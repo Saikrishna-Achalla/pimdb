@@ -1,0 +1,84 @@
+paper,name,value,unit,source
+PIMDAL,dpu_count,2048,DPUs,Table 3 / Sec 6.1
+PIMDAL,dpu_clock,350,MHz,Table 3
+PIMDAL,native_int_width,32,bit (add/sub only; mul/div emulated),Sec 2.2
+PIMDAL,dpu_peak_int_throughput,350,MOps/DPU,Table 2
+PIMDAL,system_peak_int_throughput,760,GOps,Table 2
+PIMDAL,cpu_peak_int_throughput,1606,GOps (Xeon 6226R),Table 2
+PIMDAL,dpu_mram_read_bw,628,MB/s per DPU,Table 2
+PIMDAL,dpu_mram_write_bw,633,MB/s per DPU,Table 2
+PIMDAL,system_mram_read_bw,1286,GB/s,Table 2
+PIMDAL,system_mram_write_bw,1296,GB/s,Table 2
+PIMDAL,cpu_dram_bw,79,GB/s,Table 2/3
+PIMDAL,gpu_a6000_bw,768,GB/s,Table 3
+PIMDAL,mram_per_dpu,64,MiB,Sec 2.2
+PIMDAL,wram_per_dpu,64,KiB,Sec 2.2
+PIMDAL,iram_per_dpu,24,KiB,Sec 2.2
+PIMDAL,min_threads_full_pipeline,11,threads,Sec 2.2
+PIMDAL,banks_per_rank_x_dpus_per_bank,8x8=64,DPUs/rank,Sec 2.2
+PIMDAL,tpch_scale_factor,40,SF,Sec 6.2
+PIMDAL,tpch_queries,"1,3,4,5,6",query ids,Table 4
+PIMDAL,tpch_avg_speedup_vs_cpu,3.9,x,Sec 7.3
+PIMDAL,q1_speedup_vs_gpu,2.2,x,Sec 7.3
+PIMDAL,q6_speedup_vs_gpu,3.3,x,Sec 7.3
+PIMDAL,select_8GB_kernel_vs_cpu,4.5,x,Sec 7.2 Fig 24
+PIMDAL,select_8GB_kernel_vs_gpu,3.0,x,Sec 7.2 Fig 24
+PIMDAL,agg_8GB_kernel_vs_cpu,1.5,x,Sec 7.2 Fig 24
+PIMDAL,agg_8GB_kernel_vs_gpu,2.2,x,Sec 7.2 Fig 24
+PIMDAL,order_8GB_incl_transfer_vs_cpu,2.3,x,Sec 7.2 Fig 24
+PIMDAL,order_8GB_incl_transfer_vs_gpu,0.9,x,Sec 7.2 Fig 24
+PIMDAL,join_8GB_incl_transfer_vs_cpu,0.6,x,Sec 7.2 Fig 24
+PIMDAL,join_8GB_incl_transfer_vs_gpu,0.3,x,Sec 7.2 Fig 24
+PIMDAL,order_32GB_vs_cpu,2.5,x,Sec 7.2 Fig 25
+PIMDAL,join_32GB_vs_cpu,2.0,x,Sec 7.2 Fig 25
+PIMDAL,hash_agg_vs_sort_agg,5,x,Sec 7.1
+PIMDAL,radix_buckets_optimal,32,buckets/pass,Sec 7.1
+PIMDAL,sort_ipc_max,0.92,IPC,Sec 7.1
+PIMDAL,select_pim_utilization,0.80,fraction,Sec 7.2
+PIMDAL,cpu_ipc,1.2,IPC (~40% of achievable),Sec 7.2
+PIMDAL,micro_selectivity,0.2,fraction,Sec 6.1
+PIMDAL,micro_groups,50,groups,Sec 6.1
+PIMDAL,hash_agg_thread_limit,11,threads (mutex contention beyond),Sec 7.1
+PIMDAL,broadcast_join_useful_up_to,10,MB,Sec 8/limitations
+Membrane,bfu_area,0.001,mm2 per BFU (22nm scaled),Sec 5 circuit eval
+Membrane,bfu_delay,0.45,ns,Sec 5
+Membrane,bfu_power,118.7,uW per BFU,Sec 5
+Membrane,bfu_area_overhead_vs_chip,0.1,percent,Sec 1 / 6.1
+Membrane,rank_power_overhead_sb,2.3,percent,Sec 5
+Membrane,all_bank_peak_power,4,x vs single-bank,Sec 5 (cites Newton)
+Membrane,bfu_rate,64,bit per tCCD_L per bank,Sec 4.1
+Membrane,bfu_bitwidth_range,2-64,bit (SIMD for narrow),Sec 4.1
+Membrane,bitmap_buffer,64,bit,Sec 4.1
+Membrane,dram_config,DDR4_8Gb_x8_3200 8ch 4rank/ch 4BG x4 banks 16 subarrays/bank,config,Table 2
+Membrane,subarrays_per_bank,16,count (4096 rows each),Sec 4.2
+Membrane,max_SALP,8,PEs/bank,Sec 4.2
+Membrane,pim_page_8ch_4rank,4,MB,Sec 4.4
+Membrane,filter_latency_channel,32.4,ms (1.12GB 16-bit col),Table 5
+Membrane,filter_latency_rank,8.46,ms,Table 5
+Membrane,filter_latency_bank,0.28,ms,Table 5
+Membrane,filter_latency_SALP8,0.02,ms,Table 5
+Membrane,filter_tput_channel,37.03,GB/s,Table 5
+Membrane,filter_tput_rank,141.4,GB/s,Table 5
+Membrane,filter_tput_bank,4285.71,GB/s,Table 5
+Membrane,filter_tput_SALP8,60000,GB/s,Table 5
+Membrane,e2e_speedup_bank_vs_rank,1.89/1.59,x SSB/TPCH,Sec 6.1
+Membrane,e2e_speedup_bank_vs_channel,3.7/3.15,x SSB/TPCH,Sec 6.1
+Membrane,e2e_speedup_SALP8_vs_bank,1.1,x,Sec 6.1
+Membrane,gm_speedup_D3,5.92/6.38,x SSB/TPCH,Sec 6.2
+Membrane,gm_speedup_D1,1.2/1.3,x SSB/TPCH,Sec 6.2
+Membrane,D2_speedup,5.9/4.8,x SSB/TPCH,Sec 6.2
+Membrane,memory_overhead_D2_D3,9-17,percent,Sec 6.2/Fig 9
+Membrane,scan_share_of_time_D1,60/51,percent SSB/TPCH,Sec 6.2 Fig 8
+Membrane,filter_scan_share_D1,22/46,percent SSB/TPCH,Sec 6.2
+Membrane,speedup_sf10_D3,4.4/5.0,x SSB/TPCH,Sec 6.3
+Membrane,speedup_sf100_D3,5.9/6.4,x SSB/TPCH,Sec 6.3
+Membrane,speedup_selectivity_lt_1e-4,>=10,x,Sec 6.4
+Membrane,speedup_selectivity_gt_0.1_max,1.3,x,Sec 6.4
+Membrane,D3_speedup_range,2.2-57,x,Sec 6.4
+Membrane,mode_switch_150ns_plus_50ns_geomean,5.7,x (from 5.9),Sec 4.4
+Membrane,worst_case_interrupt_slowdown,23.9,x filter latency (still 5.4x CPU),Sec 4.4
+Membrane,energy_eff_gain,3.6/3.1,x SSB/TPCH,Sec 5
+Membrane,fpga_u280_hbm_comparison,>=27.46,x Membrane faster,Sec 7
+Membrane,db_size_sf100,23.5/39.3,GB SSB/TPCH,Table 3
+Membrane,tpch_queries,"3,5,6,8,10,12,14,19",query ids,Fig 7b
+Membrane,pid_join_e2e,1.14,x,Sec 3.2

@@ -1,0 +1,983 @@
+{
+ "caps_bytes": {
+  "sf1_config_usage0.25": 77151027,
+  "q1_config_usage0.85": 262313492,
+  "no_usage_limit": 536870912
+ },
+ "queries": {
+  "2": {
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_mfgr",
+     "p_size",
+     "p_type"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 10.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_acctbal",
+     "s_name",
+     "s_address",
+     "s_phone",
+     "s_comment",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 1.5,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "partsupp": {
+    "cols": [
+     "ps_partkey",
+     "ps_suppkey",
+     "ps_supplycost"
+    ],
+    "rows": 800000,
+    "row_groups": 1,
+    "decoded_MB": 12.8,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name",
+     "n_regionkey"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "region": {
+    "cols": [
+     "r_regionkey",
+     "r_name"
+    ],
+    "rows": 5,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "3": {
+   "customer": {
+    "cols": [
+     "c_mktsegment",
+     "c_custkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 2.5,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_custkey",
+     "o_orderkey",
+     "o_orderdate",
+     "o_shippriority"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 24.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_shipdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 144.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "4": {
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_orderdate",
+     "o_orderpriority"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 30.6,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_commitdate",
+     "l_receiptdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 72.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "5": {
+   "orders": {
+    "cols": [
+     "o_custkey",
+     "o_orderkey",
+     "o_orderdate"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 18.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_suppkey",
+     "l_extendedprice",
+     "l_discount"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 144.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name",
+     "n_regionkey"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "region": {
+    "cols": [
+     "r_regionkey",
+     "r_name"
+    ],
+    "rows": 5,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "customer": {
+    "cols": [
+     "c_custkey",
+     "c_nationkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 1.2,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "6": {
+   "lineitem": {
+    "cols": [
+     "l_extendedprice",
+     "l_discount",
+     "l_shipdate",
+     "l_quantity"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 168.0,
+    "batches_sf1_config_usage0.25": 3,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "7": {
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_suppkey",
+     "l_orderkey",
+     "l_shipdate",
+     "l_extendedprice",
+     "l_discount"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 168.0,
+    "batches_sf1_config_usage0.25": 3,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_custkey"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 12.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "customer": {
+    "cols": [
+     "c_custkey",
+     "c_nationkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 1.2,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "8": {
+   "lineitem": {
+    "cols": [
+     "l_partkey",
+     "l_suppkey",
+     "l_orderkey",
+     "l_extendedprice",
+     "l_discount"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 168.0,
+    "batches_sf1_config_usage0.25": 3,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_type"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 5.7,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_custkey",
+     "o_orderdate"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 18.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "customer": {
+    "cols": [
+     "c_custkey",
+     "c_nationkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 1.2,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_regionkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "region": {
+    "cols": [
+     "r_regionkey",
+     "r_name"
+    ],
+    "rows": 5,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "9": {
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_name"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 8.2,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_suppkey",
+     "l_partkey",
+     "l_orderkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_quantity"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 216.0,
+    "batches_sf1_config_usage0.25": 3,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "partsupp": {
+    "cols": [
+     "ps_suppkey",
+     "ps_partkey",
+     "ps_supplycost"
+    ],
+    "rows": 800000,
+    "row_groups": 1,
+    "decoded_MB": 12.8,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_orderdate"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 12.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "10": {
+   "customer": {
+    "cols": [
+     "c_custkey",
+     "c_name",
+     "c_acctbal",
+     "c_address",
+     "c_phone",
+     "c_comment",
+     "c_nationkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 24.4,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_custkey",
+     "o_orderkey",
+     "o_orderdate"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 18.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_returnflag"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 150.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "11": {
+   "partsupp": {
+    "cols": [
+     "ps_partkey",
+     "ps_suppkey",
+     "ps_supplycost",
+     "ps_availqty"
+    ],
+    "rows": 800000,
+    "row_groups": 1,
+    "decoded_MB": 16.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.1,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "12": {
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_orderpriority"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 24.6,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_shipmode",
+     "l_commitdate",
+     "l_receiptdate",
+     "l_shipdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 145.7,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "13": {
+   "customer": {
+    "cols": [
+     "c_custkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 0.6,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_custkey",
+     "o_orderkey",
+     "o_comment"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 90.8,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "14": {
+   "lineitem": {
+    "cols": [
+     "l_partkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_shipdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 144.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_type"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 5.7,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "15": {
+   "lineitem": {
+    "cols": [
+     "l_suppkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_shipdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 144.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_name",
+     "s_address",
+     "s_phone"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.7,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "16": {
+   "partsupp": {
+    "cols": [
+     "ps_partkey",
+     "ps_suppkey"
+    ],
+    "rows": 800000,
+    "row_groups": 1,
+    "decoded_MB": 6.4,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_brand",
+     "p_type",
+     "p_size"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 8.9,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_comment"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.7,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "17": {
+   "lineitem": {
+    "cols": [
+     "l_partkey",
+     "l_extendedprice",
+     "l_quantity"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 120.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_brand",
+     "p_container"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 5.5,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "18": {
+   "customer": {
+    "cols": [
+     "c_name",
+     "c_custkey"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 3.9,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_custkey",
+     "o_orderdate",
+     "o_totalprice"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 30.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_orderkey",
+     "l_quantity"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 72.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "19": {
+   "lineitem": {
+    "cols": [
+     "l_partkey",
+     "l_extendedprice",
+     "l_discount",
+     "l_quantity",
+     "l_shipmode",
+     "l_shipinstruct"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 313.8,
+    "batches_sf1_config_usage0.25": 6,
+    "batches_q1_config_usage0.85": 2,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_brand",
+     "p_container",
+     "p_size"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 6.3,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "20": {
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_name",
+     "s_address",
+     "s_nationkey"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.6,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "partsupp": {
+    "cols": [
+     "ps_suppkey",
+     "ps_partkey",
+     "ps_availqty"
+    ],
+    "rows": 800000,
+    "row_groups": 1,
+    "decoded_MB": 9.6,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "part": {
+    "cols": [
+     "p_partkey",
+     "p_name"
+    ],
+    "rows": 200000,
+    "row_groups": 1,
+    "decoded_MB": 8.2,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_partkey",
+     "l_suppkey",
+     "l_quantity",
+     "l_shipdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 120.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "21": {
+   "supplier": {
+    "cols": [
+     "s_suppkey",
+     "s_nationkey",
+     "s_name"
+    ],
+    "rows": 10000,
+    "row_groups": 1,
+    "decoded_MB": 0.3,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "lineitem": {
+    "cols": [
+     "l_suppkey",
+     "l_orderkey",
+     "l_receiptdate",
+     "l_commitdate"
+    ],
+    "rows": 6001215,
+    "row_groups": 6,
+    "decoded_MB": 96.0,
+    "batches_sf1_config_usage0.25": 2,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_orderkey",
+     "o_orderstatus"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 13.5,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "nation": {
+    "cols": [
+     "n_nationkey",
+     "n_name"
+    ],
+    "rows": 25,
+    "row_groups": 1,
+    "decoded_MB": 0.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  },
+  "22": {
+   "customer": {
+    "cols": [
+     "c_custkey",
+     "c_phone",
+     "c_acctbal"
+    ],
+    "rows": 150000,
+    "row_groups": 1,
+    "decoded_MB": 4.7,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   },
+   "orders": {
+    "cols": [
+     "o_custkey"
+    ],
+    "rows": 1500000,
+    "row_groups": 2,
+    "decoded_MB": 6.0,
+    "batches_sf1_config_usage0.25": 1,
+    "batches_q1_config_usage0.85": 1,
+    "batches_no_usage_limit": 1
+   }
+  }
+ },
+ "q1_sf10_lineitem": {
+  "row_groups": 56,
+  "decoded_MB": 2759.4,
+  "batches_sf1_config_usage0.25": 56,
+  "batches_q1_config_usage0.85": 12,
+  "batches_no_usage_limit": 6
+ }
+}

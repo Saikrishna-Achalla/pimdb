@@ -1,0 +1,239 @@
+{
+ "title": "DB-PU: database command set for an SK hynix GDDR6-AiM-style bank-level processing unit",
+ "status": "modeled (paper design + Ramulator2 timing in sim/patches/aim/0002-db-pu-isrs-refresh.patch); not validated against RTL or silicon",
+ "device": {
+  "base": "GDDR6-AiM as modeled by arkhadem/aim_simulator @ 0f28a07 (GDDR6_AiM_org / GDDR6_AiM_timing)",
+  "channels": 32,
+  "banks_per_channel": 16,
+  "rows_per_bank": 16384,
+  "row_bytes_per_bank": 2048,
+  "column_word_bits": 256,
+  "tCK_ns": 0.5,
+  "all_bank_column_rate": "one 256-bit word per bank every nCCDL = 2 tCK = 1 ns -> 512 GB/s internal per channel, 16.4 TB/s per 32-channel device; external 32 GB/s per channel",
+  "execution": "lockstep: every command is broadcast to all 16 banks of the selected channels with ONE row and ONE column address (ACT16 / PREA open and close the same row in all banks). Operands must be in the open row, in the channel's global buffer (GB, constants), or in PU registers."
+ },
+ "data_layout": {
+  "name": "row-tile (PAX inside a DRAM row)",
+  "rule": "row r of bank b holds records [(r*NB+b)*T, (r*NB+b+1)*T) of every column the workload touches, plus scratch slots for the intermediates the operators write back, one slot per stored mask (ceil(T/256) words) and one header word (per-row counts). NB = 16 x channels. T = largest multiple of 32 <= 512 that fits 64 words.",
+  "why": "all-bank lockstep execution needs every operand of an element-wise operator in the same open row of the same bank; columns in separate rows would need a per-bank row-sized operand buffer.",
+  "cost_not_in_the_simulation": "a GPU interleaves 32-256 B lines across channels and banks; this layout needs whole row-tiles per bank, i.e. a one-time layout transform when a table is loaded (estimated in results/normalization.csv as read-once + write-once of the columns over the external bus), and costs capacity (base_util < 1).",
+  "padding": "the last row-tile is padded; a per-bank length register produces a lane-valid mask (no DRAM cost)."
+ },
+ "operand_widths": {
+  "source": "tpch_q1_analysis/analysis/results/q6/physical_floor.md (14.0 B/row pinned, 3 x DECIMAL(15,2) + DATE; native widths 8+8+8+4); warm_kernel_list.json shows int32 gathers + device_cast<int,long> of price and discount and a long*long Mul; q1/physical_floor.md: 28 B/row for 7 columns.",
+  "used": {
+   "l_quantity": "int16 (x100)",
+   "l_extendedprice": "int32 (x100)",
+   "l_discount": "int32 (x100)",
+   "l_tax": "int32 (x100)",
+   "l_shipdate": "int32 days",
+   "l_returnflag/l_linestatus": "uint8 dictionary codes (cuDF: string, 1 B char + 4 B offset; narrower here -> favours PIM by 8 B/row in Q1)",
+   "products/sums": "int64 (cuDF decimal64); per-bank partial sums int64, combined on the GPU in int128"
+  },
+  "inference": "the per-column split of Sirius' narrowed carriers is inferred (int32 x3 + int16 = 14 B/row), not read from a file",
+  "64-bit operands": "an int64 column puts 4 elements per 256-bit word instead of 8: every pass over it costs twice the column commands (micro-suite 'pred_price64')"
+ },
+ "pu_state_per_bank": {
+  "mask_registers": "M0..M3, 512 bits each (one predicate bit per record of the open row-tile) = 256 B latch",
+  "accumulator": "ACC: 64-bit (SUM, MMAC); wraps (two's complement)",
+  "group_accumulators": "G[0..7]: 8 x 64-bit, indexed by a 3-bit key; one aggregate per pass",
+  "count_register": "CNT: 32-bit per-bank compaction count",
+  "output_staging": "8 x 256-bit words (256 B) before an internal write-back burst",
+  "length_register": "records in the bank's last row-tile -> lane-valid mask",
+  "constants": "range bounds / small key sets in the channel's global buffer (WR_GB), broadcast to all banks",
+  "total_latch_estimate": "~0.6 KB per bank (masks 256 B + staging 256 B + 9 x 8 B accumulators + key latch 32 B)"
+ },
+ "timing_parameters": {
+  "nCCDL": {
+   "value": 2,
+   "meaning": "column-to-column, existing AiM value (MAC16 every 1 ns)"
+  },
+  "nRCDRDMAC": {
+   "value": 56,
+   "meaning": "ACT16 -> first PU read (existing; tRCD 36 + 10 ns PU offset)"
+  },
+  "nRCDWR": {
+   "value": 28,
+   "meaning": "ACT16 -> first internal write-back (existing tRCDWR)"
+  },
+  "nRTP": {
+   "value": 12,
+   "meaning": "last PU read -> PREA (existing)"
+  },
+  "nRP": {
+   "value": 32,
+   "meaning": "PREA -> ACT16 (existing)"
+  },
+  "nCCDCMP": {
+   "value": 2,
+   "meaning": "CMP16 interval"
+  },
+  "nCCDALU": {
+   "value": 2,
+   "meaning": "ALU16 interval"
+  },
+  "nCCDMUL": {
+   "value": 2,
+   "meaning": "MUL16 slot interval; one slot = 4 32x32 partial products or one operand word"
+  },
+  "nCCDGAG": {
+   "value": 2,
+   "meaning": "GAG16 interval; one slot = 4 values into 8 group accumulators or one key word"
+  },
+  "nPULAT": {
+   "value": 2,
+   "meaning": "CMP/ALU/GAG pipeline: last read -> first dependent write-back"
+  },
+  "nPULATMUL": {
+   "value": 6,
+   "meaning": "multiplier pipeline (3 stages x 1 ns): MUL16 -> write-back / register read-out"
+  },
+  "nPUWTR": {
+   "value": 11,
+   "meaning": "internal write-back -> next column read (taken = nWTRL 11)"
+  },
+  "nPUWR": {
+   "value": 33,
+   "meaning": "internal write-back -> PREA (write recovery, = nWR 33)"
+  },
+  "refresh": {
+   "nREFI": 3800,
+   "nRFC": 240,
+   "meaning": "all-bank refresh every 1.9 us (GDDR6: 16K REFab per 32 ms), tRFCab 120 ns = the AiM preset's intent (210 cycles at 0.57 ns, 3333 cycles at 0.57 ns = 1.9 us)",
+   "fix": "upstream never refreshes (AllBank manager loops over a 'rank' level GDDR6 lacks) and swaps nREFI/nRFCpb in the preset order and indexes tRFC_TABLE[0][-1] for the AiM density; fixed in 0002 patch, enabled with RefreshManager: refresh_without_rank: true. Cost: +7.2 % on the owner's Q6 SF1 trace (results/owner_q6_regression.csv).",
+   "sensitivity": "results/sensitivity.csv (tRFC 210 ns)"
+  }
+ },
+ "instructions": [
+  {
+   "name": "PCMP (trace: PCMP_ABK opsize chmask row)",
+   "operands": "column c (width 1/2/4/8 B) in the open row; constants lo, hi in GB; destination mask Md; combine mode",
+   "semantics": "for each lane j of the row-tile: p = (lo <= c[j] <= hi) (signed, at the column width; one-sided compares use INT_MIN/INT_MAX, equality uses lo = hi, NOT via the negate flag); Md = p | Md & p | Md | p  for comb = SET | AND | OR",
+   "per_unit_state": "mask registers M0..M3",
+   "datapath": "2 x 256-bit lane-segmented magnitude comparators (8 x 32-bit, 16 x 16-bit, 32 x 8-bit or 4 x 64-bit lanes) + AND/OR into the mask register",
+   "pipeline_depth": 1,
+   "dram_command": "CMP16 (new), nCCDCMP = 2 tCK",
+   "fits_MAC16_slot": "yes: a 32-bit compare is ~0.45 ns (Membrane BFU path delay, 22 nm-scaled) < 1 ns slot",
+   "words_per_row": "T*w/32 (+ ceil(T/256) mask load and store in operator-at-a-time schedule)"
+  },
+  {
+   "name": "MASK combine / store / load",
+   "operands": "mask registers; the row's mask slot",
+   "semantics": "Md = Ma AND/OR/ANDNOT Mb (register only, folded into PCMP's combine mode or 1 PU cycle hidden behind column commands); MSTORE writes a 512-bit mask into the row's mask slot (PWB, ceil(T/256) words); MLOAD reads it back (PALU, ceil(T/256) words).",
+   "mask_storage": "1 bit per record, ceil(T/256) words per row-tile; masks persist in the row between operators of an operator-at-a-time schedule; in a tile-at-a-time chain they stay in M0..M3 and are stored only if something after the chain needs them",
+   "dram_command": "none for the register op; PUWR16 / ALU16 for store / load",
+   "pipeline_depth": 1
+  },
+  {
+   "name": "EWALU (trace: PALU_ABK reads + PWB_ABK writes)",
+   "operands": "columns a[, b] or constant c (GB); output column o in the same row; kinds add, sub, add_c, rsub_c (c - a), add_shl (a + (b << s): composite-key packing), widen (sign-extend 4->8 B)",
+   "semantics": "o[j] = f(a[j], b[j] | c) computed in 64 bits and wrapped to the width of o (two's complement); written back to the open row (results stay in memory for the next operator)",
+   "datapath": "4 x 64-bit (or 8 x 32-bit) adders + shifter + sign-extension mux; staging buffer; internal write path",
+   "pipeline_depth": 1,
+   "dram_command": "ALU16 (new, nCCDALU = 2) per input word + PUWR16 (new) per output word, interleaved through the 8-word staging buffer",
+   "fits_MAC16_slot": "yes for the read side (64-bit add ~ comparable to the compare path, pipelined 1 stage); write-back adds column commands and turnarounds (nPULAT, nPUWTR, nPUWR)",
+   "words_per_row": "reads W(a)+W(b), writes W(o); widen 4->8 B: T/8 reads, T/4 writes"
+  },
+  {
+   "name": "EWMUL (trace: PMUL_ABK slots + PWB_ABK writes)",
+   "operands": "columns a, b (int32 or int64); output o (int64)",
+   "semantics": "o[j] = (a[j] * b[j]) mod 2^64; 32x32 -> 64 exact; 64x32 -> 2 partial products; 64x64 -> low 64 bits (3 partial products: lo*lo, lo*hi<<32, hi*lo<<32)",
+   "datapath": "4 x (32x32) multipliers per bank, 3-stage pipelined (latency nPULATMUL = 6 tCK); 64-bit post-adders for partial products",
+   "pipeline_depth": 3,
+   "dram_command": "MUL16 (new): one slot = one operand word or 4 partial products, nCCDMUL = 2 tCK main; PUWR16 for the result",
+   "fits_MAC16_slot": "throughput yes only because it is pipelined and the unit has 4 multipliers per bank (4x the multiplier area of AiM's 16 BF16 MACs, counting a 32x32 as 16 8x8); latency no (3 slots). With fewer multipliers the slot is 4 or 8 tCK: sensitivity.csv",
+   "words_per_row": "slots = max(W(a)+W(b), ceil(T*partials/4)); writes W(o). int32xint32: T/4 slots; 64x32: T/2; 64x64: 3T/4"
+  },
+  {
+   "name": "MMAC (masked multiply-accumulate; trace: PMUL_ABK)",
+   "operands": "columns a, b; mask Mi; ACC",
+   "semantics": "ACC += sum_j (Mi[j] & valid[j]) ? a[j]*b[j] : 0  (64-bit, wraps)",
+   "datapath": "EWMUL multipliers + 4-input 64-bit adder tree + ACC",
+   "pipeline_depth": 4,
+   "dram_command": "MUL16, same slots as EWMUL, no write-back",
+   "note": "a general operator (no embedded predicate). The owner's MMAC_ABK with an embedded range check is the fused variant and is reported only as a variant."
+  },
+  {
+   "name": "SUM (masked sum reduction; trace: PALU_ABK)",
+   "operands": "column x; mask Mi (optional); ACC",
+   "semantics": "ACC += sum_j (Mi[j] & valid[j]) ? x[j] : 0",
+   "datapath": "8-input 32-bit / 4-input 64-bit adder tree + 64-bit ACC",
+   "pipeline_depth": 2,
+   "dram_command": "ALU16 per word (nCCDALU = 2)",
+   "fits_MAC16_slot": "yes (pipelined tree)",
+   "readout": "RD_MAC: 16 banks x 8 B = 4 x 32 B per channel; the GPU adds 16 x channels partials (int128)"
+  },
+  {
+   "name": "GAGG / GCNT (small-group aggregation; trace: PGAG_ABK)",
+   "operands": "key column k (uint8, values 0..7), value column v, mask Mi; group accumulators G[0..7]",
+   "semantics": "for g in 0..7: G[g] += sum_j (Mi[j] & valid[j] & k[j]==g) ? v[j] : 0 ; GCNT: G[g] += count; keys >= 8 are ignored (the caller guarantees <= 8 groups; otherwise fall back to the GPU). One aggregate per pass; a query with A aggregates runs A (+1 for count) passes over the open row.",
+   "what_the_unit_needs": "a 3->8 key decoder per lane, 8 group accumulators (8 x 64 bit), and per group a 4-input masked adder tree (24 x 64-bit adders) so that 4 values per slot can hit any mix of groups without conflicts; a key latch of one word (32 keys)",
+   "datapath": "4 values per GAG16 slot (int64: 1 word/slot, int32: 2 slots/word, int16: 4 slots/word); GCNT: 8 popcounts of 32 bits per key word",
+   "pipeline_depth": 3,
+   "dram_command": "GAG16 (new), nCCDGAG = 2 main (4 in sensitivity)",
+   "readout": "RD_MAC: 16 banks x 8 groups x 8 B = 32 x 32 B per channel per aggregate"
+  },
+  {
+   "name": "COMPACT (bank-local compaction; trace: PALU_ABK + PWB_ABK)",
+   "operands": "source column s (or implicit record id = base + (row*NB + bank)*T + lane), mask Mi, output slot o in the same row, header word, CNT",
+   "semantics": "selected lanes of s are packed to the front of slot o in lane order; the row's count goes to the header word; CNT += count. Output order across the device is (bank, row, lane), not record order.",
+   "datapath": "prefix-popcount of the mask word + 8-lane (32-bit) or 4-lane (64-bit) compaction crossbar into the staging buffer",
+   "pipeline_depth": 2,
+   "dram_command": "ALU16 per source word + PUWR16 per output word + 1 PUWR16 (header)",
+   "lockstep_consequence": "all 16 banks get the same write commands: a host-paced issuer does not know the counts and writes the whole slot (W(s) words); an in-memory sequencer can take the max count over the channel's 16 banks (16-input max on the PU bus) and write only that many words",
+   "global_positions": "per-bank CNT read-out (2 x RD_MAC per channel = 64 B) -> exclusive prefix over 16 x channels banks on the GPU (one size read-back, measured 33.6 us median host gap on the real GPU, note 04). Bank-major dense output then needs per-row counts (header words) and a copy of every segment through the GPU: a gather. Record-order output needs a prefix over all row-tiles.",
+   "cost_of_combining": "read-out 2 RD_MAC/channel (~35 cycles) + one host round trip; moving segments = GPU reads of header + used words (simulated in the 'compact_ids+readout' variant)"
+  },
+  {
+   "name": "READ-OUT (trace: RD_MAC / RD_SBK)",
+   "semantics": "RD_MAC copies 32 B of PU registers per channel (accumulators, group accumulators, CNT) to the host (blocking, register mode, RDMAC16 timing). Mask read-out: the GPU reads the stored mask words with ordinary column reads (RD_SBK, all 16 banks interleaved, 32 GB/s external per channel).",
+   "mask_readout_format": "bitmask, 1 bit per record (cuDF's boolean mask is 1 byte per record: an 8x larger write and read; cuDF's null-mask bitmap has the same 1-bit format)"
+  },
+  {
+   "name": "WR_GB / WR_BIAS (existing)",
+   "semantics": "constants into the global buffer; clear accumulators/registers"
+  }
+ ],
+ "not_executable_at_bank_level": [
+  {
+   "op": "gather (indices -> values)",
+   "why": "every bank receives the same row and column address; a gather needs a different address per bank and usually a different bank (the index points anywhere); there is no path from one bank's PU to another bank's row",
+   "cheapest_extension": "(a) per-bank column-address register: each bank selects its own column of its OPEN row (column decoders are per bank) -> gather within a row-tile only (useful after a co-partitioned layout); (b) gather across rows = per-bank ACT with different rows: that is ordinary single-bank DRAM access, limited by tRRD/tFAW and the command bus, so it gains nothing over the GPU; (c) a router in a base die (HBM) that forwards index requests to the owning bank: a new die-level network",
+   "timing": "not modeled (no faked timing)"
+  },
+  {
+   "op": "hash build / probe",
+   "why": "the bucket of a key is in an arbitrary bank: needs data-dependent addressing plus inter-bank routing of keys and payloads; insert needs an atomic read-modify-write per bank with different addresses",
+   "cheapest_extension": "replicate a small build side into every bank (broadcast join, only for tables of a few KB per bank: the GB is 2 KB) -> becomes the small-set membership compare below; otherwise base-die logic with a crossbar to all banks of its stack (HBM)",
+   "timing": "not modeled"
+  },
+  {
+   "op": "sort / merge / radix partition",
+   "why": "needs a permutation across banks; lockstep units cannot exchange data and the only inter-bank path is through the host/GPU",
+   "cheapest_extension": "per-bank histogram (GAGG-like) is executable; the scatter is not: base-die router or GPU",
+   "timing": "not modeled"
+  },
+  {
+   "op": "global prefix scan",
+   "why": "the intra-bank part is executable (adder chain); the carry between banks needs the host (as for compaction positions)",
+   "timing": "only the per-bank part is modeled (CNT)"
+  },
+  {
+   "op": "string LIKE / variable-length data",
+   "why": "variable length breaks the fixed lane layout; dictionary codes are required",
+   "timing": "not modeled"
+  },
+  {
+   "op": "small-set membership (IN-list, dynamic filter with <= 8 keys)",
+   "executable": true,
+   "how": "k equality compares (PCMP lo = hi = key_i) OR-ed into one mask; cost k x W(c) per row; keys in GB",
+   "note": "larger sets need a hash/Bloom probe: not executable"
+  }
+ ],
+ "owner_isrs_kept": {
+  "CMP_ABK": "INT32 range compare into mask; DRAM command MAC16 (alias). Same semantics as PCMP with comb=AND.",
+  "MMAC_ABK": "paired-column masked MAC with optional embedded range check on operand b (fused). MAC16 alias. Used only for the 'owner_fused' Q6 variant.",
+  "RD_MASK": "read mask registers; RDMAC16 alias.",
+  "regression": "owner's Q6 trace on this build: SF1 20,865 cycles, SF10 207,089 cycles (identical to the README)."
+ }
+}

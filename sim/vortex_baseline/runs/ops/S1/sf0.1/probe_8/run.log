@@ -1,0 +1,15 @@
+OP probe arg=8 cores=1 warps=32 threads=1024
+TABLE rows=600572
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=31 target=32 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x000055d3afb89200 HEAD_ADDR=0x000055d3afb99280 CMPL_ADDR=0x000055d3afb99380
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000000800
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 0 probe_sorted_i32 probe items=600572 lbytes=3002860
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=47618 (r=37593, w=10025), lat=653.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=2001096, cycles=2511086, IPC=0.797
+wall_s=16.469532473 rc=0

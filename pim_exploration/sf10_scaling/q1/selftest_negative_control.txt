@@ -1,0 +1,12 @@
+negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q1_nsys.sql': ["pinned tables [] != referenced tables ['lineitem']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned [] vs referenced ['lineitem']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter2: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter3: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '56', 'hits': '0', 'h2d': '441', 'miss': '2', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '56', 'hits': '441', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned [] vs referenced ['lineitem']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter2: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter3: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '56', 'hits': '0', 'h2d': '441', 'miss': '2', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '56', 'hits': '441', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::build_string_dictionary_index_kernel(cudf:', 'cudf::io::parquet::detail::<unnamed>::compute_page_string_sizes_kernel(cudf::io:', 'cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 1053 copies, 415752491 B total, largest single 7225691 B (limits: single <= 65536 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 655 copies, 15250093 B total, largest single 301600 B (result CSV is 651 B; limit 262144 B)
+SELFTEST: PASS (verification detected the unpinned table)

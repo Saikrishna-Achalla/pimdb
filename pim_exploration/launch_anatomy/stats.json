@@ -1,0 +1,1338 @@
+{
+ "n_launches": 2730,
+ "kernel_time_us": 27717.452,
+ "cause_launches": {
+  "distinct": 267,
+  "multi-pass": 861,
+  "per-column": 635,
+  "per-batch": 370,
+  "bookkeeping": 597
+ },
+ "cause_share": {
+  "distinct": 0.0978,
+  "multi-pass": 0.3154,
+  "per-column": 0.2326,
+  "per-batch": 0.1355,
+  "bookkeeping": 0.2187
+ },
+ "cause_time_share": {
+  "distinct": 0.4007,
+  "multi-pass": 0.3143,
+  "per-column": 0.106,
+  "per-batch": 0.1608,
+  "bookkeeping": 0.0181
+ },
+ "confidence": {
+  "medium": 1222,
+  "high": 1229,
+  "low": 272,
+  "none": 7
+ },
+ "grid1": 1022,
+ "threads_le_1024": 1341,
+ "grid1_time_us": 5068.085,
+ "lt5us": 2127,
+ "distinct_short_names": 56,
+ "distinct_names_prefix120": 56,
+ "other_stream_launches": 265,
+ "grid1_by_cause": {
+  "bookkeeping": 400,
+  "multi-pass": 277,
+  "distinct": 44,
+  "per-column": 139,
+  "per-batch": 162
+ },
+ "by_type": {
+  "HASH_JOIN": {
+   "launches": 818,
+   "kernel_us": 3364.0,
+   "executions": 66,
+   "per_exec_min": 1,
+   "per_exec_med": 11.0,
+   "per_exec_max": 34,
+   "plan_instances": 60,
+   "per_inst_min": 1,
+   "per_inst_med": 11.0,
+   "per_inst_max": 35,
+   "causes": {
+    "distinct": 81,
+    "multi-pass": 276,
+    "per-column": 236,
+    "per-batch": 38,
+    "bookkeeping": 187
+   },
+   "grid1": 271
+  },
+  "DYNAMIC_FILTER probe": {
+   "launches": 464,
+   "kernel_us": 5777.5,
+   "executions": 60,
+   "per_exec_min": 1,
+   "per_exec_med": 7.0,
+   "per_exec_max": 19,
+   "plan_instances": 49,
+   "per_inst_min": 3,
+   "per_inst_med": 7,
+   "per_inst_max": 66,
+   "causes": {
+    "distinct": 50,
+    "multi-pass": 118,
+    "per-column": 160,
+    "per-batch": 69,
+    "bookkeeping": 67
+   },
+   "grid1": 78
+  },
+  "HASH_GROUP_BY": {
+   "launches": 454,
+   "kernel_us": 5704.9,
+   "executions": 23,
+   "per_exec_min": 5,
+   "per_exec_med": 16,
+   "per_exec_max": 68,
+   "plan_instances": 21,
+   "per_inst_min": 6,
+   "per_inst_med": 18,
+   "per_inst_max": 68,
+   "causes": {
+    "distinct": 15,
+    "multi-pass": 205,
+    "per-column": 46,
+    "per-batch": 52,
+    "bookkeeping": 136
+   },
+   "grid1": 193
+  },
+  "GPU_SCAN": {
+   "launches": 307,
+   "kernel_us": 3636.0,
+   "executions": 65,
+   "per_exec_min": 1,
+   "per_exec_med": 5,
+   "per_exec_max": 17,
+   "plan_instances": 57,
+   "per_inst_min": 1,
+   "per_inst_med": 5,
+   "per_inst_max": 21,
+   "causes": {
+    "distinct": 40,
+    "multi-pass": 92,
+    "per-column": 72,
+    "per-batch": 43,
+    "bookkeeping": 60
+   },
+   "grid1": 120
+  },
+  "FILTER": {
+   "launches": 169,
+   "kernel_us": 623.2,
+   "executions": 23,
+   "per_exec_min": 3,
+   "per_exec_med": 7,
+   "per_exec_max": 14,
+   "plan_instances": 16,
+   "per_inst_min": 3,
+   "per_inst_med": 10.5,
+   "per_inst_max": 42,
+   "causes": {
+    "distinct": 10,
+    "multi-pass": 46,
+    "per-column": 34,
+    "per-batch": 47,
+    "bookkeeping": 32
+   },
+   "grid1": 78
+  },
+  "TOP_N": {
+   "launches": 124,
+   "kernel_us": 1788.3,
+   "executions": 6,
+   "per_exec_min": 6,
+   "per_exec_med": 15.0,
+   "per_exec_max": 56,
+   "plan_instances": 5,
+   "per_inst_min": 6,
+   "per_inst_med": 10,
+   "per_inst_max": 76,
+   "causes": {
+    "distinct": 5,
+    "multi-pass": 46,
+    "per-column": 30,
+    "per-batch": 20,
+    "bookkeeping": 23
+   },
+   "grid1": 91
+  },
+  "ORDER_BY": {
+   "launches": 116,
+   "kernel_us": 4665.3,
+   "executions": 10,
+   "per_exec_min": 4,
+   "per_exec_med": 7.5,
+   "per_exec_max": 38,
+   "plan_instances": 10,
+   "per_inst_min": 4,
+   "per_inst_med": 7.5,
+   "per_inst_max": 38,
+   "causes": {
+    "distinct": 10,
+    "multi-pass": 47,
+    "per-column": 23,
+    "per-batch": 0,
+    "bookkeeping": 36
+   },
+   "grid1": 62
+  },
+  "DYNAMIC_FILTER build": {
+   "launches": 70,
+   "kernel_us": 193.1,
+   "executions": 34,
+   "per_exec_min": 1,
+   "per_exec_med": 2.0,
+   "per_exec_max": 4,
+   "plan_instances": 34,
+   "per_inst_min": 1,
+   "per_inst_med": 2.0,
+   "per_inst_max": 4,
+   "causes": {
+    "distinct": 34,
+    "multi-pass": 0,
+    "per-column": 3,
+    "per-batch": 0,
+    "bookkeeping": 33
+   },
+   "grid1": 4
+  },
+  "UNGROUPED_AGGREGATE": {
+   "launches": 63,
+   "kernel_us": 63.1,
+   "executions": 9,
+   "per_exec_min": 3,
+   "per_exec_med": 7,
+   "per_exec_max": 14,
+   "plan_instances": 7,
+   "per_inst_min": 3,
+   "per_inst_med": 7,
+   "per_inst_max": 21,
+   "causes": {
+    "distinct": 7,
+    "multi-pass": 18,
+    "per-column": 8,
+    "per-batch": 14,
+    "bookkeeping": 16
+   },
+   "grid1": 48
+  },
+  "PROJECTION": {
+   "launches": 50,
+   "kernel_us": 114.8,
+   "executions": 16,
+   "per_exec_min": 1,
+   "per_exec_med": 1.5,
+   "per_exec_max": 19,
+   "plan_instances": 13,
+   "per_inst_min": 1,
+   "per_inst_med": 2,
+   "per_inst_max": 19,
+   "causes": {
+    "distinct": 8,
+    "multi-pass": 3,
+    "per-column": 13,
+    "per-batch": 23,
+    "bookkeeping": 3
+   },
+   "grid1": 27
+  },
+  "MERGE_TOP_N": {
+   "launches": 44,
+   "kernel_us": 1261.7,
+   "executions": 4,
+   "per_exec_min": 6,
+   "per_exec_med": 8.0,
+   "per_exec_max": 22,
+   "plan_instances": 4,
+   "per_inst_min": 6,
+   "per_inst_med": 8.0,
+   "per_inst_max": 22,
+   "causes": {
+    "distinct": 0,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 44,
+    "bookkeeping": 0
+   },
+   "grid1": 36
+  },
+  "NESTED_LOOP_JOIN": {
+   "launches": 15,
+   "kernel_us": 42.3,
+   "executions": 2,
+   "per_exec_min": 6,
+   "per_exec_med": 7.5,
+   "per_exec_max": 9,
+   "plan_instances": 2,
+   "per_inst_min": 6,
+   "per_inst_med": 7.5,
+   "per_inst_max": 9,
+   "causes": {
+    "distinct": 2,
+    "multi-pass": 5,
+    "per-column": 7,
+    "per-batch": 0,
+    "bookkeeping": 1
+   },
+   "grid1": 1
+  },
+  "MERGE_GROUP_BY": {
+   "launches": 12,
+   "kernel_us": 36.7,
+   "executions": 1,
+   "per_exec_min": 12,
+   "per_exec_med": 12,
+   "per_exec_max": 12,
+   "plan_instances": 1,
+   "per_inst_min": 12,
+   "per_inst_med": 12,
+   "per_inst_max": 12,
+   "causes": {
+    "distinct": 0,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 12,
+    "bookkeeping": 0
+   },
+   "grid1": 2
+  },
+  "DENSE_COUNT_JOIN": {
+   "launches": 9,
+   "kernel_us": 45.8,
+   "executions": 1,
+   "per_exec_min": 9,
+   "per_exec_med": 9,
+   "per_exec_max": 9,
+   "plan_instances": 1,
+   "per_inst_min": 9,
+   "per_inst_med": 9,
+   "per_inst_max": 9,
+   "causes": {
+    "distinct": 1,
+    "multi-pass": 5,
+    "per-column": 3,
+    "per-batch": 0,
+    "bookkeeping": 0
+   },
+   "grid1": 3
+  },
+  "TOP_N/ORDER_BY (unattributed)": {
+   "launches": 6,
+   "kernel_us": 383.3,
+   "executions": 3,
+   "per_exec_min": 2,
+   "per_exec_med": 2,
+   "per_exec_max": 2,
+   "plan_instances": 3,
+   "per_inst_min": 2,
+   "per_inst_med": 2,
+   "per_inst_max": 2,
+   "causes": {
+    "distinct": 3,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 0,
+    "bookkeeping": 3
+   },
+   "grid1": 6
+  },
+  "CONCAT": {
+   "launches": 6,
+   "kernel_us": 10.2,
+   "executions": 2,
+   "per_exec_min": 2,
+   "per_exec_med": 3.0,
+   "per_exec_max": 4,
+   "plan_instances": 2,
+   "per_inst_min": 2,
+   "per_inst_med": 3.0,
+   "per_inst_max": 4,
+   "causes": {
+    "distinct": 0,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 6,
+    "bookkeeping": 0
+   },
+   "grid1": 0
+  },
+  "MERGE_AGGREGATE": {
+   "launches": 2,
+   "kernel_us": 2.0,
+   "executions": 1,
+   "per_exec_min": 2,
+   "per_exec_med": 2,
+   "per_exec_max": 2,
+   "plan_instances": 1,
+   "per_inst_min": 2,
+   "per_inst_med": 2,
+   "per_inst_max": 2,
+   "causes": {
+    "distinct": 0,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 2,
+    "bookkeeping": 0
+   },
+   "grid1": 2
+  },
+  "FILTER/PROJECTION expr (unattributed)": {
+   "launches": 1,
+   "kernel_us": 5.3,
+   "executions": 1,
+   "per_exec_min": 1,
+   "per_exec_med": 1,
+   "per_exec_max": 1,
+   "plan_instances": 1,
+   "per_inst_min": 1,
+   "per_inst_med": 1,
+   "per_inst_max": 1,
+   "causes": {
+    "distinct": 1,
+    "multi-pass": 0,
+    "per-column": 0,
+    "per-batch": 0,
+    "bookkeeping": 0
+   },
+   "grid1": 0
+  }
+ },
+ "scan_batches": {
+  "2": {
+   "P0": 1,
+   "P3": 1,
+   "P9": 1,
+   "P15": 1
+  },
+  "3": {
+   "P0": 1,
+   "P3": 1
+  },
+  "4": {
+   "P0": 1,
+   "P4": 1
+  },
+  "5": {
+   "P0": 1,
+   "P3": 1,
+   "P6": 1,
+   "P12": 1
+  },
+  "6": {
+   "P0": 3
+  },
+  "7": {
+   "P0": 1,
+   "P3": 1,
+   "P9": 1,
+   "P12": 1
+  },
+  "8": {
+   "P0": 1,
+   "P3": 1,
+   "P9": 1,
+   "P12": 1,
+   "P15": 1,
+   "P21": 1
+  },
+  "9": {
+   "P0": 1,
+   "P3": 1,
+   "P6": 1,
+   "P12": 1
+  },
+  "10": {
+   "P0": 1,
+   "P3": 1,
+   "P6": 1,
+   "P12": 1
+  },
+  "11": {
+   "P0": 1,
+   "P3": 1,
+   "P9": 1,
+   "P17": 1,
+   "P20": 1
+  },
+  "12": {
+   "P0": 2,
+   "P3": 1
+  },
+  "13": {
+   "P0": 2
+  },
+  "14": {
+   "P0": 2,
+   "P3": 1
+  },
+  "15": {
+   "P0": 2,
+   "P13": 1
+  },
+  "16": {
+   "P0": 1,
+   "P3": 1,
+   "P6": 1
+  },
+  "17": {
+   "P0": 1,
+   "P3": 2
+  },
+  "18": {
+   "P0": 1,
+   "P3": 1,
+   "P8": 1
+  },
+  "19": {
+   "P0": 1,
+   "P3": 6
+  },
+  "20": {
+   "P0": 1,
+   "P3": 1,
+   "P10": 1,
+   "P13": 1
+  },
+  "21": {
+   "P0": 1,
+   "P3": 1,
+   "P9": 1,
+   "P12": 2
+  },
+  "22": {
+   "P0": 1,
+   "P5": 1,
+   "P14": 1
+  }
+ },
+ "per_query": {
+  "2": {
+   "kernels": 229,
+   "tasks": 32,
+   "kernel_tasks": 18,
+   "empty_tasks": 14,
+   "causes": {
+    "distinct": 16,
+    "multi-pass": 74,
+    "per-column": 58,
+    "per-batch": 22,
+    "bookkeeping": 59
+   },
+   "grid1": 134
+  },
+  "3": {
+   "kernels": 92,
+   "tasks": 14,
+   "kernel_tasks": 8,
+   "empty_tasks": 6,
+   "causes": {
+    "distinct": 15,
+    "multi-pass": 28,
+    "per-column": 25,
+    "per-batch": 6,
+    "bookkeeping": 18
+   },
+   "grid1": 20
+  },
+  "4": {
+   "kernels": 56,
+   "tasks": 15,
+   "kernel_tasks": 5,
+   "empty_tasks": 10,
+   "causes": {
+    "distinct": 7,
+    "multi-pass": 26,
+    "per-column": 6,
+    "per-batch": 0,
+    "bookkeeping": 17
+   },
+   "grid1": 23
+  },
+  "5": {
+   "kernels": 133,
+   "tasks": 35,
+   "kernel_tasks": 16,
+   "empty_tasks": 19,
+   "causes": {
+    "distinct": 14,
+    "multi-pass": 32,
+    "per-column": 31,
+    "per-batch": 32,
+    "bookkeeping": 24
+   },
+   "grid1": 53
+  },
+  "6": {
+   "kernels": 47,
+   "tasks": 6,
+   "kernel_tasks": 4,
+   "empty_tasks": 2,
+   "causes": {
+    "distinct": 3,
+    "multi-pass": 5,
+    "per-column": 4,
+    "per-batch": 32,
+    "bookkeeping": 3
+   },
+   "grid1": 17
+  },
+  "7": {
+   "kernels": 207,
+   "tasks": 23,
+   "kernel_tasks": 16,
+   "empty_tasks": 7,
+   "causes": {
+    "distinct": 22,
+    "multi-pass": 72,
+    "per-column": 63,
+    "per-batch": 0,
+    "bookkeeping": 50
+   },
+   "grid1": 76
+  },
+  "8": {
+   "kernels": 172,
+   "tasks": 41,
+   "kernel_tasks": 20,
+   "empty_tasks": 21,
+   "causes": {
+    "distinct": 20,
+    "multi-pass": 38,
+    "per-column": 44,
+    "per-batch": 43,
+    "bookkeeping": 27
+   },
+   "grid1": 60
+  },
+  "9": {
+   "kernels": 144,
+   "tasks": 25,
+   "kernel_tasks": 10,
+   "empty_tasks": 15,
+   "causes": {
+    "distinct": 17,
+    "multi-pass": 41,
+    "per-column": 56,
+    "per-batch": 0,
+    "bookkeeping": 30
+   },
+   "grid1": 27
+  },
+  "10": {
+   "kernels": 238,
+   "tasks": 22,
+   "kernel_tasks": 11,
+   "empty_tasks": 11,
+   "causes": {
+    "distinct": 14,
+    "multi-pass": 81,
+    "per-column": 56,
+    "per-batch": 39,
+    "bookkeeping": 48
+   },
+   "grid1": 104
+  },
+  "11": {
+   "kernels": 168,
+   "tasks": 36,
+   "kernel_tasks": 17,
+   "empty_tasks": 19,
+   "causes": {
+    "distinct": 20,
+    "multi-pass": 60,
+    "per-column": 44,
+    "per-batch": 0,
+    "bookkeeping": 44
+   },
+   "grid1": 40
+  },
+  "12": {
+   "kernels": 86,
+   "tasks": 14,
+   "kernel_tasks": 7,
+   "empty_tasks": 7,
+   "causes": {
+    "distinct": 8,
+    "multi-pass": 27,
+    "per-column": 13,
+    "per-batch": 19,
+    "bookkeeping": 19
+   },
+   "grid1": 26
+  },
+  "13": {
+   "kernels": 36,
+   "tasks": 14,
+   "kernel_tasks": 5,
+   "empty_tasks": 9,
+   "causes": {
+    "distinct": 4,
+    "multi-pass": 14,
+    "per-column": 6,
+    "per-batch": 5,
+    "bookkeeping": 7
+   },
+   "grid1": 13
+  },
+  "14": {
+   "kernels": 46,
+   "tasks": 11,
+   "kernel_tasks": 4,
+   "empty_tasks": 7,
+   "causes": {
+    "distinct": 6,
+    "multi-pass": 12,
+    "per-column": 14,
+    "per-batch": 6,
+    "bookkeeping": 8
+   },
+   "grid1": 14
+  },
+  "15": {
+   "kernels": 112,
+   "tasks": 21,
+   "kernel_tasks": 8,
+   "empty_tasks": 13,
+   "causes": {
+    "distinct": 7,
+    "multi-pass": 29,
+    "per-column": 19,
+    "per-batch": 37,
+    "bookkeeping": 20
+   },
+   "grid1": 51
+  },
+  "16": {
+   "kernels": 156,
+   "tasks": 18,
+   "kernel_tasks": 7,
+   "empty_tasks": 11,
+   "causes": {
+    "distinct": 10,
+    "multi-pass": 74,
+    "per-column": 29,
+    "per-batch": 0,
+    "bookkeeping": 43
+   },
+   "grid1": 45
+  },
+  "17": {
+   "kernels": 74,
+   "tasks": 18,
+   "kernel_tasks": 8,
+   "empty_tasks": 10,
+   "causes": {
+    "distinct": 9,
+    "multi-pass": 26,
+    "per-column": 16,
+    "per-batch": 6,
+    "bookkeeping": 17
+   },
+   "grid1": 31
+  },
+  "18": {
+   "kernels": 127,
+   "tasks": 24,
+   "kernel_tasks": 13,
+   "empty_tasks": 11,
+   "causes": {
+    "distinct": 13,
+    "multi-pass": 42,
+    "per-column": 32,
+    "per-batch": 10,
+    "bookkeeping": 30
+   },
+   "grid1": 74
+  },
+  "19": {
+   "kernels": 175,
+   "tasks": 21,
+   "kernel_tasks": 10,
+   "empty_tasks": 11,
+   "causes": {
+    "distinct": 9,
+    "multi-pass": 23,
+    "per-column": 30,
+    "per-batch": 94,
+    "bookkeeping": 19
+   },
+   "grid1": 81
+  },
+  "20": {
+   "kernels": 142,
+   "tasks": 36,
+   "kernel_tasks": 14,
+   "empty_tasks": 22,
+   "causes": {
+    "distinct": 17,
+    "multi-pass": 54,
+    "per-column": 34,
+    "per-batch": 0,
+    "bookkeeping": 37
+   },
+   "grid1": 45
+  },
+  "21": {
+   "kernels": 166,
+   "tasks": 27,
+   "kernel_tasks": 16,
+   "empty_tasks": 11,
+   "causes": {
+    "distinct": 21,
+    "multi-pass": 53,
+    "per-column": 36,
+    "per-batch": 19,
+    "bookkeeping": 37
+   },
+   "grid1": 46
+  },
+  "22": {
+   "kernels": 124,
+   "tasks": 28,
+   "kernel_tasks": 10,
+   "empty_tasks": 18,
+   "causes": {
+    "distinct": 15,
+    "multi-pass": 50,
+    "per-column": 19,
+    "per-batch": 0,
+    "bookkeeping": 40
+   },
+   "grid1": 42
+  }
+ },
+ "roundtrips": [
+  {
+   "q": 2,
+   "kernels": 229,
+   "tasks": 32,
+   "d2h_readbacks_then_sync": 109,
+   "h2d_then_sync": 75,
+   "d2h_le64B": 110,
+   "sync_calls": 528,
+   "task_boundary_syncs": 64,
+   "readbacks_per_kernel": 0.476,
+   "sync_cuStreamSynchronize": 79,
+   "sync_cudaStreamSynchronize": 443,
+   "sync_cudaEventSynchronize": 6
+  },
+  {
+   "q": 3,
+   "kernels": 92,
+   "tasks": 14,
+   "d2h_readbacks_then_sync": 30,
+   "h2d_then_sync": 31,
+   "d2h_le64B": 32,
+   "sync_calls": 175,
+   "task_boundary_syncs": 28,
+   "readbacks_per_kernel": 0.326,
+   "sync_cuStreamSynchronize": 44,
+   "sync_cudaStreamSynchronize": 127,
+   "sync_cudaEventSynchronize": 4
+  },
+  {
+   "q": 4,
+   "kernels": 56,
+   "tasks": 15,
+   "d2h_readbacks_then_sync": 24,
+   "h2d_then_sync": 23,
+   "d2h_le64B": 23,
+   "sync_calls": 141,
+   "task_boundary_syncs": 30,
+   "readbacks_per_kernel": 0.429,
+   "sync_cuStreamSynchronize": 32,
+   "sync_cudaStreamSynchronize": 107,
+   "sync_cudaEventSynchronize": 2
+  },
+  {
+   "q": 5,
+   "kernels": 133,
+   "tasks": 35,
+   "d2h_readbacks_then_sync": 45,
+   "h2d_then_sync": 37,
+   "d2h_le64B": 46,
+   "sync_calls": 312,
+   "task_boundary_syncs": 70,
+   "readbacks_per_kernel": 0.338,
+   "sync_cuStreamSynchronize": 89,
+   "sync_cudaStreamSynchronize": 217,
+   "sync_cudaEventSynchronize": 6
+  },
+  {
+   "q": 6,
+   "kernels": 47,
+   "tasks": 6,
+   "d2h_readbacks_then_sync": 50,
+   "h2d_then_sync": 73,
+   "d2h_le64B": 50,
+   "sync_calls": 224,
+   "task_boundary_syncs": 12,
+   "readbacks_per_kernel": 1.064,
+   "sync_cuStreamSynchronize": 14,
+   "sync_cudaStreamSynchronize": 207,
+   "sync_cudaEventSynchronize": 3
+  },
+  {
+   "q": 7,
+   "kernels": 207,
+   "tasks": 23,
+   "d2h_readbacks_then_sync": 82,
+   "h2d_then_sync": 91,
+   "d2h_le64B": 86,
+   "sync_calls": 496,
+   "task_boundary_syncs": 46,
+   "readbacks_per_kernel": 0.396,
+   "sync_cuStreamSynchronize": 98,
+   "sync_cudaStreamSynchronize": 392,
+   "sync_cudaEventSynchronize": 6
+  },
+  {
+   "q": 8,
+   "kernels": 172,
+   "tasks": 41,
+   "d2h_readbacks_then_sync": 46,
+   "h2d_then_sync": 50,
+   "d2h_le64B": 51,
+   "sync_calls": 388,
+   "task_boundary_syncs": 82,
+   "readbacks_per_kernel": 0.267,
+   "sync_cuStreamSynchronize": 120,
+   "sync_cudaStreamSynchronize": 260,
+   "sync_cudaEventSynchronize": 8
+  },
+  {
+   "q": 9,
+   "kernels": 144,
+   "tasks": 25,
+   "d2h_readbacks_then_sync": 33,
+   "h2d_then_sync": 30,
+   "d2h_le64B": 36,
+   "sync_calls": 283,
+   "task_boundary_syncs": 50,
+   "readbacks_per_kernel": 0.229,
+   "sync_cuStreamSynchronize": 91,
+   "sync_cudaStreamSynchronize": 187,
+   "sync_cudaEventSynchronize": 5
+  },
+  {
+   "q": 10,
+   "kernels": 238,
+   "tasks": 22,
+   "d2h_readbacks_then_sync": 120,
+   "h2d_then_sync": 73,
+   "d2h_le64B": 122,
+   "sync_calls": 517,
+   "task_boundary_syncs": 44,
+   "readbacks_per_kernel": 0.504,
+   "sync_cuStreamSynchronize": 61,
+   "sync_cudaStreamSynchronize": 452,
+   "sync_cudaEventSynchronize": 4
+  },
+  {
+   "q": 11,
+   "kernels": 168,
+   "tasks": 36,
+   "d2h_readbacks_then_sync": 39,
+   "h2d_then_sync": 42,
+   "d2h_le64B": 39,
+   "sync_calls": 295,
+   "task_boundary_syncs": 72,
+   "readbacks_per_kernel": 0.232,
+   "sync_cuStreamSynchronize": 88,
+   "sync_cudaStreamSynchronize": 201,
+   "sync_cudaEventSynchronize": 6
+  },
+  {
+   "q": 12,
+   "kernels": 86,
+   "tasks": 14,
+   "d2h_readbacks_then_sync": 51,
+   "h2d_then_sync": 68,
+   "d2h_le64B": 50,
+   "sync_calls": 279,
+   "task_boundary_syncs": 28,
+   "readbacks_per_kernel": 0.593,
+   "sync_cuStreamSynchronize": 35,
+   "sync_cudaStreamSynchronize": 241,
+   "sync_cudaEventSynchronize": 3
+  },
+  {
+   "q": 13,
+   "kernels": 36,
+   "tasks": 14,
+   "d2h_readbacks_then_sync": 9,
+   "h2d_then_sync": 10,
+   "d2h_le64B": 8,
+   "sync_calls": 77,
+   "task_boundary_syncs": 28,
+   "readbacks_per_kernel": 0.25,
+   "sync_cuStreamSynchronize": 29,
+   "sync_cudaStreamSynchronize": 46,
+   "sync_cudaEventSynchronize": 2
+  },
+  {
+   "q": 14,
+   "kernels": 46,
+   "tasks": 11,
+   "d2h_readbacks_then_sync": 37,
+   "h2d_then_sync": 47,
+   "d2h_le64B": 37,
+   "sync_calls": 182,
+   "task_boundary_syncs": 22,
+   "readbacks_per_kernel": 0.804,
+   "sync_cuStreamSynchronize": 25,
+   "sync_cudaStreamSynchronize": 155,
+   "sync_cudaEventSynchronize": 2
+  },
+  {
+   "q": 15,
+   "kernels": 112,
+   "tasks": 21,
+   "d2h_readbacks_then_sync": 52,
+   "h2d_then_sync": 48,
+   "d2h_le64B": 51,
+   "sync_calls": 268,
+   "task_boundary_syncs": 42,
+   "readbacks_per_kernel": 0.464,
+   "sync_cuStreamSynchronize": 56,
+   "sync_cudaStreamSynchronize": 210,
+   "sync_cudaEventSynchronize": 2
+  },
+  {
+   "q": 16,
+   "kernels": 156,
+   "tasks": 18,
+   "d2h_readbacks_then_sync": 70,
+   "h2d_then_sync": 69,
+   "d2h_le64B": 70,
+   "sync_calls": 339,
+   "task_boundary_syncs": 36,
+   "readbacks_per_kernel": 0.449,
+   "sync_cuStreamSynchronize": 47,
+   "sync_cudaStreamSynchronize": 289,
+   "sync_cudaEventSynchronize": 3
+  },
+  {
+   "q": 17,
+   "kernels": 74,
+   "tasks": 18,
+   "d2h_readbacks_then_sync": 25,
+   "h2d_then_sync": 35,
+   "d2h_le64B": 25,
+   "sync_calls": 186,
+   "task_boundary_syncs": 36,
+   "readbacks_per_kernel": 0.338,
+   "sync_cuStreamSynchronize": 47,
+   "sync_cudaStreamSynchronize": 136,
+   "sync_cudaEventSynchronize": 3
+  },
+  {
+   "q": 18,
+   "kernels": 127,
+   "tasks": 24,
+   "d2h_readbacks_then_sync": 38,
+   "h2d_then_sync": 40,
+   "d2h_le64B": 38,
+   "sync_calls": 244,
+   "task_boundary_syncs": 48,
+   "readbacks_per_kernel": 0.299,
+   "sync_cuStreamSynchronize": 62,
+   "sync_cudaStreamSynchronize": 179,
+   "sync_cudaEventSynchronize": 3
+  },
+  {
+   "q": 19,
+   "kernels": 175,
+   "tasks": 21,
+   "d2h_readbacks_then_sync": 167,
+   "h2d_then_sync": 287,
+   "d2h_le64B": 171,
+   "sync_calls": 879,
+   "task_boundary_syncs": 42,
+   "readbacks_per_kernel": 0.954,
+   "sync_cuStreamSynchronize": 42,
+   "sync_cudaStreamSynchronize": 830,
+   "sync_cudaEventSynchronize": 7
+  },
+  {
+   "q": 20,
+   "kernels": 142,
+   "tasks": 36,
+   "d2h_readbacks_then_sync": 53,
+   "h2d_then_sync": 53,
+   "d2h_le64B": 55,
+   "sync_calls": 371,
+   "task_boundary_syncs": 72,
+   "readbacks_per_kernel": 0.373,
+   "sync_cuStreamSynchronize": 98,
+   "sync_cudaStreamSynchronize": 267,
+   "sync_cudaEventSynchronize": 6
+  },
+  {
+   "q": 21,
+   "kernels": 166,
+   "tasks": 27,
+   "d2h_readbacks_then_sync": 48,
+   "h2d_then_sync": 50,
+   "d2h_le64B": 49,
+   "sync_calls": 356,
+   "task_boundary_syncs": 54,
+   "readbacks_per_kernel": 0.289,
+   "sync_cuStreamSynchronize": 94,
+   "sync_cudaStreamSynchronize": 253,
+   "sync_cudaEventSynchronize": 9
+  },
+  {
+   "q": 22,
+   "kernels": 124,
+   "tasks": 28,
+   "d2h_readbacks_then_sync": 79,
+   "h2d_then_sync": 80,
+   "d2h_le64B": 78,
+   "sync_calls": 398,
+   "task_boundary_syncs": 56,
+   "readbacks_per_kernel": 0.637,
+   "sync_cuStreamSynchronize": 67,
+   "sync_cudaStreamSynchronize": 329,
+   "sync_cudaEventSynchronize": 2
+  }
+ ],
+ "readbacks_by_preceding_op_type": {
+  "HASH_JOIN": 301,
+  "GPU_SCAN": 265,
+  "DYNAMIC_FILTER probe": 166,
+  "HASH_GROUP_BY": 137,
+  "UNGROUPED_AGGREGATE": 82,
+  "FILTER": 71,
+  "TOP_N": 54,
+  "MERGE_TOP_N": 32,
+  "ORDER_BY": 31,
+  "PROJECTION": 25,
+  "task prologue (no kernel yet)": 24,
+  "MERGE_AGGREGATE": 7,
+  "NESTED_LOOP_JOIN": 4,
+  "DENSE_COUNT_JOIN": 3,
+  "MERGE_GROUP_BY": 3,
+  "TOP_N/ORDER_BY (unattributed)": 1,
+  "DYNAMIC_FILTER build": 1
+ },
+ "readbacks_by_value": {
+  "other / not data-sizing (result copy, task prologue, cast, gather)": 715,
+  "string column total bytes (allocate chars buffer)": 197,
+  "output row count of a compaction / copy_if (allocate gathered columns)": 174,
+  "number of groups (allocate group-by result)": 28,
+  "min/max pre-check (choose type / zone map)": 22,
+  "string column total bytes / chars size (allocate chars buffer)": 17,
+  "group-by shared-memory fallback flag (choose algorithm)": 17,
+  "reduction scalar": 12,
+  "join output row count (allocate join result)": 11,
+  "keys-sorted check (choose sort vs hash group-by)": 9,
+  "HyperLogLog estimate (choose dictionary encoding)": 3,
+  "scalar extraction (get_element / minmax result)": 1,
+  "top-N boundary / sort result": 1
+ },
+ "readbacks_by_preceding_call": {
+  "(no kernel yet in task)": 638,
+  "strings offsets: size scan (+total-bytes readback)": 197,
+  "apply_boolean_mask/copy_if: select sweep (+size readback)": 122,
+  "copy_if of matches: select sweep (+size readback)": 52,
+  "groupby internal pass: compact (DeviceSelectSweepKernel)": 28,
+  "cast of one column (transform_kernel)": 19,
+  "hash groupby: mapping_indices_kernel (set insert_and_find)": 17,
+  "strings gather chars (gather_chars_fn_char_parallel)": 15,
+  "minmax result single_thread_kernel": 14,
+  "cudf::gather of one column (transform_kernel)": 12,
+  "keys_ascending: cub DeviceFind is_sorted (+bool readback)": 9,
+  "hash_join offsets inclusive scan (+output size readback)": 9,
+  "expression: static_kernel (binop)": 8,
+  "single_thread_kernel (minmax result / get_element)": 8,
+  "cub DeviceReduce second (single-tile) pass": 8,
+  "groupby internal pass: scan (DeviceScanKernel)": 5,
+  "gather null masks valid_if_n (+null-count readback)": 5,
+  "sort groupby: reduce_by_key": 4,
+  "expression: compute_column_kernel (expr)": 4,
+  "cudf::reduce (cub DeviceReduce)": 3,
+  "approx_distinct_count HyperLogLog (+estimate readback)": 3,
+  "expression: copy_if_else_kernel (expr)": 3,
+  "expression bookkeeping: valid_if_kernel": 3,
+  "strings make_chars_buffer: MultiBlockBatchMemcpyKernel": 3,
+  "expression: transform_kernel (expr)": 2,
+  "join post-filter: count + copy_if of surviving pairs (+size ": 2,
+  "strings gather chars (gather_chars_fn_string_parallel)": 2,
+  "hash groupby: single_pass_shmem_aggs_kernel": 2,
+  "groupby internal pass: search (static_kernel)": 2,
+  "compute_conditional_join_output_size": 2,
+  "dense count join: single_thread_kernel": 1,
+  "dense count join: DeviceReduceSingleTileKernel": 1,
+  "sort/top-k: DeviceRadixSortSingleTileKernel": 1,
+  "group-by/distinct helper: gb_aux": 1,
+  "dyn-filter bloom add_if_n": 1,
+  "group-by/distinct helper: sorted_check": 1
+ },
+ "readbacks_by_bytes": {
+  "1": 407,
+  "4": 313,
+  "8": 445,
+  "16": 8,
+  "24": 19,
+  "32": 1,
+  "40": 1,
+  "48": 2,
+  "88": 1,
+  "96": 1,
+  "106": 1,
+  "144": 1,
+  "208": 1,
+  "214": 1,
+  "280": 1,
+  "672": 1,
+  "3004": 1,
+  "3310": 1,
+  "3808": 1
+ },
+ "distinct_symbols_all": 200,
+ "distinct_symbols_per_query": {
+  "2": [
+   229,
+   65
+  ],
+  "3": [
+   92,
+   45
+  ],
+  "4": [
+   56,
+   41
+  ],
+  "5": [
+   133,
+   50
+  ],
+  "6": [
+   47,
+   15
+  ],
+  "7": [
+   207,
+   70
+  ],
+  "8": [
+   172,
+   54
+  ],
+  "9": [
+   144,
+   53
+  ],
+  "10": [
+   238,
+   61
+  ],
+  "11": [
+   168,
+   55
+  ],
+  "12": [
+   86,
+   39
+  ],
+  "13": [
+   36,
+   26
+  ],
+  "14": [
+   46,
+   26
+  ],
+  "15": [
+   112,
+   48
+  ],
+  "16": [
+   156,
+   71
+  ],
+  "17": [
+   74,
+   53
+  ],
+  "18": [
+   127,
+   61
+  ],
+  "19": [
+   175,
+   30
+  ],
+  "20": [
+   142,
+   65
+  ],
+  "21": [
+   166,
+   47
+  ],
+  "22": [
+   124,
+   59
+  ]
+ },
+ "top_symbols": [
+  [
+   231,
+   "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_selector_from_types<(bool)1, (bool)1, cuda::std::__4::tuple<thrust::permutation_ite"
+  ],
+  [
+   150,
+   "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_selector_from_types<(bool)1, (bool)1, cuda::std::__4::tuple<thrust::permutation_ite"
+  ],
+  [
+   149,
+   "void cub::detail::scan::DeviceCompactInitKernel<cub::ScanTileState<int, (bool)1>, long *>(T1, int, T2)"
+  ],
+  [
+   121,
+   "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_selector_from_types<cuda::__4::counting_iterator<int, long>, cub::NullType *, int "
+  ],
+  [
+   107,
+   "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_from_types<cuda::__4::transform_iterator<cudf::strings::detail::string_offsets_f"
+  ],
+  [
+   107,
+   "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from_types<cuda::__4::transform_iterator<cudf::strings::detail::string_offsets_fn<cu"
+  ],
+  [
+   98,
+   "void cudf::strings::detail::gather_chars_fn_char_parallel<(int)32, cuda::__4::transform_iterator<cudf::detail::value_accessor<cudf::string_view>, cuda::__4::cou"
+  ],
+  [
+   73,
+   "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_from_types<cuda::__4::transform_iterator<cudf::strings::detail::string_offsets_f"
+  ],
+  [
+   73,
+   "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from_types<cuda::__4::transform_iterator<cudf::strings::detail::string_offsets_fn<cu"
+  ],
+  [
+   68,
+   "void cudf::strings::detail::gather_chars_fn_char_parallel<(int)32, cuda::__4::transform_iterator<cudf::detail::value_accessor<cudf::string_view>, cuda::__4::cou"
+  ]
+ ],
+ "same_name_repeat_in_exec_block": 1082,
+ "same_name_repeat_in_task": 1382,
+ "per_batch_split": {
+  "repeat_task_launches": 306,
+  "repeat_task_us": 3147.417,
+  "merge_concat_launches": 64,
+  "merge_concat_us": 1310.494,
+  "merge_top_n_launches": 44
+ }
+}

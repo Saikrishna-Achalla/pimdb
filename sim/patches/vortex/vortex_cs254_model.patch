@@ -1,0 +1,429 @@
+--- a/VX_config.toml
++++ b/VX_config.toml
+@@ -249,6 +249,11 @@
+ VX_CFG_L2_NUM_WAYS = 8
+ VX_CFG_L2_WRITEBACK = "expr: int($l2_is_llc and $single_cluster)"
+ VX_CFG_L2_DIRTYBYTES = 0
++# cs254 patch: 1 = a write-back cache installs a sector overwritten in full by one store without
++# fetching it from memory (write-validate, as GPU L2s do); 0 = always fill on a write miss (upstream).
++VX_CFG_CACHE_WRITE_VALIDATE = 0
++# cs254 patch: 1 = XOR the tag into the set index of every cache (GPU-style hashed sets); 0 = upstream.
++VX_CFG_CACHE_SET_HASH = 0
+ VX_CFG_L2_REPL_POLICY = "expr: $__cache_repl_fifo"
+ VX_CFG_L2_MSHR_SIZE = 16
+ VX_CFG_L2_LATENCY = "expr: 4 + max(0, clog2($VX_CFG_L2_SIZE) - clog2(1048576))"
+--- a/sim/common/dram_sim.cpp
++++ b/sim/common/dram_sim.cpp
+@@ -335,6 +335,14 @@
+     }
+   }
+ 
++  bool busy() const {
++    for (auto& channel : channels_) {
++      if (!channel.pending_txs.empty() || !channel.read_rsps.empty() || !channel.write_rsps.empty())
++        return true;
++    }
++    return false;
++  }
++
+   bool can_accept(uint32_t channel) const {
+     return (config_.queue_size == 0) || (channels_.at(channel).inflight < config_.queue_size);
+   }
+@@ -399,6 +407,10 @@
+   impl_->tick();
+ }
+ 
++bool DramSim::busy() const {
++  return impl_->busy();
++}
++
+ bool DramSim::can_accept(uint32_t channel) const {
+   return impl_->can_accept(channel);
+ }
+--- a/sim/common/dram_sim.h
++++ b/sim/common/dram_sim.h
+@@ -56,6 +56,11 @@
+   // False while the channel holds queue_size requests.
+   bool can_accept(uint32_t channel) const;
+ 
++  // cs254 patch (vortex_dram_drain.patch): true while any channel still holds a transaction not yet
++  // accepted by its controller or a response not yet delivered. Writes are acknowledged when the
++  // controller accepts them, so without this a launch could end with its writes still queued here.
++  bool busy() const;
++
+   // addr: byte address within the channel.
+   void send_request(uint32_t channel, uint64_t addr, bool is_write, ResponseCallback response_cb, void* arg);
+ 
+--- a/sim/simx/mem/cache.cpp
++++ b/sim/simx/mem/cache.cpp
+@@ -26,6 +26,13 @@
+ #include <util.h>
+ #include <vector>
+ 
++#ifndef VX_CFG_CACHE_WRITE_VALIDATE
++#define VX_CFG_CACHE_WRITE_VALIDATE 0
++#endif
++#ifndef VX_CFG_CACHE_SET_HASH
++#define VX_CFG_CACHE_SET_HASH 0
++#endif
++
+ using namespace vortex;
+ 
+ struct params_t {
+@@ -94,9 +101,22 @@
+       return 0;
+   }
+ 
++  // cs254 patch (vortex_cache_set_hash.patch): with VX_CFG_CACHE_SET_HASH the set index is XORed with
++  // the tag folded to the index width (GPU caches hash their set/slice index). Without it, the
++  // per-thread stacks (8 KB apart) all fall into a handful of sets and thrash the L1 and L2.
++  uint64_t set_hash(uint64_t tag) const {
++    uint64_t h = 0;
++    int32_t bits = set_select_addr_end - set_select_addr_start + 1;
++    if (!VX_CFG_CACHE_SET_HASH || bits <= 0)
++      return 0;
++    for (uint64_t t = tag; t != 0; t >>= bits)
++      h ^= t & ((uint64_t(1) << bits) - 1);
++    return h;
++  }
++
+   uint32_t addr_set_id(uint64_t addr) const {
+     if (set_select_addr_end >= set_select_addr_start)
+-      return (uint32_t)bit_getw(addr, set_select_addr_start, set_select_addr_end);
++      return (uint32_t)(bit_getw(addr, set_select_addr_start, set_select_addr_end) ^ set_hash(addr_tag(addr)));
+     else
+       return 0;
+   }
+@@ -120,7 +140,7 @@
+     if (bank_select_addr_end >= bank_select_addr_start)
+       addr = bit_setw(addr, bank_select_addr_start, bank_select_addr_end, bank_id);
+     if (set_select_addr_end >= set_select_addr_start)
+-      addr = bit_setw(addr, set_select_addr_start, set_select_addr_end, set_id);
++      addr = bit_setw(addr, set_select_addr_start, set_select_addr_end, set_id ^ set_hash(tag));
+     if (tag_select_addr_end >= tag_select_addr_start)
+       addr = bit_setw(addr, tag_select_addr_start, tag_select_addr_end, tag);
+     return addr;
+@@ -140,12 +160,16 @@
+ struct sector_t {
+   bool valid;
+   bool dirty;
++  // cs254 patch (write-validate): installed by a store without a fill, so only the dirty_mask bytes
++  // are known. Stores may hit it; loads and AMOs treat it as a miss and the fill merges under it.
++  bool partial = false;
+   uint64_t dirty_mask;                 // per-byte dirty bits; the writeback byte-enable
+   std::shared_ptr<mem_block_t> data;  // sector bytes (= one mem_block)
+ 
+   void reset() {
+     valid = false;
+     dirty = false;
++    partial = false;
+     dirty_mask = 0;
+     data.reset();
+   }
+@@ -1016,6 +1040,42 @@
+     uint32_t sector_id = params_.addr_sector_id(bank_req.addr);
+     auto &set          = sets_.at(set_id);
+ 
++    int line_id = this->allocLine(set_id, addr_tag, bank_req.hart_id, bank_req.uuid);
++    if (line_id < 0) {
++      return false; // stall
++    }
++
++    auto &line = set.lines.at(line_id);
++    line.tag     = addr_tag;
++    line.lru_ctr = 0;
++    auto &sec    = line.sectors.at(sector_id);
++    if (sec.valid && sec.partial) {
++      // cs254 patch: fill under a write-validated sector -- memory bytes where not dirty.
++      auto merged = make_mem_block_copy(*bank_req.data);
++      for (uint32_t b = 0; b < merged->size(); ++b)
++        if (sec.dirty_mask & (1ull << b)) (*merged)[b] = (*sec.data)[b];
++      sec.data    = merged;
++      sec.partial = false;
++    } else {
++      sec.valid      = true;
++      sec.dirty      = false;
++      sec.dirty_mask = 0;
++      sec.data       = bank_req.data;
++    }
++    mshr_.replay(bank_req.mshr_id);
++    // arm the fill-forward window for this chain
++    fwd_active_ = true;
++    fwd_set_    = set_id;
++    fwd_tag_    = addr_tag;
++    fwd_sector_ = sector_id;
++    return true;
++  }
++
++  // cs254 patch (vortex_l2_write_validate.patch): the way for (set_id, addr_tag), allocated as
++  // processFill always did -- the resident way for a sector refill, else a victim way whose dirty
++  // sectors are written back. Returns -1 (stall) when the writebacks do not fit the egress queue.
++  int allocLine(uint32_t set_id, uint64_t addr_tag, uint32_t hart_id, uint64_t uuid) {
++    auto &set = sets_.at(set_id);
+     int resident_id = set.find_resident(addr_tag);
+     const bool is_refill = (resident_id != -1);
+ 
+@@ -1038,7 +1098,7 @@
+         }
+       }
+       if (wb_count > 0 && (this->mem_req_out.size() + wb_count) > this->mem_req_out.capacity()) {
+-        return false; // stall
++        return -1; // stall
+       }
+ 
+       if (config_.repl_policy == Cache::FIFO) {
+@@ -1056,8 +1116,8 @@
+         MemReq wb;
+         wb.addr   = params_.mem_addr_sector(bank_id_, set_id, victim_line.tag, s);
+         wb.op     = MemOp::ST;
+-        wb.hart_id = bank_req.hart_id;
+-        wb.uuid   = bank_req.uuid;
++        wb.hart_id = hart_id;
++        wb.uuid   = uuid;
+         wb.data   = sec.data;
+         wb.byteen = sec.dirty_mask;
+         this->mem_req_out.send(wb, MEM_REQ_DELAY);
+@@ -1069,22 +1129,7 @@
+       victim_line.reset();
+       victim_line.tag = addr_tag;
+     }
+-
+-    auto &line = set.lines.at(line_id);
+-    line.tag     = addr_tag;
+-    line.lru_ctr = 0;
+-    auto &sec    = line.sectors.at(sector_id);
+-    sec.valid      = true;
+-    sec.dirty      = false;
+-    sec.dirty_mask = 0;
+-    sec.data       = bank_req.data;
+-    mshr_.replay(bank_req.mshr_id);
+-    // arm the fill-forward window for this chain
+-    fwd_active_ = true;
+-    fwd_set_    = set_id;
+-    fwd_tag_    = addr_tag;
+-    fwd_sector_ = sector_id;
+-    return true;
++    return line_id;
+   }
+ 
+   // Fill-forward drain: complete the oldest ready replay directly when it is
+@@ -1117,7 +1162,8 @@
+     auto &set = sets_.at(head->set_id);
+     int present_id = set.find_resident(head->addr_tag);
+     uint32_t sector_id = head->sector_id;
+-    if (present_id == -1 || !set.lines.at(present_id).sectors.at(sector_id).valid) {
++    if (present_id == -1 || !set.lines.at(present_id).sectors.at(sector_id).valid
++     || set.lines.at(present_id).sectors.at(sector_id).partial) {
+       fwd_active_ = false;
+       return false;
+     }
+@@ -1299,7 +1345,7 @@
+       int present_id = set.tag_match(addr_tag, config_.repl_policy, rand_ctr_, &free_id, &repl_id);
+       // Probe targets only the sector the AMO addresses; other sectors of the
+       // same line are independent and stay resident.
+-      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid) ? present_id : -1;
++      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid && !set.lines.at(present_id).sectors.at(sector_id).partial) ? present_id : -1;
+       const bool hit   = (hit_id != -1);
+       const bool dirty = hit && set.lines.at(hit_id).sectors.at(sector_id).dirty;
+ 
+@@ -1381,7 +1427,7 @@
+       int32_t free_id = -1, repl_id = 0;
+       int present_id = set.tag_match(addr_tag, config_.repl_policy, rand_ctr_, &free_id, &repl_id);
+       // Sector hit: line resident AND the requested sector valid.
+-      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid) ? present_id : -1;
++      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid && (!set.lines.at(present_id).sectors.at(sector_id).partial || (bank_req.write && !memop_is_atomic(bank_req.op)))) ? present_id : -1;
+ 
+       // The replayed sector is normally present — the fill that woke this
+       // replay just installed it. It can still be gone when a concurrent
+@@ -1487,7 +1533,7 @@
+       int present_id = set.tag_match(addr_tag, config_.repl_policy, rand_ctr_, &free_id, &repl_id);
+       // Sector hit: line resident AND the requested sector valid (a sector miss
+       // on a resident line takes the miss path and refills just that sector).
+-      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid) ? present_id : -1;
++      int hit_id = (present_id != -1 && set.lines.at(present_id).sectors.at(sector_id).valid && (!set.lines.at(present_id).sectors.at(sector_id).partial || bank_req.write)) ? present_id : -1;
+ 
+       if (hit_id != -1) {
+         // Hit while a same-(set,tag,sector) chain still carries a write or
+@@ -1552,6 +1598,8 @@
+           if (config_.write_back) {
+             hit_sec.dirty = true;
+             hit_sec.dirty_mask |= bank_req.byteen;
++            if (hit_sec.partial && hit_sec.dirty_mask == ~uint64_t(0))
++              hit_sec.partial = false;
+           } else {
+             MemReq w;
+             w.addr   = params_.mem_addr_sector(bank_id_, set_id, addr_tag, sector_id);
+@@ -1612,6 +1660,40 @@
+             mshr_.enqueue(merge_req, set_id, addr_tag, sector_id);
+             DT(3, this->name() << " mshr-enqueue (wt-merge): " << bank_req);
+           }
++        } else if (VX_CFG_CACHE_WRITE_VALIDATE && bank_req.write && config_.write_back
++                   && sizeof(mem_block_t) == 64
++                   && !mshr_.has_pending_fill(set_id, addr_tag, sector_id, -1)
++                   && !mshr_.has_ordered_reqs(set_id, addr_tag, sector_id)) {
++          // cs254 patch: write-validate. A store miss installs the sector dirty without a fill read
++          // from memory (GPU L2s keep per-byte masks and fetch nothing for written sectors). A
++          // sector not yet fully written stays 'partial': later stores merge into it, a load or
++          // AMO misses and its fill merges under the dirty bytes. Writebacks carry dirty_mask.
++          if (need_core_rsp(bank_req) && this->core_rsp_out.full())
++            return;
++          int line_id = this->allocLine(set_id, addr_tag, bank_req.hart_id, bank_req.uuid);
++          if (line_id < 0)
++            return; // stall
++          auto &line = set.lines.at(line_id);
++          line.tag     = addr_tag;
++          line.lru_ctr = 0;
++          auto &sec      = line.sectors.at(sector_id);
++          sec.valid      = true;
++          sec.dirty      = true;
++          sec.dirty_mask = bank_req.byteen;
++          sec.partial    = (bank_req.byteen != ~uint64_t(0));
++          sec.data       = make_mem_block_copy(*bank_req.data);
++#if VX_CFG_EXT_A_ENABLED
++          if (config_.is_llc) {
++            uint64_t line_addr = (bank_req.addr >> config_.L) << config_.L;
++            amo_unit_.invalidate(line_addr, /*except=*/bank_req.hart_id);
++          }
++#endif
++          if (need_core_rsp(bank_req)) {
++            MemRsp rsp{bank_req.req_tag, bank_req.hart_id, bank_req.uuid};
++            this->core_rsp_out.send(rsp);
++            crsp_sent_ = true;
++          }
++          hit_id = line_id;   // replacement-state update below
+         } else {
+           // Read miss, or write-back write miss → MSHR-backed.
+           // First miss for this line sends the fill request; subsequent
+--- a/sim/simx/mem/memory.cpp
++++ b/sim/simx/mem/memory.cpp
+@@ -82,6 +82,10 @@
+ 		dram_sim_.reset();
+ 	}
+ 
++	bool busy() const {
++		return dram_sim_.busy();
++	}
++
+ 	void tick() {
+ 		dram_sim_.tick();
+ 
+@@ -197,4 +201,7 @@
+ 
+ const Memory::PerfStats &Memory::perf_stats() const {
+ 	return impl_->perf_stats();
+-}
+\ No newline at end of file
++}
++bool Memory::busy() const {
++  return impl_->busy();
++}
+--- a/sim/simx/mem/memory.h
++++ b/sim/simx/mem/memory.h
+@@ -59,6 +59,9 @@
+ 
+ 	const PerfStats& perf_stats() const;
+ 
++	// cs254 patch: DRAM transactions still queued (see DramSim::busy).
++	bool busy() const;
++
+ protected:
+ 	void on_reset();
+ 	void on_tick();
+--- a/sim/simx/processor.cpp
++++ b/sim/simx/processor.cpp
+@@ -21,6 +21,8 @@
+ #endif
+ 
+ #include <cstdlib>
++#include <cinttypes>
++#include <cstdio>
+ #include <execinfo.h>
+ 
+ using namespace vortex;
+@@ -204,11 +206,39 @@
+ #endif
+ }
+ 
++// --- cs254 project patch (sim/patches/vortex/vortex_launch_log.patch) ---
++// When the environment variable VX_LAUNCH_LOG names a file, every kernel launch (run()) and every
++// cache flush that follows it append one line there, so a multi-kernel host program gets exact
++// per-launch simulated cycles, instructions and DRAM requests. (The MPM report printed at device
++// close mixes free-running core counters with memory counters that reset at each launch.)
++static FILE* vx_launch_log() {
++  static FILE* f = []() -> FILE* {
++    const char* p = std::getenv("VX_LAUNCH_LOG");
++    return (p && p[0]) ? std::fopen(p, "a") : nullptr;
++  }();
++  return f;
++}
++
++static uint64_t vx_total_instrs(const std::vector<Cluster::Ptr>& clusters) {
++  uint64_t n = 0;
++  for (auto& cl : clusters) {
++    for (uint32_t c = 0; ; ++c) {
++      auto core = cl->get_core(c);
++      if (core == nullptr) break;
++      n += core->perf_stats().instrs;
++    }
++  }
++  return n;
++}
++// --- end cs254 patch ---
++
+ void ProcessorImpl::flush_caches() {
+   // Cache hierarchy is drained inside-out: issue all L1 flush_begin() calls
+   // up-front so icache, dcache, and graphics caches flush in parallel, then
+   // tick until all surfaces report flush_done().
+ 
++  const uint64_t fl_c0 = SimPlatform::instance().cycles();   // cs254 patch
++  const uint64_t fl_r0 = perf_mem_reads_, fl_w0 = perf_mem_writes_;
+   // L1 surfaces: dcache + icache + graphics caches.
+   // Write-through surfaces early-exit in Cache::flush_begin().
+   for (auto& cluster : clusters_) {
+@@ -266,13 +296,21 @@
+ 
+   // L3 cache (single instance at processor level).
+   l3cache_->flush_begin();
+-  while (!l3cache_->flush_done() || !SimPlatform::instance().idle()) {
++  while (!l3cache_->flush_done() || !SimPlatform::instance().idle()
++         || memsim_->busy()) {   // cs254 patch: wait until the write-backs reached the controller
+     SimPlatform::instance().tick();
+   }
++  if (auto f = vx_launch_log()) {   // cs254 patch
++    std::fprintf(f, "FLUSH cycles=%" PRIu64 " mem_reads=%" PRIu64 " mem_writes=%" PRIu64 "\n",
++                 SimPlatform::instance().cycles() - fl_c0, perf_mem_reads_ - fl_r0, perf_mem_writes_ - fl_w0);
++    std::fflush(f);
++  }
+ }
+ 
+ int ProcessorImpl::run() {
+   this->reset();
++  const uint64_t run_c0 = SimPlatform::instance().cycles();   // cs254 patch
++  const uint64_t run_i0 = vx_total_instrs(clusters_);
+   kmu_->start();
+   this->forward_delegated_launch();
+ 
+@@ -304,10 +342,22 @@
+     // work: cache pipelines wrap a SimChannel inside TFifo, so cache-pipe
+     // state (and any in-flight cache→memory writethrough) shows up in
+     // idle(), as do launch-lane CTAs and barrier hops between domains.
+-    done = (!any_running || faulted) && SimPlatform::instance().idle();
++    done = (!any_running || faulted) && SimPlatform::instance().idle()
++        && !memsim_->busy();   // cs254 patch: the launch's DRAM writes are part of its time
+     perf_mem_latency_ += perf_mem_pending_reads_;
+   } while (!done);
+ 
++  if (auto f = vx_launch_log()) {   // cs254 patch
++    Cache::PerfStats l2;
++    for (auto& cl : clusters_) l2 += cl->perf_stats().l2cache;
++    std::fprintf(f, "RUN cycles=%" PRIu64 " instrs=%" PRIu64 " mem_reads=%" PRIu64 " mem_writes=%" PRIu64
++                 " mem_lat=%" PRIu64 " l2_reads=%" PRIu64 " l2_writes=%" PRIu64 " l2_read_misses=%" PRIu64
++                 " l2_write_misses=%" PRIu64 " l2_evictions=%" PRIu64 " l2_mshr_stalls=%" PRIu64 " l2_bank_stalls=%" PRIu64 "\n",
++                 SimPlatform::instance().cycles() - run_c0, vx_total_instrs(clusters_) - run_i0,
++                 perf_mem_reads_, perf_mem_writes_, perf_mem_latency_, l2.reads, l2.writes, l2.read_misses,
++                 l2.write_misses, l2.evictions, l2.mshr_stalls, l2.bank_stalls);
++    std::fflush(f);
++  }
+   return exitcode;
+ }
+ 

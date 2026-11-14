@@ -1,0 +1,15 @@
+[functional] SF=0.01: 60,175 rows, 1 tiles/bank, selected 1,191 (1.98%)
+[functional] PIM revenue = 1193053.2253   DuckDB = 1193053.2253   -> MATCH (exact)
+
+    SF           rows dev tiles/bank    sim cyc    PIM ms eff TB/s CXL-pull ms GPU-HBM ms  vs CXL  vs GPU
+     1      6,001,215   1         46     20,865     0.011     9.20        3.73      0.032    351x    3.0x
+       ch0: MAC16=5,888 ACT16=92 CMP=6,992cyc MMAC=6,992cyc RD_MAC=36cyc  (sim wall 0.1s)  scan 10.4 us + CXL return 0.187 us
+    10     60,012,150   1        458    207,089     0.104     9.27       37.26      0.318    359x    3.1x
+       ch0: MAC16=58,624 ACT16=916 CMP=69,616cyc MMAC=69,616cyc RD_MAC=36cyc  (sim wall 1.1s)  scan 103.5 us + CXL return 0.187 us
+
+CXL (CENT model, unicast): 8 GB/s/lane, device x4, host x16, RTT 180 ns, 192 B payload per 256 B flit. Peak internal BW 16.0 TB/s/device.
+GPU baseline assumes data already resident in 80 GB HBM (n/a when it doesn't fit).
+
+real	0m1.679s
+user	0m4.817s
+sys	0m0.154s

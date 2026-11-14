@@ -1,0 +1,4237 @@
+{
+ "q": 9,
+ "meta": {
+  "q": 9,
+  "iter": 5,
+  "window_ns": [
+   2290066112.0,
+   2299066176.0
+  ],
+  "n_kernels": 144,
+  "n_ncu": 144,
+  "ncu_matched": 144,
+  "ncu_matched_exact_grid": 144
+ },
+ "task_gap_us": 300.0,
+ "plan_ops": {
+  "0": "GPU_SCAN",
+  "1": "PARTITION",
+  "2": "CONCAT",
+  "3": "GPU_SCAN",
+  "4": "PARTITION",
+  "5": "CONCAT",
+  "6": "GPU_SCAN",
+  "7": "PARTITION",
+  "8": "CONCAT",
+  "9": "HASH_JOIN",
+  "10": "PROJECTION",
+  "11": "PARTITION",
+  "12": "CONCAT",
+  "13": "GPU_SCAN",
+  "14": "PARTITION",
+  "15": "CONCAT",
+  "16": "GPU_SCAN",
+  "17": "DYNAMIC_FILTER",
+  "18": "PARTITION",
+  "19": "CONCAT",
+  "20": "HASH_JOIN",
+  "21": "PROJECTION",
+  "22": "PARTITION",
+  "23": "CONCAT",
+  "24": "HASH_JOIN",
+  "25": "PARTITION",
+  "26": "CONCAT",
+  "27": "GPU_SCAN",
+  "28": "DYNAMIC_FILTER",
+  "29": "PARTITION",
+  "30": "CONCAT",
+  "31": "HASH_JOIN",
+  "32": "PARTITION",
+  "33": "CONCAT",
+  "34": "HASH_JOIN",
+  "35": "PROJECTION",
+  "36": "HASH_GROUP_BY",
+  "37": "PARTITION",
+  "38": "MERGE_GROUP_BY",
+  "39": "ORDER_BY",
+  "40": "SORT_SAMPLE",
+  "41": "SORT_PARTITION",
+  "42": "MERGE_SORT",
+  "43": "RESULT_COLLECTOR"
+ },
+ "plan_edges_contracted": [
+  [
+   0,
+   2,
+   true,
+   "default"
+  ],
+  [
+   2,
+   34,
+   true,
+   "build"
+  ],
+  [
+   3,
+   5,
+   true,
+   "default"
+  ],
+  [
+   5,
+   9,
+   true,
+   "build"
+  ],
+  [
+   6,
+   8,
+   true,
+   "default"
+  ],
+  [
+   8,
+   9,
+   true,
+   "default"
+  ],
+  [
+   9,
+   10,
+   false,
+   null
+  ],
+  [
+   10,
+   12,
+   true,
+   "default"
+  ],
+  [
+   12,
+   24,
+   true,
+   "build"
+  ],
+  [
+   13,
+   15,
+   true,
+   "default"
+  ],
+  [
+   15,
+   20,
+   true,
+   "build"
+  ],
+  [
+   16,
+   17,
+   false,
+   null
+  ],
+  [
+   17,
+   19,
+   true,
+   "default"
+  ],
+  [
+   19,
+   20,
+   true,
+   "default"
+  ],
+  [
+   20,
+   21,
+   false,
+   null
+  ],
+  [
+   21,
+   23,
+   true,
+   "default"
+  ],
+  [
+   23,
+   24,
+   true,
+   "default"
+  ],
+  [
+   24,
+   26,
+   true,
+   "default"
+  ],
+  [
+   26,
+   31,
+   true,
+   "build"
+  ],
+  [
+   27,
+   28,
+   false,
+   null
+  ],
+  [
+   28,
+   30,
+   true,
+   "default"
+  ],
+  [
+   30,
+   31,
+   true,
+   "default"
+  ],
+  [
+   31,
+   33,
+   true,
+   "default"
+  ],
+  [
+   33,
+   34,
+   true,
+   "default"
+  ],
+  [
+   34,
+   35,
+   false,
+   null
+  ],
+  [
+   35,
+   36,
+   false,
+   null
+  ],
+  [
+   36,
+   38,
+   true,
+   "default"
+  ],
+  [
+   38,
+   39,
+   false,
+   null
+  ],
+  [
+   39,
+   41,
+   true,
+   "default"
+  ],
+  [
+   41,
+   42,
+   true,
+   "default"
+  ]
+ ],
+ "nodes_operator_level": [
+  {
+   "id": 0,
+   "thread": 584738,
+   "op": "PROJECTION",
+   "task": 0,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 0.0,
+   "end_us": 0.96,
+   "steps": [
+    {
+     "id": 0,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 0.96,
+     "wr_B_ncu": 128.0,
+     "dram_rd_B_ncu": 11008.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 32.0,
+     "max_grid": 1,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "id": 1,
+   "thread": 584738,
+   "op": "DYNAMIC_FILTER",
+   "task": 1,
+   "plan_candidates": [
+    17,
+    28
+   ],
+   "plan_id": null,
+   "start_us": 1099.166,
+   "end_us": 1159.198,
+   "steps": [
+    {
+     "id": 1,
+     "sub": "dynf_probe_mask",
+     "launches": 1,
+     "kernel_us_nsys": 14.976,
+     "wr_B_ncu": 800000.0,
+     "dram_rd_B_ncu": 3424256.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 15929376.0,
+     "max_grid": 1563,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      18
+     ]
+    },
+    {
+     "id": 2,
+     "sub": "mask_compact",
+     "launches": 2,
+     "kernel_us_nsys": 6.944,
+     "wr_B_ncu": 1256864.0,
+     "dram_rd_B_ncu": 862720.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 12059392.0,
+     "max_grid": 139,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 0.96,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      19,
+      20
+     ]
+    },
+    {
+     "id": 3,
+     "sub": "gather",
+     "launches": 3,
+     "kernel_us_nsys": 4.8,
+     "wr_B_ncu": 439680.0,
+     "dram_rd_B_ncu": 1544704.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1538304.0,
+     "max_grid": 172,
+     "placed_by": {
+      "context": 3
+     },
+     "inner_gap_us": 9.248,
+     "inner_host": [
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      21,
+      22,
+      23
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "thread": 584738,
+   "op": "DYNF_BUILD",
+   "task": 2,
+   "plan_candidates": [],
+   "plan_id": null,
+   "start_us": 1849.277,
+   "end_us": 1863.293,
+   "steps": [
+    {
+     "id": 4,
+     "sub": "dynf_build",
+     "launches": 2,
+     "kernel_us_nsys": 3.648,
+     "wr_B_ncu": 2281760.0,
+     "dram_rd_B_ncu": 462336.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1582720.0,
+     "max_grid": 344,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 2.048,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      44,
+      45
+     ]
+    },
+    {
+     "id": 5,
+     "sub": "dynf_build",
+     "launches": 2,
+     "kernel_us_nsys": 4.576,
+     "wr_B_ncu": 2194336.0,
+     "dram_rd_B_ncu": 440064.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5800704.0,
+     "max_grid": 344,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 0.896,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      46,
+      47
+     ]
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "thread": 584738,
+   "op": "HASH_JOIN_BUILD",
+   "task": 3,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 3419.865,
+   "end_us": 3530.073,
+   "steps": [
+    {
+     "id": 6,
+     "sub": "join_build",
+     "launches": 2,
+     "kernel_us_nsys": 109.408,
+     "wr_B_ncu": 72428384.0,
+     "dram_rd_B_ncu": 27350016.0,
+     "dram_wr_B_ncu": 19795968.0,
+     "sm_ld_B_ncu": 83822752.0,
+     "max_grid": 11719,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 0.8,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      94,
+      95
+     ]
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "thread": 584738,
+   "op": "HASH_JOIN_PROBE",
+   "task": 3,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 3551.769,
+   "end_us": 3755.545,
+   "steps": [
+    {
+     "id": 7,
+     "sub": "join_probe",
+     "launches": 1,
+     "kernel_us_nsys": 27.968,
+     "wr_B_ncu": 1322464.0,
+     "dram_rd_B_ncu": 14900992.0,
+     "dram_wr_B_ncu": 1024.0,
+     "sm_ld_B_ncu": 44725920.0,
+     "max_grid": 2583,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      96
+     ]
+    },
+    {
+     "id": 8,
+     "sub": "join_retrieve",
+     "launches": 2,
+     "kernel_us_nsys": 5.12,
+     "wr_B_ncu": 2682464.0,
+     "dram_rd_B_ncu": 1361920.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 13869440.0,
+     "max_grid": 517,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 1.76,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      97,
+      98
+     ]
+    },
+    {
+     "id": 9,
+     "sub": "gather",
+     "launches": 8,
+     "kernel_us_nsys": 71.36,
+     "wr_B_ncu": 12020000.0,
+     "dram_rd_B_ncu": 23840000.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 37861760.0,
+     "max_grid": 10332,
+     "placed_by": {
+      "context": 8
+     },
+     "inner_gap_us": 70.272,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "sync",
+      "async-api",
+      "readback+sync",
+      "alloc"
+     ],
+     "kernels": [
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106
+     ]
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "thread": 584738,
+   "op": "PROJECTION",
+   "task": 3,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 3778.041,
+   "end_us": 4057.432,
+   "steps": [
+    {
+     "id": 10,
+     "sub": "expr_cast",
+     "launches": 5,
+     "kernel_us_nsys": 12.576,
+     "wr_B_ncu": 9918400.0,
+     "dram_rd_B_ncu": 5345536.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5289888.0,
+     "max_grid": 259,
+     "placed_by": {
+      "name": 5
+     },
+     "inner_gap_us": 38.912,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "sync"
+     ],
+     "kernels": [
+      107,
+      108,
+      109,
+      110,
+      111
+     ]
+    },
+    {
+     "id": 11,
+     "sub": "expr_binop",
+     "launches": 2,
+     "kernel_us_nsys": 26.751,
+     "wr_B_ncu": 5289792.0,
+     "dram_rd_B_ncu": 8172800.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 8265312.0,
+     "max_grid": 646,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 5.792,
+     "inner_host": [
+      "alloc"
+     ],
+     "kernels": [
+      112,
+      113
+     ]
+    },
+    {
+     "id": 12,
+     "sub": "expr_cast",
+     "launches": 3,
+     "kernel_us_nsys": 9.6,
+     "wr_B_ncu": 10579552.0,
+     "dram_rd_B_ncu": 5322240.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5289824.0,
+     "max_grid": 259,
+     "placed_by": {
+      "name": 3
+     },
+     "inner_gap_us": 4.032,
+     "inner_host": [
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      114,
+      115,
+      116
+     ]
+    },
+    {
+     "id": 13,
+     "sub": "expr_binop",
+     "launches": 1,
+     "kernel_us_nsys": 6.144,
+     "wr_B_ncu": 2644896.0,
+     "dram_rd_B_ncu": 5419776.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5289792.0,
+     "max_grid": 646,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      117
+     ]
+    },
+    {
+     "id": 14,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 4.48,
+     "wr_B_ncu": 5289760.0,
+     "dram_rd_B_ncu": 2653696.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 2644896.0,
+     "max_grid": 259,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      118
+     ]
+    },
+    {
+     "id": 15,
+     "sub": "expr_binop",
+     "launches": 1,
+     "kernel_us_nsys": 13.12,
+     "wr_B_ncu": 5289760.0,
+     "dram_rd_B_ncu": 10686720.0,
+     "dram_wr_B_ncu": 256.0,
+     "sm_ld_B_ncu": 10579520.0,
+     "max_grid": 646,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      119
+     ]
+    },
+    {
+     "id": 16,
+     "sub": "minmax_reduce",
+     "launches": 3,
+     "kernel_us_nsys": 7.648,
+     "wr_B_ncu": 41472.0,
+     "dram_rd_B_ncu": 5358336.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5331168.0,
+     "max_grid": 646,
+     "placed_by": {
+      "context": 3
+     },
+     "inner_gap_us": 27.68,
+     "inner_host": [
+      "async-api",
+      "sync"
+     ],
+     "kernels": [
+      120,
+      121,
+      122
+     ]
+    },
+    {
+     "id": 17,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 3.584,
+     "wr_B_ncu": 2644896.0,
+     "dram_rd_B_ncu": 5297664.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 5289760.0,
+     "max_grid": 431,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      123
+     ]
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "thread": 584738,
+   "op": "GROUP_BY",
+   "task": 3,
+   "plan_candidates": [
+    36,
+    38
+   ],
+   "plan_id": null,
+   "start_us": 4081.848,
+   "end_us": 4432.343,
+   "steps": [
+    {
+     "id": 18,
+     "sub": "gb_insert",
+     "launches": 3,
+     "kernel_us_nsys": 37.216,
+     "wr_B_ncu": 3268224.0,
+     "dram_rd_B_ncu": 1399808.0,
+     "dram_wr_B_ncu": 4352.0,
+     "sm_ld_B_ncu": 31125152.0,
+     "max_grid": 1292,
+     "placed_by": {
+      "context": 2,
+      "name": 1
+     },
+     "inner_gap_us": 29.6,
+     "inner_host": [
+      "sync",
+      "alloc"
+     ],
+     "kernels": [
+      124,
+      125,
+      126
+     ]
+    },
+    {
+     "id": 19,
+     "sub": "gb_aggregate",
+     "launches": 2,
+     "kernel_us_nsys": 88.704,
+     "wr_B_ncu": 13204352.0,
+     "dram_rd_B_ncu": 9071104.0,
+     "dram_wr_B_ncu": 55808.0,
+     "sm_ld_B_ncu": 190493696.0,
+     "max_grid": 646,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 15.872,
+     "inner_host": [
+      "sync"
+     ],
+     "kernels": [
+      127,
+      128
+     ]
+    },
+    {
+     "id": 20,
+     "sub": "gb_extract_keys",
+     "launches": 2,
+     "kernel_us_nsys": 5.024,
+     "wr_B_ncu": 14176.0,
+     "dram_rd_B_ncu": 2705920.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 2696768.0,
+     "max_grid": 115,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 1.376,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      129,
+      130
+     ]
+    },
+    {
+     "id": 21,
+     "sub": "gather",
+     "launches": 5,
+     "kernel_us_nsys": 9.088,
+     "wr_B_ncu": 6432.0,
+     "dram_rd_B_ncu": 88576.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 40928.0,
+     "max_grid": 6,
+     "placed_by": {
+      "context": 5
+     },
+     "inner_gap_us": 62.175,
+     "inner_host": [
+      "sync",
+      "async-api",
+      "readback+sync",
+      "alloc"
+     ],
+     "kernels": [
+      131,
+      132,
+      133,
+      134,
+      135
+     ]
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "thread": 584738,
+   "op": "PROJECTION",
+   "task": 4,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 4442.551,
+   "end_us": 4443.447,
+   "steps": [
+    {
+     "id": 22,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 0.896,
+     "wr_B_ncu": 2816.0,
+     "dram_rd_B_ncu": 10240.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1408.0,
+     "max_grid": 1,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      136
+     ]
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "thread": 584739,
+   "op": "PROJECTION",
+   "task": 5,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 328.768,
+   "end_us": 329.632,
+   "steps": [
+    {
+     "id": 23,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 0.864,
+     "wr_B_ncu": 40000.0,
+     "dram_rd_B_ncu": 20992.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 10016.0,
+     "max_grid": 40,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      1
+     ]
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "thread": 584739,
+   "op": "DYNF_BUILD",
+   "task": 6,
+   "plan_candidates": [],
+   "plan_id": null,
+   "start_us": 1042.654,
+   "end_us": 1050.366,
+   "steps": [
+    {
+     "id": 24,
+     "sub": "dynf_build",
+     "launches": 2,
+     "kernel_us_nsys": 3.552,
+     "wr_B_ncu": 700032.0,
+     "dram_rd_B_ncu": 206080.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1453248.0,
+     "max_grid": 86,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 4.16,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      16,
+      17
+     ]
+    }
+   ]
+  },
+  {
+   "id": 10,
+   "thread": 584739,
+   "op": "HASH_JOIN_BUILD",
+   "task": 7,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 1340.99,
+   "end_us": 1350.27,
+   "steps": [
+    {
+     "id": 25,
+     "sub": "join_build",
+     "launches": 2,
+     "kernel_us_nsys": 6.816,
+     "wr_B_ncu": 622176.0,
+     "dram_rd_B_ncu": 220160.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 618912.0,
+     "max_grid": 86,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 2.464,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      24,
+      25
+     ]
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "thread": 584739,
+   "op": "HASH_JOIN_PROBE",
+   "task": 7,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 1372.221,
+   "end_us": 1425.981,
+   "steps": [
+    {
+     "id": 26,
+     "sub": "join_probe",
+     "launches": 1,
+     "kernel_us_nsys": 6.816,
+     "wr_B_ncu": 175872.0,
+     "dram_rd_B_ncu": 403200.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 2292320.0,
+     "max_grid": 344,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      26
+     ]
+    },
+    {
+     "id": 27,
+     "sub": "join_retrieve",
+     "launches": 2,
+     "kernel_us_nsys": 3.072,
+     "wr_B_ncu": 357024.0,
+     "dram_rd_B_ncu": 213504.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1808064.0,
+     "max_grid": 69,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 1.696,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      27,
+      28
+     ]
+    },
+    {
+     "id": 28,
+     "sub": "gather",
+     "launches": 3,
+     "kernel_us_nsys": 3.232,
+     "wr_B_ncu": 439680.0,
+     "dram_rd_B_ncu": 848896.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 835392.0,
+     "max_grid": 172,
+     "placed_by": {
+      "context": 3
+     },
+     "inner_gap_us": 11.296,
+     "inner_host": [
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      29,
+      30,
+      31
+     ]
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "thread": 584739,
+   "op": "PROJECTION",
+   "task": 7,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 1446.077,
+   "end_us": 1447.037,
+   "steps": [
+    {
+     "id": 29,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 0.96,
+     "wr_B_ncu": 175872.0,
+     "dram_rd_B_ncu": 98048.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 87936.0,
+     "max_grid": 172,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      32
+     ]
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "thread": 584739,
+   "op": "DYNAMIC_FILTER",
+   "task": 8,
+   "plan_candidates": [
+    17,
+    28
+   ],
+   "plan_id": null,
+   "start_us": 2015.42,
+   "end_us": 2318.268,
+   "steps": [
+    {
+     "id": 30,
+     "sub": "dynf_probe_mask",
+     "launches": 1,
+     "kernel_us_nsys": 100.384,
+     "wr_B_ncu": 2262720.0,
+     "dram_rd_B_ncu": 13055488.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 161726240.0,
+     "max_grid": 4096,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      49
+     ]
+    },
+    {
+     "id": 31,
+     "sub": "mask_compact",
+     "launches": 2,
+     "kernel_us_nsys": 14.144,
+     "wr_B_ncu": 2955136.0,
+     "dram_rd_B_ncu": 2063616.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 30143264.0,
+     "max_grid": 348,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 1.312,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      52,
+      53
+     ]
+    },
+    {
+     "id": 32,
+     "sub": "gather",
+     "launches": 6,
+     "kernel_us_nsys": 38.016,
+     "wr_B_ncu": 2425216.0,
+     "dram_rd_B_ncu": 19661312.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 19764992.0,
+     "max_grid": 216,
+     "placed_by": {
+      "context": 6
+     },
+     "inner_gap_us": 34.912,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      57,
+      58,
+      60,
+      62,
+      65,
+      68
+     ]
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "thread": 584739,
+   "op": "PROJECTION",
+   "task": 9,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 2336.604,
+   "end_us": 2343.74,
+   "steps": [
+    {
+     "id": 33,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 7.136,
+     "wr_B_ncu": 440352.0,
+     "dram_rd_B_ncu": 230400.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 220192.0,
+     "max_grid": 216,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      73
+     ]
+    }
+   ]
+  },
+  {
+   "id": 15,
+   "thread": 584739,
+   "op": "ORDER/SORT",
+   "task": 10,
+   "plan_candidates": [
+    39,
+    41,
+    42
+   ],
+   "plan_id": null,
+   "start_us": 4868.151,
+   "end_us": 5332.246,
+   "steps": [
+    {
+     "id": 34,
+     "sub": "sort",
+     "launches": 2,
+     "kernel_us_nsys": 360.672,
+     "wr_B_ncu": 1408.0,
+     "dram_rd_B_ncu": 97792.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1176128.0,
+     "max_grid": 1,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 35.583,
+     "inner_host": [
+      "sync"
+     ],
+     "kernels": [
+      137,
+      138
+     ]
+    },
+    {
+     "id": 35,
+     "sub": "gather",
+     "launches": 5,
+     "kernel_us_nsys": 8.64,
+     "wr_B_ncu": 7840.0,
+     "dram_rd_B_ncu": 80640.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 37536.0,
+     "max_grid": 6,
+     "placed_by": {
+      "context": 5
+     },
+     "inner_gap_us": 34.944,
+     "inner_host": [
+      "async-api",
+      "readback+sync",
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      139,
+      140,
+      141,
+      142,
+      143
+     ]
+    }
+   ]
+  },
+  {
+   "id": 16,
+   "thread": 584740,
+   "op": "HASH_JOIN_BUILD",
+   "task": 11,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 453.439,
+   "end_us": 461.247,
+   "steps": [
+    {
+     "id": 36,
+     "sub": "join_build",
+     "launches": 2,
+     "kernel_us_nsys": 3.424,
+     "wr_B_ncu": 1152.0,
+     "dram_rd_B_ncu": 19968.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 864.0,
+     "max_grid": 1,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 4.384,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      2,
+      3
+     ]
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "thread": 584740,
+   "op": "HASH_JOIN_PROBE",
+   "task": 11,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 485.439,
+   "end_us": 629.151,
+   "steps": [
+    {
+     "id": 37,
+     "sub": "join_probe",
+     "launches": 1,
+     "kernel_us_nsys": 3.328,
+     "wr_B_ncu": 40000.0,
+     "dram_rd_B_ncu": 67328.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 756768.0,
+     "max_grid": 79,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      4
+     ]
+    },
+    {
+     "id": 38,
+     "sub": "join_retrieve",
+     "launches": 2,
+     "kernel_us_nsys": 2.624,
+     "wr_B_ncu": 81440.0,
+     "dram_rd_B_ncu": 76800.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 408160.0,
+     "max_grid": 16,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 2.272,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      5,
+      6
+     ]
+    },
+    {
+     "id": 39,
+     "sub": "gather",
+     "launches": 4,
+     "kernel_us_nsys": 9.024,
+     "wr_B_ncu": 203200.0,
+     "dram_rd_B_ncu": 245760.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 969472.0,
+     "max_grid": 313,
+     "placed_by": {
+      "context": 4
+     },
+     "inner_gap_us": 94.304,
+     "inner_host": [
+      "sync",
+      "async-api",
+      "readback+sync"
+     ],
+     "kernels": [
+      7,
+      8,
+      9,
+      10
+     ]
+    }
+   ]
+  },
+  {
+   "id": 18,
+   "thread": 584740,
+   "op": "PROJECTION",
+   "task": 11,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 651.967,
+   "end_us": 652.831,
+   "steps": [
+    {
+     "id": 40,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 0.864,
+     "wr_B_ncu": 40000.0,
+     "dram_rd_B_ncu": 29952.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 20000.0,
+     "max_grid": 40,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      11
+     ]
+    }
+   ]
+  },
+  {
+   "id": 19,
+   "thread": 584740,
+   "op": "HASH_JOIN_BUILD",
+   "task": 12,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 1601.661,
+   "end_us": 1610.397,
+   "steps": [
+    {
+     "id": 41,
+     "sub": "join_build",
+     "launches": 2,
+     "kernel_us_nsys": 6.272,
+     "wr_B_ncu": 565152.0,
+     "dram_rd_B_ncu": 203776.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 560480.0,
+     "max_grid": 79,
+     "placed_by": {
+      "context": 1,
+      "name": 1
+     },
+     "inner_gap_us": 2.464,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      33,
+      34
+     ]
+    }
+   ]
+  },
+  {
+   "id": 20,
+   "thread": 584740,
+   "op": "HASH_JOIN_PROBE",
+   "task": 12,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 1631.421,
+   "end_us": 1754.109,
+   "steps": [
+    {
+     "id": 42,
+     "sub": "join_probe",
+     "launches": 1,
+     "kernel_us_nsys": 8.832,
+     "wr_B_ncu": 175872.0,
+     "dram_rd_B_ncu": 385792.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 6860544.0,
+     "max_grid": 344,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      35
+     ]
+    },
+    {
+     "id": 43,
+     "sub": "join_retrieve",
+     "launches": 2,
+     "kernel_us_nsys": 3.008,
+     "wr_B_ncu": 357024.0,
+     "dram_rd_B_ncu": 213248.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1800704.0,
+     "max_grid": 69,
+     "placed_by": {
+      "name": 2
+     },
+     "inner_gap_us": 2.304,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      36,
+      37
+     ]
+    },
+    {
+     "id": 44,
+     "sub": "gather",
+     "launches": 6,
+     "kernel_us_nsys": 16.864,
+     "wr_B_ncu": 1337120.0,
+     "dram_rd_B_ncu": 1807872.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 8416800.0,
+     "max_grid": 1374,
+     "placed_by": {
+      "context": 6
+     },
+     "inner_gap_us": 65.216,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "sync",
+      "async-api",
+      "readback+sync"
+     ],
+     "kernels": [
+      38,
+      39,
+      40,
+      41,
+      42,
+      43
+     ]
+    }
+   ]
+  },
+  {
+   "id": 21,
+   "thread": 584740,
+   "op": "DYNAMIC_FILTER",
+   "task": 13,
+   "plan_candidates": [
+    17,
+    28
+   ],
+   "plan_id": null,
+   "start_us": 1917.532,
+   "end_us": 2348.06,
+   "steps": [
+    {
+     "id": 45,
+     "sub": "dynf_probe_mask",
+     "launches": 1,
+     "kernel_us_nsys": 101.536,
+     "wr_B_ncu": 2262656.0,
+     "dram_rd_B_ncu": 13044736.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 161783968.0,
+     "max_grid": 4096,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      48
+     ]
+    },
+    {
+     "id": 46,
+     "sub": "mask_compact",
+     "launches": 2,
+     "kernel_us_nsys": 14.432,
+     "wr_B_ncu": 2968352.0,
+     "dram_rd_B_ncu": 2062592.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 30132032.0,
+     "max_grid": 348,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 11.392,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      51,
+      54
+     ]
+    },
+    {
+     "id": 47,
+     "sub": "gather",
+     "launches": 6,
+     "kernel_us_nsys": 53.888,
+     "wr_B_ncu": 2427648.0,
+     "dram_rd_B_ncu": 19662336.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 19768000.0,
+     "max_grid": 216,
+     "placed_by": {
+      "context": 6
+     },
+     "inner_gap_us": 27.616,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      59,
+      63,
+      66,
+      69,
+      71,
+      74
+     ]
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "thread": 584740,
+   "op": "PROJECTION",
+   "task": 14,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 2365.5,
+   "end_us": 2366.684,
+   "steps": [
+    {
+     "id": 48,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 1.184,
+     "wr_B_ncu": 441984.0,
+     "dram_rd_B_ncu": 231168.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 220992.0,
+     "max_grid": 216,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      76
+     ]
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "thread": 584741,
+   "op": "FILTER",
+   "task": 15,
+   "plan_candidates": [
+    0,
+    3,
+    6,
+    13,
+    16,
+    17,
+    27,
+    28
+   ],
+   "plan_id": null,
+   "start_us": 889.502,
+   "end_us": 949.534,
+   "steps": [
+    {
+     "id": 49,
+     "sub": "pred_string",
+     "launches": 1,
+     "kernel_us_nsys": 27.04,
+     "wr_B_ncu": 200000.0,
+     "dram_rd_B_ncu": 7368704.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 186239520.0,
+     "max_grid": 261,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      12
+     ]
+    },
+    {
+     "id": 50,
+     "sub": "mask_compact",
+     "launches": 2,
+     "kernel_us_nsys": 4.384,
+     "wr_B_ncu": 294560.0,
+     "dram_rd_B_ncu": 262144.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 3010112.0,
+     "max_grid": 35,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 1.184,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      13,
+      14
+     ]
+    },
+    {
+     "id": 51,
+     "sub": "gather",
+     "launches": 1,
+     "kernel_us_nsys": 1.6,
+     "wr_B_ncu": 43968.0,
+     "dram_rd_B_ncu": 338688.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 336288.0,
+     "max_grid": 43,
+     "placed_by": {
+      "context": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      15
+     ]
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "thread": 584741,
+   "op": "DYNAMIC_FILTER",
+   "task": 16,
+   "plan_candidates": [
+    17,
+    28
+   ],
+   "plan_id": null,
+   "start_us": 2111.804,
+   "end_us": 2351.964,
+   "steps": [
+    {
+     "id": 52,
+     "sub": "dynf_probe_mask",
+     "launches": 1,
+     "kernel_us_nsys": 98.048,
+     "wr_B_ncu": 2262336.0,
+     "dram_rd_B_ncu": 13042176.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 161699904.0,
+     "max_grid": 4096,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      50
+     ]
+    },
+    {
+     "id": 53,
+     "sub": "mask_compact",
+     "launches": 2,
+     "kernel_us_nsys": 12.608,
+     "wr_B_ncu": 2959904.0,
+     "dram_rd_B_ncu": 2063360.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 30142976.0,
+     "max_grid": 348,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 0.928,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      55,
+      56
+     ]
+    },
+    {
+     "id": 54,
+     "sub": "gather",
+     "launches": 6,
+     "kernel_us_nsys": 51.424,
+     "wr_B_ncu": 2420704.0,
+     "dram_rd_B_ncu": 19608576.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 19718848.0,
+     "max_grid": 215,
+     "placed_by": {
+      "context": 6
+     },
+     "inner_gap_us": 21.472,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc"
+     ],
+     "kernels": [
+      61,
+      64,
+      67,
+      70,
+      72,
+      75
+     ]
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "thread": 584741,
+   "op": "PROJECTION",
+   "task": 17,
+   "plan_candidates": [
+    10,
+    21,
+    35
+   ],
+   "plan_id": null,
+   "start_us": 2369.916,
+   "end_us": 2371.227,
+   "steps": [
+    {
+     "id": 55,
+     "sub": "expr_cast",
+     "launches": 1,
+     "kernel_us_nsys": 1.311,
+     "wr_B_ncu": 440128.0,
+     "dram_rd_B_ncu": 230400.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 220064.0,
+     "max_grid": 215,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      77
+     ]
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "thread": 584741,
+   "op": "HASH_JOIN_BUILD",
+   "task": 18,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 2807.131,
+   "end_us": 2836.603,
+   "steps": [
+    {
+     "id": 56,
+     "sub": "join_build",
+     "launches": 1,
+     "kernel_us_nsys": 9.248,
+     "wr_B_ncu": 2307200.0,
+     "dram_rd_B_ncu": 897536.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 703488.0,
+     "max_grid": 172,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      78
+     ]
+    },
+    {
+     "id": 57,
+     "sub": "offsets_scan",
+     "launches": 2,
+     "kernel_us_nsys": 3.968,
+     "wr_B_ncu": 176576.0,
+     "dram_rd_B_ncu": 202240.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 177728.0,
+     "max_grid": 6,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 2.88,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      79,
+      80
+     ]
+    },
+    {
+     "id": 58,
+     "sub": "join_build",
+     "launches": 1,
+     "kernel_us_nsys": 6.368,
+     "wr_B_ncu": 351744.0,
+     "dram_rd_B_ncu": 897536.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 2797344.0,
+     "max_grid": 172,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      81
+     ]
+    }
+   ]
+  },
+  {
+   "id": 27,
+   "thread": 584741,
+   "op": "HASH_JOIN_PROBE",
+   "task": 18,
+   "plan_candidates": [
+    9,
+    20,
+    24,
+    31,
+    34
+   ],
+   "plan_id": null,
+   "start_us": 2872.859,
+   "end_us": 3130.138,
+   "steps": [
+    {
+     "id": 59,
+     "sub": "join_probe_count",
+     "launches": 1,
+     "kernel_us_nsys": 41.055,
+     "wr_B_ncu": 2644928.0,
+     "dram_rd_B_ncu": 3543808.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 89208608.0,
+     "max_grid": 1292,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      82
+     ]
+    },
+    {
+     "id": 60,
+     "sub": "offsets_scan",
+     "launches": 2,
+     "kernel_us_nsys": 4.832,
+     "wr_B_ncu": 2655264.0,
+     "dram_rd_B_ncu": 1354240.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 1503072.0,
+     "max_grid": 123,
+     "placed_by": {
+      "context": 2
+     },
+     "inner_gap_us": 8.256,
+     "inner_host": [
+      "async-api"
+     ],
+     "kernels": [
+      83,
+      84
+     ]
+    },
+    {
+     "id": 61,
+     "sub": "join_retrieve",
+     "launches": 1,
+     "kernel_us_nsys": 25.44,
+     "wr_B_ncu": 3246272.0,
+     "dram_rd_B_ncu": 4354304.0,
+     "dram_wr_B_ncu": 256.0,
+     "sm_ld_B_ncu": 37489952.0,
+     "max_grid": 96,
+     "placed_by": {
+      "name": 1
+     },
+     "inner_gap_us": 0.0,
+     "inner_host": [],
+     "kernels": [
+      85
+     ]
+    },
+    {
+     "id": 62,
+     "sub": "gather",
+     "launches": 8,
+     "kernel_us_nsys": 72.064,
+     "wr_B_ncu": 12681216.0,
+     "dram_rd_B_ncu": 16790784.0,
+     "dram_wr_B_ncu": 0,
+     "sm_ld_B_ncu": 82309504.0,
+     "max_grid": 10332,
+     "placed_by": {
+      "context": 8
+     },
+     "inner_gap_us": 70.08,
+     "inner_host": [
+      "alloc",
+      "alloc",
+      "alloc",
+      "alloc",
+      "sync",
+      "async-api",
+      "readback+sync"
+     ],
+     "kernels": [
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93
+     ]
+    }
+   ]
+  }
+ ],
+ "edges_operator_level": [
+  {
+   "src": 3,
+   "dst": 4,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "wr_src": 72428384.0,
+   "rd_dst": 14900992.0,
+   "roundtrip": 14900992.0,
+   "launches_src": 2,
+   "launches_dst": 11,
+   "gap_ns": 21696,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.696
+  },
+  {
+   "src": 4,
+   "dst": 5,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "wr_src": 12020000.0,
+   "rd_dst": 5345536.0,
+   "roundtrip": 5345536.0,
+   "launches_src": 11,
+   "launches_dst": 17,
+   "gap_ns": 22496,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 9,
+    "event_waits": 0,
+    "api_calls": 16
+   },
+   "gap_us": 22.496
+  },
+  {
+   "src": 5,
+   "dst": 6,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "PROJECTION",
+   "dst_op": "GROUP_BY",
+   "wr_src": 2644896.0,
+   "rd_dst": 1399808.0,
+   "roundtrip": 1399808.0,
+   "launches_src": 17,
+   "launches_dst": 12,
+   "gap_ns": 24416,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 9
+   },
+   "gap_us": 24.416
+  },
+  {
+   "src": 10,
+   "dst": 11,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "wr_src": 622176.0,
+   "rd_dst": 403200.0,
+   "roundtrip": 403200.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 21951,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.951
+  },
+  {
+   "src": 11,
+   "dst": 12,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "wr_src": 439680.0,
+   "rd_dst": 98048.0,
+   "roundtrip": 98048.0,
+   "launches_src": 6,
+   "launches_dst": 1,
+   "gap_ns": 20096,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 5,
+    "event_waits": 0,
+    "api_calls": 12
+   },
+   "gap_us": 20.096
+  },
+  {
+   "src": 16,
+   "dst": 17,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "wr_src": 1152.0,
+   "rd_dst": 67328.0,
+   "roundtrip": 1152.0,
+   "launches_src": 2,
+   "launches_dst": 7,
+   "gap_ns": 24192,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 24.192
+  },
+  {
+   "src": 17,
+   "dst": 18,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "wr_src": 203200.0,
+   "rd_dst": 29952.0,
+   "roundtrip": 29952.0,
+   "launches_src": 7,
+   "launches_dst": 1,
+   "gap_ns": 22816,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 5,
+    "event_waits": 0,
+    "api_calls": 12
+   },
+   "gap_us": 22.816
+  },
+  {
+   "src": 19,
+   "dst": 20,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "wr_src": 565152.0,
+   "rd_dst": 385792.0,
+   "roundtrip": 385792.0,
+   "launches_src": 2,
+   "launches_dst": 9,
+   "gap_ns": 21024,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.024
+  },
+  {
+   "src": 26,
+   "dst": 27,
+   "kind": "same-thread",
+   "confidence": "medium",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "wr_src": 351744.0,
+   "rd_dst": 3543808.0,
+   "roundtrip": 351744.0,
+   "launches_src": 4,
+   "launches_dst": 12,
+   "gap_ns": 36256,
+   "host": {
+    "kind": "sync",
+    "syncs": 5,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 2,
+    "api_calls": 17
+   },
+   "gap_us": 36.256
+  },
+  {
+   "src": 9,
+   "dst": 1,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "wr_src": 700032.0,
+   "rd_dst": 3424256.0,
+   "roundtrip": 700032.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 48800,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 48.8
+  },
+  {
+   "src": 20,
+   "dst": 2,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "DYNF_BUILD",
+   "wr_src": 1337120.0,
+   "rd_dst": 462336.0,
+   "roundtrip": 462336.0,
+   "launches_src": 9,
+   "launches_dst": 4,
+   "gap_ns": 95168,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 95.168
+  },
+  {
+   "src": 27,
+   "dst": 3,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_BUILD",
+   "wr_src": 12681216.0,
+   "rd_dst": 27350016.0,
+   "roundtrip": 12681216.0,
+   "launches_src": 12,
+   "launches_dst": 2,
+   "gap_ns": 289727,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 289.727
+  },
+  {
+   "src": 27,
+   "dst": 7,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "wr_src": 12681216.0,
+   "rd_dst": 10240.0,
+   "roundtrip": 10240.0,
+   "launches_src": 12,
+   "launches_dst": 1,
+   "gap_ns": 1312413,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 1312.413
+  },
+  {
+   "src": 0,
+   "dst": 8,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "wr_src": 128.0,
+   "rd_dst": 20992.0,
+   "roundtrip": 128.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 327808,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 327.808
+  },
+  {
+   "src": 23,
+   "dst": 9,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "FILTER",
+   "dst_op": "DYNF_BUILD",
+   "wr_src": 43968.0,
+   "rd_dst": 206080.0,
+   "roundtrip": 43968.0,
+   "launches_src": 4,
+   "launches_dst": 2,
+   "gap_ns": 93120,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 93.12
+  },
+  {
+   "src": 1,
+   "dst": 10,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "HASH_JOIN_BUILD",
+   "wr_src": 439680.0,
+   "rd_dst": 220160.0,
+   "roundtrip": 220160.0,
+   "launches_src": 6,
+   "launches_dst": 2,
+   "gap_ns": 181792,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 181.792
+  },
+  {
+   "src": 2,
+   "dst": 13,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "wr_src": 2194336.0,
+   "rd_dst": 13055488.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 4,
+   "launches_dst": 9,
+   "gap_ns": 152127,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 152.127
+  },
+  {
+   "src": 20,
+   "dst": 14,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "wr_src": 1337120.0,
+   "rd_dst": 230400.0,
+   "roundtrip": 230400.0,
+   "launches_src": 9,
+   "launches_dst": 1,
+   "gap_ns": 582495,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 582.495
+  },
+  {
+   "src": 6,
+   "dst": 15,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "GROUP_BY",
+   "dst_op": "ORDER/SORT",
+   "wr_src": 6432.0,
+   "rd_dst": 97792.0,
+   "roundtrip": 6432.0,
+   "launches_src": 12,
+   "launches_dst": 7,
+   "gap_ns": 435808,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 435.808
+  },
+  {
+   "src": 8,
+   "dst": 16,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "wr_src": 40000.0,
+   "rd_dst": 19968.0,
+   "roundtrip": 19968.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 123807,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 123.807
+  },
+  {
+   "src": 12,
+   "dst": 19,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "wr_src": 175872.0,
+   "rd_dst": 203776.0,
+   "roundtrip": 175872.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 154624,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 154.624
+  },
+  {
+   "src": 2,
+   "dst": 21,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "wr_src": 2194336.0,
+   "rd_dst": 13044736.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 4,
+   "launches_dst": 9,
+   "gap_ns": 54239,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 54.239
+  },
+  {
+   "src": 14,
+   "dst": 22,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "wr_src": 440352.0,
+   "rd_dst": 231168.0,
+   "roundtrip": 231168.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 21760,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 21.76
+  },
+  {
+   "src": 2,
+   "dst": 24,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "wr_src": 2194336.0,
+   "rd_dst": 13042176.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 4,
+   "launches_dst": 9,
+   "gap_ns": 248511,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 248.511
+  },
+  {
+   "src": 22,
+   "dst": 25,
+   "kind": "cross-thread",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "wr_src": 441984.0,
+   "rd_dst": 230400.0,
+   "roundtrip": 230400.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 3232,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 3.232
+  },
+  {
+   "src": 25,
+   "dst": 26,
+   "kind": "same-thread-new-task",
+   "confidence": "low",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "wr_src": 440128.0,
+   "rd_dst": 897536.0,
+   "roundtrip": 440128.0,
+   "launches_src": 1,
+   "launches_dst": 4,
+   "gap_ns": 435904,
+   "host": {
+    "kind": "task-boundary"
+   },
+   "gap_us": 435.904
+  }
+ ],
+ "edges_subop_level": [
+  {
+   "src": 1,
+   "dst": 2,
+   "kind": "same-thread",
+   "src_sub": "dynf_probe_mask",
+   "dst_sub": "mask_compact",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 800000.0,
+   "dram_wr_src": 0,
+   "rd_dst": 862720.0,
+   "roundtrip": 800000.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 1984,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 3
+   },
+   "gap_us": 1.984
+  },
+  {
+   "src": 2,
+   "dst": 3,
+   "kind": "same-thread",
+   "src_sub": "mask_compact",
+   "dst_sub": "gather",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 1256864.0,
+   "dram_wr_src": 0,
+   "rd_dst": 1544704.0,
+   "roundtrip": 1256864.0,
+   "launches_src": 2,
+   "launches_dst": 3,
+   "gap_ns": 21120,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 2,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 21.12
+  },
+  {
+   "src": 4,
+   "dst": 5,
+   "kind": "same-thread",
+   "src_sub": "dynf_build",
+   "dst_sub": "dynf_build",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNF_BUILD",
+   "intra_op": true,
+   "wr_src": 2281760.0,
+   "dram_wr_src": 0,
+   "rd_dst": 440064.0,
+   "roundtrip": 440064.0,
+   "launches_src": 2,
+   "launches_dst": 2,
+   "gap_ns": 2848,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 2
+   },
+   "gap_us": 2.848
+  },
+  {
+   "src": 6,
+   "dst": 7,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "join_probe",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": false,
+   "wr_src": 72428384.0,
+   "dram_wr_src": 19795968.0,
+   "rd_dst": 14900992.0,
+   "roundtrip": 14900992.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 21696,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.696
+  },
+  {
+   "src": 7,
+   "dst": 8,
+   "kind": "same-thread",
+   "src_sub": "join_probe",
+   "dst_sub": "join_retrieve",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 1322464.0,
+   "dram_wr_src": 1024.0,
+   "rd_dst": 1361920.0,
+   "roundtrip": 1322464.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 9376,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 6
+   },
+   "gap_us": 9.376
+  },
+  {
+   "src": 8,
+   "dst": 9,
+   "kind": "same-thread",
+   "src_sub": "join_retrieve",
+   "dst_sub": "gather",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 2682464.0,
+   "dram_wr_src": 0,
+   "rd_dst": 23840000.0,
+   "roundtrip": 2682464.0,
+   "launches_src": 2,
+   "launches_dst": 8,
+   "gap_ns": 17920,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 4,
+    "event_waits": 0,
+    "api_calls": 11
+   },
+   "gap_us": 17.92
+  },
+  {
+   "src": 9,
+   "dst": 10,
+   "kind": "same-thread",
+   "src_sub": "gather",
+   "dst_sub": "expr_cast",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 12020000.0,
+   "dram_wr_src": 0,
+   "rd_dst": 5345536.0,
+   "roundtrip": 5345536.0,
+   "launches_src": 8,
+   "launches_dst": 5,
+   "gap_ns": 22496,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 9,
+    "event_waits": 0,
+    "api_calls": 16
+   },
+   "gap_us": 22.496
+  },
+  {
+   "src": 10,
+   "dst": 11,
+   "kind": "same-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_binop",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 9918400.0,
+   "dram_wr_src": 0,
+   "rd_dst": 8172800.0,
+   "roundtrip": 8172800.0,
+   "launches_src": 5,
+   "launches_dst": 2,
+   "gap_ns": 28352,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 3,
+    "d2h_copies": 3,
+    "d2h_bytes": 3,
+    "allocs": 1,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 8
+   },
+   "gap_us": 28.352
+  },
+  {
+   "src": 11,
+   "dst": 12,
+   "kind": "same-thread",
+   "src_sub": "expr_binop",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 5289792.0,
+   "dram_wr_src": 0,
+   "rd_dst": 5322240.0,
+   "roundtrip": 5289792.0,
+   "launches_src": 2,
+   "launches_dst": 3,
+   "gap_ns": 2816,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 3
+   },
+   "gap_us": 2.816
+  },
+  {
+   "src": 12,
+   "dst": 13,
+   "kind": "same-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_binop",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 10579552.0,
+   "dram_wr_src": 0,
+   "rd_dst": 5419776.0,
+   "roundtrip": 5419776.0,
+   "launches_src": 3,
+   "launches_dst": 1,
+   "gap_ns": 3136,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 2
+   },
+   "gap_us": 3.136
+  },
+  {
+   "src": 13,
+   "dst": 14,
+   "kind": "same-thread",
+   "src_sub": "expr_binop",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 2644896.0,
+   "dram_wr_src": 0,
+   "rd_dst": 2653696.0,
+   "roundtrip": 2644896.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 3456,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 2
+   },
+   "gap_us": 3.456
+  },
+  {
+   "src": 14,
+   "dst": 15,
+   "kind": "same-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_binop",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 5289760.0,
+   "dram_wr_src": 0,
+   "rd_dst": 10686720.0,
+   "roundtrip": 5289760.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 8864,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 3
+   },
+   "gap_us": 8.864
+  },
+  {
+   "src": 15,
+   "dst": 16,
+   "kind": "same-thread",
+   "src_sub": "expr_binop",
+   "dst_sub": "minmax_reduce",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 5289760.0,
+   "dram_wr_src": 256.0,
+   "rd_dst": 5358336.0,
+   "roundtrip": 5289760.0,
+   "launches_src": 1,
+   "launches_dst": 3,
+   "gap_ns": 38912,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 5,
+    "d2h_copies": 1,
+    "d2h_bytes": 4,
+    "allocs": 3,
+    "frees": 7,
+    "event_waits": 2,
+    "api_calls": 26
+   },
+   "gap_us": 38.912
+  },
+  {
+   "src": 16,
+   "dst": 17,
+   "kind": "same-thread",
+   "src_sub": "minmax_reduce",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": true,
+   "wr_src": 41472.0,
+   "dram_wr_src": 0,
+   "rd_dst": 5297664.0,
+   "roundtrip": 41472.0,
+   "launches_src": 3,
+   "launches_dst": 1,
+   "gap_ns": 33536,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 40,
+    "allocs": 1,
+    "frees": 6,
+    "event_waits": 1,
+    "api_calls": 26
+   },
+   "gap_us": 33.536
+  },
+  {
+   "src": 17,
+   "dst": 18,
+   "kind": "same-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "gb_insert",
+   "src_op": "PROJECTION",
+   "dst_op": "GROUP_BY",
+   "intra_op": false,
+   "wr_src": 2644896.0,
+   "dram_wr_src": 0,
+   "rd_dst": 1399808.0,
+   "roundtrip": 1399808.0,
+   "launches_src": 1,
+   "launches_dst": 3,
+   "gap_ns": 24416,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 9
+   },
+   "gap_us": 24.416
+  },
+  {
+   "src": 18,
+   "dst": 19,
+   "kind": "same-thread",
+   "src_sub": "gb_insert",
+   "dst_sub": "gb_aggregate",
+   "src_op": "GROUP_BY",
+   "dst_op": "GROUP_BY",
+   "intra_op": true,
+   "wr_src": 3268224.0,
+   "dram_wr_src": 4352.0,
+   "rd_dst": 9071104.0,
+   "roundtrip": 3268224.0,
+   "launches_src": 3,
+   "launches_dst": 2,
+   "gap_ns": 72672,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 3,
+    "d2h_copies": 1,
+    "d2h_bytes": 4,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 72.672
+  },
+  {
+   "src": 19,
+   "dst": 20,
+   "kind": "same-thread",
+   "src_sub": "gb_aggregate",
+   "dst_sub": "gb_extract_keys",
+   "src_op": "GROUP_BY",
+   "dst_op": "GROUP_BY",
+   "intra_op": true,
+   "wr_src": 13204352.0,
+   "dram_wr_src": 55808.0,
+   "rd_dst": 2705920.0,
+   "roundtrip": 2705920.0,
+   "launches_src": 2,
+   "launches_dst": 2,
+   "gap_ns": 1344,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 3,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 4
+   },
+   "gap_us": 1.344
+  },
+  {
+   "src": 20,
+   "dst": 21,
+   "kind": "same-thread",
+   "src_sub": "gb_extract_keys",
+   "dst_sub": "gather",
+   "src_op": "GROUP_BY",
+   "dst_op": "GROUP_BY",
+   "intra_op": true,
+   "wr_src": 14176.0,
+   "dram_wr_src": 0,
+   "rd_dst": 88576.0,
+   "roundtrip": 14176.0,
+   "launches_src": 2,
+   "launches_dst": 5,
+   "gap_ns": 27424,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 2,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 27.424
+  },
+  {
+   "src": 25,
+   "dst": 26,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "join_probe",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": false,
+   "wr_src": 622176.0,
+   "dram_wr_src": 0,
+   "rd_dst": 403200.0,
+   "roundtrip": 403200.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 21951,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.951
+  },
+  {
+   "src": 26,
+   "dst": 27,
+   "kind": "same-thread",
+   "src_sub": "join_probe",
+   "dst_sub": "join_retrieve",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 175872.0,
+   "dram_wr_src": 0,
+   "rd_dst": 213504.0,
+   "roundtrip": 175872.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 9408,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 6
+   },
+   "gap_us": 9.408
+  },
+  {
+   "src": 27,
+   "dst": 28,
+   "kind": "same-thread",
+   "src_sub": "join_retrieve",
+   "dst_sub": "gather",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 357024.0,
+   "dram_wr_src": 0,
+   "rd_dst": 848896.0,
+   "roundtrip": 357024.0,
+   "launches_src": 2,
+   "launches_dst": 3,
+   "gap_ns": 18240,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 4,
+    "event_waits": 0,
+    "api_calls": 11
+   },
+   "gap_us": 18.24
+  },
+  {
+   "src": 28,
+   "dst": 29,
+   "kind": "same-thread",
+   "src_sub": "gather",
+   "dst_sub": "expr_cast",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 439680.0,
+   "dram_wr_src": 0,
+   "rd_dst": 98048.0,
+   "roundtrip": 98048.0,
+   "launches_src": 3,
+   "launches_dst": 1,
+   "gap_ns": 20096,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 5,
+    "event_waits": 0,
+    "api_calls": 12
+   },
+   "gap_us": 20.096
+  },
+  {
+   "src": 30,
+   "dst": 31,
+   "kind": "same-thread",
+   "src_sub": "dynf_probe_mask",
+   "dst_sub": "mask_compact",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2262720.0,
+   "dram_wr_src": 0,
+   "rd_dst": 2063616.0,
+   "roundtrip": 2063616.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 90400,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 5
+   },
+   "gap_us": 90.4
+  },
+  {
+   "src": 31,
+   "dst": 32,
+   "kind": "same-thread",
+   "src_sub": "mask_compact",
+   "dst_sub": "gather",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2955136.0,
+   "dram_wr_src": 0,
+   "rd_dst": 19661312.0,
+   "roundtrip": 2955136.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 23680,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 2,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 23.68
+  },
+  {
+   "src": 34,
+   "dst": 35,
+   "kind": "same-thread",
+   "src_sub": "sort",
+   "dst_sub": "gather",
+   "src_op": "ORDER/SORT",
+   "dst_op": "ORDER/SORT",
+   "intra_op": true,
+   "wr_src": 1408.0,
+   "dram_wr_src": 0,
+   "rd_dst": 80640.0,
+   "roundtrip": 1408.0,
+   "launches_src": 2,
+   "launches_dst": 5,
+   "gap_ns": 24256,
+   "host": {
+    "kind": "sync",
+    "syncs": 4,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 5,
+    "event_waits": 2,
+    "api_calls": 21
+   },
+   "gap_us": 24.256
+  },
+  {
+   "src": 36,
+   "dst": 37,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "join_probe",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": false,
+   "wr_src": 1152.0,
+   "dram_wr_src": 0,
+   "rd_dst": 67328.0,
+   "roundtrip": 1152.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 24192,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 24.192
+  },
+  {
+   "src": 37,
+   "dst": 38,
+   "kind": "same-thread",
+   "src_sub": "join_probe",
+   "dst_sub": "join_retrieve",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 40000.0,
+   "dram_wr_src": 0,
+   "rd_dst": 76800.0,
+   "roundtrip": 40000.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 9888,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 6
+   },
+   "gap_us": 9.888
+  },
+  {
+   "src": 38,
+   "dst": 39,
+   "kind": "same-thread",
+   "src_sub": "join_retrieve",
+   "dst_sub": "gather",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 81440.0,
+   "dram_wr_src": 0,
+   "rd_dst": 245760.0,
+   "roundtrip": 81440.0,
+   "launches_src": 2,
+   "launches_dst": 4,
+   "gap_ns": 22272,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 4,
+    "event_waits": 0,
+    "api_calls": 11
+   },
+   "gap_us": 22.272
+  },
+  {
+   "src": 39,
+   "dst": 40,
+   "kind": "same-thread",
+   "src_sub": "gather",
+   "dst_sub": "expr_cast",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 203200.0,
+   "dram_wr_src": 0,
+   "rd_dst": 29952.0,
+   "roundtrip": 29952.0,
+   "launches_src": 4,
+   "launches_dst": 1,
+   "gap_ns": 22816,
+   "host": {
+    "kind": "sync",
+    "syncs": 1,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 5,
+    "event_waits": 0,
+    "api_calls": 12
+   },
+   "gap_us": 22.816
+  },
+  {
+   "src": 41,
+   "dst": 42,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "join_probe",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": false,
+   "wr_src": 565152.0,
+   "dram_wr_src": 0,
+   "rd_dst": 385792.0,
+   "roundtrip": 385792.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 21024,
+   "host": {
+    "kind": "sync",
+    "syncs": 3,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 12
+   },
+   "gap_us": 21.024
+  },
+  {
+   "src": 42,
+   "dst": 43,
+   "kind": "same-thread",
+   "src_sub": "join_probe",
+   "dst_sub": "join_retrieve",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 175872.0,
+   "dram_wr_src": 0,
+   "rd_dst": 213248.0,
+   "roundtrip": 175872.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 9024,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 6
+   },
+   "gap_us": 9.024
+  },
+  {
+   "src": 43,
+   "dst": 44,
+   "kind": "same-thread",
+   "src_sub": "join_retrieve",
+   "dst_sub": "gather",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 357024.0,
+   "dram_wr_src": 0,
+   "rd_dst": 1807872.0,
+   "roundtrip": 357024.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 17440,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 4,
+    "event_waits": 0,
+    "api_calls": 11
+   },
+   "gap_us": 17.44
+  },
+  {
+   "src": 45,
+   "dst": 46,
+   "kind": "same-thread",
+   "src_sub": "dynf_probe_mask",
+   "dst_sub": "mask_compact",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2262656.0,
+   "dram_wr_src": 0,
+   "rd_dst": 2062592.0,
+   "roundtrip": 2062592.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 187104,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 5
+   },
+   "gap_us": 187.104
+  },
+  {
+   "src": 46,
+   "dst": 47,
+   "kind": "same-thread",
+   "src_sub": "mask_compact",
+   "dst_sub": "gather",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2968352.0,
+   "dram_wr_src": 0,
+   "rd_dst": 19662336.0,
+   "roundtrip": 2968352.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 34560,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 2,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 34.56
+  },
+  {
+   "src": 49,
+   "dst": 50,
+   "kind": "same-thread",
+   "src_sub": "pred_string",
+   "dst_sub": "mask_compact",
+   "src_op": "FILTER",
+   "dst_op": "FILTER",
+   "intra_op": true,
+   "wr_src": 200000.0,
+   "dram_wr_src": 0,
+   "rd_dst": 262144.0,
+   "roundtrip": 200000.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 960,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 2,
+    "frees": 3,
+    "event_waits": 0,
+    "api_calls": 8
+   },
+   "gap_us": 0.96
+  },
+  {
+   "src": 50,
+   "dst": 51,
+   "kind": "same-thread",
+   "src_sub": "mask_compact",
+   "dst_sub": "gather",
+   "src_op": "FILTER",
+   "dst_op": "FILTER",
+   "intra_op": true,
+   "wr_src": 294560.0,
+   "dram_wr_src": 0,
+   "rd_dst": 338688.0,
+   "roundtrip": 294560.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 24864,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 2,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 24.864
+  },
+  {
+   "src": 52,
+   "dst": 53,
+   "kind": "same-thread",
+   "src_sub": "dynf_probe_mask",
+   "dst_sub": "mask_compact",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2262336.0,
+   "dram_wr_src": 0,
+   "rd_dst": 2063360.0,
+   "roundtrip": 2063360.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 19584,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 2,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 5
+   },
+   "gap_us": 19.584
+  },
+  {
+   "src": 53,
+   "dst": 54,
+   "kind": "same-thread",
+   "src_sub": "mask_compact",
+   "dst_sub": "gather",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": true,
+   "wr_src": 2959904.0,
+   "dram_wr_src": 0,
+   "rd_dst": 19608576.0,
+   "roundtrip": 2959904.0,
+   "launches_src": 2,
+   "launches_dst": 6,
+   "gap_ns": 36096,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 2,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 7
+   },
+   "gap_us": 36.096
+  },
+  {
+   "src": 56,
+   "dst": 57,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "offsets_scan",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": true,
+   "wr_src": 2307200.0,
+   "dram_wr_src": 0,
+   "rd_dst": 202240.0,
+   "roundtrip": 202240.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 1664,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 0,
+    "event_waits": 0,
+    "api_calls": 2
+   },
+   "gap_us": 1.664
+  },
+  {
+   "src": 57,
+   "dst": 58,
+   "kind": "same-thread",
+   "src_sub": "offsets_scan",
+   "dst_sub": "join_build",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": true,
+   "wr_src": 176576.0,
+   "dram_wr_src": 0,
+   "rd_dst": 897536.0,
+   "roundtrip": 176576.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 5344,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 1,
+    "event_waits": 0,
+    "api_calls": 3
+   },
+   "gap_us": 5.344
+  },
+  {
+   "src": 58,
+   "dst": 59,
+   "kind": "same-thread",
+   "src_sub": "join_build",
+   "dst_sub": "join_probe_count",
+   "src_op": "HASH_JOIN_BUILD",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": false,
+   "wr_src": 351744.0,
+   "dram_wr_src": 0,
+   "rd_dst": 3543808.0,
+   "roundtrip": 351744.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 36256,
+   "host": {
+    "kind": "sync",
+    "syncs": 5,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 4,
+    "frees": 0,
+    "event_waits": 2,
+    "api_calls": 17
+   },
+   "gap_us": 36.256
+  },
+  {
+   "src": 59,
+   "dst": 60,
+   "kind": "same-thread",
+   "src_sub": "join_probe_count",
+   "dst_sub": "offsets_scan",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 2644928.0,
+   "dram_wr_src": 0,
+   "rd_dst": 1354240.0,
+   "roundtrip": 1354240.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 16064,
+   "host": {
+    "kind": "sync",
+    "syncs": 2,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 3,
+    "frees": 0,
+    "event_waits": 1,
+    "api_calls": 9
+   },
+   "gap_us": 16.064
+  },
+  {
+   "src": 60,
+   "dst": 61,
+   "kind": "same-thread",
+   "src_sub": "offsets_scan",
+   "dst_sub": "join_retrieve",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 2655264.0,
+   "dram_wr_src": 0,
+   "rd_dst": 4354304.0,
+   "roundtrip": 2655264.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 17824,
+   "host": {
+    "kind": "readback+sync",
+    "syncs": 1,
+    "d2h_copies": 1,
+    "d2h_bytes": 8,
+    "allocs": 2,
+    "frees": 5,
+    "event_waits": 0,
+    "api_calls": 14
+   },
+   "gap_us": 17.824
+  },
+  {
+   "src": 61,
+   "dst": 62,
+   "kind": "same-thread",
+   "src_sub": "join_retrieve",
+   "dst_sub": "gather",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_PROBE",
+   "intra_op": true,
+   "wr_src": 3246272.0,
+   "dram_wr_src": 256.0,
+   "rd_dst": 16790784.0,
+   "roundtrip": 3246272.0,
+   "launches_src": 1,
+   "launches_dst": 8,
+   "gap_ns": 1664,
+   "host": {
+    "kind": "alloc",
+    "syncs": 0,
+    "d2h_copies": 0,
+    "d2h_bytes": 0,
+    "allocs": 1,
+    "frees": 2,
+    "event_waits": 0,
+    "api_calls": 5
+   },
+   "gap_us": 1.664
+  },
+  {
+   "src": 24,
+   "dst": 1,
+   "kind": "cross-thread",
+   "src_sub": "dynf_build",
+   "dst_sub": "dynf_probe_mask",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": false,
+   "wr_src": 700032.0,
+   "dram_wr_src": 0,
+   "rd_dst": 3424256.0,
+   "roundtrip": 700032.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 48800,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 48.8
+  },
+  {
+   "src": 44,
+   "dst": 4,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "dynf_build",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "DYNF_BUILD",
+   "intra_op": false,
+   "wr_src": 1337120.0,
+   "dram_wr_src": 0,
+   "rd_dst": 462336.0,
+   "roundtrip": 462336.0,
+   "launches_src": 6,
+   "launches_dst": 2,
+   "gap_ns": 95168,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 95.168
+  },
+  {
+   "src": 62,
+   "dst": 6,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "join_build",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": false,
+   "wr_src": 12681216.0,
+   "dram_wr_src": 0,
+   "rd_dst": 27350016.0,
+   "roundtrip": 12681216.0,
+   "launches_src": 8,
+   "launches_dst": 2,
+   "gap_ns": 289727,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 289.727
+  },
+  {
+   "src": 62,
+   "dst": 22,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "expr_cast",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 12681216.0,
+   "dram_wr_src": 0,
+   "rd_dst": 10240.0,
+   "roundtrip": 10240.0,
+   "launches_src": 8,
+   "launches_dst": 1,
+   "gap_ns": 1312413,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 1312.413
+  },
+  {
+   "src": 0,
+   "dst": 23,
+   "kind": "cross-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 128.0,
+   "dram_wr_src": 0,
+   "rd_dst": 20992.0,
+   "roundtrip": 128.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 327808,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 327.808
+  },
+  {
+   "src": 51,
+   "dst": 24,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "dynf_build",
+   "src_op": "FILTER",
+   "dst_op": "DYNF_BUILD",
+   "intra_op": false,
+   "wr_src": 43968.0,
+   "dram_wr_src": 0,
+   "rd_dst": 206080.0,
+   "roundtrip": 43968.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 93120,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 93.12
+  },
+  {
+   "src": 3,
+   "dst": 25,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "join_build",
+   "src_op": "DYNAMIC_FILTER",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": false,
+   "wr_src": 439680.0,
+   "dram_wr_src": 0,
+   "rd_dst": 220160.0,
+   "roundtrip": 220160.0,
+   "launches_src": 3,
+   "launches_dst": 2,
+   "gap_ns": 181792,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 181.792
+  },
+  {
+   "src": 5,
+   "dst": 30,
+   "kind": "cross-thread",
+   "src_sub": "dynf_build",
+   "dst_sub": "dynf_probe_mask",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": false,
+   "wr_src": 2194336.0,
+   "dram_wr_src": 0,
+   "rd_dst": 13055488.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 152127,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 152.127
+  },
+  {
+   "src": 44,
+   "dst": 33,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "expr_cast",
+   "src_op": "HASH_JOIN_PROBE",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 1337120.0,
+   "dram_wr_src": 0,
+   "rd_dst": 230400.0,
+   "roundtrip": 230400.0,
+   "launches_src": 6,
+   "launches_dst": 1,
+   "gap_ns": 582495,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 582.495
+  },
+  {
+   "src": 21,
+   "dst": 34,
+   "kind": "cross-thread",
+   "src_sub": "gather",
+   "dst_sub": "sort",
+   "src_op": "GROUP_BY",
+   "dst_op": "ORDER/SORT",
+   "intra_op": false,
+   "wr_src": 6432.0,
+   "dram_wr_src": 0,
+   "rd_dst": 97792.0,
+   "roundtrip": 6432.0,
+   "launches_src": 5,
+   "launches_dst": 2,
+   "gap_ns": 435808,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 435.808
+  },
+  {
+   "src": 23,
+   "dst": 36,
+   "kind": "cross-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "join_build",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": false,
+   "wr_src": 40000.0,
+   "dram_wr_src": 0,
+   "rd_dst": 19968.0,
+   "roundtrip": 19968.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 123807,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 123.807
+  },
+  {
+   "src": 29,
+   "dst": 41,
+   "kind": "cross-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "join_build",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": false,
+   "wr_src": 175872.0,
+   "dram_wr_src": 0,
+   "rd_dst": 203776.0,
+   "roundtrip": 175872.0,
+   "launches_src": 1,
+   "launches_dst": 2,
+   "gap_ns": 154624,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 154.624
+  },
+  {
+   "src": 5,
+   "dst": 45,
+   "kind": "cross-thread",
+   "src_sub": "dynf_build",
+   "dst_sub": "dynf_probe_mask",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": false,
+   "wr_src": 2194336.0,
+   "dram_wr_src": 0,
+   "rd_dst": 13044736.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 54239,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 54.239
+  },
+  {
+   "src": 33,
+   "dst": 48,
+   "kind": "cross-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 440352.0,
+   "dram_wr_src": 0,
+   "rd_dst": 231168.0,
+   "roundtrip": 231168.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 21760,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 21.76
+  },
+  {
+   "src": 5,
+   "dst": 52,
+   "kind": "cross-thread",
+   "src_sub": "dynf_build",
+   "dst_sub": "dynf_probe_mask",
+   "src_op": "DYNF_BUILD",
+   "dst_op": "DYNAMIC_FILTER",
+   "intra_op": false,
+   "wr_src": 2194336.0,
+   "dram_wr_src": 0,
+   "rd_dst": 13042176.0,
+   "roundtrip": 2194336.0,
+   "launches_src": 2,
+   "launches_dst": 1,
+   "gap_ns": 248511,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 248.511
+  },
+  {
+   "src": 48,
+   "dst": 55,
+   "kind": "cross-thread",
+   "src_sub": "expr_cast",
+   "dst_sub": "expr_cast",
+   "src_op": "PROJECTION",
+   "dst_op": "PROJECTION",
+   "intra_op": false,
+   "wr_src": 441984.0,
+   "dram_wr_src": 0,
+   "rd_dst": 230400.0,
+   "roundtrip": 230400.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 3232,
+   "host": {
+    "kind": "thread-hand-off"
+   },
+   "gap_us": 3.232
+  },
+  {
+   "src": 55,
+   "dst": 56,
+   "kind": "same-thread-new-task",
+   "src_sub": "expr_cast",
+   "dst_sub": "join_build",
+   "src_op": "PROJECTION",
+   "dst_op": "HASH_JOIN_BUILD",
+   "intra_op": false,
+   "wr_src": 440128.0,
+   "dram_wr_src": 0,
+   "rd_dst": 897536.0,
+   "roundtrip": 440128.0,
+   "launches_src": 1,
+   "launches_dst": 1,
+   "gap_ns": 435904,
+   "host": {
+    "kind": "task-boundary"
+   },
+   "gap_us": 435.904
+  }
+ ],
+ "notes": "nodes = segments (one operator's kernels on one host thread within one task); steps = sub-operators. wr = SM global store+atomic bytes (ncu); dram_rd cold-L2 (ncu); times real-clock (nsys iter 5). same-thread edges: medium confidence; cross-thread edges: low confidence (latest plan-compatible producer)."
+}

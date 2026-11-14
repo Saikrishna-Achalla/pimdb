@@ -1,0 +1,40 @@
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         5.0      44.0      28.018       43.46    3865    8580
+   5         5.0      47.0      28.626       45.84    3865    8580
+   6         5.0      46.0      28.959       45.48    3865    8580
+   7         5.0      46.0      28.372       45.02    3865    8580
+   8         7.0      44.0      28.311       42.86    3865    8580
+median: planning 5.0 ms, engine 46.0 ms, GPU busy 28.372 ms (62% of the engine window), first->last GPU op 45.02 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                     6712.0   61.920
+  cudaMallocFromPoolAsync                   5761.0   19.074
+  cuStreamSynchronize                        407.0   12.220
+  cudaLaunchKernel                          3865.0   10.625
+  cudaMemcpyBatchAsync                      3648.0    9.782
+  cudaFreeAsync                             5761.0    6.944
+  cudaMemcpyAsync                            952.0    3.514
+  cudaEventRecord                           3190.0    1.689
+  cudaStreamWaitEvent                       2906.2    1.678
+  cudaStreamGetDevice                       3306.0    0.450
+  cudaEventCreateWithFlags                   285.8    0.436
+  cudaMemsetAsync                            986.0    0.425
+  cudaEventDestroy                           284.0    0.383
+  cuKernelGetName                           3865.0    0.222
+  cudaEventSynchronize                        56.0    0.131
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 42102.4 us of kernels):
+  single_pass_shmem_aggs_kernel                  13590.3 us  32.3%
+  transform_kernel                                5898.2 us  14.0%
+  static_kernel                                   5174.4 us  12.3%
+  mapping_indices_kernel                          5112.7 us  12.1%
+  BatchMemcpyKernel                               3512.5 us   8.3%
+  DeviceScanKernel                                3266.3 us   7.8%
+  DeviceReduceKernel                              2697.4 us   6.4%
+  DeviceSelectSweepKernel                         1022.7 us   2.4%
+  DeviceReduceSingleTileKernel                     415.5 us   1.0%
+  MultiBlockBatchMemcpyKernel                      386.0 us   0.9%
+  single_thread_kernel                             263.7 us   0.6%
+  gather_chars_fn_char_parallel                    226.8 us   0.5%

@@ -1,0 +1,13 @@
+OP compact arg=49 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 mask_count compact items=60175 lbytes=60295
+LAUNCH 1 scan_tiles compact items=30 lbytes=244
+HOST readback_count bytes=4
+LAUNCH 2 mask_scatter compact items=60175 lbytes=296227
+LAUNCHES 3
+DONE
+PERF: core0: lmem: reqs=166956, bank_stalls=98113 (utility=63%)
+PERF: core0: coalescer: misses=2818
+PERF: memory: reqs=5450 (r=994, w=4456), lat=719.9 cyc, bank_st=0 (utility=100%)
+PERF: instrs=133175, cycles=349813, IPC=0.381
+wall_s=2.176575076 rc=0

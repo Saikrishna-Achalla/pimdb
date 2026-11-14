@@ -1,0 +1,268 @@
+query,sf,config,rows,row_id,description,time_us,ratio,label,note
+Q6,0.01,S1,60175,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S1,284.271,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,0.01,S1,60175,a_noprecheck,(a') baseline without the min/max pre-check launches,253.078,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,0.01,S1,60175,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,60.175,,modeled,14.00 B/row (the bytes the PIM chain reads) / 14.0 GB/s; stream reaches 98.6 % in calibration
+Q6,0.01,S1,60175,b_gpuwidth,"(b2) same, at the GPU's own column format",60.175,,modeled,14 B/row (Vortex/cuDF widths) / 14.0 GB/s
+Q6,0.01,S1,60175,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),22.7383,,modeled (simulated 1 ch / channels),q6_main op/host; 0.4375 channels
+Q6,0.01,S1,60175,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),9.1611,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,0.01,S1,60175,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",40.8366,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,0.01,S1,60175,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",141.8491,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,0.01,S1,60175,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",19.0651,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,0.01,S1,60175,f,(f) owner's fused command (non-compliant reference: query-specific fusion),8.2171,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,0.01,S1,60175,a/c,simulated baseline vs PIM operator-at-a-time,,12.5019,modeled speedup,
+Q6,0.01,S1,60175,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,31.0301,modeled speedup,
+Q6,0.01,S1,60175,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,27.6252,modeled speedup,
+Q6,0.01,S1,60175,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.5685,modeled speedup,
+Q6,0.01,S1,60175,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.5685,modeled speedup,
+Q6,0.01,S1,60175,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.6464,modeled speedup,
+Q6,0.01,S1,60175,a/e,simulated baseline vs PIM Sirius mirror,,6.9612,modeled speedup,
+Q6,0.01,S1,60175,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4736,modeled speedup,
+Q6,0.01,S1,60175,a/f,simulated baseline vs fused reference (not compliant),,34.5949,modeled speedup,
+Q6,0.01,S4,60175,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S4,191.748,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,0.01,S4,60175,a_noprecheck,(a') baseline without the min/max pre-check launches,161.738,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,0.01,S4,60175,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,15.0437,,modeled,14.00 B/row (the bytes the PIM chain reads) / 56.0 GB/s; stream reaches 93.9 % in calibration
+Q6,0.01,S4,60175,b_gpuwidth,"(b2) same, at the GPU's own column format",15.0437,,modeled,14 B/row (Vortex/cuDF widths) / 56.0 GB/s
+Q6,0.01,S4,60175,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),5.6846,,modeled (simulated 1 ch / channels),q6_main op/host; 1.75 channels
+Q6,0.01,S4,60175,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),2.2903,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,0.01,S4,60175,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",10.2091,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,0.01,S4,60175,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",35.4623,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,0.01,S4,60175,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",4.7663,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,0.01,S4,60175,f,(f) owner's fused command (non-compliant reference: query-specific fusion),2.0543,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,0.01,S4,60175,a/c,simulated baseline vs PIM operator-at-a-time,,33.7313,modeled speedup,
+Q6,0.01,S4,60175,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,83.7223,modeled speedup,
+Q6,0.01,S4,60175,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,70.6191,modeled speedup,
+Q6,0.01,S4,60175,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.5685,modeled speedup,
+Q6,0.01,S4,60175,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.5685,modeled speedup,
+Q6,0.01,S4,60175,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.6464,modeled speedup,
+Q6,0.01,S4,60175,a/e,simulated baseline vs PIM Sirius mirror,,18.782,modeled speedup,
+Q6,0.01,S4,60175,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4736,modeled speedup,
+Q6,0.01,S4,60175,a/f,simulated baseline vs fused reference (not compliant),,93.3405,modeled speedup,
+Q6,0.1,S1,600572,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S1,1197.741,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,0.1,S1,600572,a_noprecheck,(a') baseline without the min/max pre-check launches,1161.259,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,0.1,S1,600572,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,600.572,,modeled,14.00 B/row (the bytes the PIM chain reads) / 14.0 GB/s; stream reaches 98.6 % in calibration
+Q6,0.1,S1,600572,b_gpuwidth,"(b2) same, at the GPU's own column format",600.572,,modeled,14 B/row (Vortex/cuDF widths) / 14.0 GB/s
+Q6,0.1,S1,600572,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),222.3383,,modeled (simulated 1 ch / channels),q6_main op/host; 0.4375 channels
+Q6,0.1,S1,600572,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),88.4366,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,0.1,S1,600572,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",407.2206,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,0.1,S1,600572,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",1409.3029,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,0.1,S1,600572,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",188.8251,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,0.1,S1,600572,f,(f) owner's fused command (non-compliant reference: query-specific fusion),82.9806,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,0.1,S1,600572,a/c,simulated baseline vs PIM operator-at-a-time,,5.387,modeled speedup,
+Q6,0.1,S1,600572,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,13.5435,modeled speedup,
+Q6,0.1,S1,600572,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,13.131,modeled speedup,
+Q6,0.1,S1,600572,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.791,modeled speedup,
+Q6,0.1,S1,600572,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.791,modeled speedup,
+Q6,0.1,S1,600572,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.7012,modeled speedup,
+Q6,0.1,S1,600572,a/e,simulated baseline vs PIM Sirius mirror,,2.9413,modeled speedup,
+Q6,0.1,S1,600572,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4748,modeled speedup,
+Q6,0.1,S1,600572,a/f,simulated baseline vs fused reference (not compliant),,14.434,modeled speedup,
+Q6,0.1,S4,600572,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S4,425.23,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,0.1,S4,600572,a_noprecheck,(a') baseline without the min/max pre-check launches,393.764,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,0.1,S4,600572,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,150.143,,modeled,14.00 B/row (the bytes the PIM chain reads) / 56.0 GB/s; stream reaches 93.9 % in calibration
+Q6,0.1,S4,600572,b_gpuwidth,"(b2) same, at the GPU's own column format",150.143,,modeled,14 B/row (Vortex/cuDF widths) / 56.0 GB/s
+Q6,0.1,S4,600572,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),55.5846,,modeled (simulated 1 ch / channels),q6_main op/host; 1.75 channels
+Q6,0.1,S4,600572,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),22.1091,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,0.1,S4,600572,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",101.8051,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,0.1,S4,600572,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",352.3257,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,0.1,S4,600572,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",47.2063,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,0.1,S4,600572,f,(f) owner's fused command (non-compliant reference: query-specific fusion),20.7451,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,0.1,S4,600572,a/c,simulated baseline vs PIM operator-at-a-time,,7.6501,modeled speedup,
+Q6,0.1,S4,600572,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,19.2332,modeled speedup,
+Q6,0.1,S4,600572,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,17.81,modeled speedup,
+Q6,0.1,S4,600572,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.791,modeled speedup,
+Q6,0.1,S4,600572,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.791,modeled speedup,
+Q6,0.1,S4,600572,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.7012,modeled speedup,
+Q6,0.1,S4,600572,a/e,simulated baseline vs PIM Sirius mirror,,4.1769,modeled speedup,
+Q6,0.1,S4,600572,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4748,modeled speedup,
+Q6,0.1,S4,600572,a/f,simulated baseline vs fused reference (not compliant),,20.4978,modeled speedup,
+Q6,1.0,S1,6001215,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S1,10676.609,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,1.0,S1,6001215,a_noprecheck,(a') baseline without the min/max pre-check launches,10581.463,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,1.0,S1,6001215,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,6001.215,,modeled,14.00 B/row (the bytes the PIM chain reads) / 14.0 GB/s; stream reaches 98.6 % in calibration
+Q6,1.0,S1,6001215,b_gpuwidth,"(b2) same, at the GPU's own column format",6001.215,,modeled,14 B/row (Vortex/cuDF widths) / 14.0 GB/s
+Q6,1.0,S1,6001215,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),2215.6891,,modeled (simulated 1 ch / channels),q6_main op/host; 0.4375 channels
+Q6,1.0,S1,6001215,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),881.3394,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,1.0,S1,6001215,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",4072.2743,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,1.0,S1,6001215,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",14080.9554,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,1.0,S1,6001215,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",1885.6023,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,1.0,S1,6001215,f,(f) owner's fused command (non-compliant reference: query-specific fusion),829.3806,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,1.0,S1,6001215,a/c,simulated baseline vs PIM operator-at-a-time,,4.8186,modeled speedup,
+Q6,1.0,S1,6001215,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,12.1141,modeled speedup,
+Q6,1.0,S1,6001215,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,12.0061,modeled speedup,
+Q6,1.0,S1,6001215,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.8092,modeled speedup,
+Q6,1.0,S1,6001215,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.8092,modeled speedup,
+Q6,1.0,S1,6001215,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.7085,modeled speedup,
+Q6,1.0,S1,6001215,a/e,simulated baseline vs PIM Sirius mirror,,2.6218,modeled speedup,
+Q6,1.0,S1,6001215,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4737,modeled speedup,
+Q6,1.0,S1,6001215,a/f,simulated baseline vs fused reference (not compliant),,12.873,modeled speedup,
+Q6,1.0,S4,6001215,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S4,2679.951,,simulated,13 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q6,1.0,S4,6001215,a_noprecheck,(a') baseline without the min/max pre-check launches,2633.613,,simulated,"11 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q6,1.0,S4,6001215,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,1500.3038,,modeled,14.00 B/row (the bytes the PIM chain reads) / 56.0 GB/s; stream reaches 93.9 % in calibration
+Q6,1.0,S4,6001215,b_gpuwidth,"(b2) same, at the GPU's own column format",1500.3038,,modeled,14 B/row (Vortex/cuDF widths) / 56.0 GB/s
+Q6,1.0,S4,6001215,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),553.9223,,modeled (simulated 1 ch / channels),q6_main op/host; 1.75 channels
+Q6,1.0,S4,6001215,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),220.3349,,modeled (simulated 1 ch / channels),q6_main tile/seq
+Q6,1.0,S4,6001215,e,"(e) PIM Sirius mirror: 2 casts + 64x64 multiply with write-back + masked sum, tile-at-a-time",1018.0686,,modeled (simulated 1 ch / channels),q6_mirror_sirius tile/seq (compaction+gathers still replaced by the mask)
+Q6,1.0,S4,6001215,e_op,"(e-op) PIM Sirius mirror, operator-at-a-time",3520.2389,,modeled (simulated 1 ch / channels),q6_mirror_sirius op/host
+Q6,1.0,S4,6001215,mulwb,"(e2) PIM multiply written back then masked sum, tile-at-a-time",471.4006,,modeled (simulated 1 ch / channels),q6_mulwb_sum tile/seq
+Q6,1.0,S4,6001215,f,(f) owner's fused command (non-compliant reference: query-specific fusion),207.3451,,modeled (simulated 1 ch / channels),"q6_owner_fused; reads 16.0 B/row (qty int32), not the same widths"
+Q6,1.0,S4,6001215,a/c,simulated baseline vs PIM operator-at-a-time,,4.8381,modeled speedup,
+Q6,1.0,S4,6001215,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,12.1631,modeled speedup,
+Q6,1.0,S4,6001215,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,11.9528,modeled speedup,
+Q6,1.0,S4,6001215,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,6.8092,modeled speedup,
+Q6,1.0,S4,6001215,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,6.8092,modeled speedup,
+Q6,1.0,S4,6001215,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,2.7085,modeled speedup,
+Q6,1.0,S4,6001215,a/e,simulated baseline vs PIM Sirius mirror,,2.6324,modeled speedup,
+Q6,1.0,S4,6001215,b_samebytes/e,GPU floor vs PIM Sirius mirror,,1.4737,modeled speedup,
+Q6,1.0,S4,6001215,a/f,simulated baseline vs fused reference (not compliant),,12.9251,modeled speedup,
+Q1,0.01,S1,60175,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S1,2630.042,,simulated,42 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q1,0.01,S1,60175,a_noprecheck,(a') baseline without the min/max pre-check launches,2311.615,,simulated,"32 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q1,0.01,S1,60175,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,85.9643,,modeled,20.00 B/row (the bytes the PIM chain reads) / 14.0 GB/s; stream reaches 98.6 % in calibration
+Q1,0.01,S1,60175,b_gpuwidth,"(b2) same, at the GPU's own column format",120.35,,modeled,28 B/row (Vortex/cuDF widths) / 14.0 GB/s
+Q1,0.01,S1,60175,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),153.1566,,modeled (simulated 1 ch / channels),q1_main op/host; 0.4375 channels
+Q1,0.01,S1,60175,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),54.6126,,modeled (simulated 1 ch / channels),q1_main tile/seq
+Q1,0.01,S1,60175,a/c,simulated baseline vs PIM operator-at-a-time,,17.1722,modeled speedup,
+Q1,0.01,S1,60175,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,48.1582,modeled speedup,
+Q1,0.01,S1,60175,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,42.3275,modeled speedup,
+Q1,0.01,S1,60175,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,1.5741,modeled speedup,
+Q1,0.01,S1,60175,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,2.2037,modeled speedup,
+Q1,0.01,S1,60175,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,0.5613,modeled speedup,
+Q1,0.01,S4,60175,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S4,1088.709,,simulated,42 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q1,0.01,S4,60175,a_noprecheck,(a') baseline without the min/max pre-check launches,897.33,,simulated,"32 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q1,0.01,S4,60175,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,21.4911,,modeled,20.00 B/row (the bytes the PIM chain reads) / 56.0 GB/s; stream reaches 93.9 % in calibration
+Q1,0.01,S4,60175,b_gpuwidth,"(b2) same, at the GPU's own column format",30.0875,,modeled,28 B/row (Vortex/cuDF widths) / 56.0 GB/s
+Q1,0.01,S4,60175,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),38.2891,,modeled (simulated 1 ch / channels),q1_main op/host; 1.75 channels
+Q1,0.01,S4,60175,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),13.6531,,modeled (simulated 1 ch / channels),q1_main tile/seq
+Q1,0.01,S4,60175,a/c,simulated baseline vs PIM operator-at-a-time,,28.4339,modeled speedup,
+Q1,0.01,S4,60175,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,79.7405,modeled speedup,
+Q1,0.01,S4,60175,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,65.7233,modeled speedup,
+Q1,0.01,S4,60175,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,1.5741,modeled speedup,
+Q1,0.01,S4,60175,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,2.2037,modeled speedup,
+Q1,0.01,S4,60175,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,0.5613,modeled speedup,
+Q1,0.1,S1,600572,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S1,21246.671,,simulated,42 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q1,0.1,S1,600572,a_noprecheck,(a') baseline without the min/max pre-check launches,19391.564,,simulated,"32 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q1,0.1,S1,600572,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,857.96,,modeled,20.00 B/row (the bytes the PIM chain reads) / 14.0 GB/s; stream reaches 98.6 % in calibration
+Q1,0.1,S1,600572,b_gpuwidth,"(b2) same, at the GPU's own column format",1201.144,,modeled,28 B/row (Vortex/cuDF widths) / 14.0 GB/s
+Q1,0.1,S1,600572,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),1512.7291,,modeled (simulated 1 ch / channels),q1_main op/host; 0.4375 channels
+Q1,0.1,S1,600572,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),536.8183,,modeled (simulated 1 ch / channels),q1_main tile/seq
+Q1,0.1,S1,600572,a/c,simulated baseline vs PIM operator-at-a-time,,14.0453,modeled speedup,
+Q1,0.1,S1,600572,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,39.5789,modeled speedup,
+Q1,0.1,S1,600572,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,36.1231,modeled speedup,
+Q1,0.1,S1,600572,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,1.5982,modeled speedup,
+Q1,0.1,S1,600572,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,2.2375,modeled speedup,
+Q1,0.1,S1,600572,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,0.5672,modeled speedup,
+Q1,0.1,S4,600572,a,(a) baseline: Sirius-structured multi-kernel chain on Vortex S4,5691.74,,simulated,42 launches incl. simx launch cost; incl. Sirius min/max SUM pre-check; host steps not included
+Q1,0.1,S4,600572,a_noprecheck,(a') baseline without the min/max pre-check launches,5107.768,,simulated,"32 launches; PIM chains leave the pre-check out (planner policy), so (a') is the like-for-like baseline"
+Q1,0.1,S4,600572,b_samebytes,(b) baseline lower bound: GPU reads each input byte once at the configured bandwidth,214.49,,modeled,20.00 B/row (the bytes the PIM chain reads) / 56.0 GB/s; stream reaches 93.9 % in calibration
+Q1,0.1,S4,600572,b_gpuwidth,"(b2) same, at the GPU's own column format",300.286,,modeled,28 B/row (Vortex/cuDF widths) / 56.0 GB/s
+Q1,0.1,S4,600572,c,(c) PIM operator-at-a-time (one general operator sweeps the table per command sequence),378.1823,,modeled (simulated 1 ch / channels),q1_main op/host; 1.75 channels
+Q1,0.1,S4,600572,d,(d) PIM tile-at-a-time (in-memory sequencer runs the chain on each open row),134.2046,,modeled (simulated 1 ch / channels),q1_main tile/seq
+Q1,0.1,S4,600572,a/c,simulated baseline vs PIM operator-at-a-time,,15.0503,modeled speedup,
+Q1,0.1,S4,600572,a/d,simulated baseline vs PIM tile-at-a-time (mixes in the plan change: masked aggregate replaces compaction+gather),,42.4109,modeled speedup,
+Q1,0.1,S4,600572,a_noprecheck/d,like-for-like work (no pre-check) vs PIM tile-at-a-time (still mixes in the plan change),,38.0596,modeled speedup,
+Q1,0.1,S4,600572,b_samebytes/d,HONEST PIM-specific: best memory-bound GPU plan reading the same bytes vs PIM tile-at-a-time,,1.5982,modeled speedup,
+Q1,0.1,S4,600572,b_gpuwidth/d,GPU floor at cuDF widths vs PIM tile-at-a-time (includes the narrower PIM format),,2.2375,modeled speedup,
+Q1,0.1,S4,600572,b_samebytes/c,GPU floor vs PIM operator-at-a-time,,0.5672,modeled speedup,
+Q6,0.01,S4 vs S1,,check a/c,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,2.6981,check,"S1 12.50x, S4 33.73x; Vortex S4/S1 time 1.48x vs 4.00x ideal"
+Q6,0.01,S4 vs S1,,check a/d,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,2.6981,check,"S1 31.03x, S4 83.72x; Vortex S4/S1 time 1.48x vs 4.00x ideal"
+Q6,0.01,S4 vs S1,,check b_samebytes/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0,check,"S1 6.57x, S4 6.57x"
+Q6,0.01,S4 vs S1,,check a/e,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,2.6981,check,"S1 6.96x, S4 18.78x; Vortex S4/S1 time 1.48x vs 4.00x ideal"
+Q6,0.1,S4 vs S1,,check a/c,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,1.4201,check,"S1 5.39x, S4 7.65x; Vortex S4/S1 time 2.82x vs 4.00x ideal"
+Q6,0.1,S4 vs S1,,check a/d,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,1.4201,check,"S1 13.54x, S4 19.23x; Vortex S4/S1 time 2.82x vs 4.00x ideal"
+Q6,0.1,S4 vs S1,,check b_samebytes/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0,check,"S1 6.79x, S4 6.79x"
+Q6,0.1,S4 vs S1,,check a/e,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,1.4201,check,"S1 2.94x, S4 4.18x; Vortex S4/S1 time 2.82x vs 4.00x ideal"
+Q6,1.0,S4 vs S1,,check a/c,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.004,check,"S1 4.82x, S4 4.84x; Vortex S4/S1 time 3.98x vs 4.00x ideal"
+Q6,1.0,S4 vs S1,,check a/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.004,check,"S1 12.11x, S4 12.16x; Vortex S4/S1 time 3.98x vs 4.00x ideal"
+Q6,1.0,S4 vs S1,,check b_samebytes/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0,check,"S1 6.81x, S4 6.81x"
+Q6,1.0,S4 vs S1,,check a/e,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.004,check,"S1 2.62x, S4 2.63x; Vortex S4/S1 time 3.98x vs 4.00x ideal"
+Q1,0.01,S4 vs S1,,check a/c,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,1.6558,check,"S1 17.17x, S4 28.43x; Vortex S4/S1 time 2.42x vs 4.00x ideal"
+Q1,0.01,S4 vs S1,,check a/d,scaling invariance: S4 speedup / S1 speedup (OUTSIDE 10 %),,1.6558,check,"S1 48.16x, S4 79.74x; Vortex S4/S1 time 2.42x vs 4.00x ideal"
+Q1,0.01,S4 vs S1,,check b_samebytes/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0,check,"S1 1.57x, S4 1.57x"
+Q1,0.1,S4 vs S1,,check a/c,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0716,check,"S1 14.05x, S4 15.05x; Vortex S4/S1 time 3.73x vs 4.00x ideal"
+Q1,0.1,S4 vs S1,,check a/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0716,check,"S1 39.58x, S4 42.41x; Vortex S4/S1 time 3.73x vs 4.00x ideal"
+Q1,0.1,S4 vs S1,,check b_samebytes/d,scaling invariance: S4 speedup / S1 speedup (within 10 %),,1.0,check,"S1 1.60x, S4 1.60x"
+Q6,0.01,5070 (projected),60175,a,full RTX 5070: a,5.9223,,modeled,S1 x 1/48: assumes simx time scales linearly with cores+bandwidth (S4/S1 checks this) INCLUDING the simx launch cost
+Q6,0.01,5070 (projected),60175,a_noprecheck,full RTX 5070: a_noprecheck,5.2725,,modeled,(a') x 1/48
+Q6,0.01,5070 (projected),60175,a_launchfix,full RTX 5070: a_launchfix,35.9361,,modeled,(S1 - simx launch cost 119.34 us)/48 + 13 launches x 2.5 us real-GPU launch time (modeled)
+Q6,0.01,5070 (projected),60175,a_fromS4,full RTX 5070: a_fromS4,15.979,,modeled,S4 x 1/12 (cross-check of the linear projection)
+Q6,0.01,5070 (projected),60175,b_samebytes,full RTX 5070: b_samebytes,1.2536,,modeled,same bytes / 672 GB/s
+Q6,0.01,5070 (projected),60175,b_gpuwidth,full RTX 5070: b_gpuwidth,1.2536,,modeled,cuDF-width bytes / 672 GB/s
+Q6,0.01,5070 (projected),60175,c,full RTX 5070: c,0.4737,,modeled,1 ch / 21 (linear in channels)
+Q6,0.01,5070 (projected),60175,d,full RTX 5070: d,0.1909,,modeled,1 ch / 21 (linear in channels)
+Q6,0.01,5070 (projected),60175,e,full RTX 5070: e,0.8508,,modeled,1 ch / 21
+Q6,0.01,5070 (projected),60175,e_op,full RTX 5070: e_op,2.9552,,modeled,1 ch / 21
+Q6,0.01,5070 (projected),60175,mulwb,full RTX 5070: mulwb,0.3972,,modeled,1 ch / 21
+Q6,0.01,5070 (projected),60175,f,full RTX 5070: f,0.1712,,modeled,1 ch / 21
+Q6,0.01,5070 (projected),60175,a/c,full-5070 speedup,,12.5019,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.01,5070 (projected),60175,a/d,full-5070 speedup,,31.0301,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.01,5070 (projected),60175,a_noprecheck/d,full-5070 speedup,,27.6252,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.01,5070 (projected),60175,b_samebytes/d,full-5070 speedup,,6.5685,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.01,5070 (projected),60175,a/e,full-5070 speedup,,6.9612,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.01,5070 (projected),60175,a_launchfix/d,full-5070 speedup,,188.2878,modeled speedup,
+Q6,0.01,5070 (projected),60175,a_fromS4/d,full-5070 speedup,,83.7223,modeled speedup,
+Q6,0.1,5070 (projected),600572,a,full RTX 5070: a,24.9529,,modeled,S1 x 1/48: assumes simx time scales linearly with cores+bandwidth (S4/S1 checks this) INCLUDING the simx launch cost
+Q6,0.1,5070 (projected),600572,a_noprecheck,full RTX 5070: a_noprecheck,24.1929,,modeled,(a') x 1/48
+Q6,0.1,5070 (projected),600572,a_launchfix,full RTX 5070: a_launchfix,54.9667,,modeled,(S1 - simx launch cost 119.34 us)/48 + 13 launches x 2.5 us real-GPU launch time (modeled)
+Q6,0.1,5070 (projected),600572,a_fromS4,full RTX 5070: a_fromS4,35.4358,,modeled,S4 x 1/12 (cross-check of the linear projection)
+Q6,0.1,5070 (projected),600572,b_samebytes,full RTX 5070: b_samebytes,12.5119,,modeled,same bytes / 672 GB/s
+Q6,0.1,5070 (projected),600572,b_gpuwidth,full RTX 5070: b_gpuwidth,12.5119,,modeled,cuDF-width bytes / 672 GB/s
+Q6,0.1,5070 (projected),600572,c,full RTX 5070: c,4.632,,modeled,1 ch / 21 (linear in channels)
+Q6,0.1,5070 (projected),600572,d,full RTX 5070: d,1.8424,,modeled,1 ch / 21 (linear in channels)
+Q6,0.1,5070 (projected),600572,e,full RTX 5070: e,8.4838,,modeled,1 ch / 21
+Q6,0.1,5070 (projected),600572,e_op,full RTX 5070: e_op,29.3605,,modeled,1 ch / 21
+Q6,0.1,5070 (projected),600572,mulwb,full RTX 5070: mulwb,3.9339,,modeled,1 ch / 21
+Q6,0.1,5070 (projected),600572,f,full RTX 5070: f,1.7288,,modeled,1 ch / 21
+Q6,0.1,5070 (projected),600572,a/c,full-5070 speedup,,5.387,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.1,5070 (projected),600572,a/d,full-5070 speedup,,13.5435,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.1,5070 (projected),600572,a_noprecheck/d,full-5070 speedup,,13.131,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.1,5070 (projected),600572,b_samebytes/d,full-5070 speedup,,6.791,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.1,5070 (projected),600572,a/e,full-5070 speedup,,2.9413,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,0.1,5070 (projected),600572,a_launchfix/d,full-5070 speedup,,29.8338,modeled speedup,
+Q6,0.1,5070 (projected),600572,a_fromS4/d,full-5070 speedup,,19.2332,modeled speedup,
+Q6,1.0,5070 (projected),6001215,a,full RTX 5070: a,222.4294,,modeled,S1 x 1/48: assumes simx time scales linearly with cores+bandwidth (S4/S1 checks this) INCLUDING the simx launch cost
+Q6,1.0,5070 (projected),6001215,a_noprecheck,full RTX 5070: a_noprecheck,220.4471,,modeled,(a') x 1/48
+Q6,1.0,5070 (projected),6001215,a_launchfix,full RTX 5070: a_launchfix,252.4431,,modeled,(S1 - simx launch cost 119.34 us)/48 + 13 launches x 2.5 us real-GPU launch time (modeled)
+Q6,1.0,5070 (projected),6001215,a_fromS4,full RTX 5070: a_fromS4,223.3293,,modeled,S4 x 1/12 (cross-check of the linear projection)
+Q6,1.0,5070 (projected),6001215,b_samebytes,full RTX 5070: b_samebytes,125.0253,,modeled,same bytes / 672 GB/s
+Q6,1.0,5070 (projected),6001215,b_gpuwidth,full RTX 5070: b_gpuwidth,125.0253,,modeled,cuDF-width bytes / 672 GB/s
+Q6,1.0,5070 (projected),6001215,c,full RTX 5070: c,46.1602,,modeled,1 ch / 21 (linear in channels)
+Q6,1.0,5070 (projected),6001215,d,full RTX 5070: d,18.3612,,modeled,1 ch / 21 (linear in channels)
+Q6,1.0,5070 (projected),6001215,e,full RTX 5070: e,84.839,,modeled,1 ch / 21
+Q6,1.0,5070 (projected),6001215,e_op,full RTX 5070: e_op,293.3532,,modeled,1 ch / 21
+Q6,1.0,5070 (projected),6001215,mulwb,full RTX 5070: mulwb,39.2834,,modeled,1 ch / 21
+Q6,1.0,5070 (projected),6001215,f,full RTX 5070: f,17.2788,,modeled,1 ch / 21
+Q6,1.0,5070 (projected),6001215,d_direct,full RTX 5070: d_direct,18.399,,simulated,simulated 1/21 share on one channel (AiM builder's direct check)
+Q6,1.0,5070 (projected),6001215,c_direct,full RTX 5070: c_direct,46.154,,simulated,simulated 1/21 share on one channel
+Q6,1.0,5070 (projected),6001215,a/c,full-5070 speedup,,4.8186,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,1.0,5070 (projected),6001215,a/d,full-5070 speedup,,12.1141,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,1.0,5070 (projected),6001215,a_noprecheck/d,full-5070 speedup,,12.0061,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,1.0,5070 (projected),6001215,b_samebytes/d,full-5070 speedup,,6.8092,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,1.0,5070 (projected),6001215,a/e,full-5070 speedup,,2.6218,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q6,1.0,5070 (projected),6001215,a_launchfix/d,full-5070 speedup,,13.7487,modeled speedup,
+Q6,1.0,5070 (projected),6001215,a_fromS4/d,full-5070 speedup,,12.1631,modeled speedup,
+Q1,0.01,5070 (projected),60175,a,full RTX 5070: a,54.7925,,modeled,S1 x 1/48: assumes simx time scales linearly with cores+bandwidth (S4/S1 checks this) INCLUDING the simx launch cost
+Q1,0.01,5070 (projected),60175,a_noprecheck,full RTX 5070: a_noprecheck,48.1586,,modeled,(a') x 1/48
+Q1,0.01,5070 (projected),60175,a_launchfix,full RTX 5070: a_launchfix,151.76,,modeled,(S1 - simx launch cost 385.56 us)/48 + 42 launches x 2.5 us real-GPU launch time (modeled)
+Q1,0.01,5070 (projected),60175,a_fromS4,full RTX 5070: a_fromS4,90.7258,,modeled,S4 x 1/12 (cross-check of the linear projection)
+Q1,0.01,5070 (projected),60175,b_samebytes,full RTX 5070: b_samebytes,1.7909,,modeled,same bytes / 672 GB/s
+Q1,0.01,5070 (projected),60175,b_gpuwidth,full RTX 5070: b_gpuwidth,2.5073,,modeled,cuDF-width bytes / 672 GB/s
+Q1,0.01,5070 (projected),60175,c,full RTX 5070: c,3.1908,,modeled,1 ch / 21 (linear in channels)
+Q1,0.01,5070 (projected),60175,d,full RTX 5070: d,1.1378,,modeled,1 ch / 21 (linear in channels)
+Q1,0.01,5070 (projected),60175,a/c,full-5070 speedup,,17.1722,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.01,5070 (projected),60175,a/d,full-5070 speedup,,48.1582,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.01,5070 (projected),60175,a_noprecheck/d,full-5070 speedup,,42.3275,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.01,5070 (projected),60175,b_samebytes/d,full-5070 speedup,,1.5741,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.01,5070 (projected),60175,a_launchfix/d,full-5070 speedup,,133.3847,modeled speedup,
+Q1,0.01,5070 (projected),60175,a_fromS4/d,full-5070 speedup,,79.7405,modeled speedup,
+Q1,0.1,5070 (projected),600572,a,full RTX 5070: a,442.639,,modeled,S1 x 1/48: assumes simx time scales linearly with cores+bandwidth (S4/S1 checks this) INCLUDING the simx launch cost
+Q1,0.1,5070 (projected),600572,a_noprecheck,full RTX 5070: a_noprecheck,403.9909,,modeled,(a') x 1/48
+Q1,0.1,5070 (projected),600572,a_launchfix,full RTX 5070: a_launchfix,539.6065,,modeled,(S1 - simx launch cost 385.56 us)/48 + 42 launches x 2.5 us real-GPU launch time (modeled)
+Q1,0.1,5070 (projected),600572,a_fromS4,full RTX 5070: a_fromS4,474.3117,,modeled,S4 x 1/12 (cross-check of the linear projection)
+Q1,0.1,5070 (projected),600572,b_samebytes,full RTX 5070: b_samebytes,17.8742,,modeled,same bytes / 672 GB/s
+Q1,0.1,5070 (projected),600572,b_gpuwidth,full RTX 5070: b_gpuwidth,25.0238,,modeled,cuDF-width bytes / 672 GB/s
+Q1,0.1,5070 (projected),600572,c,full RTX 5070: c,31.5152,,modeled,1 ch / 21 (linear in channels)
+Q1,0.1,5070 (projected),600572,d,full RTX 5070: d,11.1837,,modeled,1 ch / 21 (linear in channels)
+Q1,0.1,5070 (projected),600572,a/c,full-5070 speedup,,14.0453,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.1,5070 (projected),600572,a/d,full-5070 speedup,,39.5789,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.1,5070 (projected),600572,a_noprecheck/d,full-5070 speedup,,36.1231,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.1,5070 (projected),600572,b_samebytes/d,full-5070 speedup,,1.5982,modeled speedup,"identical to S1 by construction for a/x and b/x (both sides scaled linearly: 48/1 cores, 21/0.4375 channels)"
+Q1,0.1,5070 (projected),600572,a_launchfix/d,full-5070 speedup,,48.2493,modeled speedup,
+Q1,0.1,5070 (projected),600572,a_fromS4/d,full-5070 speedup,,42.4109,modeled speedup,

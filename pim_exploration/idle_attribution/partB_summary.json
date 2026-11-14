@@ -1,0 +1,301 @@
+{
+ "runs": {
+  "q6_plain": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 4.0,
+   "timer_ms_mean": 4.153333333333333,
+   "timer_ms_min": 4.0,
+   "timer_ms_max": 5.0,
+   "n": 150
+  },
+  "q6_cudatrace": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 5.0,
+   "timer_ms_mean": 5.006666666666667,
+   "timer_ms_min": 4.0,
+   "timer_ms_max": 7.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    12868,
+    36073201,
+    1048576
+   ],
+   "trace_kernels": 7353
+  },
+  "q6_cpu": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 5.0,
+   "timer_ms_mean": 5.126666666666667,
+   "timer_ms_min": 4.0,
+   "timer_ms_max": 7.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    12699,
+    445077,
+    612
+   ],
+   "trace_kernels": 7191
+  },
+  "q3_plain": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 7.0,
+   "timer_ms_mean": 7.48,
+   "timer_ms_min": 6.0,
+   "timer_ms_max": 10.0,
+   "n": 150
+  },
+  "q3_cudatrace": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 9.0,
+   "timer_ms_mean": 8.853333333333333,
+   "timer_ms_min": 7.0,
+   "timer_ms_max": 10.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    5791,
+    39711752,
+    1048576
+   ],
+   "trace_kernels": 14411
+  },
+  "q3_cpu": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 9.0,
+   "timer_ms_mean": 9.313333333333333,
+   "timer_ms_min": 7.0,
+   "timer_ms_max": 12.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    5508,
+    167229,
+    192
+   ],
+   "trace_kernels": 14076
+  },
+  "q9_plain": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 11.0,
+   "timer_ms_mean": 11.18,
+   "timer_ms_min": 9.0,
+   "timer_ms_max": 14.0,
+   "n": 150
+  },
+  "q9_cudatrace": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 12.0,
+   "timer_ms_mean": 12.42,
+   "timer_ms_min": 10.0,
+   "timer_ms_max": 16.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    6960,
+    63545050,
+    1048576
+   ],
+   "trace_kernels": 22712
+  },
+  "q9_cpu": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 14.0,
+   "timer_ms_mean": 13.84,
+   "timer_ms_min": 11.0,
+   "timer_ms_max": 18.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    6426,
+    305235,
+    192
+   ],
+   "trace_kernels": 22032
+  },
+  "q18_plain": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 10.0,
+   "timer_ms_mean": 10.146666666666667,
+   "timer_ms_min": 8.0,
+   "timer_ms_max": 12.0,
+   "n": 150
+  },
+  "q18_cudatrace": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 12.0,
+   "timer_ms_mean": 11.566666666666666,
+   "timer_ms_min": 9.0,
+   "timer_ms_max": 14.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    7988,
+    19243801,
+    1048576
+   ],
+   "trace_kernels": 19677
+  },
+  "q18_cpu": {
+   "checks_ok": true,
+   "failed": {},
+   "timer_ms_median": 13.0,
+   "timer_ms_mean": 12.813333333333333,
+   "timer_ms_min": 10.0,
+   "timer_ms_max": 16.0,
+   "n": 150,
+   "trace_h2d_copies_bytes_max": [
+    7803,
+    305694,
+    384
+   ],
+   "trace_kernels": 19431
+  }
+ },
+ "queries": {
+  "6": {
+   "timer": {
+    "plain": 4.0,
+    "cudatrace": 5.0,
+    "cpu": 5.0
+   },
+   "gpu_idle_ms": 1.6493562866666667,
+   "engine_ms": 2.2241660000000003,
+   "planning_ms": 2.768382,
+   "gpu_busy_ms": 0.7504465,
+   "groups_ms": {
+    "i_cuda_sync_copy_event_other": 0.4899074496440017,
+    "profiler_artifact": 0.3170318338040783,
+    "ii_alloc": 0.16890157293778074,
+    "iii_sirius_operator_host": 0.11533608784477233,
+    "iii_cudf_host": 0.06958868655869145,
+    "i_cuda_launch": 0.056893976218729894,
+    "iv_sirius_sched_handoff": 0.4228176652405388,
+    "v_duckdb_plan_result": 0.0317568815045442,
+    "vi_unattributed": 0.005728101007055806
+   },
+   "groups_sum_ms": 1.6779622547601931,
+   "all_off_cpu_ms": 0.3591893,
+   "all_off_cpu_blocked_in": {
+    "pthread_cond_wait": 0.30125702000000004,
+    "pthread_cond_wait+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 0.027486593333333333,
+    "unknown": 0.014237833333333333,
+    "pthread_cond_wait+pthread_mutex_lock+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 0.0072103666666666665,
+    "pthread_cond_wait+pthread_rwlock_wrlock": 0.00395864,
+    "pthread_cond_wait+pthread_mutex_lock+pthread_rwlock_wrlock": 0.0021139266666666667,
+    "in_cuda_api+pthread_cond_wait+pthread_mutex_lock": 0.0008693333333333334,
+    "pthread_cond_wait+unknown": 0.00076992,
+    "in_cuda_api+pthread_cond_wait": 0.00049916,
+    "pthread_cond_wait+pthread_mutex_lock": 0.00041262,
+    "in_cuda_api+pthread_cond_wait+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 0.00014101333333333332,
+    "pthread_cond_wait+pthread_mutex_lock+pthread_rwlock_rdlock": 0.00011494
+   }
+  },
+  "3": {
+   "timer": {
+    "plain": 7.0,
+    "cudatrace": 9.0,
+    "cpu": 9.0
+   },
+   "gpu_idle_ms": 4.417706559999999,
+   "engine_ms": 5.3385155,
+   "planning_ms": 3.629199,
+   "gpu_busy_ms": 1.265774,
+   "groups_ms": {
+    "profiler_artifact": 0.8313184761094345,
+    "i_cuda_sync_copy_event_other": 0.8897329736040359,
+    "iii_sirius_operator_host": 0.3966840712215036,
+    "i_cuda_launch": 0.23060363716822774,
+    "ii_alloc": 0.4539531864122881,
+    "iii_cudf_host": 0.18845356838780938,
+    "iv_sirius_sched_handoff": 1.3647955636227502,
+    "v_duckdb_plan_result": 0.12369541505669081,
+    "vi_unattributed": 0.022984004896568277
+   },
+   "groups_sum_ms": 4.502220896479309,
+   "all_off_cpu_ms": 1.1018157866666667,
+   "all_off_cpu_blocked_in": {
+    "pthread_cond_wait": 1.08336908,
+    "unknown": 0.014824046666666667,
+    "in_cuda_api+pthread_cond_wait": 0.0014527000000000001,
+    "pthread_cond_wait+unknown": 0.0011412133333333335,
+    "pthread_cond_wait+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 0.0005768866666666666,
+    "pthread_cond_wait+pthread_mutex_lock": 0.00041304000000000004,
+    "pthread_cond_wait+pthread_rwlock_wrlock": 2.87e-05,
+    "in_cuda_api+pthread_cond_wait+pthread_rwlock_wrlock": 1.012e-05
+   }
+  },
+  "9": {
+   "timer": {
+    "plain": 11.0,
+    "cudatrace": 12.0,
+    "cpu": 14.0
+   },
+   "gpu_idle_ms": 7.099046759999999,
+   "engine_ms": 8.394601999999999,
+   "planning_ms": 5.0671135,
+   "gpu_busy_ms": 1.640847,
+   "groups_ms": {
+    "profiler_artifact": 1.3234239063177637,
+    "i_cuda_sync_copy_event_other": 1.3711946565543933,
+    "iii_sirius_operator_host": 0.6963476397409074,
+    "i_cuda_launch": 0.351883434389621,
+    "ii_alloc": 0.7853026817821757,
+    "iii_cudf_host": 0.30926072062857407,
+    "iv_sirius_sched_handoff": 2.3309815016330915,
+    "vi_unattributed": 0.04012440194201813,
+    "v_duckdb_plan_result": 0.027412605992291297
+   },
+   "groups_sum_ms": 7.235931548980836,
+   "all_off_cpu_ms": 1.7410770866666667,
+   "all_off_cpu_blocked_in": {
+    "pthread_cond_wait": 1.7118004266666667,
+    "unknown": 0.01386834,
+    "in_cuda_api+pthread_cond_wait": 0.008062873333333333,
+    "pthread_cond_wait+unknown": 0.003914473333333333,
+    "pthread_cond_wait+pthread_mutex_lock": 0.0030060399999999998,
+    "pthread_cond_wait+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 0.0004067266666666667,
+    "pthread_cond_wait+pthread_mutex_lock+pthread_rwlock_wrlock": 1.1313333333333332e-05,
+    "pthread_cond_wait+pthread_rwlock_wrlock": 5e-06,
+    "pthread_cond_wait+pthread_mutex_lock+pthread_rwlock_rdlock+pthread_rwlock_wrlock": 1.8933333333333333e-06
+   }
+  },
+  "18": {
+   "timer": {
+    "plain": 10.0,
+    "cudatrace": 12.0,
+    "cpu": 13.0
+   },
+   "gpu_idle_ms": 6.4795755,
+   "engine_ms": 8.158065,
+   "planning_ms": 4.372482,
+   "gpu_busy_ms": 1.86102,
+   "groups_ms": {
+    "i_cuda_sync_copy_event_other": 1.482255683920867,
+    "profiler_artifact": 1.1336605007718812,
+    "i_cuda_launch": 0.4449945584322821,
+    "iii_sirius_operator_host": 0.5678978174278689,
+    "iii_cudf_host": 0.29726847372823545,
+    "ii_alloc": 0.6078565124707713,
+    "iv_sirius_sched_handoff": 2.0098056689100146,
+    "vi_unattributed": 0.026336412641910913,
+    "v_duckdb_plan_result": 0.03829374941611184
+   },
+   "groups_sum_ms": 6.608369377719943,
+   "all_off_cpu_ms": 1.5961423600000002,
+   "all_off_cpu_blocked_in": {
+    "pthread_cond_wait": 1.56604248,
+    "unknown": 0.013449466666666667,
+    "pthread_cond_wait+unknown": 0.0086965,
+    "in_cuda_api+pthread_cond_wait": 0.007202106666666667,
+    "pthread_cond_wait+pthread_rwlock_wrlock": 0.0007116666666666667,
+    "pthread_cond_wait+pthread_mutex_lock": 4.014e-05
+   }
+  }
+ }
+}

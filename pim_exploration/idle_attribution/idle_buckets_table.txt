@@ -1,0 +1,102 @@
+Per-query wall decomposition of one warm iteration (median of the 5 measured nsys iterations; ms)
+timer = DuckDB .timer real (1 ms res); pre = qb(log) -> first CUDA call; engine = CUDA-trace span; post = remainder of timer
+  q  timer   pre engine  post | gpuact launch  alloc memcpy   sync  event  other hostonly | idle%eng host%idle eng_untraced
+  2   17.0  5.21  11.11  0.68 |   1.32   0.89   0.55   0.72   1.02   0.23   0.06     6.26 |    88.1%     64.0%          7.0
+  3   10.0  3.99   6.54 -0.53 |   1.26   0.37   0.24   0.28   0.43   0.09   0.03     3.84 |    80.8%     72.7%          3.0
+  4    8.0  3.16   4.89 -0.05 |   0.42   0.21   0.12   0.23   0.48   0.07   0.05     3.27 |    91.5%     73.0%          2.0
+  5   14.0  4.54   9.11  0.34 |   0.65   0.53   0.34   0.37   0.70   0.14   0.04     6.00 |    92.9%     70.9%          4.0
+  6    6.0  2.87   2.79  0.34 |   0.75   0.13   0.20   0.39   0.28   0.12   0.01     0.90 |    73.2%     44.0%          2.0
+  7   14.0  4.81   8.91  0.28 |   1.29   0.56   0.38   0.52   1.15   0.15   0.04     4.96 |    85.6%     65.1%          6.0
+  8   16.0  5.76  10.27 -0.03 |   0.74   0.59   0.38   0.43   0.78   0.18   0.05     7.07 |    92.8%     74.2%          4.0
+  9   14.0  4.73   9.33 -0.06 |   1.64   0.45   0.33   0.35   0.60   0.14   0.04     5.45 |    82.5%     70.8%          5.0
+ 10   14.0  4.03   9.61  0.37 |   2.00   0.62   0.47   0.62   1.35   0.18   0.04     4.29 |    79.2%     56.4%          7.0
+ 11   15.0  4.15   8.35  2.50 |   0.35   0.56   0.29   0.32   0.52   0.13   0.04     5.79 |    95.8%     72.4%          3.5
+ 12    8.0  3.20   5.43 -0.63 |   1.13   0.26   0.23   0.34   0.70   0.10   0.02     2.75 |    79.2%     63.9%          3.0
+ 13    7.0  3.11   3.89  0.00 |   0.45   0.15   0.08   0.15   0.28   0.04   0.02     2.67 |    88.4%     77.6%          2.0
+ 14    8.0  2.98   4.14  0.88 |   0.46   0.26   0.21   0.45   0.31   0.11   0.02     2.73 |    89.0%     74.1%          2.0
+ 15    9.0  3.07   5.47  0.47 |   0.65   0.32   0.23   0.34   0.64   0.10   0.02     3.14 |    88.2%     65.2%          3.0
+ 16   22.0  3.25  15.33  3.43 |   7.49   0.51   0.39   0.52   0.97   0.15   0.04     5.17 |    51.2%     65.9%         13.0
+ 17   11.0  4.29   5.85  0.86 |   0.28   0.37   0.19   0.31   0.44   0.15   0.03     4.13 |    95.2%     74.2%          3.0
+ 18   13.0  4.36   8.86 -0.22 |   1.87   0.40   0.23   0.33   0.66   0.09   0.03     5.20 |    78.9%     74.3%          5.0
+ 19   12.0  4.07   7.18  0.75 |   1.85   0.30   0.45   0.60   1.01   0.18   0.02     2.77 |    74.2%     52.0%          6.0
+ 20   14.0  4.45   9.68 -0.13 |   1.31   0.48   0.38   0.44   0.76   0.18   0.07     5.52 |    86.5%     65.9%          5.0
+ 21   16.0  5.98   9.90  0.12 |   2.29   0.58   0.36   0.42   0.80   0.18   0.07     5.22 |    76.9%     68.5%          6.0
+ 22   11.0  3.74   6.86  0.41 |   0.56   0.36   0.24   0.43   0.72   0.11   0.03     4.43 |    91.8%     70.5%          4.0
+SUM  259.0 85.72 163.50  9.79 |  28.72   8.91   6.28   8.56  14.61   2.83   0.79    91.57 |    82.4%     67.9%
+Shares of the 21-query summed GPU-idle engine time: launch 6.6%, alloc 4.7%, memcpy 6.4%, sync 10.8%, event 2.1%, other 0.6%, host_only 67.9%
+Shares of summed .timer wall: pre 33.1%, gpu_active 11.1%, idle 52.0%, post 3.8%
+nsys CUDA-trace inflation of the engine window: sum nsys engine 163.5 ms vs untraced timing-run engine (log, 1 ms) 95.5 ms -> x1.71; summed .timer under nsys 259.0 vs untraced warm 163.5 ms
+  CUDA API calls per iteration summed over queries: 33664; (nsys engine - untraced engine)/API call = 2.02 us (inferred tracing cost per call, includes 1 ms log rounding)
+
+Counts per warm iteration (median)
+  q  kern   ops apicalls  syncs memset H2D<=16B  H2D>16B D2H<=16B  D2H>16B   D2D    H2D_B    D2H_B   LAR LARmed_us LARp90_us plan_ops pipes
+  2   229   476     2658    528      5       57       58      110        1    16     6858    18516   129       9.9      31.6       49    34
+  3    92   180      947    175      5       25       11       31        2    14     1093      422    36      10.2      73.2       25    16
+  4    56   117      692    141      4       11       18       23        2     3     2231    16616    34      10.0      29.8       18    13
+  5   133   247     1459    312      4       25       25       45        2    13     2419      407    69      11.0      63.2       46    36
+  6    47   195      994    224      3       77        6       47        3    12     2909      263    23      16.9      38.1        5     3
+  7   207   454     2481    496     15       61       52       85        4    30     8254    33424   108       8.2      26.7       48    36
+  8   172   317     1846    388      7       31       30       49        2    26     2872      326    80       9.1     381.9       61    48
+  9   144   260     1452    283      9       20       22       35        2    28     1995     6391    64      11.9     302.2       44    36
+ 10   238   523     2731    517     14       62       57      121        6    25     5981    70011   119      10.2      22.2       31    22
+ 11   168   267     1445    295      2       35       16       37        3     6     1313   439270    55      10.4      35.4       52    38
+ 12    86   231     1326    279      6       53       29       50        1     6     6322      296    47      10.5      29.8       18    12
+ 13    36    61      357     77      2        9        4        8        1     1      354      720    17      19.5     363.1       14    11
+ 14    46   154      802    182      1       45       10       36        1    15     1918      167    25      10.5      23.3       12     9
+ 15   112   262     1374    268     13       43       23       49        3    19     2613      390    55      10.4      32.5       26    20
+ 16   156   338     1768    339      4       46       38       70        3    21     6656   927035    77       9.2      26.3       27    18
+ 17    74   164      919    186      7       29       14       23        2    15     2258      154    36      11.3      54.1       27    18
+ 18   127   238     1301    244      5       32       19       36        4    15     1998    19926    59       9.3      49.7       34    24
+ 19   175   663     3833    879      5      249       60      170        1     3    23256      510    74       6.8      14.7       15     9
+ 20   142   292     1705    371      9       37       31       54        2    17     3862     9581    73       9.0      29.9       56    40
+ 21   166   299     1813    356      6       21       40       49        2    15     4081    19690    80      12.6     812.4       48    36
+ 22   124   323     1761    398      3       74       28       76        3    15     4868      570    66       7.9      18.1       42    28
+
+Per-thread time inside the engine span (all 21 queries summed, median iteration; ms)
+  duckdb           queries=17 in_api=   0.10 (of which GPU idle   0.10) not_in_api= 148.39 (GPU idle 121.97) launches=0 api_calls=53
+  gpu_pipeline_0   queries=21 in_api=  21.06 (of which GPU idle  11.29) not_in_api= 143.18 (GPU idle 124.22) launches=649 api_calls=8029
+  gpu_pipeline_1   queries=21 in_api=  19.06 (of which GPU idle  11.51) not_in_api= 145.18 (GPU idle 124.01) launches=703 api_calls=8307
+  gpu_pipeline_2   queries=21 in_api=  20.44 (of which GPU idle  10.25) not_in_api= 143.79 (GPU idle 125.26) launches=628 api_calls=7394
+  gpu_pipeline_3   queries=21 in_api=  19.84 (of which GPU idle  12.89) not_in_api= 144.40 (GPU idle 122.63) launches=750 api_calls=9861
+  task_creator_0   queries= 3 in_api=   0.10 (of which GPU idle   0.10) not_in_api=  23.75 (GPU idle  19.76) launches=0 api_calls=20
+
+Regression over 21 queries (per-query medians). slope +- SE, intercept, R^2, leave-one-out range of the first slope
+ target engine_us_nsys:
+   37.617(7.379)*launches + 2895   R2=0.578  LOO=[np.float64(35.017), np.float64(42.014)]
+   10.310(4.074)*gpu_ops + 4810   R2=0.252  LOO=[np.float64(9.259), np.float64(17.064)]
+   1.823(0.726)*api_calls + 4863   R2=0.249  LOO=[np.float64(1.624), np.float64(3.253)]
+   7.002(3.502)*sync_calls + 5472   R2=0.174  LOO=[np.float64(5.959), np.float64(15.758)]
+   117.334(31.312)*plan_ops + 3886   R2=0.425  LOO=[np.float64(106.145), np.float64(127.639)]
+   144.433(41.539)*pipelines + 4298   R2=0.389  LOO=[np.float64(128.635), np.float64(161.633)]
+   -9.790(11.966)*pinned_mb + 8670   R2=0.034  LOO=[np.float64(-14.168), np.float64(0.173)]
+   1.383(0.311)*kernel_sum_us + 5957   R2=0.510  LOO=[np.float64(1.325), np.float64(2.175)]
+   29.404(5.096)*launches + 1.021(0.199)*kernel_sum_us + 2613   R2=0.828  LOO=[np.float64(26.679), np.float64(33.513)]
+   1.200(0.559)*api_calls + 1.209(0.296)*kernel_sum_us + 4263   R2=0.610  LOO=[np.float64(0.975), np.float64(2.465)]
+   28.974(9.678)*launches + 47.264(35.195)*plan_ops + 2448   R2=0.616  LOO=[np.float64(20.72), np.float64(34.585)]
+   38.419(7.076)*launches + -12.603(7.587)*pinned_mb + 3930   R2=0.634  LOO=[np.float64(35.418), np.float64(41.785)]
+ target engine_idle_us_nsys:
+   29.289(4.688)*launches + 2610   R2=0.673  LOO=[np.float64(26.591), np.float64(33.161)]
+   7.055(2.989)*gpu_ops + 4382   R2=0.227  LOO=[np.float64(5.965), np.float64(12.698)]
+   1.293(0.527)*api_calls + 4345   R2=0.241  LOO=[np.float64(1.103), np.float64(2.509)]
+   5.060(2.526)*sync_calls + 4746   R2=0.174  LOO=[np.float64(4.193), np.float64(12.669)]
+   117.718(12.587)*plan_ops + 2505   R2=0.822  LOO=[np.float64(110.721), np.float64(121.801)]
+   148.268(17.693)*pipelines + 2838   R2=0.787  LOO=[np.float64(138.17), np.float64(154.467)]
+   -6.239(8.668)*pinned_mb + 6981   R2=0.027  LOO=[np.float64(-8.563), np.float64(-2.292)]
+   0.375(0.309)*kernel_sum_us + 5922   R2=0.072  LOO=[np.float64(0.317), np.float64(1.156)]
+   29.164(5.074)*launches + 0.016(0.199)*kernel_sum_us + 2606   R2=0.673  LOO=[np.float64(26.434), np.float64(33.271)]
+   1.189(0.555)*api_calls + 0.203(0.295)*kernel_sum_us + 4244   R2=0.260  LOO=[np.float64(0.966), np.float64(2.44)]
+   13.918(3.451)*launches + 84.059(12.551)*plan_ops + 1814   R2=0.906  LOO=[np.float64(12.069), np.float64(15.262)]
+   29.825(4.459)*launches + -8.422(4.781)*pinned_mb + 3302   R2=0.721  LOO=[np.float64(27.117), np.float64(33.017)]
+ target engine_us_untraced_log1ms:
+   28.549(7.293)*launches + 836   R2=0.446  LOO=[np.float64(25.515), np.float64(29.79)]
+   10.603(3.259)*gpu_ops + 1487   R2=0.358  LOO=[np.float64(9.587), np.float64(14.408)]
+   1.815(0.591)*api_calls + 1637   R2=0.332  LOO=[np.float64(1.706), np.float64(2.609)]
+   7.298(2.874)*sync_calls + 2136   R2=0.253  LOO=[np.float64(6.893), np.float64(12.319)]
+   44.674(34.141)*plan_ops + 3063   R2=0.083  LOO=[np.float64(36.128), np.float64(56.279)]
+   49.165(44.462)*pipelines + 3361   R2=0.060  LOO=[np.float64(36.907), np.float64(67.029)]
+   -5.474(10.435)*pinned_mb + 5042   R2=0.014  LOO=[np.float64(-16.358), np.float64(6.31)]
+   1.501(0.169)*kernel_sum_us + 2563   R2=0.806  LOO=[np.float64(1.476), np.float64(2.113)]
+   18.289(1.811)*launches + 1.276(0.071)*kernel_sum_us + 483   R2=0.971  LOO=[np.float64(16.813), np.float64(19.9)]
+   1.126(0.213)*api_calls + 1.338(0.113)*kernel_sum_us + 974   R2=0.924  LOO=[np.float64(0.983), np.float64(1.687)]
+   36.538(9.625)*launches + -43.691(35.001)*plan_ops + 1250   R2=0.491  LOO=[np.float64(28.113), np.float64(43.957)]
+   29.033(7.322)*launches + -7.600(7.851)*pinned_mb + 1460   R2=0.474  LOO=[np.float64(25.204), np.float64(31.161)]

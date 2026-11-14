@@ -1,0 +1,207 @@
+{
+ "label": "q13 sf1_pipeline(existing)",
+ "results_dir": "/home/sai/cs254_project/tpch_q1_analysis/analysis/results/q13",
+ "nsys_sqlite": "/home/sai/cs254_project/tpch_q1_analysis/analysis/results/q13/traces/q13_nsys.sqlite",
+ "warm_ms": 3.0,
+ "warm_min_ms": 3.0,
+ "warm_max_ms": 4.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 86.0,
+ "result_rows": 42,
+ "gpu_equals_cpu": true,
+ "compare_mode": "exact",
+ "timing_log_planning_ms": 1.0,
+ "timing_log_engine_ms": 2.0,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "orders": 1500000,
+  "customer": 150000
+ },
+ "pinned_bytes": 91371520,
+ "pool_peak_after_pin_bytes": 229655491,
+ "pool_peak_end_bytes": 273513216,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  36,
+  36,
+  36,
+  36,
+  36
+ ],
+ "nsys_median": {
+  "planning_ms": 1.999872,
+  "engine_ms": 4.0,
+  "gpu_busy_ms": 0.449471,
+  "kernels": 36,
+  "gpu_ops": 61,
+  "kernel_ms": 0.461247,
+  "lt5us": 23,
+  "ge100us": 2,
+  "ge100us_ms": 0.220608,
+  "grid_lt48": 16,
+  "grid_1": 13
+ },
+ "rep_iter": {
+  "iter": 5,
+  "planning_ms": 0.999936,
+  "engine_ms": 4.0,
+  "gpu_busy_ms": 0.449471,
+  "kernels": 36,
+  "gpu_ops": 61,
+  "kernel_ms": 0.451263,
+  "lt5us": 23,
+  "ge100us": 2,
+  "ge100us_ms": 0.219935,
+  "grid_lt48": 16,
+  "grid_1": 13,
+  "families": {
+   "like_multiliteral_kernel": {
+    "launches": 2,
+    "ns": 196127,
+    "phase": "string ops",
+    "grid_max": 2930,
+    "grid_min": 2930
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 3,
+    "ns": 2016,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 2,
+    "grid_min": 1
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 3,
+    "ns": 17280,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 131,
+    "grid_min": 53
+   },
+   "transform_kernel": {
+    "launches": 11,
+    "ns": 41824,
+    "phase": "gather/copy/concat",
+    "grid_max": 264,
+    "grid_min": 1
+   },
+   "DeviceReduceKernel": {
+    "launches": 2,
+    "ns": 3872,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 74,
+    "grid_min": 42
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 2,
+    "ns": 2272,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 1,
+    "ns": 992,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "accumulate_kernel": {
+    "launches": 3,
+    "ns": 36640,
+    "phase": "hash join probe",
+    "grid_max": 288,
+    "grid_min": 288
+   },
+   "emit_kernel": {
+    "launches": 1,
+    "ns": 2272,
+    "phase": "hash join probe",
+    "grid_max": 288,
+    "grid_min": 288
+   },
+   "init_found_pos_pointer": {
+    "launches": 1,
+    "ns": 672,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "find_kernel": {
+    "launches": 1,
+    "ns": 1664,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 293,
+    "grid_min": 293
+   },
+   "static_kernel": {
+    "launches": 3,
+    "ns": 2816,
+    "phase": "hash group-by/agg",
+    "grid_max": 586,
+    "grid_min": 60
+   },
+   "mapping_indices_kernel": {
+    "launches": 1,
+    "ns": 17024,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 240
+   },
+   "single_pass_shmem_aggs_kernel": {
+    "launches": 1,
+    "ns": 7456,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 240
+   },
+   "DeviceMergeSortBlockSortKernel": {
+    "launches": 1,
+    "ns": 118336,
+    "phase": "sort/top-N",
+    "grid_max": 1,
+    "grid_min": 1
+   }
+  },
+  "phases": {
+   "string ops": {
+    "launches": 2,
+    "ns": 196127
+   },
+   "cub scan/select/reduce": {
+    "launches": 11,
+    "ns": 25344
+   },
+   "gather/copy/concat": {
+    "launches": 8,
+    "ns": 39360
+   },
+   "expression eval": {
+    "launches": 3,
+    "ns": 4288
+   },
+   "hash join probe": {
+    "launches": 4,
+    "ns": 38912
+   },
+   "other": {
+    "launches": 4,
+    "ns": 3392
+   },
+   "hash group-by/agg": {
+    "launches": 3,
+    "ns": 25504
+   },
+   "sort/top-N": {
+    "launches": 1,
+    "ns": 118336
+   }
+  }
+ }
+}

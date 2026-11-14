@@ -1,0 +1,15 @@
+negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q9_nsys.sql': ["pinned tables ['nation', 'orders', 'part', 'partsupp', 'supplier'] != referenced tables ['lineitem', 'nation', 'orders', 'part', 'partsupp', 'supplier']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['nation', 'orders', 'part', 'partsupp', 'supplier'] vs referenced ['lineitem', 'nation', 'orders', 'part', 'partsupp', 'supplier']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter2: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter3: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '112', 'hits': '0', 'h2d': '630', 'miss': '43', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '112', 'hits': '478', 'h2d': '180', 'miss': '13', 'evictions': '180'}"]
+[FAIL] timing_log:no_downgrade_or_spill: 4 downgrade/spill/OOM lines in query iterations:  [downgrade] [HOST:0] memory pressure but no viable downgrade target (host full, no disk configured); backing off until memory is released. Consider configuring a disk memory space to enable spilling.
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['nation', 'orders', 'part', 'partsupp', 'supplier'] vs referenced ['lineitem', 'nation', 'orders', 'part', 'partsupp', 'supplier']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter2: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter3: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '112', 'hits': '0', 'h2d': '630', 'miss': '43', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '112', 'hits': '478', 'h2d': '180', 'miss': '13', 'evictions': '180'}"]
+[FAIL] nsys_log:no_downgrade_or_spill: 4 downgrade/spill/OOM lines in query iterations:  [downgrade] [HOST:0] memory pressure but no viable downgrade target (host full, no disk configured); backing off until memory is released. Consider configuring a disk memory space to enable spilling.
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 709 copies, 595007287 B total, largest single 5839125 B (limits: single <= 50000 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 264 copies, 12886553 B total, largest single 307200 B (result CSV is 4939 B; limit 262144 B)
+[FAIL] nsys:kernels_per_iteration_stable: measured iterations: [678, 696]
+SELFTEST: PASS (verification detected the unpinned table)

@@ -1,0 +1,16 @@
+OP filter_conj arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 filter_conj filter items=60175 lbytes=661925
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=12943 (r=9441, w=3502), lat=876.9 cyc, bank_st=0 (utility=100%)
+PERF: instrs=118554, cycles=70820, IPC=1.674
+wall_s=4.397167712 rc=0

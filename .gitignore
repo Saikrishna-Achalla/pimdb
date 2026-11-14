@@ -4,7 +4,8 @@
 
 # Nsight Compute reports: regenerable with the pipeline, and most exceed GitHub's 100 MB file limit
 *.ncu-rep
-# raw Nsight Systems stream (the .nsys-rep and .sqlite exports are kept)
+# raw Nsight Systems stream and report: both embed the full process environment (account ids, tokens) - never commit.
+# The .sqlite exports are kept, after pim_exploration/scrub_nsys_env.py removed the environment from them.
 *.qdstrm
 
 # built binaries and downloaded archives
@@ -15,3 +16,25 @@ tpch_q1_analysis/microbench/unroll_study
 
 # stale staging copy of the pipeline scripts
 tpch_q1_analysis/scripts/tpch_sf1_next/
+
+# PIM exploration: lock file, extracted paper text (third-party copyright), raw profiles
+pim_exploration/.gpu.lock
+pim_exploration/papers/*.txt
+pim_exploration/papers/*.pdf
+*.nsys-rep
+perf.data
+perf.data.old
+# raw run directories of the PIM exploration (nsys exports embed the process environment: scrub before sharing)
+pim_exploration/**/runs/
+pim_exploration/sf10_scaling/**/*.sqlite
+
+# simulation phase: regenerable caches, data exports, build clones made by the scouting step
+sim/aim_pim/cache/
+pim_exploration/sim_scout/aim_build/
+pim_exploration/sim_scout/**/cache/
+pim_exploration/sim_scout/**/home/
+pim_exploration/review/
+# raw stdout of the SF10 runs (full result dumps, 107 MB); timing.json / result.csv / the breakdown files are kept
+pim_exploration/sf10_scaling/**/traces/timing_run.txt
+pim_exploration/sf10_scaling/**/traces/duckdb_cpu_run.txt
+pim_exploration/sf10_scaling/**/traces/nsys_run.txt

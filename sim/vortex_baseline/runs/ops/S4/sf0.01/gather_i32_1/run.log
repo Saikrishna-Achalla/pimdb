@@ -1,0 +1,16 @@
+OP gather_i32 arg=1 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 gather_i32 gather4 items=1207 lbytes=14484
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=111
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=63
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=64
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=61
+PERF: memory: reqs=2023 (r=1146, w=877), lat=1362.8 cyc, bank_st=0 (utility=100%)
+PERF: instrs=7476, cycles=22931, IPC=0.326
+wall_s=3.055536154 rc=0

@@ -1,0 +1,19 @@
+OP reduce_i32 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=600572
+LAUNCH 0 reduce_sum_i32 reduce4 items=600572 lbytes=2402416
+LAUNCH 1 reduce_sum_final reduce4 items=16 lbytes=136
+HOST readback_scalar bytes=8
+RESULT sum=2161592928024
+LAUNCHES 2
+DONE
+PERF: core0: lmem: reqs=578, bank_stalls=1274 (utility=31%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=1017 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=1015 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=1000 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=264 (r=36, w=228), lat=672.5 cyc, bank_st=0 (utility=100%)
+PERF: instrs=415356, cycles=187445, IPC=2.216
+wall_s=10.178604654 rc=0

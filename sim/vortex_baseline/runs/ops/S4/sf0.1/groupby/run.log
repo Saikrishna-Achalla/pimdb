@@ -1,0 +1,35 @@
+OP groupby arg=0 cores=4 warps=32 threads=4096
+TABLE rows=600572
+LAUNCH 0 fill_i32 groupby items=16 lbytes=64
+LAUNCH 1 fill_i64 groupby items=64 lbytes=512
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=87 target=88 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x000055845c571580 HEAD_ADDR=0x000055845c581600 CMPL_ADDR=0x000055845c581700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000001600
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 2 gb_map_str groupby items=600572 lbytes=13212584
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=112 target=113 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x000055845c571580 HEAD_ADDR=0x000055845c581600 CMPL_ADDR=0x000055845c581700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000001c40
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 3 gb_agg_sum groupby items=600572 lbytes=16816016
+HOST readback_groupby_table bytes=64
+HOST readback_groupby_acc bytes=512
+GROUP N F 9525700 13373779584 18597 3765
+GROUP R F 378552300 533795052647 741346 148301
+GROUP N O 767982200 1082348707724 1506270 300716
+GROUP A F 377420000 532075388069 741087 147790
+LAUNCHES 4
+DONE
+PERF: core0: lmem: reqs=601600, bank_stalls=1701968 (utility=26%)
+PERF: core0: coalescer: misses=88092
+PERF: core1: lmem: reqs=601584, bank_stalls=1707536 (utility=26%)
+PERF: core1: coalescer: misses=88202
+PERF: core2: lmem: reqs=600576, bank_stalls=1700306 (utility=26%)
+PERF: core2: coalescer: misses=88406
+PERF: core3: lmem: reqs=600576, bank_stalls=1697557 (utility=26%)
+PERF: core3: coalescer: misses=88115
+PERF: memory: reqs=268685 (r=263560, w=5125), lat=1373.5 cyc, bank_st=0 (utility=100%)
+PERF: instrs=4512333, cycles=2279539, IPC=1.979
+wall_s=138.358028267 rc=0

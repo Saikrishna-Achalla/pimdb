@@ -1,0 +1,42 @@
+OP chain_q6 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=6001215
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=30 target=31 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000558954c8e580 HEAD_ADDR=0x0000558954c9e600 CMPL_ADDR=0x0000558954c9e700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x00000000000007c0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 0 filter_conj q6.filter items=6001215 lbytes=66013365
+LAUNCH 1 mask_count q6.compact items=6001215 lbytes=6001279
+LAUNCH 2 scan_tiles q6.compact items=16 lbytes=132
+HOST readback_count bytes=4
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=106 target=107 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000558954c8e580 HEAD_ADDR=0x0000558954c9e600 CMPL_ADDR=0x0000558954c9e700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000001ac0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 3 mask_scatter q6.compact items=6001215 lbytes=6457919
+LAUNCH 4 gather_i32 q6.gather_price items=114160 lbytes=1369920
+LAUNCH 5 gather_i32 q6.gather_disc items=114160 lbytes=1369920
+LAUNCH 6 cast_i32_i64 q6.cast_price items=114160 lbytes=1369920
+LAUNCH 7 cast_i32_i64 q6.cast_disc items=114160 lbytes=1369920
+LAUNCH 8 binop_i64 q6.mul items=114160 lbytes=2739840
+LAUNCH 9 reduce_minmax_i64 q6.minmax items=114160 lbytes=913536
+LAUNCH 10 reduce_minmax_final q6.minmax items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 11 reduce_sum_i64 q6.sum items=114160 lbytes=913408
+LAUNCH 12 reduce_sum_final q6.sum items=16 lbytes=136
+HOST readback_scalar bytes=8
+RESULT q6 revenue_x1e4=1231410782283 selected=114160
+LAUNCHES 13
+DONE
+PERF: core0: lmem: reqs=578, bank_stalls=218725 (utility=0%)
+PERF: core0: coalescer: misses=37432
+PERF: core1: lmem: reqs=0, bank_stalls=217344 (utility=0%)
+PERF: core1: coalescer: misses=37390
+PERF: core2: lmem: reqs=0, bank_stalls=217909 (utility=0%)
+PERF: core2: coalescer: misses=37286
+PERF: core3: lmem: reqs=0, bank_stalls=213880 (utility=0%)
+PERF: core3: coalescer: misses=36922
+PERF: memory: reqs=264 (r=36, w=228), lat=669.2 cyc, bank_st=0 (utility=100%)
+PERF: instrs=14028659, cycles=6732037, IPC=2.084
+wall_s=206.758589758 rc=0

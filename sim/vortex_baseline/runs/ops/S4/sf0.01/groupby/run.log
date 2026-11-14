@@ -1,0 +1,30 @@
+OP groupby arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 fill_i32 groupby items=16 lbytes=64
+LAUNCH 1 fill_i64 groupby items=64 lbytes=512
+LAUNCH 2 gb_map_str groupby items=60175 lbytes=1323850
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=112 target=113 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x000055b247e5e580 HEAD_ADDR=0x000055b247e6e600 CMPL_ADDR=0x000055b247e6e700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000001c40
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 3 gb_agg_sum groupby items=60175 lbytes=1684900
+HOST readback_groupby_table bytes=64
+HOST readback_groupby_acc bytes=512
+GROUP N F 897100 1238480137 1662 348
+GROUP R F 38144900 53459444535 74253 14902
+GROUP N O 76525100 107286230210 150038 30049
+GROUP A F 38045600 53234821165 74501 14876
+LAUNCHES 4
+DONE
+PERF: core0: lmem: reqs=60928, bank_stalls=174674 (utility=26%)
+PERF: core0: coalescer: misses=11891
+PERF: core1: lmem: reqs=60928, bank_stalls=174209 (utility=26%)
+PERF: core1: coalescer: misses=12217
+PERF: core2: lmem: reqs=60928, bank_stalls=177066 (utility=26%)
+PERF: core2: coalescer: misses=12200
+PERF: core3: lmem: reqs=59964, bank_stalls=170872 (utility=26%)
+PERF: core3: coalescer: misses=11695
+PERF: memory: reqs=30465 (r=26364, w=4101), lat=1284.2 cyc, bank_st=0 (utility=100%)
+PERF: instrs=509700, cycles=350345, IPC=1.455
+wall_s=24.624551847 rc=0

@@ -1,0 +1,15 @@
+OP groupby arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 fill_i32 groupby items=16 lbytes=64
+LAUNCH 1 fill_i64 groupby items=64 lbytes=512
+LAUNCH 2 gb_map_str groupby items=60175 lbytes=1323850
+LAUNCH 3 gb_agg_sum groupby items=60175 lbytes=1684900
+HOST readback_groupby_table bytes=64
+HOST readback_groupby_acc bytes=512
+GROUP N F 897100 1238480137 1662 348
+GROUP R F 38144900 53459444535 74253 14902
+GROUP N O 76525100 107286230210 150038 30049
+GROUP A F 38045600 53234821165 74501 14876
+LAUNCHES 4
+DONE
+wall_s=8.007195209 rc=0

@@ -1,0 +1,9 @@
+OP minmax_i64 arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 reduce_minmax_i64 minmax8 items=60175 lbytes=481464
+LAUNCH 1 reduce_minmax_final minmax8 items=4 lbytes=80
+HOST readback_minmax bytes=16
+RESULT min=90400 max=9494950
+LAUNCHES 2
+DONE
+wall_s=3.112556854 rc=0

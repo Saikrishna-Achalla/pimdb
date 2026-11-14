@@ -1,0 +1,18 @@
+OP compact arg=25 cores=1 warps=64 threads=2048
+TABLE rows=600572
+LAUNCH 0 mask_count compact items=600572 lbytes=600604
+LAUNCH 1 scan_tiles compact items=8 lbytes=68
+HOST readback_count bytes=4
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=82 target=83 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000558cd81b0640 HEAD_ADDR=0x0000558cd81c06c0 CMPL_ADDR=0x0000558cd81c0780
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x00000000000014c0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 2 mask_scatter compact items=600572 lbytes=1799796
+LAUNCHES 3
+DONE
+PERF: core0: lmem: reqs=120842, bank_stalls=88320 (utility=58%)
+PERF: core0: coalescer: misses=108830
+PERF: memory: reqs=56267 (r=23533, w=32734), lat=1135.7 cyc, bank_st=0 (utility=100%)
+PERF: instrs=495837, cycles=1621494, IPC=0.306
+wall_s=19.305468945 rc=0

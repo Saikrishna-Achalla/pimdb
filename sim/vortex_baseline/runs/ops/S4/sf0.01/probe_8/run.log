@@ -1,0 +1,16 @@
+OP probe arg=8 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 probe_sorted_i32 probe items=60175 lbytes=300875
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=7291 (r=3789, w=3502), lat=676.6 cyc, bank_st=0 (utility=100%)
+PERF: instrs=221776, cycles=92403, IPC=2.400
+wall_s=3.790760064 rc=0

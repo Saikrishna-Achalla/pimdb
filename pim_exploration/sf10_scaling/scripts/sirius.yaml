@@ -1,0 +1,20 @@
+# sf10_scaling copy of tpch_sf1/sirius.yaml. Only change: GPU usage_limit_fraction 0.25 -> 0.85 (10.4 GB), as in the
+# earlier Q1 SF10 study, so that SF10 pinned tables + working memory fit. NOTE: Sirius derives its batch sizes
+# (scan_task_batch_size, hash_partition_bytes, ...) as GPU capacity / 40, so this also changes the batch size;
+# SF1 control runs use this same file (see probe_settings.sh / settings_probe_*.txt).
+sirius:
+  max_concurrent_queries: 1
+  topology: { num_gpus: 1 }
+  memory:
+    gpu:
+      usage_limit_fraction: 0.85
+      reservation_limit_fraction: 1.0
+      downgrade_trigger_fraction: 0.8
+      downgrade_stop_fraction: 0.6
+    host: { capacity_bytes: 1GB, initial_number_pools: 2, pool_size: 512, block_size: 1048576 }
+  executor:
+    pipeline:     { num_threads: 4 }
+    downgrade:    { num_threads: 1 }
+    task_creator: { num_threads: 1 }
+  telemetry:
+    enable_quent: false

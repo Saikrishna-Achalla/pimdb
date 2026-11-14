@@ -1,0 +1,16 @@
+OP mask_and arg=0 cores=4 warps=32 threads=4096
+TABLE rows=600572
+LAUNCH 0 mask_and and items=600572 lbytes=1801716
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=30736 (r=18791, w=11945), lat=738.5 cyc, bank_st=0 (utility=100%)
+PERF: instrs=368968, cycles=166236, IPC=2.220
+wall_s=10.828651155 rc=0

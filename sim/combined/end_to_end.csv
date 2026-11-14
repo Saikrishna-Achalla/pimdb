@@ -1,0 +1,280 @@
+section,query,sf,case,metric,value,unit,label,basis
+host+e2e,Q6,1.0,baseline,"kernel time, S1 x 1/48",222.4294,us,modeled (from simulated),chains_totals sim_time_us / 48
+host+e2e,Q6,1.0,baseline,"kernel time, launch-cost corrected",252.4431,us,modeled,(sim - simx launch cost)/48 + 13 x 2.5 us
+host+e2e,Q6,1.0,baseline,host gaps (measured medians x chain gaps),141.2,us,modeled,2 read-back gaps x 33.6 + 10 alloc gaps x 7.4 (chains_totals.csv); one batch
+host+e2e,Q6,1.0,baseline,host gaps if size read-backs removed in software,88.8,us,modeled,all gaps priced as alloc-only gaps (notes 05/06: over-allocation / device-side sizes remove the read-back without PIM)
+host+e2e,Q6,1.0,baseline,omitted bookkeeping launches,7.5,us,modeled,3 x 2.5 us
+host+e2e,Q6,1.0,baseline,END-TO-END (kernel + host gaps + omitted),371.1294,us,modeled,
+host+e2e,Q6,1.0,baseline,"END-TO-END, software-improved host",318.7294,us,modeled,
+host+e2e,Q6,1.0,"PIM tile/sequencer, posted",PIM chain time,18.3612,us,modeled (from simulated),1 ch / 21
+host+e2e,Q6,1.0,"PIM tile/sequencer, posted",host: start+completion+params+read-out,0.609,us,modeled,0.60 us start/completion (chains.csv) + 9 host commands x 1 ns (note 09 issue model)
+host+e2e,Q6,1.0,"PIM tile/sequencer, posted",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q6,1.0,"PIM tile/sequencer, posted",END-TO-END,26.3702,us,modeled,
+host+e2e,Q6,1.0,"PIM operator/host-paced, posted",PIM chain time,46.1602,us,modeled (from simulated),1 ch / 21
+host+e2e,Q6,1.0,"PIM operator/host-paced, posted",host: gaps + issued commands,31.008,us,modeled,4 operator launches x 7.4 us + 1408 commands (simulated 1/21 share) x 1 ns
+host+e2e,Q6,1.0,"PIM operator/host-paced, posted",END-TO-END,77.1682,us,modeled,
+host+e2e,Q6,1.0,"PIM tile/sequencer, synchronous",PIM chain time,18.3612,us,modeled (from simulated),1 ch / 21
+host+e2e,Q6,1.0,"PIM tile/sequencer, synchronous",host: start+completion+params+read-out,3.3,us,modeled,0.60 us start/completion (chains.csv) + 9 host commands x 300 ns (note 09 issue model)
+host+e2e,Q6,1.0,"PIM tile/sequencer, synchronous",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q6,1.0,"PIM tile/sequencer, synchronous",END-TO-END,29.0612,us,modeled,
+host+e2e,Q6,1.0,"PIM operator/host-paced, synchronous",PIM chain time,46.1602,us,modeled (from simulated),1 ch / 21
+host+e2e,Q6,1.0,"PIM operator/host-paced, synchronous",host: gaps + issued commands,452.0,us,modeled,4 operator launches x 7.4 us + 1408 commands (simulated 1/21 share) x 300 ns
+host+e2e,Q6,1.0,"PIM operator/host-paced, synchronous",END-TO-END,498.1602,us,modeled,
+host+e2e,Q6,1.0,speedup tile/seq posted,baseline e2e / PIM e2e,14.0738,x,modeled,
+host+e2e,Q6,1.0,speedup tile/seq posted,baseline e2e (software-improved host) / PIM e2e,12.0867,x,modeled,
+host+e2e,Q6,1.0,speedup tile/seq posted,GPU floor + one launch gap / PIM e2e,5.0218,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+host+e2e,Q6,1.0,speedup tile/seq synchronous,baseline e2e / PIM e2e,12.7706,x,modeled,
+host+e2e,Q6,1.0,speedup tile/seq synchronous,baseline e2e (software-improved host) / PIM e2e,10.9675,x,modeled,
+host+e2e,Q6,1.0,speedup tile/seq synchronous,GPU floor + one launch gap / PIM e2e,4.5568,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+host+e2e,Q1,0.1,baseline,"kernel time, S1 x 1/48",442.639,us,modeled (from simulated),chains_totals sim_time_us / 48
+host+e2e,Q1,0.1,baseline,"kernel time, launch-cost corrected",539.6065,us,modeled,(sim - simx launch cost)/48 + 42 x 2.5 us
+host+e2e,Q1,0.1,baseline,host gaps (measured medians x chain gaps),513.0,us,modeled,8 read-back gaps x 33.6 + 33 alloc gaps x 7.4 (chains_totals.csv); one batch
+host+e2e,Q1,0.1,baseline,host gaps if size read-backs removed in software,303.4,us,modeled,all gaps priced as alloc-only gaps (notes 05/06: over-allocation / device-side sizes remove the read-back without PIM)
+host+e2e,Q1,0.1,baseline,omitted bookkeeping launches,42.5,us,modeled,17 x 2.5 us
+host+e2e,Q1,0.1,baseline,END-TO-END (kernel + host gaps + omitted),998.139,us,modeled,
+host+e2e,Q1,0.1,baseline,"END-TO-END, software-improved host",788.539,us,modeled,
+host+e2e,Q1,0.1,"PIM tile/sequencer, posted",PIM chain time,11.1837,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,0.1,"PIM tile/sequencer, posted",host: start+completion+params+read-out,0.797,us,modeled,0.60 us start/completion (chains.csv) + 197 host commands x 1 ns (note 09 issue model)
+host+e2e,Q1,0.1,"PIM tile/sequencer, posted",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q1,0.1,"PIM tile/sequencer, posted",END-TO-END,19.3807,us,modeled,
+host+e2e,Q1,0.1,"PIM operator/host-paced, posted",PIM chain time,31.5152,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,0.1,"PIM operator/host-paced, posted",host: gaps + issued commands,52.8706,us,modeled,7 operator launches x 7.4 us + 1071 commands (1-ch count / 21 (modeled)) x 1 ns
+host+e2e,Q1,0.1,"PIM operator/host-paced, posted",END-TO-END,84.3858,us,modeled,
+host+e2e,Q1,0.1,"PIM tile/sequencer, synchronous",PIM chain time,11.1837,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,0.1,"PIM tile/sequencer, synchronous",host: start+completion+params+read-out,59.7,us,modeled,0.60 us start/completion (chains.csv) + 197 host commands x 300 ns (note 09 issue model)
+host+e2e,Q1,0.1,"PIM tile/sequencer, synchronous",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q1,0.1,"PIM tile/sequencer, synchronous",END-TO-END,78.2837,us,modeled,
+host+e2e,Q1,0.1,"PIM operator/host-paced, synchronous",PIM chain time,31.5152,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,0.1,"PIM operator/host-paced, synchronous",host: gaps + issued commands,372.9857,us,modeled,7 operator launches x 7.4 us + 1071 commands (1-ch count / 21 (modeled)) x 300 ns
+host+e2e,Q1,0.1,"PIM operator/host-paced, synchronous",END-TO-END,404.5009,us,modeled,
+host+e2e,Q1,0.1,speedup tile/seq posted,baseline e2e / PIM e2e,51.5017,x,modeled,
+host+e2e,Q1,0.1,speedup tile/seq posted,baseline e2e (software-improved host) / PIM e2e,40.6868,x,modeled,
+host+e2e,Q1,0.1,speedup tile/seq posted,GPU floor + one launch gap / PIM e2e,1.3041,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+host+e2e,Q1,0.1,speedup tile/seq synchronous,baseline e2e / PIM e2e,12.7503,x,modeled,
+host+e2e,Q1,0.1,speedup tile/seq synchronous,baseline e2e (software-improved host) / PIM e2e,10.0728,x,modeled,
+host+e2e,Q1,0.1,speedup tile/seq synchronous,GPU floor + one launch gap / PIM e2e,0.3229,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+host+e2e,Q1,1.0,baseline,"kernel time, S1 x 1/48",4426.3898,us,modeled (from simulated),"chains_totals sim_time_us / 48 (Q1 SF1 baseline = SF0.1 simulated x 10, modeled linear in rows; Vortex Q6 per-row time fell 11 % SF0.1->SF1)"
+host+e2e,Q1,1.0,baseline,"kernel time, launch-cost corrected",4523.3571,us,modeled,(sim - simx launch cost)/48 + 42 x 2.5 us
+host+e2e,Q1,1.0,baseline,host gaps (measured medians x chain gaps),513.0,us,modeled,8 read-back gaps x 33.6 + 33 alloc gaps x 7.4 (chains_totals.csv); one batch
+host+e2e,Q1,1.0,baseline,host gaps if size read-backs removed in software,303.4,us,modeled,all gaps priced as alloc-only gaps (notes 05/06: over-allocation / device-side sizes remove the read-back without PIM)
+host+e2e,Q1,1.0,baseline,omitted bookkeeping launches,42.5,us,modeled,17 x 2.5 us
+host+e2e,Q1,1.0,baseline,END-TO-END (kernel + host gaps + omitted),4981.8898,us,modeled,
+host+e2e,Q1,1.0,baseline,"END-TO-END, software-improved host",4772.2898,us,modeled,
+host+e2e,Q1,1.0,"PIM tile/sequencer, posted",PIM chain time,111.6474,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,1.0,"PIM tile/sequencer, posted",host: start+completion+params+read-out,0.797,us,modeled,0.60 us start/completion (chains.csv) + 197 host commands x 1 ns (note 09 issue model)
+host+e2e,Q1,1.0,"PIM tile/sequencer, posted",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q1,1.0,"PIM tile/sequencer, posted",END-TO-END,119.8444,us,modeled,
+host+e2e,Q1,1.0,"PIM operator/host-paced, posted",PIM chain time,314.7756,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,1.0,"PIM operator/host-paced, posted",host: gaps + issued commands,62.617,us,modeled,7 operator launches x 7.4 us + 10817 commands (simulated 1/21 share) x 1 ns
+host+e2e,Q1,1.0,"PIM operator/host-paced, posted",END-TO-END,377.3926,us,modeled,
+host+e2e,Q1,1.0,"PIM tile/sequencer, synchronous",PIM chain time,111.6474,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,1.0,"PIM tile/sequencer, synchronous",host: start+completion+params+read-out,59.7,us,modeled,0.60 us start/completion (chains.csv) + 197 host commands x 300 ns (note 09 issue model)
+host+e2e,Q1,1.0,"PIM tile/sequencer, synchronous",host gap to launch the chain,7.4,us,modeled,"one alloc-only real-GPU gap (measured median, note 04)"
+host+e2e,Q1,1.0,"PIM tile/sequencer, synchronous",END-TO-END,178.7474,us,modeled,
+host+e2e,Q1,1.0,"PIM operator/host-paced, synchronous",PIM chain time,314.7756,us,modeled (from simulated),1 ch / 21
+host+e2e,Q1,1.0,"PIM operator/host-paced, synchronous",host: gaps + issued commands,3296.9,us,modeled,7 operator launches x 7.4 us + 10817 commands (simulated 1/21 share) x 300 ns
+host+e2e,Q1,1.0,"PIM operator/host-paced, synchronous",END-TO-END,3611.6756,us,modeled,
+host+e2e,Q1,1.0,speedup tile/seq posted,baseline e2e / PIM e2e,41.5696,x,modeled,
+host+e2e,Q1,1.0,speedup tile/seq posted,baseline e2e (software-improved host) / PIM e2e,39.8207,x,modeled,
+host+e2e,Q1,1.0,speedup tile/seq posted,GPU floor + one launch gap / PIM e2e,1.5532,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+host+e2e,Q1,1.0,speedup tile/seq synchronous,baseline e2e / PIM e2e,27.8711,x,modeled,
+host+e2e,Q1,1.0,speedup tile/seq synchronous,baseline e2e (software-improved host) / PIM e2e,26.6985,x,modeled,
+host+e2e,Q1,1.0,speedup tile/seq synchronous,GPU floor + one launch gap / PIM e2e,1.0414,x,modeled,best memory-bound GPU plan: one pass at 672 GB/s + one alloc-only gap
+amdahl,Q6,1,real GPU,wall (untraced .timer mean),3.083,ms,measured,tpch_q1_analysis/analysis/results/q6/timing.json (1 ms resolution; median 3.0)
+amdahl,Q6,1,real GPU,"planning (median, nsys run)",2.0001,ms,"measured (real GPU, nsys sqlite + timing.json)","tpch_q1_analysis/analysis/results/q6; SF1 pipeline yaml (0.25 pool, ~77 MB batches); 1 ms log stamps"
+amdahl,Q6,1,real GPU,"engine window (median, nsys run)",3.0001,ms,"measured (real GPU, nsys sqlite + timing.json)","tpch_q1_analysis/analysis/results/q6; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q6,1,real GPU,GPU busy (union kernel+copy+memset),0.7477,ms,"measured (real GPU, nsys sqlite + timing.json)","tpch_q1_analysis/analysis/results/q6; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q6,1,real GPU,kernel time summed,0.7213,ms,"measured (real GPU, nsys sqlite + timing.json)","tpch_q1_analysis/analysis/results/q6; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q6,1,real GPU,launches / scan batches,47 / 3,,"measured (real GPU, nsys sqlite + timing.json)","tpch_q1_analysis/analysis/results/q6; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: host/GPU side,0.0068,ms,"measured (real GPU, nsys sqlite + timing.json)",8 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: left out,0.0092,ms,"measured (real GPU, nsys sqlite + timing.json)",9 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: mapped,0.6443,ms,"measured (real GPU, nsys sqlite + timing.json)",12 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: mapped (variant),0.0063,ms,"measured (real GPU, nsys sqlite + timing.json)",6 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: removed,0.0158,ms,"measured (real GPU, nsys sqlite + timing.json)",6 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,kernel ms by PIM mapping status: removed (no PIM equivalent needed),0.0383,ms,"measured (real GPU, nsys sqlite + timing.json)",6 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,1,real GPU,replaceable share of GPU busy (mapped+removed),0.9127,fraction,"measured (real GPU, nsys sqlite + timing.json)",busy - union(busy without replaceable kernels); overlap-aware
+amdahl,Q6,1,real GPU,replaceable share incl. min/max pre-check,0.925,fraction,"measured (real GPU, nsys sqlite + timing.json)",pre-check is planner policy (left out by both PIM mapping and as removable in software)
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,accelerated factor s,6.8092,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU busy after,0.1655,ms,modeled,
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU-busy speedup,4.5178,x,modeled,
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall after,2.5008,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall-clock speedup,1.2328,x,modeled,
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,accelerated factor s,12.0061,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU busy after,0.1221,ms,modeled,
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU-busy speedup,6.1227,x,modeled,
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,wall after,2.4574,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,chain speedup (a')/(d) = simulated baseline / PIM tile,wall-clock speedup,1.2546,x,modeled,
+amdahl,Q6,1,speedup -> infinity (upper bound),accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,speedup -> infinity (upper bound),GPU busy after,0.0653,ms,modeled,
+amdahl,Q6,1,speedup -> infinity (upper bound),GPU-busy speedup,11.4539,x,modeled,
+amdahl,Q6,1,speedup -> infinity (upper bound),host time removed,0.0,ms,modeled,
+amdahl,Q6,1,speedup -> infinity (upper bound),wall after,2.4006,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,speedup -> infinity (upper bound),wall-clock speedup,1.2843,x,modeled,
+amdahl,Q6,1,replace by projected PIM chain time (absolute),accelerated factor s,abs,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,replace by projected PIM chain time (absolute),GPU busy after,0.0836,ms,modeled,
+amdahl,Q6,1,replace by projected PIM chain time (absolute),GPU-busy speedup,8.9395,x,modeled,
+amdahl,Q6,1,replace by projected PIM chain time (absolute),host time removed,0.0,ms,modeled,
+amdahl,Q6,1,replace by projected PIM chain time (absolute),wall after,2.4189,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,replace by projected PIM chain time (absolute),wall-clock speedup,1.2745,x,modeled,
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,accelerated factor s,6.8092,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,GPU busy after,0.1655,ms,modeled,
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,GPU-busy speedup,4.5178,x,modeled,
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,host time removed,0.4014,ms,modeled,"3 batches x (141.2 us chain gaps - 7.4 us sequencer gap) = 0.401 ms, capped at the measured GPU-idle engine time 2.252 ms"
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,wall after,2.0994,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,(b)/(d) + chain host gaps removed,wall-clock speedup,1.4685,x,modeled,
+amdahl,Q6,1,infinity + chain host gaps removed,accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 18.4 us (5070 linear, x SF/1)"
+amdahl,Q6,1,infinity + chain host gaps removed,GPU busy after,0.0653,ms,modeled,
+amdahl,Q6,1,infinity + chain host gaps removed,GPU-busy speedup,11.4539,x,modeled,
+amdahl,Q6,1,infinity + chain host gaps removed,host time removed,0.4014,ms,modeled,"3 batches x (141.2 us chain gaps - 7.4 us sequencer gap) = 0.401 ms, capped at the measured GPU-idle engine time 2.252 ms"
+amdahl,Q6,1,infinity + chain host gaps removed,wall after,1.9992,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,1,infinity + chain host gaps removed,wall-clock speedup,1.5421,x,modeled,
+amdahl,Q6,10,real GPU,wall (untraced .timer mean),12.25,ms,measured,pim_exploration/sf10_scaling/q6/timing.json (1 ms resolution; median 12.0)
+amdahl,Q6,10,real GPU,"planning (median, nsys run)",4.0,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q6; sf10_main (0.85 pool, 262 MB batches); 1 ms log stamps"
+amdahl,Q6,10,real GPU,"engine window (median, nsys run)",10.0001,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q6; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q6,10,real GPU,GPU busy (union kernel+copy+memset),6.7584,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q6; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q6,10,real GPU,kernel time summed,6.8398,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q6; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q6,10,real GPU,launches / scan batches,108 / 7,,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q6; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: host/GPU side,0.015,ms,"measured (real GPU, nsys sqlite + timing.json)",17 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: left out,0.0329,ms,"measured (real GPU, nsys sqlite + timing.json)",21 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: mapped,6.2337,ms,"measured (real GPU, nsys sqlite + timing.json)",28 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: mapped (variant),0.0421,ms,"measured (real GPU, nsys sqlite + timing.json)",14 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: removed,0.1671,ms,"measured (real GPU, nsys sqlite + timing.json)",14 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,kernel ms by PIM mapping status: removed (no PIM equivalent needed),0.3559,ms,"measured (real GPU, nsys sqlite + timing.json)",14 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q6,10,real GPU,replaceable share of GPU busy (mapped+removed),0.9762,fraction,"measured (real GPU, nsys sqlite + timing.json)",busy - union(busy without replaceable kernels); overlap-aware
+amdahl,Q6,10,real GPU,replaceable share incl. min/max pre-check,0.9808,fraction,"measured (real GPU, nsys sqlite + timing.json)",pre-check is planner policy (left out by both PIM mapping and as removable in software)
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,accelerated factor s,6.8092,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU busy after,1.1296,ms,modeled,
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU-busy speedup,5.9829,x,modeled,
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall after,6.6212,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall-clock speedup,1.8501,x,modeled,
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,accelerated factor s,12.0061,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU busy after,0.7102,ms,modeled,
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU-busy speedup,9.5162,x,modeled,
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,wall after,6.2018,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,chain speedup (a')/(d) = simulated baseline / PIM tile,wall-clock speedup,1.9752,x,modeled,
+amdahl,Q6,10,speedup -> infinity (upper bound),accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,speedup -> infinity (upper bound),GPU busy after,0.1607,ms,modeled,
+amdahl,Q6,10,speedup -> infinity (upper bound),GPU-busy speedup,42.0638,x,modeled,
+amdahl,Q6,10,speedup -> infinity (upper bound),host time removed,0.0,ms,modeled,
+amdahl,Q6,10,speedup -> infinity (upper bound),wall after,5.6522,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,speedup -> infinity (upper bound),wall-clock speedup,2.1673,x,modeled,
+amdahl,Q6,10,replace by projected PIM chain time (absolute),accelerated factor s,abs,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,replace by projected PIM chain time (absolute),GPU busy after,0.3443,ms,modeled,
+amdahl,Q6,10,replace by projected PIM chain time (absolute),GPU-busy speedup,19.6305,x,modeled,
+amdahl,Q6,10,replace by projected PIM chain time (absolute),host time removed,0.0,ms,modeled,
+amdahl,Q6,10,replace by projected PIM chain time (absolute),wall after,5.8358,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,replace by projected PIM chain time (absolute),wall-clock speedup,2.0991,x,modeled,
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,accelerated factor s,6.8092,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,GPU busy after,1.1296,ms,modeled,
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,GPU-busy speedup,5.9829,x,modeled,
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,host time removed,0.9366,ms,modeled,"7 batches x (141.2 us chain gaps - 7.4 us sequencer gap) = 0.937 ms, capped at the measured GPU-idle engine time 3.242 ms"
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,wall after,5.6846,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,(b)/(d) + chain host gaps removed,wall-clock speedup,2.155,x,modeled,
+amdahl,Q6,10,infinity + chain host gaps removed,accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 183.6 us (5070 linear, x SF/1)"
+amdahl,Q6,10,infinity + chain host gaps removed,GPU busy after,0.1607,ms,modeled,
+amdahl,Q6,10,infinity + chain host gaps removed,GPU-busy speedup,42.0638,x,modeled,
+amdahl,Q6,10,infinity + chain host gaps removed,host time removed,0.9366,ms,modeled,"7 batches x (141.2 us chain gaps - 7.4 us sequencer gap) = 0.937 ms, capped at the measured GPU-idle engine time 3.242 ms"
+amdahl,Q6,10,infinity + chain host gaps removed,wall after,4.7156,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q6,10,infinity + chain host gaps removed,wall-clock speedup,2.5977,x,modeled,
+amdahl,Q1,1,real GPU,wall (untraced .timer mean),7.583,ms,measured,pim_exploration/sf10_scaling/q1/sf1_sf1pipe/timing.json (1 ms resolution; median 8.0)
+amdahl,Q1,1,real GPU,"planning (median, nsys run)",2.0001,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1/sf1_sf1pipe; SF1 pipeline yaml (0.25 pool, ~77 MB batches); 1 ms log stamps"
+amdahl,Q1,1,real GPU,"engine window (median, nsys run)",8.0,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1/sf1_sf1pipe; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q1,1,real GPU,GPU busy (union kernel+copy+memset),3.0785,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1/sf1_sf1pipe; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q1,1,real GPU,kernel time summed,4.2028,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1/sf1_sf1pipe; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q1,1,real GPU,launches / scan batches,465 / 6,,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1/sf1_sf1pipe; SF1 pipeline yaml (0.25 pool, ~77 MB batches)"
+amdahl,Q1,1,real GPU,kernel ms by PIM mapping status: host/GPU side,0.2073,ms,"measured (real GPU, nsys sqlite + timing.json)",60 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,1,real GPU,kernel ms by PIM mapping status: left out,0.3,ms,"measured (real GPU, nsys sqlite + timing.json)",90 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,1,real GPU,kernel ms by PIM mapping status: mapped,2.422,ms,"measured (real GPU, nsys sqlite + timing.json)",128 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,1,real GPU,kernel ms by PIM mapping status: mapped (folded),0.2234,ms,"measured (real GPU, nsys sqlite + timing.json)",36 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,1,real GPU,kernel ms by PIM mapping status: removed,1.051,ms,"measured (real GPU, nsys sqlite + timing.json)",151 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,1,real GPU,replaceable share of GPU busy (mapped+removed),0.7733,fraction,"measured (real GPU, nsys sqlite + timing.json)",busy - union(busy without replaceable kernels); overlap-aware
+amdahl,Q1,1,real GPU,replaceable share incl. min/max pre-check,0.8532,fraction,"measured (real GPU, nsys sqlite + timing.json)",pre-check is planner policy (left out by both PIM mapping and as removable in software)
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,accelerated factor s,1.5982,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU busy after,2.1874,ms,modeled,
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU-busy speedup,1.4074,x,modeled,
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall after,6.6919,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall-clock speedup,1.1332,x,modeled,
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,accelerated factor s,36.1231,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU busy after,0.7637,ms,modeled,
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU-busy speedup,4.0312,x,modeled,
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,wall after,5.2682,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,chain speedup (a')/(d) = simulated baseline / PIM tile,wall-clock speedup,1.4394,x,modeled,
+amdahl,Q1,1,speedup -> infinity (upper bound),accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,speedup -> infinity (upper bound),GPU busy after,0.6978,ms,modeled,
+amdahl,Q1,1,speedup -> infinity (upper bound),GPU-busy speedup,4.412,x,modeled,
+amdahl,Q1,1,speedup -> infinity (upper bound),host time removed,0.0,ms,modeled,
+amdahl,Q1,1,speedup -> infinity (upper bound),wall after,5.2023,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,speedup -> infinity (upper bound),wall-clock speedup,1.4576,x,modeled,
+amdahl,Q1,1,replace by projected PIM chain time (absolute),accelerated factor s,abs,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,replace by projected PIM chain time (absolute),GPU busy after,0.8096,ms,modeled,
+amdahl,Q1,1,replace by projected PIM chain time (absolute),GPU-busy speedup,3.8025,x,modeled,
+amdahl,Q1,1,replace by projected PIM chain time (absolute),host time removed,0.0,ms,modeled,
+amdahl,Q1,1,replace by projected PIM chain time (absolute),wall after,5.3141,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,replace by projected PIM chain time (absolute),wall-clock speedup,1.427,x,modeled,
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,accelerated factor s,1.5982,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,GPU busy after,2.1874,ms,modeled,
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,GPU-busy speedup,1.4074,x,modeled,
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,host time removed,3.0336,ms,modeled,"6 batches x (513.0 us chain gaps - 7.4 us sequencer gap) = 3.034 ms, capped at the measured GPU-idle engine time 4.922 ms"
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,wall after,3.6583,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,(b)/(d) + chain host gaps removed,wall-clock speedup,2.0728,x,modeled,
+amdahl,Q1,1,infinity + chain host gaps removed,accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 111.8 us (5070 linear, x SF/0.1)"
+amdahl,Q1,1,infinity + chain host gaps removed,GPU busy after,0.6978,ms,modeled,
+amdahl,Q1,1,infinity + chain host gaps removed,GPU-busy speedup,4.412,x,modeled,
+amdahl,Q1,1,infinity + chain host gaps removed,host time removed,3.0336,ms,modeled,"6 batches x (513.0 us chain gaps - 7.4 us sequencer gap) = 3.034 ms, capped at the measured GPU-idle engine time 4.922 ms"
+amdahl,Q1,1,infinity + chain host gaps removed,wall after,2.1687,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,1,infinity + chain host gaps removed,wall-clock speedup,3.4966,x,modeled,
+amdahl,Q1,10,real GPU,wall (untraced .timer mean),34.5,ms,measured,pim_exploration/sf10_scaling/q1/timing.json (1 ms resolution; median 34.0)
+amdahl,Q1,10,real GPU,"planning (median, nsys run)",4.9999,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1; sf10_main (0.85 pool, 262 MB batches); 1 ms log stamps"
+amdahl,Q1,10,real GPU,"engine window (median, nsys run)",32.0,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q1,10,real GPU,GPU busy (union kernel+copy+memset),27.1028,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q1,10,real GPU,kernel time summed,44.8327,ms,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q1,10,real GPU,launches / scan batches,873 / 12,,"measured (real GPU, nsys sqlite + timing.json)","pim_exploration/sf10_scaling/q1; sf10_main (0.85 pool, 262 MB batches)"
+amdahl,Q1,10,real GPU,kernel ms by PIM mapping status: host/GPU side,0.2751,ms,"measured (real GPU, nsys sqlite + timing.json)",90 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,10,real GPU,kernel ms by PIM mapping status: left out,2.8437,ms,"measured (real GPU, nsys sqlite + timing.json)",180 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,10,real GPU,kernel ms by PIM mapping status: mapped,28.6167,ms,"measured (real GPU, nsys sqlite + timing.json)",242 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,10,real GPU,kernel ms by PIM mapping status: mapped (folded),2.7921,ms,"measured (real GPU, nsys sqlite + timing.json)",72 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,10,real GPU,kernel ms by PIM mapping status: removed,10.3173,ms,"measured (real GPU, nsys sqlite + timing.json)",289 launches; sim/aim_pim/results/sirius_to_pim_mapping.csv regexes
+amdahl,Q1,10,real GPU,replaceable share of GPU busy (mapped+removed),0.8674,fraction,"measured (real GPU, nsys sqlite + timing.json)",busy - union(busy without replaceable kernels); overlap-aware
+amdahl,Q1,10,real GPU,replaceable share incl. min/max pre-check,0.9577,fraction,"measured (real GPU, nsys sqlite + timing.json)",pre-check is planner policy (left out by both PIM mapping and as removable in software)
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,accelerated factor s,1.5982,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU busy after,18.303,ms,modeled,
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,GPU-busy speedup,1.4808,x,modeled,
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall after,25.7002,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,chain speedup (b)/(d) = same-bytes GPU floor / PIM tile,wall-clock speedup,1.3424,x,modeled,
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,accelerated factor s,36.1231,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU busy after,4.2441,ms,modeled,
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,GPU-busy speedup,6.386,x,modeled,
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,host time removed,0.0,ms,modeled,
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,wall after,11.6413,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,chain speedup (a')/(d) = simulated baseline / PIM tile,wall-clock speedup,2.9636,x,modeled,
+amdahl,Q1,10,speedup -> infinity (upper bound),accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,speedup -> infinity (upper bound),GPU busy after,3.5933,ms,modeled,
+amdahl,Q1,10,speedup -> infinity (upper bound),GPU-busy speedup,7.5426,x,modeled,
+amdahl,Q1,10,speedup -> infinity (upper bound),host time removed,0.0,ms,modeled,
+amdahl,Q1,10,speedup -> infinity (upper bound),wall after,10.9905,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,speedup -> infinity (upper bound),wall-clock speedup,3.1391,x,modeled,
+amdahl,Q1,10,replace by projected PIM chain time (absolute),accelerated factor s,abs,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,replace by projected PIM chain time (absolute),GPU busy after,4.7117,ms,modeled,
+amdahl,Q1,10,replace by projected PIM chain time (absolute),GPU-busy speedup,5.7523,x,modeled,
+amdahl,Q1,10,replace by projected PIM chain time (absolute),host time removed,0.0,ms,modeled,
+amdahl,Q1,10,replace by projected PIM chain time (absolute),wall after,12.1089,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,replace by projected PIM chain time (absolute),wall-clock speedup,2.8492,x,modeled,
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,accelerated factor s,1.5982,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,GPU busy after,18.303,ms,modeled,
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,GPU-busy speedup,1.4808,x,modeled,
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,host time removed,4.8972,ms,modeled,"12 batches x (513.0 us chain gaps - 7.4 us sequencer gap) = 6.067 ms, capped at the measured GPU-idle engine time 4.897 ms"
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,wall after,20.803,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,(b)/(d) + chain host gaps removed,wall-clock speedup,1.6584,x,modeled,
+amdahl,Q1,10,infinity + chain host gaps removed,accelerated factor s,inf,x,modeled,"Q6 from SF1 chain, Q1 from SF0.1 chain (S1); PIM abs time = 1118.4 us (5070 linear, x SF/0.1)"
+amdahl,Q1,10,infinity + chain host gaps removed,GPU busy after,3.5933,ms,modeled,
+amdahl,Q1,10,infinity + chain host gaps removed,GPU-busy speedup,7.5426,x,modeled,
+amdahl,Q1,10,infinity + chain host gaps removed,host time removed,4.8972,ms,modeled,"12 batches x (513.0 us chain gaps - 7.4 us sequencer gap) = 6.067 ms, capped at the measured GPU-idle engine time 4.897 ms"
+amdahl,Q1,10,infinity + chain host gaps removed,wall after,6.0933,ms,modeled,planning and non-replaceable kernels stay; saved kernel time assumed on the critical path (upper bound)
+amdahl,Q1,10,infinity + chain host gaps removed,wall-clock speedup,5.662,x,modeled,

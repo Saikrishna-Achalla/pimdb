@@ -1,0 +1,11 @@
+attempt,kind,run,config,cores,warps,channels,data_rate,configured_gbs,bytes_requested,dram_read_bytes,cycles,achieved_gbs,pct_of_configured,row_hit_pct,latency_cycles,latency_ns,passed,wall_s,note
+1,stream,S1_g1024,S1,1,32,4,1750,14.0,4194304,4220416,786880,13.39,95.6,78.8,,,True,5.076030098,"option C: 4 narrow GDDR6 channels @1750; 4 MB stream, 1024 threads (32 warps), 4 loads in flight per thread"
+1,stream,S1_g4096,S1,1,32,4,1750,14.0,4194304,4220544,790196,13.334,95.2,42.0,,,True,4.665113269,"same, 4096 work-items (4 rounds of the resident 1024)"
+1,stream,S1_16M_g1024,S1,1,32,4,1750,14.0,16777216,16803328,3053805,13.801,98.6,48.9,,,True,14.686305676,"same config, 16 MB stream (startup amortised) -- S1 calibration point"
+2,stream,S1_1ch7000_16M,S1_1ch7000,1,32,1,7000,14.0,16777216,16803328,3906935,10.787,77.1,77.3,,,True,17.994892135,"alternative: 1 GDDR6 channel @7000 MT/s (same 14 GB/s, fewer banks) -- worse, rejected"
+3,stream,S1_w16_16M,S1_w16,1,16,4,1750,14.0,16777216,16791040,3045587,13.838,98.8,96.2,,,True,11.110055047,sensitivity: 16 warps
+3,stream,S1_w64_16M,S1_w64,1,64,4,1750,14.0,16777216,16827904,3066614,13.743,98.2,50.7,,,True,22.581628724,sensitivity: 64 warps
+1,stream,S4_4M_g4096,S4,4,32,16,1750,56.0,4194304,4294144,221946,47.471,84.8,81.2,,,True,5.435598497,"S4: 16 narrow channels @1750; 4 MB stream, 4096 threads"
+1,stream,S4_16M_g4096,S4,4,32,16,1750,56.0,16777216,16877056,801142,52.605,93.9,73.8,,,True,16.236393166,S4: 16 MB stream -- S4 calibration point
+1,latency,S1_n256/n1280,S1,1,32,4,1750,14.0,,,,,,51.9,752.7,299.6,True,1.906374777,"pointer chase over 32 MB, 4 KB apart; (cycles(1280 loads)-cycles(256 loads))/1024; target 858 cyc @2.866 GHz = 299 ns = 752 cyc @2.512 GHz; PLATFORM_MEMORY_LATENCY=503 (518 gave 767 cyc)"
+1,latency,S4_n256/n1280,S4,4,32,16,1750,56.0,,,,,,51.7,753.6,300.0,True,4.079215422,"pointer chase over 32 MB, 4 KB apart; (cycles(1280 loads)-cycles(256 loads))/1024; target 858 cyc @2.866 GHz = 299 ns = 752 cyc @2.512 GHz; PLATFORM_MEMORY_LATENCY=503 (518 gave 767 cyc)"

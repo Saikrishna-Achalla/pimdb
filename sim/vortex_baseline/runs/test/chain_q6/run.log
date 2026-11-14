@@ -1,0 +1,22 @@
+OP chain_q6 arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 filter_conj q6.filter items=60175 lbytes=661925
+LAUNCH 1 mask_count q6.compact items=60175 lbytes=60295
+LAUNCH 2 scan_tiles q6.compact items=30 lbytes=244
+HOST readback_count bytes=4
+LAUNCH 3 mask_scatter q6.compact items=60175 lbytes=65059
+LAUNCH 4 gather_i32 q6.gather_price items=1191 lbytes=14292
+LAUNCH 5 gather_i32 q6.gather_disc items=1191 lbytes=14292
+LAUNCH 6 cast_i32_i64 q6.cast_price items=1191 lbytes=14292
+LAUNCH 7 cast_i32_i64 q6.cast_disc items=1191 lbytes=14292
+LAUNCH 8 binop_i64 q6.mul items=1191 lbytes=28584
+LAUNCH 9 reduce_minmax_i64 q6.minmax items=1191 lbytes=9592
+LAUNCH 10 reduce_minmax_final q6.minmax items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 11 reduce_sum_i64 q6.sum items=1191 lbytes=9560
+LAUNCH 12 reduce_sum_final q6.sum items=4 lbytes=40
+HOST readback_scalar bytes=8
+RESULT q6 revenue_x1e4=11930532253 selected=1191
+LAUNCHES 13
+DONE
+wall_s=3.374851128 rc=0

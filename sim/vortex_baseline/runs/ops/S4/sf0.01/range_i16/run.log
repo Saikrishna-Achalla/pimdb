@@ -1,0 +1,16 @@
+OP range_i16 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 range_i16 range items=60175 lbytes=180525
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=5406 (r=1904, w=3502), lat=659.8 cyc, bank_st=0 (utility=100%)
+PERF: instrs=58852, cycles=44468, IPC=1.323
+wall_s=3.221663061 rc=0

@@ -1,0 +1,27 @@
+# sf10_scaling b77 variant: sirius.yaml (0.85 GPU pool) + batch settings of the SF1 pipeline (see bottom).
+sirius:
+  max_concurrent_queries: 1
+  topology: { num_gpus: 1 }
+  memory:
+    gpu:
+      usage_limit_fraction: 0.85
+      reservation_limit_fraction: 1.0
+      downgrade_trigger_fraction: 0.8
+      downgrade_stop_fraction: 0.6
+    host: { capacity_bytes: 1GB, initial_number_pools: 2, pool_size: 512, block_size: 1048576 }
+  executor:
+    pipeline:     { num_threads: 4 }
+    downgrade:    { num_threads: 1 }
+    task_creator: { num_threads: 1 }
+  telemetry:
+    enable_quent: false
+  # b77 variant: batch-size settings forced to the values Sirius derives under the SF1 pipeline's yaml
+  # (usage_limit_fraction 0.25; settings_probe_sf1pipeline_yaml.txt). max_build_* are 8x, as in with_batch_size().
+  operator_params:
+    scan_task_batch_size: 77151027
+    hash_partition_bytes: 77151027
+    concat_batch_bytes: 77151027
+    cross_join_task_bytes: 77151027
+    sort_sample_bytes: 77151027
+    max_build_hash_table_bytes: 617208216
+    max_build_probe_resident_bytes: 617208216

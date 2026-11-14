@@ -1,0 +1,91 @@
+=== q13 task 6 thread T3 task stream 47 (317 us wall)
+     0.0us      cuStreamSynchronize
+    22.9us      cudaStreamSynchronize
+    24.8us      cudaStreamSynchronize
+    26.9us      H2D    8 B (cudaMemcpyBatchAsync)
+    50.1us K1   DeviceReduceKernel                 grid=74         2.2us pass   multi-pass  P4:DENSE_COUNT_JOIN(4)             dense count join: DeviceReduceKernel
+    61.7us K2   DeviceReduceSingleTileKernel       grid=1          1.1us pass   multi-pass  P4:DENSE_COUNT_JOIN(4)             dense count join: DeviceReduceSingleTileKernel
+    78.7us      cudaStreamSynchronize
+    81.6us      cudaStreamSynchronize
+    83.0us      H2D    1 B (cudaMemcpyBatchAsync)
+    94.3us      cudaStreamSynchronize
+    96.4us      cudaStreamSynchronize
+    97.6us      H2D    4 B (cudaMemcpyBatchAsync)
+   107.2us      cudaStreamSynchronize
+   108.7us      cudaStreamSynchronize
+   109.8us      H2D    1 B (cudaMemcpyBatchAsync)
+   118.7us      cudaStreamSynchronize
+   120.1us      cudaStreamSynchronize
+   121.3us      H2D    4 B (cudaMemcpyBatchAsync)
+   125.8us K3   single_thread_kernel               grid=1          0.8us pass   multi-pass  P4:DENSE_COUNT_JOIN(4)             dense count join: single_thread_kernel
+   138.7us      D2H    4 B (cudaMemcpyBatchAsync)
+   143.9us      cudaStreamSynchronize  <- host round trip #1: waits for the 4 B readback
+   148.1us      D2H    4 B (cudaMemcpyBatchAsync)
+   151.7us      cudaStreamSynchronize  <- host round trip #2: waits for the 4 B readback
+   178.2us      MEMSET 1200000 B (cudaMemsetAsync)
+   194.7us K4   accumulate_kernel                  grid=288        2.0us main   distinct    P4:DENSE_COUNT_JOIN(4)             dense count join: accumulate_kernel
+   203.3us K5   accumulate_kernel                  grid=288       17.5us column per-column  P4:DENSE_COUNT_JOIN(4)             dense count join: accumulate_kernel
+   210.1us K6   accumulate_kernel                  grid=288       17.4us column per-column  P4:DENSE_COUNT_JOIN(4)             dense count join: accumulate_kernel
+   226.6us K7   DeviceReduceKernel                 grid=42         1.4us pass   multi-pass  P4:DENSE_COUNT_JOIN(4)             dense count join: DeviceReduceKernel
+   234.0us K8   DeviceReduceSingleTileKernel       grid=1          1.1us pass   multi-pass  P4:DENSE_COUNT_JOIN(4)             dense count join: DeviceReduceSingleTileKernel
+   240.5us      cudaStreamSynchronize
+   263.9us      D2H    8 B (cudaMemcpyAsync)
+   272.9us      cudaStreamSynchronize  <- host round trip #3: waits for the 8 B readback
+   287.5us K9   emit_kernel                        grid=288        2.3us column per-column  P4:DENSE_COUNT_JOIN(4)             dense count join: emit_kernel
+   303.9us      cudaStreamSynchronize
+   316.4us      cuStreamSynchronize
+--- 9 launches, 3 D2H readback round trips
+=== q13 task 7 thread T2 task stream 46 (349 us wall)
+     0.0us      cuStreamSynchronize
+     6.4us      cudaStreamSynchronize
+    19.7us K1   init_found_pos_pointer             grid=1          0.7us init   bookkeeping P5:HASH_GROUP_BY(6)                keys_ascending: cub DeviceFind is_sorted (+bool readback)
+    24.2us K2   find_kernel                        grid=293        1.7us pass   multi-pass  P5:HASH_GROUP_BY(6)                keys_ascending: cub DeviceFind is_sorted (+bool readback)
+    27.8us      D2H    4 B (cudaMemcpyAsync)
+    34.0us      cudaStreamSynchronize  <- host round trip #1: waits for the 4 B readback
+    51.0us      cudaStreamSynchronize
+    54.6us      H2D    64 B (cudaMemcpyBatchAsync)
+    58.5us      cudaStreamSynchronize
+    69.4us K3   static_kernel                      grid=586        1.2us init   bookkeeping P5:HASH_GROUP_BY(6)                groupby bookkeeping: slot_init
+    75.9us      cudaStreamSynchronize
+    80.8us      H2D    4 B (cudaMemcpyBatchAsync)
+    94.5us K4   static_kernel                      grid=60         0.7us init   bookkeeping P5:HASH_GROUP_BY(6)                groupby bookkeeping: fill
+   101.6us      MEMSET 4 B (cudaMemsetAsync)
+   106.1us K5   mapping_indices_kernel             grid=240       16.9us pass   multi-pass  P5:HASH_GROUP_BY(6)                hash groupby: mapping_indices_kernel (set insert_and_find)
+   109.9us      D2H    4 B (cudaMemcpyBatchAsync)
+   116.8us      cuStreamSynchronize  <- host round trip #2: waits for the 4 B readback
+   169.7us K6   DeviceCompactInitKernel            grid=1          0.7us init   bookkeeping P5:HASH_GROUP_BY(6)                groupby bookkeeping: compact_init
+   172.7us K7   DeviceSelectSweepKernel            grid=53         3.4us pass   multi-pass  P5:HASH_GROUP_BY(6)                groupby internal pass: compact (DeviceSelectSweepKernel)
+   176.2us      D2H    8 B (cudaMemcpyBatchAsync)
+   179.6us      cuStreamSynchronize  <- host round trip #3: waits for the 8 B readback
+   258.8us K8   transform_kernel                   grid=1          0.9us pass   multi-pass  P5:HASH_GROUP_BY(6)                groupby internal pass: gather (transform_kernel)
+   264.6us K9   static_kernel                      grid=60         1.0us pass   multi-pass  P5:HASH_GROUP_BY(6)                groupby internal pass: gb_aux (static_kernel)
+   271.0us      cudaStreamSynchronize
+   274.2us      H2D    64 B (cudaMemcpyBatchAsync)
+   276.2us      cudaStreamSynchronize
+   286.8us K10  transform_kernel                   grid=1          0.8us init   bookkeeping P5:HASH_GROUP_BY(6)                groupby bookkeeping: fill
+   292.2us      cudaStreamSynchronize
+   295.6us      H2D    64 B (cudaMemcpyBatchAsync)
+   297.4us      cudaStreamSynchronize
+   302.9us K11  single_pass_shmem_aggs_kernel      grid=240        7.3us main   distinct    P5:HASH_GROUP_BY(6)                hash groupby: single_pass_shmem_aggs_kernel
+   317.7us K12  transform_kernel                   grid=1          1.0us pass   multi-pass  P5:HASH_GROUP_BY(6)                cudf::gather of one column (transform_kernel)
+   331.3us K13  transform_kernel                   grid=1          1.0us column per-column  P5:HASH_GROUP_BY(6)                cast of one column (transform_kernel)
+   340.0us      cudaStreamSynchronize
+   347.9us      cuStreamSynchronize
+--- 13 launches, 3 D2H readback round trips
+=== q13 task 9 thread T1 task stream 45 (255 us wall)
+     0.0us      cuStreamSynchronize
+     6.8us      cudaStreamSynchronize
+    26.3us K1   transform_kernel                   grid=1          0.7us init   bookkeeping P7:ORDER_BY(9)                     thrust::sequence of row indices before sort
+    48.1us      cudaStreamSynchronize
+    53.9us      H2D    128 B (cudaMemcpyBatchAsync)
+    60.9us      cudaStreamSynchronize
+    70.8us      H2D    2 B (cudaMemcpyBatchAsync)
+    78.5us      H2D    2 B (cudaMemcpyBatchAsync)
+    85.6us      H2D    8 B (cudaMemcpyBatchAsync)
+    89.4us      cudaStreamSynchronize
+   101.7us K2   DeviceMergeSortBlockSortKernel     grid=1        117.7us main   distinct    P7:ORDER_BY(9)                     sort/top-k: DeviceMergeSortBlockSortKernel
+   128.9us K3   transform_kernel                   grid=1          1.1us pass   multi-pass  P7:ORDER_BY(9)                     cudf::gather of one column (transform_kernel)
+   143.1us K4   transform_kernel                   grid=1          1.0us column per-column  P7:ORDER_BY(9)                     cudf::gather of one column (transform_kernel)
+   159.3us      cudaStreamSynchronize
+   252.7us      cuStreamSynchronize
+--- 4 launches, 0 D2H readback round trips

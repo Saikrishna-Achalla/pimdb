@@ -1,0 +1,75 @@
+diff --git a/VX_config.toml b/VX_config.toml
+index f51186cde..80bce26d8 100644
+--- a/VX_config.toml
++++ b/VX_config.toml
+@@ -90,6 +90,12 @@ VX_CFG_PLATFORM_MEMORY_TYPE = "HBM2"
+ VX_CFG_PLATFORM_MEMORY_DATA_RATE = "expr: 2 * $VX_CFG_PLATFORM_CLOCK_RATE"
+ VX_CFG_PLATFORM_MEMORY_LATENCY = 0
+ VX_CFG_PLATFORM_MEMORY_QUEUE_SIZE = 0
++# Entries in each channel controller's read (and write) queue that the FR-FCFS
++# scheduler picks from; Ramulator's default is 32.
++VX_CFG_PLATFORM_MEMORY_SCHED_QUEUE_SIZE = 32
++# log2 of the 32 B bursts a channel maps to one bank's row before moving to the
++# next bank: 2 = 128 B (default); 5 = a whole 1 KB HBM row.
++VX_CFG_PLATFORM_MEMORY_ROW_VISIT_BITS = 2
+ 
+ [alu]
+ VX_CFG_NUM_ALU_LANES = "expr: $VX_CFG_SIMD_WIDTH"
+diff --git a/sim/common/dram_sim.cpp b/sim/common/dram_sim.cpp
+index bc899b89f..f944a26b9 100644
+--- a/sim/common/dram_sim.cpp
++++ b/sim/common/dram_sim.cpp
+@@ -137,12 +137,13 @@ private:
+   // only affects row hits.
+   static constexpr uint64_t channel_size_ = uint64_t(1) << 30;
+ 
+-  // Bursts per row visit (minimalist open page, 128 B).
+-  static constexpr uint32_t row_visit_bits_ = 2;
+ 
+   Config config_;
+   uint32_t bank_bits_;    // pseudo-channel, bank group and bank
+   uint32_t column_bits_;  // bursts per row
++  // log2 bursts per row visit: 2 = 128 B (minimalist open page, the default); up to column_bits_
++  // (the whole row contiguous in one bank).
++  uint32_t row_visit_bits_;
+   std::vector<channel_t> channels_;
+   uint64_t cycle_;
+   // DRAM ticks owed, in units of 1/(2 x core_clock): each core cycle adds the
+@@ -191,6 +192,7 @@ private:
+     auto controller = memory_system["Controller"];
+     controller["impl"] = "Generic";
+     controller["Scheduler"]["impl"] = "FRFCFS";
++    controller["queue_size"] = config_.sched_queue_size;
+     // No refresh is modelled: Ramulator's refresh manager refreshes per rank
+     // and these devices have no rank level. GPU controllers hide refresh with
+     // per-bank refresh, for which Ramulator has no manager (and its HBM REFsb
+@@ -282,6 +284,7 @@ public:
+     // row; GDDR6: 4 x 4 banks, 64 bursts per 2 KB row.
+     , bank_bits_((config.type == Type::GDDR6) ? 4 : 5)
+     , column_bits_((config.type == Type::GDDR6) ? 6 : 5)
++    , row_visit_bits_(std::min(config.row_visit_bits, column_bits_))
+     , channels_(config.num_channels) {
+     for (uint32_t ch = 0; ch < config.num_channels; ++ch) {
+       auto ramulator_config = this->channel_config(ch);
+@@ -375,6 +378,8 @@ DramSim::Config DramSim::platform_config() {
+   config.data_rate    = VX_CFG_PLATFORM_MEMORY_DATA_RATE;
+   config.latency      = VX_CFG_PLATFORM_MEMORY_LATENCY;
+   config.queue_size   = VX_CFG_PLATFORM_MEMORY_QUEUE_SIZE;
++  config.sched_queue_size = VX_CFG_PLATFORM_MEMORY_SCHED_QUEUE_SIZE;
++  config.row_visit_bits = VX_CFG_PLATFORM_MEMORY_ROW_VISIT_BITS;
+   return config;
+ }
+ 
+diff --git a/sim/common/dram_sim.h b/sim/common/dram_sim.h
+index 565dede37..f992b81b5 100644
+--- a/sim/common/dram_sim.h
++++ b/sim/common/dram_sim.h
+@@ -39,6 +39,8 @@ public:
+     uint32_t data_rate;     // MT/s per pin
+     uint32_t latency;       // fixed read latency added in core cycles (PHY, controller, NoC)
+     uint32_t queue_size;    // requests a channel holds in flight; 0 = unbounded
++    uint32_t sched_queue_size; // controller read/write queue entries FR-FCFS picks from
++    uint32_t row_visit_bits;   // log2 bursts per row visit before moving to the next bank
+   };
+ 
+   // The memory configured in VX_config.toml.

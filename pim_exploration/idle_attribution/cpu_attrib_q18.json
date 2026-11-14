@@ -1,0 +1,3303 @@
+{
+ "q": 18,
+ "iterations": 150,
+ "kernels_per_iter": [
+  127,
+  127,
+  127
+ ],
+ "timer_ms_median": 13.0,
+ "engine_ms_median": 8.158065,
+ "planning_ms_median": 4.372482,
+ "gpu_busy_ms_median": 1.86102,
+ "thread_cpu_us_per_sample": 136.222824009884,
+ "app_samples_in_windows": 14569,
+ "profiler_thread_samples": 411,
+ "gpu_idle_engine_ms_per_iter": 6.4795755,
+ "gpu_idle_some_app_thread_on_cpu_ms_per_iter": 4.883433139999999,
+ "gpu_idle_all_app_threads_off_cpu_ms_per_iter": 1.5961423600000002,
+ "all_off_cpu_pipeline_threads_blocked_in_ms_per_iter": {
+  "pthread_cond_wait": 1.56604248,
+  "unknown": 0.013449466666666667,
+  "pthread_cond_wait+unknown": 0.0086965,
+  "in_cuda_api+pthread_cond_wait": 0.007202106666666667,
+  "pthread_cond_wait+pthread_rwlock_wrlock": 0.0007116666666666667,
+  "pthread_cond_wait+pthread_mutex_lock": 4.014e-05
+ },
+ "all_off_cpu_episodes": {
+  "per_iter": 81.82666666666667,
+  "median_us": 2.178,
+  "p90_us": 58.45660000000001
+ },
+ "all_off_cpu_thread_state_ms_per_iter": {
+  "gpu_pipeline_N|pthread_cond_wait": 6.31412116,
+  "duckdb|unknown": 4.736164553333333,
+  "duckdb|pthread_cond_wait": 4.406588466666666,
+  "duckdb|pthread_cond_timedwait": 4.22296926,
+  "duckdb|sem_timedwait": 3.7263442533333335,
+  "cuda-EvtHandlr|poll": 1.5961423600000002,
+  "task_creator_N|pthread_cond_wait": 1.5850686866666668,
+  "|unknown": 1.5719431000000001,
+  "reactor-3_worke|sem_timedwait": 0.75130248,
+  "reactor-2_worke|sem_timedwait": 0.7493852133333334,
+  "scan_manager_N|pthread_cond_wait": 0.72044084,
+  "reactor-0_worke|sem_timedwait": 0.65867584,
+  "reactor-1_worke|sem_timedwait": 0.6477769733333334,
+  "scan_manager_N|unknown": 0.26087473333333333,
+  "duckdb|sem_wait": 0.09071563333333334,
+  "downgrade_N|unknown": 0.08061246666666666,
+  "uring_gauges|pthread_cond_timedwait": 0.07341232666666667,
+  "gpu_pipeline_N|unknown": 0.06249436666666667,
+  "duckdb|pthread_mutex_lock": 0.0624117,
+  "duckdb|pthread_join": 0.03230416666666667,
+  "uring_gauges|unknown": 0.011854873333333333,
+  "task_creator_N|unknown": 0.010762446666666666,
+  "gpu_pipeline_N|in_cuda_api": 0.007202106666666667,
+  "duckdb|pthread_cond_signal": 0.0007549133333333333,
+  "gpu_pipeline_N|pthread_rwlock_wrlock": 0.0007116666666666667
+ },
+ "gpu_idle_wall_attrib_ms_per_iter": {
+  "cuda:sync": 0.7021529784242683,
+  "profiler": 0.661770479040007,
+  "cuda:launch": 0.4449945584322821,
+  "cuda:memcpy": 0.37506684210721014,
+  "sirius:operators": 0.35327119026562925,
+  "cudf": 0.24096303980415001,
+  "cuda:alloc": 0.2392980941773626,
+  "sirius:memory_batches": 0.19510135572082288,
+  "wait:sirius_loop_poll": 0.1546885845978903,
+  "cudart_outside_traced_api": 0.14939103033083956,
+  "cuda_driver_outside_api": 0.11715162864850033,
+  "sirius:scheduler_taskqueue": 0.10973505267462887,
+  "cuda:launch:profiler": 0.10625380272770961,
+  "profiler[libc_other]": 0.09467486268686948,
+  "sirius:operators[libc_alloc]": 0.0917233681666553,
+  "rmm": 0.08264184656599635,
+  "cuda:event": 0.07946331400576573,
+  "cuda:memcpy:profiler": 0.07764700968563394,
+  "sirius:scheduler_taskqueue[libc_other]": 0.056456792617429745,
+  "sirius:memory_batches[libc_alloc]": 0.05358097744388774,
+  "cuda:sync:profiler": 0.05358097744388774,
+  "sirius:scheduler_taskqueue[libc_alloc]": 0.052218749203788904,
+  "sirius:operators[libc_other]": 0.04813206448349238,
+  "cuda:event:profiler": 0.04631576016336059,
+  "cuda:alloc:profiler": 0.044045379763195856,
+  "cudf[libc_alloc]": 0.040866847202965226,
+  "wait:os_wait_or_yield": 0.033298912535749445,
+  "profiler[libc_mem_str]": 0.023914673548401866,
+  "cuda_driver_outside_api[libc_other]": 0.02270380400164734,
+  "sirius:operators[libc_mem_str]": 0.0213415757615485,
+  "sirius:logging_format": 0.0213415757615485,
+  "sirius:memory_batches[libc_other]": 0.020433423601482602,
+  "cuda:other:profiler": 0.018617119281350812,
+  "cudart_outside_traced_api[libc_other]": 0.01816304320131787,
+  "kernel_or_vdso": 0.017103532347907662,
+  "sirius:logging_format[libc_other]": 0.01634673888118608,
+  "cuda:other": 0.013622282400988396,
+  "duckdb:other": 0.00923288029400325,
+  "duckdb:executor_wait[libc_alloc]": 0.008173369440593041,
+  "cudf[libc_mem_str]": 0.00817336944059304,
+  "cudf[libc_other]": 0.007265217280527147,
+  "duckdb:result_output": 0.006357065120461254,
+  "duckdb:bind": 0.006357065120461254,
+  "sirius:logging_format[libc_mem_str]": 0.006357065120461254,
+  "profiler[libc_dl_lookup]": 0.005902989040428308,
+  "sirius:memory_batches[libc_dl_lookup]": 0.005448912960395361,
+  "sirius:logging_format[libc_alloc]": 0.004540760800329467,
+  "sirius:scheduler_taskqueue[libc_mem_str]": 0.004540760800329467,
+  "other:libspdlog.so.1.17.0": 0.0036326086402635733,
+  "rmm[libc_mem_str]": 0.0036326086402635733,
+  "cudart_outside_traced_api[libc_dl_lookup]": 0.0036326086402635733,
+  "duckdb:bind[libc_alloc]": 0.0036326086402635733,
+  "rmm[libc_alloc]": 0.0036326086402635733,
+  "rmm[libc_dl_lookup]": 0.00272445648019768,
+  "sirius:scheduler_taskqueue[libc_dl_lookup]": 0.00272445648019768,
+  "sirius:other": 0.0021190217068204177,
+  "other:libspdlog.so.1.17.0[libc_other]": 0.0018163043201317867,
+  "duckdb:other[libc_alloc]": 0.0018163043201317867,
+  "sirius:operators[libc_dl_lookup]": 0.0018163043201317867,
+  "other:libfmt.so.12.1.0": 0.0018163043201317867,
+  "duckdb:executor_wait": 0.0018163043201317867,
+  "sirius:memory_batches[libc_mem_str]": 0.00136222824009884,
+  "other:[Max depth][libc_alloc]": 0.0010595108534102089,
+  "profiler[libc_alloc]": 0.000937447391035761,
+  "sirius:other[libc_alloc]": 0.0009081521600658933,
+  "duckdb:parse[libc_alloc]": 0.0009081521600658933,
+  "cuda_driver_outside_api[libc_mem_str]": 0.0009081521600658933,
+  "other:libcuvs.so": 0.0009081521600658933
+ },
+ "samples_by_window_category": {
+  "engine_gpu_busy|cuda:alloc": 68,
+  "engine_gpu_busy|cuda:alloc:profiler": 12,
+  "engine_gpu_busy|cuda:event": 21,
+  "engine_gpu_busy|cuda:event:profiler": 10,
+  "engine_gpu_busy|cuda:launch": 61,
+  "engine_gpu_busy|cuda:launch:profiler": 28,
+  "engine_gpu_busy|cuda:memcpy": 126,
+  "engine_gpu_busy|cuda:memcpy:profiler": 10,
+  "engine_gpu_busy|cuda:other:profiler": 2,
+  "engine_gpu_busy|cuda:sync": 1762,
+  "engine_gpu_busy|cuda:sync:profiler": 4,
+  "engine_gpu_busy|cuda_driver_outside_api": 23,
+  "engine_gpu_busy|cuda_driver_outside_api[libc_mem_str]": 1,
+  "engine_gpu_busy|cuda_driver_outside_api[libc_other]": 5,
+  "engine_gpu_busy|cudart_outside_traced_api": 37,
+  "engine_gpu_busy|cudart_outside_traced_api[libc_dl_lookup]": 2,
+  "engine_gpu_busy|cudart_outside_traced_api[libc_other]": 1,
+  "engine_gpu_busy|cudf": 41,
+  "engine_gpu_busy|cudf[libc_alloc]": 8,
+  "engine_gpu_busy|cudf[libc_other]": 2,
+  "engine_gpu_busy|duckdb:executor_wait[libc_alloc]": 3,
+  "engine_gpu_busy|kernel_or_vdso": 1,
+  "engine_gpu_busy|profiler": 86,
+  "engine_gpu_busy|profiler[libc_mem_str]": 1,
+  "engine_gpu_busy|profiler[libc_other]": 10,
+  "engine_gpu_busy|profiler_threads": 32,
+  "engine_gpu_busy|rmm": 16,
+  "engine_gpu_busy|rmm[libc_alloc]": 1,
+  "engine_gpu_busy|sirius:memory_batches": 19,
+  "engine_gpu_busy|sirius:memory_batches[libc_alloc]": 1,
+  "engine_gpu_busy|sirius:memory_batches[libc_dl_lookup]": 1,
+  "engine_gpu_busy|sirius:memory_batches[libc_other]": 1,
+  "engine_gpu_busy|sirius:operators": 13,
+  "engine_gpu_busy|sirius:operators[libc_alloc]": 2,
+  "engine_gpu_busy|sirius:other": 1,
+  "engine_gpu_busy|sirius:scheduler_taskqueue": 1,
+  "engine_gpu_busy|wait:os_wait_or_yield": 1,
+  "engine_gpu_busy|wait:sirius_loop_poll": 7,
+  "engine_gpu_idle|cuda:alloc": 269,
+  "engine_gpu_idle|cuda:alloc:profiler": 50,
+  "engine_gpu_idle|cuda:event": 88,
+  "engine_gpu_idle|cuda:event:profiler": 51,
+  "engine_gpu_idle|cuda:launch": 494,
+  "engine_gpu_idle|cuda:launch:profiler": 118,
+  "engine_gpu_idle|cuda:memcpy": 417,
+  "engine_gpu_idle|cuda:memcpy:profiler": 86,
+  "engine_gpu_idle|cuda:other": 15,
+  "engine_gpu_idle|cuda:other:profiler": 21,
+  "engine_gpu_idle|cuda:sync": 803,
+  "engine_gpu_idle|cuda:sync:profiler": 60,
+  "engine_gpu_idle|cuda_driver_outside_api": 139,
+  "engine_gpu_idle|cuda_driver_outside_api[libc_mem_str]": 1,
+  "engine_gpu_idle|cuda_driver_outside_api[libc_other]": 25,
+  "engine_gpu_idle|cudart_outside_traced_api": 165,
+  "engine_gpu_idle|cudart_outside_traced_api[libc_dl_lookup]": 4,
+  "engine_gpu_idle|cudart_outside_traced_api[libc_other]": 20,
+  "engine_gpu_idle|cudf": 272,
+  "engine_gpu_idle|cudf[libc_alloc]": 45,
+  "engine_gpu_idle|cudf[libc_mem_str]": 9,
+  "engine_gpu_idle|cudf[libc_other]": 8,
+  "engine_gpu_idle|duckdb:bind": 7,
+  "engine_gpu_idle|duckdb:bind[libc_alloc]": 4,
+  "engine_gpu_idle|duckdb:executor_wait": 4,
+  "engine_gpu_idle|duckdb:executor_wait[libc_alloc]": 13,
+  "engine_gpu_idle|duckdb:other": 13,
+  "engine_gpu_idle|duckdb:other[libc_alloc]": 2,
+  "engine_gpu_idle|duckdb:parse[libc_alloc]": 1,
+  "engine_gpu_idle|duckdb:result_output": 7,
+  "engine_gpu_idle|kernel_or_vdso": 20,
+  "engine_gpu_idle|other:[Max depth][libc_alloc]": 2,
+  "engine_gpu_idle|other:libcuvs.so": 1,
+  "engine_gpu_idle|other:libfmt.so.12.1.0": 2,
+  "engine_gpu_idle|other:libspdlog.so.1.17.0": 4,
+  "engine_gpu_idle|other:libspdlog.so.1.17.0[libc_other]": 2,
+  "engine_gpu_idle|profiler": 792,
+  "engine_gpu_idle|profiler[libc_alloc]": 2,
+  "engine_gpu_idle|profiler[libc_dl_lookup]": 7,
+  "engine_gpu_idle|profiler[libc_mem_str]": 32,
+  "engine_gpu_idle|profiler[libc_other]": 110,
+  "engine_gpu_idle|profiler_threads": 231,
+  "engine_gpu_idle|rmm": 92,
+  "engine_gpu_idle|rmm[libc_alloc]": 4,
+  "engine_gpu_idle|rmm[libc_dl_lookup]": 3,
+  "engine_gpu_idle|rmm[libc_mem_str]": 4,
+  "engine_gpu_idle|sirius:logging_format": 24,
+  "engine_gpu_idle|sirius:logging_format[libc_alloc]": 6,
+  "engine_gpu_idle|sirius:logging_format[libc_mem_str]": 7,
+  "engine_gpu_idle|sirius:logging_format[libc_other]": 18,
+  "engine_gpu_idle|sirius:memory_batches": 221,
+  "engine_gpu_idle|sirius:memory_batches[libc_alloc]": 60,
+  "engine_gpu_idle|sirius:memory_batches[libc_dl_lookup]": 6,
+  "engine_gpu_idle|sirius:memory_batches[libc_mem_str]": 2,
+  "engine_gpu_idle|sirius:memory_batches[libc_other]": 23,
+  "engine_gpu_idle|sirius:operators": 395,
+  "engine_gpu_idle|sirius:operators[libc_alloc]": 103,
+  "engine_gpu_idle|sirius:operators[libc_dl_lookup]": 2,
+  "engine_gpu_idle|sirius:operators[libc_mem_str]": 24,
+  "engine_gpu_idle|sirius:operators[libc_other]": 54,
+  "engine_gpu_idle|sirius:other": 3,
+  "engine_gpu_idle|sirius:other[libc_alloc]": 1,
+  "engine_gpu_idle|sirius:scheduler_taskqueue": 131,
+  "engine_gpu_idle|sirius:scheduler_taskqueue[libc_alloc]": 60,
+  "engine_gpu_idle|sirius:scheduler_taskqueue[libc_dl_lookup]": 3,
+  "engine_gpu_idle|sirius:scheduler_taskqueue[libc_mem_str]": 5,
+  "engine_gpu_idle|sirius:scheduler_taskqueue[libc_other]": 70,
+  "engine_gpu_idle|wait:os_wait_or_yield": 44,
+  "engine_gpu_idle|wait:sirius_loop_poll": 233,
+  "planning|cuda_driver_outside_api": 2,
+  "planning|cudart_outside_traced_api": 1,
+  "planning|cudf": 9,
+  "planning|duckdb:bind": 526,
+  "planning|duckdb:bind[libc_alloc]": 139,
+  "planning|duckdb:bind[libc_mem_str]": 30,
+  "planning|duckdb:bind[libc_other]": 23,
+  "planning|duckdb:executor_wait": 82,
+  "planning|duckdb:executor_wait[libc_alloc]": 31,
+  "planning|duckdb:executor_wait[libc_mem_str]": 3,
+  "planning|duckdb:executor_wait[libc_other]": 6,
+  "planning|duckdb:other": 26,
+  "planning|duckdb:other[libc_alloc]": 5,
+  "planning|duckdb:other[libc_other]": 2,
+  "planning|duckdb:parquet_metadata_bind": 983,
+  "planning|duckdb:parquet_metadata_bind[libc_alloc]": 136,
+  "planning|duckdb:parquet_metadata_bind[libc_mem_str]": 125,
+  "planning|duckdb:parquet_metadata_bind[libc_other]": 70,
+  "planning|duckdb:parse": 500,
+  "planning|duckdb:parse[libc_alloc]": 77,
+  "planning|duckdb:parse[libc_mem_str]": 12,
+  "planning|duckdb:parse[libc_other]": 8,
+  "planning|duckdb:plan_optimize": 699,
+  "planning|duckdb:plan_optimize[libc_alloc]": 216,
+  "planning|duckdb:plan_optimize[libc_mem_str]": 36,
+  "planning|duckdb:plan_optimize[libc_other]": 54,
+  "planning|duckdb:result_output": 43,
+  "planning|duckdb:result_output[libc_alloc]": 10,
+  "planning|duckdb:result_output[libc_mem_str]": 1,
+  "planning|duckdb:result_output[libc_other]": 6,
+  "planning|kernel_or_vdso": 26,
+  "planning|other:[Max depth][libc_alloc]": 2,
+  "planning|other:libfmt.so.12.1.0": 4,
+  "planning|other:libspdlog.so.1.17.0": 4,
+  "planning|other:libspdlog.so.1.17.0[libc_dl_lookup]": 1,
+  "planning|other:libspdlog.so.1.17.0[libc_other]": 7,
+  "planning|profiler": 113,
+  "planning|profiler[libc_dl_lookup]": 5,
+  "planning|profiler[libc_mem_str]": 19,
+  "planning|profiler[libc_other]": 42,
+  "planning|profiler_threads": 114,
+  "planning|rmm": 2,
+  "planning|sirius:logging_format": 8,
+  "planning|sirius:logging_format[libc_alloc]": 4,
+  "planning|sirius:logging_format[libc_mem_str]": 1,
+  "planning|sirius:logging_format[libc_other]": 4,
+  "planning|sirius:memory_batches": 40,
+  "planning|sirius:memory_batches[libc_alloc]": 10,
+  "planning|sirius:memory_batches[libc_mem_str]": 1,
+  "planning|sirius:memory_batches[libc_other]": 10,
+  "planning|sirius:operators": 489,
+  "planning|sirius:operators[libc_alloc]": 220,
+  "planning|sirius:operators[libc_dl_lookup]": 1,
+  "planning|sirius:operators[libc_mem_str]": 47,
+  "planning|sirius:operators[libc_other]": 83,
+  "planning|sirius:other": 38,
+  "planning|sirius:other[libc_alloc]": 17,
+  "planning|sirius:other[libc_mem_str]": 2,
+  "planning|sirius:other[libc_other]": 5,
+  "planning|sirius:scheduler_taskqueue": 30,
+  "planning|sirius:scheduler_taskqueue[libc_alloc]": 8,
+  "planning|sirius:scheduler_taskqueue[libc_mem_str]": 1,
+  "planning|sirius:scheduler_taskqueue[libc_other]": 7,
+  "planning|wait:os_wait_or_yield": 37,
+  "planning|wait:sirius_loop_poll": 37,
+  "post_engine|duckdb:bind": 1,
+  "post_engine|duckdb:executor_wait": 45,
+  "post_engine|duckdb:executor_wait[libc_mem_str]": 1,
+  "post_engine|duckdb:executor_wait[libc_other]": 1,
+  "post_engine|duckdb:other": 6,
+  "post_engine|duckdb:other[libc_alloc]": 1,
+  "post_engine|duckdb:parquet_metadata_bind": 10,
+  "post_engine|duckdb:parquet_metadata_bind[libc_alloc]": 7,
+  "post_engine|duckdb:plan_optimize": 6,
+  "post_engine|duckdb:plan_optimize[libc_alloc]": 9,
+  "post_engine|duckdb:result_output": 55,
+  "post_engine|duckdb:result_output[libc_alloc]": 13,
+  "post_engine|duckdb:result_output[libc_mem_str]": 4,
+  "post_engine|duckdb:result_output[libc_other]": 10,
+  "post_engine|profiler": 33,
+  "post_engine|profiler[libc_dl_lookup]": 2,
+  "post_engine|profiler[libc_mem_str]": 2,
+  "post_engine|profiler[libc_other]": 17,
+  "post_engine|profiler_threads": 34,
+  "post_engine|sirius:logging_format": 1,
+  "post_engine|sirius:memory_batches": 1,
+  "post_engine|sirius:operators": 17,
+  "post_engine|sirius:operators[libc_alloc]": 3,
+  "post_engine|sirius:other": 6,
+  "post_engine|sirius:other[libc_alloc]": 2,
+  "post_engine|wait:os_wait_or_yield": 2,
+  "post_engine|wait:sirius_loop_poll": 2
+ },
+ "samples_by_window_leafmodule": {
+  "planning|duckdb": 2859,
+  "engine_gpu_busy|libcuda.so.580.173.02": 1852,
+  "engine_gpu_idle|libcuda.so.580.173.02": 1811,
+  "planning|libc.so.6": 1225,
+  "engine_gpu_idle|libsirius.so.0.0.0": 1047,
+  "engine_gpu_idle|libc.so.6": 966,
+  "engine_gpu_idle|libcupti.so.13.1": 739,
+  "planning|libsirius.so.0.0.0": 638,
+  "engine_gpu_idle|libToolsInjection64.so": 394,
+  "engine_gpu_idle|libcudf.so": 374,
+  "planning|libstdc++.so.6.0.36": 293,
+  "engine_gpu_idle|libstdc++.so.6.0.36": 143,
+  "engine_gpu_busy|[vdso]": 140,
+  "engine_gpu_busy|libcupti.so.13.1": 123,
+  "post_engine|duckdb": 123,
+  "engine_gpu_idle|librmm.so": 117,
+  "planning|libToolsInjection64.so": 100,
+  "engine_gpu_busy|libc.so.6": 96,
+  "post_engine|libc.so.6": 69,
+  "engine_gpu_idle|[vdso]": 68,
+  "engine_gpu_busy|libcudf.so": 67,
+  "engine_gpu_busy|libsirius.so.0.0.0": 48,
+  "engine_gpu_idle|libToolsInjectionMemoryAllocator.so": 45,
+  "post_engine|libToolsInjection64.so": 33,
+  "engine_gpu_idle|duckdb": 31,
+  "engine_gpu_busy|libToolsInjection64.so": 27,
+  "engine_gpu_busy|librmm.so": 27,
+  "post_engine|libsirius.so.0.0.0": 26,
+  "engine_gpu_idle|ld-linux-x86-64.so.2": 25,
+  "planning|[kernel.kallsyms]": 16,
+  "engine_gpu_idle|[kernel.kallsyms]": 11,
+  "planning|[vdso]": 11,
+  "planning|libcudf.so": 9,
+  "planning|libToolsInjectionMemoryAllocator.so": 9,
+  "planning|ld-linux-x86-64.so.2": 7,
+  "engine_gpu_idle|libspdlog.so.1.17.0": 4,
+  "post_engine|libstdc++.so.6.0.36": 4,
+  "planning|libfmt.so.12.1.0": 4,
+  "planning|libspdlog.so.1.17.0": 4,
+  "planning|libcupti.so.13.1": 4,
+  "engine_gpu_busy|libstdc++.so.6.0.36": 3,
+  "planning|libcuda.so.580.173.02": 3,
+  "engine_gpu_busy|ld-linux-x86-64.so.2": 3,
+  "engine_gpu_idle|liburing.so.2.15": 2,
+  "engine_gpu_busy|libToolsInjectionMemoryAllocator.so": 2,
+  "planning|librmm.so": 2,
+  "engine_gpu_idle|libfmt.so.12.1.0": 2,
+  "planning|libm.so.6": 2,
+  "engine_gpu_idle|libm.so.6": 2,
+  "post_engine|ld-linux-x86-64.so.2": 2,
+  "engine_gpu_busy|[kernel.kallsyms]": 1,
+  "engine_gpu_idle|libcuvs.so": 1,
+  "engine_gpu_idle|libgcc_s.so.1": 1
+ },
+ "samples_by_window_thread": {
+  "planning|duckdb": 5027,
+  "engine_gpu_idle|gpu_pipeline_N": 4638,
+  "engine_gpu_busy|gpu_pipeline_N": 2372,
+  "engine_gpu_idle|duckdb": 801,
+  "engine_gpu_idle|task_creator_N": 291,
+  "post_engine|duckdb": 256,
+  "planning|scan_manager_N": 84,
+  "planning|task_creator_N": 34,
+  "engine_gpu_idle|cuda-EvtHandlr": 33,
+  "planning|gpu_pipeline_N": 28,
+  "engine_gpu_busy|duckdb": 12,
+  "engine_gpu_idle|reactor-0_worke": 7,
+  "engine_gpu_idle|reactor-2_worke": 5,
+  "planning|reactor-2_worke": 4,
+  "engine_gpu_idle|reactor-3_worke": 4,
+  "planning|reactor-1_worke": 4,
+  "planning|reactor-0_worke": 3,
+  "engine_gpu_busy|reactor-1_worke": 2,
+  "planning|reactor-3_worke": 2,
+  "engine_gpu_idle|scan_manager_N": 2,
+  "engine_gpu_idle|": 1,
+  "engine_gpu_busy|reactor-0_worke": 1,
+  "engine_gpu_busy|reactor-2_worke": 1,
+  "engine_gpu_busy|reactor-3_worke": 1,
+  "engine_gpu_idle|reactor-1_worke": 1,
+  "post_engine|reactor-1_worke": 1
+ },
+ "top_functions": {
+  "engine_gpu_busy": [
+   [
+    386,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e022be19"
+   ],
+   [
+    137,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088e"
+   ],
+   [
+    87,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460820"
+   ],
+   [
+    80,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f98c"
+   ],
+   [
+    78,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460854"
+   ],
+   [
+    55,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460833"
+   ],
+   [
+    50,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460888"
+   ],
+   [
+    47,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046085b"
+   ],
+   [
+    43,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046095d"
+   ],
+   [
+    42,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6c3"
+   ],
+   [
+    37,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608c1"
+   ],
+   [
+    34,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460940"
+   ],
+   [
+    34,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046084b"
+   ],
+   [
+    32,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9df90"
+   ],
+   [
+    29,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608b8"
+   ],
+   [
+    27,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9dfa0"
+   ],
+   [
+    26,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460891"
+   ],
+   [
+    26,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6a0"
+   ],
+   [
+    24,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046084f"
+   ],
+   [
+    24,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608a1"
+   ],
+   [
+    20,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e03185f1"
+   ],
+   [
+    19,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e022be19"
+   ],
+   [
+    19,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088c"
+   ],
+   [
+    18,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608bd"
+   ],
+   [
+    11,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f688"
+   ],
+   [
+    11,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e03185f5"
+   ],
+   [
+    11,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040546e"
+   ],
+   [
+    9,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0405373"
+   ],
+   [
+    9,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2 <- 0x7f8938282108"
+   ],
+   [
+    8,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460897"
+   ],
+   [
+    8,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608ad"
+   ],
+   [
+    8,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f9c8"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e0a7"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9df98"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046085d"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460894"
+   ],
+   [
+    7,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f8938312ab9"
+   ],
+   [
+    6,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f580"
+   ],
+   [
+    6,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460854"
+   ],
+   [
+    6,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040534f"
+   ],
+   [
+    6,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0895"
+   ],
+   [
+    6,
+    "cuda:alloc",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    6,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e03df969"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f9a5"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f973"
+   ],
+   [
+    5,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460940"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6ae"
+   ],
+   [
+    5,
+    "cudart_outside_traced_api",
+    "librmm.so",
+    "cudaGetDevice"
+   ],
+   [
+    5,
+    "cudart_outside_traced_api",
+    "librmm.so",
+    "libcudart_static_4c573df439a7675747de4ac8a0dfd2077e471dc7"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e022c0fc"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f99a"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608a5"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f9ba"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libc.so.6",
+    "__clock_gettime"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6ce"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460838"
+   ],
+   [
+    5,
+    "cuda:alloc",
+    "libc.so.6",
+    "__GI___pthread_mutex_unlock_usercnt"
+   ],
+   [
+    5,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e020"
+   ],
+   [
+    5,
+    "cudart_outside_traced_api",
+    "libcudf.so",
+    "libcudart_static_92985ad401d8bcbae04026a899a9432cb40876b5"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e03185bb"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e0bb"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f590"
+   ],
+   [
+    4,
+    "cuda:memcpy",
+    "[vdso]",
+    "0x7f8a0417f98c"
+   ],
+   [
+    4,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460820"
+   ],
+   [
+    4,
+    "cudart_outside_traced_api",
+    "libcudf.so",
+    "cudaGetLastError"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608a9"
+   ],
+   [
+    4,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608c1"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e022be17"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04053f8"
+   ],
+   [
+    4,
+    "cuda:memcpy",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    4,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::parallel::downgrade_executor::processing_loop()"
+   ],
+   [
+    4,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460950"
+   ],
+   [
+    3,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "void cuda::__4::__dtor_fn<cucascade::memory::reservation_aware_resource_adaptor>(void*, bool)"
+   ],
+   [
+    3,
+    "cuda:alloc",
+    "libcuda.so.580.173.02",
+    "0x7f86e02ef3c4"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040546c"
+   ],
+   [
+    3,
+    "cuda:launch",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f992"
+   ],
+   [
+    3,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088e"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e1fb"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e03185c4"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417fb35"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e0d5"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046089a"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0405366"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e02f"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a041801b0"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f5c2"
+   ],
+   [
+    3,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e028ef56"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e365"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f66c"
+   ],
+   [
+    3,
+    "cuda_driver_outside_api[libc_other]",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2 <- 0x7f86e04d6226"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9e06a"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040539c"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0405338"
+   ],
+   [
+    3,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608a1"
+   ],
+   [
+    3,
+    "cudf",
+    "libcudf.so",
+    "_init"
+   ],
+   [
+    3,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e0fb6e73"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608b4"
+   ],
+   [
+    3,
+    "cuda:alloc",
+    "libc.so.6",
+    "__libc_free"
+   ],
+   [
+    3,
+    "cuda:memcpy:profiler",
+    "libcupti.so.13.1",
+    "0x7f89382d6154"
+   ],
+   [
+    3,
+    "rmm",
+    "librmm.so",
+    "rmm::_RMM_26_10::device_buffer::~device_buffer()"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e025e1de"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_rwlock_tryrdlock@GLIBC_2"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040537b"
+   ],
+   [
+    3,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0893"
+   ],
+   [
+    3,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382d6154"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e025e173"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_once@GLIBC_2"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9dfc0"
+   ],
+   [
+    3,
+    "rmm",
+    "librmm.so",
+    "rmm::_RMM_26_10::exec_policy_nosync::exec_policy_nosync(cuda::__4::stream_ref, cuda::mr::__4::__version_bump_ver4_::any_resource<cuda::mr::__4::device_accessibl"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e03185e9"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460872"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9df57"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417fa40"
+   ],
+   [
+    3,
+    "cuda:launch:profiler",
+    "libcupti.so.13.1",
+    "0x7f893826abe6"
+   ],
+   [
+    3,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e03bfe14"
+   ],
+   [
+    3,
+    "cuda:memcpy",
+    "libc.so.6",
+    "__GI___pthread_mutex_unlock_usercnt"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0405419"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f995"
+   ],
+   [
+    3,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046089d"
+   ]
+  ],
+  "engine_gpu_idle": [
+   [
+    179,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::task_scheduler::management_eventloop()"
+   ],
+   [
+    122,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e022be19"
+   ],
+   [
+    49,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02ff6a66"
+   ],
+   [
+    49,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088e"
+   ],
+   [
+    42,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2 <- NSYS_OSRT_pthread_mutex_lock_0"
+   ],
+   [
+    41,
+    "cuda:sync",
+    "[vdso]",
+    "0x7f8a0417f98c"
+   ],
+   [
+    39,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e03df969"
+   ],
+   [
+    37,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0895"
+   ],
+   [
+    32,
+    "profiler[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- 0x7f8a030bf4c2"
+   ],
+   [
+    29,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460820"
+   ],
+   [
+    27,
+    "cuda:memcpy",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    27,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2 <- 0x7f8938282108"
+   ],
+   [
+    26,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f8938312ab9"
+   ],
+   [
+    25,
+    "cuda:memcpy",
+    "libc.so.6",
+    "__GI___pthread_mutex_unlock_usercnt"
+   ],
+   [
+    25,
+    "cuda:launch",
+    "libc.so.6",
+    "__GI___pthread_mutex_unlock_usercnt"
+   ],
+   [
+    25,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460854"
+   ],
+   [
+    22,
+    "cuda:alloc",
+    "libc.so.6",
+    "__GI___pthread_mutex_unlock_usercnt"
+   ],
+   [
+    21,
+    "wait:os_wait_or_yield",
+    "libc.so.6",
+    "__internal_syscall_cancel"
+   ],
+   [
+    20,
+    "cudart_outside_traced_api",
+    "libcudf.so",
+    "libcudart_static_92985ad401d8bcbae04026a899a9432cb40876b5"
+   ],
+   [
+    20,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_rwlock_tryrdlock@GLIBC_2"
+   ],
+   [
+    20,
+    "cudart_outside_traced_api[libc_other]",
+    "libc.so.6",
+    "__pthread_once@GLIBC_2 <- libcudart_static_5887a27cefafb4cd438bdc166b0a6f874b079d4b"
+   ],
+   [
+    20,
+    "sirius:scheduler_taskqueue",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::gpu_pipeline_executor::manager_loop()"
+   ],
+   [
+    18,
+    "cuda_driver_outside_api[libc_other]",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2 <- 0x7f86e04d6226"
+   ],
+   [
+    18,
+    "sirius:logging_format[libc_other]",
+    "libc.so.6",
+    "__memchr_avx2 <- std::vformat[abi:cxx11](std::basic_string_view<char, std::char_traits<char> >, std::basic_format_args<std::basic_format_context<std::__format::"
+   ],
+   [
+    18,
+    "cudart_outside_traced_api",
+    "librmm.so",
+    "cudaGetDevice"
+   ],
+   [
+    18,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040560f"
+   ],
+   [
+    17,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "cucascade::memory::(anonymous namespace)::ptds_allocation_tracker::get_tracker_state(cuda::__4::stream_ref)"
+   ],
+   [
+    17,
+    "sirius:scheduler_taskqueue",
+    "libsirius.so.0.0.0",
+    "sirius::creator::task_creator::manager_loop()"
+   ],
+   [
+    16,
+    "cuda:launch",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    16,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460833"
+   ],
+   [
+    15,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e028ef56"
+   ],
+   [
+    15,
+    "cuda:alloc",
+    "libc.so.6",
+    "__pthread_rwlock_unlock@GLIBC_2"
+   ],
+   [
+    15,
+    "sirius:logging_format",
+    "libsirius.so.0.0.0",
+    "std::vformat[abi:cxx11](std::basic_string_view<char, std::char_traits<char> >, std::basic_format_args<std::basic_format_context<std::__format::_Sink_iter<char>,"
+   ],
+   [
+    14,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e0425f39"
+   ],
+   [
+    14,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382d6154"
+   ],
+   [
+    14,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046095d"
+   ],
+   [
+    14,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::parallel::downgrade_executor::processing_loop()"
+   ],
+   [
+    14,
+    "profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_pthread_mutex_lock_0"
+   ],
+   [
+    13,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460888"
+   ],
+   [
+    13,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460940"
+   ],
+   [
+    13,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046084b"
+   ],
+   [
+    13,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "cucascade::read_only_data_batch::~read_only_data_batch()"
+   ],
+   [
+    13,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_rwlock_unlock@GLIBC_2"
+   ],
+   [
+    13,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6c3"
+   ],
+   [
+    12,
+    "cuda:alloc",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f99311"
+   ],
+   [
+    12,
+    "cudf",
+    "libcudf.so",
+    "cudf::column::alloc_size() const"
+   ],
+   [
+    12,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e03bfe14"
+   ],
+   [
+    12,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382e3f1c"
+   ],
+   [
+    12,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608b8"
+   ],
+   [
+    12,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046084f"
+   ],
+   [
+    12,
+    "duckdb:executor_wait[libc_alloc]",
+    "libc.so.6",
+    "__malloc_trim <- duckdb::Allocator::ThreadFlush(bool, unsigned long, unsigned long)"
+   ],
+   [
+    12,
+    "sirius:scheduler_taskqueue",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::gpu_pipeline_executor::process_task(std::unique_ptr<sirius::parallel::itask, std::default_delete<sirius::parallel::itask> >, sirius::exec::bou"
+   ],
+   [
+    11,
+    "cudf",
+    "libcudf.so",
+    "std::vector<cudf::column_view, std::allocator<cudf::column_view> >::vector(std::vector<cudf::column_view, std::allocator<cudf::column_view> > const&)"
+   ],
+   [
+    11,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    11,
+    "cudart_outside_traced_api",
+    "libcuda.so.580.173.02",
+    "cuCtxGetDevice_v2"
+   ],
+   [
+    11,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e03bfe14"
+   ],
+   [
+    11,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382dbb56"
+   ],
+   [
+    11,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e0223a34"
+   ],
+   [
+    11,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02ff6a69"
+   ],
+   [
+    11,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608c1"
+   ],
+   [
+    11,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "cucascade::io::uring::uring_reactor::worker_loop(std::stop_token const&)"
+   ],
+   [
+    11,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382dbc24"
+   ],
+   [
+    10,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e0223a34"
+   ],
+   [
+    10,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0890"
+   ],
+   [
+    10,
+    "profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_pthread_rwlock_tryrdlock_0"
+   ],
+   [
+    10,
+    "rmm",
+    "librmm.so",
+    "rmm::_RMM_26_10::device_buffer::device_buffer(rmm::_RMM_26_10::device_buffer&&)"
+   ],
+   [
+    10,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e040546e"
+   ],
+   [
+    10,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0893"
+   ],
+   [
+    10,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030b5cdb"
+   ],
+   [
+    10,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e03df958"
+   ],
+   [
+    10,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "pthread_cond_broadcast@@GLIBC_2 <- NSYS_OSRT_pthread_cond_broadcast_1"
+   ],
+   [
+    9,
+    "cudf",
+    "libcudf.so",
+    "cudf::table::alloc_size() const"
+   ],
+   [
+    9,
+    "cudart_outside_traced_api",
+    "libcudf.so",
+    "cudaGetLastError"
+   ],
+   [
+    9,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::gpu_pipeline_task::compute_task(cuda::__4::stream_ref)"
+   ],
+   [
+    9,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e04608a1"
+   ],
+   [
+    9,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e0fb6ec4"
+   ],
+   [
+    9,
+    "cuda_driver_outside_api",
+    "libcuda.so.580.173.02",
+    "0x7f86e04d61f0"
+   ],
+   [
+    9,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046085b"
+   ],
+   [
+    9,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()"
+   ],
+   [
+    9,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02f27429"
+   ],
+   [
+    9,
+    "sirius:scheduler_taskqueue",
+    "libsirius.so.0.0.0",
+    "sirius::creator::task_creator::manager_loop()::{lambda()#1}::operator()()"
+   ],
+   [
+    9,
+    "wait:os_wait_or_yield",
+    "libc.so.6",
+    "pthread_cond_wait@@GLIBC_2"
+   ],
+   [
+    9,
+    "cudf",
+    "libcudf.so",
+    "_init"
+   ],
+   [
+    9,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382e4a0e"
+   ],
+   [
+    9,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088c"
+   ],
+   [
+    9,
+    "cuda:launch",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2"
+   ],
+   [
+    9,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::log::get_sink()"
+   ],
+   [
+    8,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382e403e"
+   ],
+   [
+    8,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e021f6a0"
+   ],
+   [
+    8,
+    "rmm",
+    "librmm.so",
+    "rmm::_RMM_26_10::device_buffer::device_buffer(unsigned long, cuda::__4::stream_ref, cuda::mr::__4::__version_bump_ver4_::any_resource<cuda::mr::__4::device_acce"
+   ],
+   [
+    8,
+    "cuda:sync",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2"
+   ],
+   [
+    8,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::gpu_pipeline_task::execute(cuda::__4::stream_ref)"
+   ],
+   [
+    8,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e03df943"
+   ],
+   [
+    8,
+    "sirius:operators[libc_mem_str]",
+    "libc.so.6",
+    "__strlen_avx2 <- std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string<std::allocator<char> >(char const*, std::allocato"
+   ],
+   [
+    8,
+    "cuda_driver_outside_api",
+    "libcuda.so.580.173.02",
+    "0x7f86e04cb10f"
+   ],
+   [
+    8,
+    "cuda:alloc",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2"
+   ],
+   [
+    8,
+    "cuda:alloc",
+    "libc.so.6",
+    "__pthread_getspecific@GLIBC_2"
+   ],
+   [
+    8,
+    "cuda:sync:profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0893"
+   ],
+   [
+    8,
+    "cudf",
+    "libcudf.so",
+    "cudf::table::view() const"
+   ],
+   [
+    8,
+    "cudf",
+    "libcudf.so",
+    "cudf::column_view::column_view(cudf::data_type, int, void const*, unsigned int const*, int, int, std::vector<cudf::column_view, std::allocator<cudf::column_view"
+   ],
+   [
+    8,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e01de1c4"
+   ],
+   [
+    8,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "cucascade::read_only_data_batch::read_only_data_batch(std::shared_ptr<cucascade::data_batch const>, std::shared_lock<std::shared_mutex>)"
+   ],
+   [
+    8,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::op::pipelineable_operator_data::get_read_only_batches() const"
+   ],
+   [
+    8,
+    "cudart_outside_traced_api",
+    "librmm.so",
+    "libcudart_static_418eebf4e9b7463362b8385a31d08da131d0ea88"
+   ],
+   [
+    8,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e01b50bd"
+   ],
+   [
+    8,
+    "profiler",
+    "libcupti.so.13.1",
+    "0x7f89382d6105"
+   ],
+   [
+    7,
+    "profiler[libc_dl_lookup]",
+    "ld-linux-x86-64.so.2",
+    "__tls_get_addr <- 0x7f8a03ee0484"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0460891"
+   ],
+   [
+    7,
+    "cudf",
+    "libcudf.so",
+    "cudf::detail::column_view_base::column_view_base(cudf::data_type, int, void const*, unsigned int const*, int, int)"
+   ],
+   [
+    7,
+    "cuda:alloc",
+    "libc.so.6",
+    "__libc_calloc"
+   ],
+   [
+    7,
+    "cuda:alloc:profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_pthread_rwlock_rdlock_1"
+   ],
+   [
+    7,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e046088e"
+   ],
+   [
+    7,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030b3523"
+   ],
+   [
+    7,
+    "cuda:memcpy",
+    "libcuda.so.580.173.02",
+    "0x7f86e03e179e"
+   ],
+   [
+    7,
+    "cuda:sync",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9df90"
+   ],
+   [
+    7,
+    "cuda:alloc",
+    "libcuda.so.580.173.02",
+    "0x7f86e0f9ed74"
+   ],
+   [
+    7,
+    "cuda:launch",
+    "libcuda.so.580.173.02",
+    "0x7f86e040546e"
+   ],
+   [
+    7,
+    "kernel_or_vdso",
+    "[kernel.kallsyms]",
+    "0xffffffffafa00080"
+   ],
+   [
+    7,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "cucascade::data_batch::to_read_only() const"
+   ],
+   [
+    7,
+    "cuda:alloc",
+    "libc.so.6",
+    "__pthread_rwlock_trywrlock@GLIBC_2"
+   ]
+  ],
+  "planning": [
+   [
+    228,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::ThriftFileTransport::read(unsigned char*, unsigned int)"
+   ],
+   [
+    94,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_apache::thrift::protocol::TVirtualProtocol<duckdb_apache::thrift::protocol::TCompactProtocolT<duckdb::ThriftFileTransport>, duckdb_apache::thrift::protoc"
+   ],
+   [
+    87,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "unsigned int duckdb_apache::thrift::transport::readAll<duckdb::ThriftFileTransport>(duckdb::ThriftFileTransport&, unsigned char*, unsigned int)"
+   ],
+   [
+    85,
+    "duckdb:parquet_metadata_bind[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- duckdb::ThriftFileTransport::read(unsigned char*, unsigned int)"
+   ],
+   [
+    74,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatchStack::ExecuteFrame(duckdb::MatchStackFrame&)"
+   ],
+   [
+    49,
+    "duckdb:parse[libc_alloc]",
+    "libc.so.6",
+    "malloc_consolidate <- void std::vector<duckdb::MatcherToken, std::allocator<duckdb::MatcherToken> >::_M_realloc_append<std::__cxx11::basic_string<char, std::cha"
+   ],
+   [
+    47,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_apache::thrift::protocol::TCompactProtocolT<duckdb::ThriftFileTransport>::readBignum64(long&)"
+   ],
+   [
+    43,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::SerializationData::~SerializationData()"
+   ],
+   [
+    38,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatchStep::Child(duckdb::MatchInput)"
+   ],
+   [
+    36,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_apache::thrift::protocol::TCompactProtocolT<duckdb::ThriftFileTransport>::getTType(signed char)"
+   ],
+   [
+    35,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ListMatchProcess::Resume(std::optional<duckdb::MatcherResult>)"
+   ],
+   [
+    34,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::ColumnMetaData::read(duckdb_apache::thrift::protocol::TProtocol*)"
+   ],
+   [
+    25,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatcherFirstSet::MightMatch(duckdb::MatchState&) const"
+   ],
+   [
+    23,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::EdgeInterpolationAlgorithm::type duckdb_parquet::SafeEnumCast<duckdb_parquet::EdgeInterpolationAlgorithm>(std::map<int, char const*, std::less<i"
+   ],
+   [
+    22,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::StringUtil::CIEquals(char const*, unsigned long, char const*, unsigned long)"
+   ],
+   [
+    22,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::StringUtil::CIHash(char const*, unsigned long)"
+   ],
+   [
+    22,
+    "duckdb:parquet_metadata_bind[libc_other]",
+    "libstdc++.so.6.0.36",
+    "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_replace(unsigned long, unsigned long, char const*, unsigned long) <- duckdb_"
+   ],
+   [
+    20,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "std::vector<duckdb_parquet::ColumnChunk, std::allocator<duckdb_parquet::ColumnChunk> >::_M_default_append(unsigned long)"
+   ],
+   [
+    19,
+    "profiler[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- 0x7f8a030bf4c2"
+   ],
+   [
+    19,
+    "duckdb:parquet_metadata_bind[libc_mem_str]",
+    "libc.so.6",
+    "__memcmp_avx2_movbe <- duckdb::StringUtil::StartsWith(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basi"
+   ],
+   [
+    18,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::_Deque_base<std::reference_wrapper<duckdb::CompressionInfo const>, std::allocator<std::reference_wrapper<duckdb::CompressionInfo const> > >:"
+   ],
+   [
+    18,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::Statistics::read(duckdb_apache::thrift::protocol::TProtocol*)"
+   ],
+   [
+    17,
+    "wait:os_wait_or_yield",
+    "libc.so.6",
+    "__internal_syscall_cancel"
+   ],
+   [
+    17,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::Tokenizer::TokenizeInputInternal(duckdb::TokenizerBehavior&) const"
+   ],
+   [
+    16,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatchStack::FinalizeFrame(duckdb::MatchStackFrame&)"
+   ],
+   [
+    16,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "std::pair<std::__detail::_Node_iterator<duckdb::ColumnBinding, true, true>, bool> std::_Hashtable<duckdb::ColumnBinding, duckdb::ColumnBinding, std::allocator<d"
+   ],
+   [
+    15,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::vector<duckdb_parquet::Encoding::type, std::allocator<duckdb_parquet::Encoding::type> >::_M_default_append(unsigned long)"
+   ],
+   [
+    15,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "std::_Hashtable<duckdb::ColumnBinding, duckdb::ColumnBinding, std::allocator<duckdb::ColumnBinding>, std::__detail::_Identity, duckdb::ColumnBindingEquality, du"
+   ],
+   [
+    14,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::task_scheduler::management_eventloop()"
+   ],
+   [
+    14,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::ColumnChunk::read(duckdb_apache::thrift::protocol::TProtocol*)"
+   ],
+   [
+    14,
+    "duckdb:executor_wait[libc_alloc]",
+    "libc.so.6",
+    "__malloc_trim <- duckdb::Allocator::ThreadFlush(bool, unsigned long, unsigned long)"
+   ],
+   [
+    13,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2 <- NSYS_OSRT_pthread_mutex_lock_1"
+   ],
+   [
+    13,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::StringUtil::CILessThan(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, std::__cxx11::basic_string<char, std::cha"
+   ],
+   [
+    13,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::LogicalOperatorVisitor::VisitExpression(duckdb::unique_ptr<duckdb::Expression, std::default_delete<duckdb::Expression>, true>*)"
+   ],
+   [
+    13,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::pair<std::__detail::_Node_iterator<duckdb::ColumnBinding, true, true>, bool> std::_Hashtable<duckdb::ColumnBinding, duckdb::ColumnBinding, s"
+   ],
+   [
+    12,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::PageEncodingStats::read(duckdb_apache::thrift::protocol::TProtocol*)"
+   ],
+   [
+    12,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::CompiledGrammar::GetRule(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) const"
+   ],
+   [
+    12,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::Identifier& std::vector<duckdb::Identifier, std::allocator<duckdb::Identifier> >::emplace_back<duckdb::Identifier>(duckdb::Identifier&&)"
+   ],
+   [
+    12,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::TaskSchedulerPool::Wait(long)"
+   ],
+   [
+    11,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::BinaryDeserializer::OnOptionalPropertyBegin(unsigned short, char const*)"
+   ],
+   [
+    11,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::ColumnMetaData::ColumnMetaData()"
+   ],
+   [
+    11,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_apache::thrift::protocol::TCompactProtocolT<duckdb::ThriftFileTransport>::readBinary(std::__cxx11::basic_string<char, std::char_traits<char>, std::alloca"
+   ],
+   [
+    11,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std:"
+   ],
+   [
+    10,
+    "duckdb:parse[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- void std::vector<duckdb::MatcherToken, std::allocator<duckdb::MatcherToken> >::_M_realloc_append<std::__cxx11::basic_string<char, std::char_trait"
+   ],
+   [
+    10,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::StorageVersionInfo::GetStorageVersionString[abi:cxx11](duckdb::StorageVersion const&)"
+   ],
+   [
+    10,
+    "duckdb:executor_wait[libc_alloc]",
+    "libc.so.6",
+    "malloc_consolidate <- duckdb::Allocator::ThreadFlush(bool, unsigned long, unsigned long)"
+   ],
+   [
+    10,
+    "duckdb:plan_optimize[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- duckdb::MemoryStream::WriteData(unsigned char const*, unsigned long)"
+   ],
+   [
+    10,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- std::_Hashtable<duckdb::ColumnBinding, duckdb::ColumnBinding, std::allocator<duckdb::ColumnBinding>, std::__detail::_Identity, duckdb::Column"
+   ],
+   [
+    10,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::StringUtil::CIEquals(char const*, unsigned long, char const*, unsigned long)"
+   ],
+   [
+    10,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2 <- NSYS_OSRT_pthread_mutex_lock_0"
+   ],
+   [
+    9,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ListMatcher::StartMatch(duckdb::MatchState&) const"
+   ],
+   [
+    9,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ChoiceMatchProcess<false>::Resume(std::optional<duckdb::MatcherResult>)"
+   ],
+   [
+    9,
+    "duckdb:bind[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<true>(char const*, unsigned lo"
+   ],
+   [
+    9,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::ParquetReader::ParseSchemaRecursive(unsigned long, unsigned long, unsigned long, unsigned long&, unsigned long&, duckdb::ClientContext&)"
+   ],
+   [
+    9,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::sirius_plan_printer::render_dag[abi:cxx11]() const"
+   ],
+   [
+    9,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "std::__detail::_Map_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::pair<std::__cxx11::basic_string<char, std::char_t"
+   ],
+   [
+    9,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "malloc_consolidate <- duckdb::LogicalGet::Deserialize(duckdb::Deserializer&)"
+   ],
+   [
+    8,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::parallel::downgrade_executor::processing_loop()"
+   ],
+   [
+    8,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc <- std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned "
+   ],
+   [
+    8,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::MemoryStream::ReadData(duckdb::QueryContext, unsigned char*, unsigned long)"
+   ],
+   [
+    8,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "void std::vector<duckdb::MultiFileColumnDefinition, std::allocator<duckdb::MultiFileColumnDefinition> >::_M_realloc_append<duckdb::MultiFileColumnDefinition>(du"
+   ],
+   [
+    8,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "sirius::scan_manager::sirius_scan_manager::prepare_for_query(sirius::planner::query const&, bool, std::vector<int, std::allocator<int> > const&, std::shared_ptr"
+   ],
+   [
+    8,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ParserPackratCache::Lookup(duckdb::Matcher const&, unsigned long) const"
+   ],
+   [
+    8,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc2 <- std::_Deque_base<std::reference_wrapper<duckdb::CompressionInfo const>, std::allocator<std::reference_wrapper<duckdb::CompressionInfo const> >"
+   ],
+   [
+    8,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "_int_free_create_chunk <- duckdb::SerializationData::~SerializationData()"
+   ],
+   [
+    8,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- duckdb::SerializationData::~SerializationData()"
+   ],
+   [
+    8,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::Catalog::TryLookupEntryAcrossCatalogs(duckdb::CatalogEntryRetriever&, duckdb::EntryLookupInfo const&, duckdb::OnEntryNotFound)"
+   ],
+   [
+    8,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb_parquet::ColumnMetaData::~ColumnMetaData()"
+   ],
+   [
+    7,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "cucascade::io::uring::uring_reactor::worker_loop(std::stop_token const&)"
+   ],
+   [
+    7,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::StringUtil::CIHash(char const*, unsigned long)"
+   ],
+   [
+    7,
+    "sirius:operators[libc_mem_str]",
+    "libc.so.6",
+    "__strlen_avx2 <- duckdb::operator==(char const*, duckdb::Identifier const&)"
+   ],
+   [
+    7,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::RowGroup::read(duckdb_apache::thrift::protocol::TProtocol*)"
+   ],
+   [
+    7,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::BindContext::CreateColumnReference(duckdb::BindingAlias const&, duckdb::Identifier const&, duckdb::ColumnBindType)"
+   ],
+   [
+    7,
+    "duckdb:bind",
+    "duckdb",
+    "std::vector<duckdb::LogicalType, std::allocator<duckdb::LogicalType> >::~vector()"
+   ],
+   [
+    7,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::FileSystem::HasGlob(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)"
+   ],
+   [
+    7,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ArenaAllocator::AllocateAligned(unsigned long)"
+   ],
+   [
+    7,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::Binding::TryGetBindingIndex(duckdb::Identifier const&, unsigned long&)"
+   ],
+   [
+    7,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::ReadSingleParquetFileBind(duckdb::ClientContext&, duckdb::TableFunctionBindInput&, duckdb::vector<duckdb::LogicalType, true, std::allocator<duckdb::Logi"
+   ],
+   [
+    7,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::LogicalType::TryGetBuiltinTypeInfo(duckdb::LogicalTypeId)"
+   ],
+   [
+    7,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::RelationColumnStatsLookup::AddRelation(duckdb::RelationStats const&)"
+   ],
+   [
+    7,
+    "duckdb:parquet_metadata_bind[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- void std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_construct<true>(char const*, unsigned lo"
+   ],
+   [
+    7,
+    "kernel_or_vdso",
+    "[kernel.kallsyms]",
+    "0xffffffffafa01280"
+   ],
+   [
+    6,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::TokenIterator::Current() const"
+   ],
+   [
+    6,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc2 <- std::vector<duckdb_parquet::Encoding::type, std::allocator<duckdb_parquet::Encoding::type> >::_M_default_append(unsigned long)"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::BinaryDeserializer::OnListBegin()"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::Identifier& std::vector<duckdb::Identifier, std::allocator<duckdb::Identifier> >::emplace_back<duckdb::Identifier>(duckdb::Identifier&&)"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::NumericValueUnionToValueInternal(duckdb::LogicalType const&, duckdb::NumericValueUnion const&)"
+   ],
+   [
+    6,
+    "sirius:memory_batches",
+    "libsirius.so.0.0.0",
+    "sirius::pipeline::materialize_repository_wiring(std::vector<sirius::pipeline::repository_wiring, std::allocator<sirius::pipeline::repository_wiring> > const&, c"
+   ],
+   [
+    6,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::LogicalType::TryGetBuiltinTypeInfo(duckdb::LogicalTypeId)"
+   ],
+   [
+    6,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::ParquetColumnSchema::~ParquetColumnSchema()"
+   ],
+   [
+    6,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::unique_ptr<duckdb::ParsedExpression, std::default_delete<duckdb::ParsedExpression>, true>& std::vector<duckdb::unique_ptr<duckdb::ParsedExpression, std:"
+   ],
+   [
+    6,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatchStack::Execute(duckdb::MatchInput)"
+   ],
+   [
+    6,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::Value::~Value()"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::ExpressionIterator::EnumerateChildren(duckdb::Expression&, std::function<void (duckdb::unique_ptr<duckdb::Expression, std::default_delete<duckdb::Expres"
+   ],
+   [
+    6,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::ExpressionMatcher::Match(duckdb::Expression&, duckdb::vector<std::reference_wrapper<duckdb::Expression>, true, std::allocator<std::reference_wrapper<duc"
+   ],
+   [
+    6,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc2 <- std::vector<duckdb_parquet::PageEncodingStats, std::allocator<duckdb_parquet::PageEncodingStats> >::_M_default_append(unsigned long)"
+   ],
+   [
+    6,
+    "other:libspdlog.so.1.17.0[libc_other]",
+    "libc.so.6",
+    "__strrchr_avx2 <- spdlog::details::short_filename_formatter<spdlog::details::null_scoped_padder>::format(spdlog::details::log_msg const&, tm const&, fmt::v12::b"
+   ],
+   [
+    6,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::Binder::BindSelectNode(duckdb::SelectNode&, duckdb::BoundStatement)"
+   ],
+   [
+    6,
+    "kernel_or_vdso",
+    "[kernel.kallsyms]",
+    "0xffffffffafa00080"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::Value::~Value()"
+   ],
+   [
+    6,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::__cxx11::basic_string<char, std::char_traits<char>, std::allo"
+   ],
+   [
+    6,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030b3523"
+   ],
+   [
+    6,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a03476b3c"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::LogicalGet::Deserialize(duckdb::Deserializer&)"
+   ],
+   [
+    6,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::PEGTransformer::ExpressionDepthWeight(duckdb::optional_ptr<duckdb::CompiledGrammarRule const, true>, duckdb::ParseResult&)"
+   ],
+   [
+    6,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::BinaryDeserializer::OnPropertyBegin(unsigned short, char const*)"
+   ],
+   [
+    5,
+    "profiler[libc_dl_lookup]",
+    "ld-linux-x86-64.so.2",
+    "__tls_get_addr <- 0x7f8a03ee0484"
+   ],
+   [
+    5,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02f27215"
+   ],
+   [
+    5,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "std::_Hashtable<std::reference_wrapper<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const>, std::pair<std::reference_wrapper<"
+   ],
+   [
+    5,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::KeywordMatcher::MatchAtomic(duckdb::MatchState&) const"
+   ],
+   [
+    5,
+    "duckdb:parquet_metadata_bind[libc_other]",
+    "libstdc++.so.6.0.36",
+    "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::basic_string(std::__cxx11::basic_string<char, std::char_traits<char>, std::allo"
+   ],
+   [
+    5,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::CatalogLookup::CatalogLookup(duckdb::Catalog&, duckdb::Identifier, duckdb::EntryLookupInfo const&)"
+   ],
+   [
+    5,
+    "duckdb:parse",
+    "duckdb",
+    "duckdb::MatchStep::Complete(duckdb::MatcherResult)"
+   ],
+   [
+    5,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- duckdb::ParquetColumnSchema& std::vector<duckdb::ParquetColumnSchema, std::allocator<duckdb::ParquetColumnSchema> >::emplace_back<duckdb::Parquet"
+   ],
+   [
+    5,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::vector<duckdb_parquet::PageEncodingStats, std::allocator<duckdb_parquet::PageEncodingStats> >::_M_default_append(unsigned long)"
+   ],
+   [
+    5,
+    "sirius:operators[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char con"
+   ],
+   [
+    5,
+    "duckdb:bind[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- std::__detail::_Map_base<duckdb::Identifier, std::pair<duckdb::Identifier const, unsigned long>, std::allocator<std::pair<duckdb::Identifier cons"
+   ],
+   [
+    5,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "void std::vector<duckdb::ColumnBinding, std::allocator<duckdb::ColumnBinding> >::_M_realloc_append<duckdb::TableIndex&, duckdb::ProjectionIndex>(duckdb::TableIn"
+   ],
+   [
+    5,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::AddColumnNameToBinding(duckdb::Identifier const&, std::unordered_set<duckdb::Identifier, duckdb::IdentifierHashFunction, duckdb::IdentifierEquality, std"
+   ],
+   [
+    5,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "std::vector<duckdb::LogicalType, std::allocator<duckdb::LogicalType> >::operator=(std::vector<duckdb::LogicalType, std::allocator<duckdb::LogicalType> > const&)"
+   ]
+  ],
+  "post_engine": [
+   [
+    19,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::TaskSchedulerPool::Wait(long)"
+   ],
+   [
+    10,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "_IO_fwrite <- NSYS_OSRT_fwrite_0"
+   ],
+   [
+    8,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f0895"
+   ],
+   [
+    5,
+    "profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_fwrite_0"
+   ],
+   [
+    5,
+    "duckdb:result_output[libc_other]",
+    "libc.so.6",
+    "__printf_fp_buffer_1 <- endTimer()"
+   ],
+   [
+    4,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::string_t duckdb::StringCast::Operation<int>(int, duckdb::StringHeap&)"
+   ],
+   [
+    4,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::ColumnMetaData::~ColumnMetaData()"
+   ],
+   [
+    3,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::Date::Convert(duckdb::date_t, int&, int&, int&)"
+   ],
+   [
+    3,
+    "duckdb:result_output[libc_mem_str]",
+    "libc.so.6",
+    "__memcmp_avx2_movbe <- duckdb_shell::ModeCsvRenderer::PrintEscapedCSV(duckdb_shell::PrintStream&, char const*, unsigned long)"
+   ],
+   [
+    3,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::HugeintDivMod(duckdb::hugeint_t, duckdb::hugeint_t)"
+   ],
+   [
+    3,
+    "duckdb:executor_wait",
+    "duckdb",
+    "void duckdb::shared_ptr<duckdb::DictionaryBuffer, true>::__enable_weak_this<duckdb::VectorBuffer, duckdb::DictionaryBuffer, 0>(duckdb::enable_shared_from_this<d"
+   ],
+   [
+    3,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb_parquet::ColumnMetaData::~ColumnMetaData()"
+   ],
+   [
+    3,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb_shell::ModeCsvRenderer::PrintEscapedCSV(duckdb_shell::PrintStream&, char const*, unsigned long)"
+   ],
+   [
+    3,
+    "duckdb:result_output",
+    "duckdb",
+    "std::vector<duckdb::LogicalType, std::allocator<duckdb::LogicalType> >::~vector()"
+   ],
+   [
+    2,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::BlockMetaData::Pin(duckdb::BufferManager&)"
+   ],
+   [
+    2,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::Value::~Value()"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::ChunkUnit::~ChunkUnit()"
+   ],
+   [
+    2,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::PhysicalHashJoin::~PhysicalHashJoin()"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::QueryResultStream<duckdb::ChunkFormat>::~QueryResultStream()"
+   ],
+   [
+    2,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::LogicalOperator::~LogicalOperator()"
+   ],
+   [
+    2,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::AllocatedData::AllocatedData()"
+   ],
+   [
+    2,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::Statistics::~Statistics()"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::TempBufferPoolReservation duckdb::StandardBufferManager::EvictBlocksOrThrow<char [37], std::__cxx11::basic_string<char, std::char_traits<char>, std::all"
+   ],
+   [
+    2,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb_parquet::FileMetaData::~FileMetaData()"
+   ],
+   [
+    2,
+    "profiler[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- NSYS_OSRT_fwrite_0"
+   ],
+   [
+    2,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02ff6a66"
+   ],
+   [
+    2,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::VectorStringBuffer::CopyInternal(duckdb::Vector const&, duckdb::SelectionVector const&, unsigned long, unsigned long, unsigned long, unsigned long)"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::BufferPool::MemoryUsage::UpdateUsedMemory(duckdb::MemoryTag, long)"
+   ],
+   [
+    2,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030bec00"
+   ],
+   [
+    2,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb_je_malloc_default"
+   ],
+   [
+    2,
+    "profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_sem_timedwait_0"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb_shell::ShellRenderer::ConvertChunk(duckdb::DataChunk&)"
+   ],
+   [
+    2,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb_parquet::FileMetaData::~FileMetaData()"
+   ],
+   [
+    2,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb_je_malloc"
+   ],
+   [
+    2,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::VectorStringBuffer::CopyInternal(duckdb::Vector const&, duckdb::SelectionVector const&, unsigned long, unsigned long, unsigned long, unsigned long)"
+   ],
+   [
+    2,
+    "duckdb:other",
+    "duckdb",
+    "duckdb::TransactionContext::Commit()"
+   ],
+   [
+    2,
+    "sirius:other",
+    "libsirius.so.0.0.0",
+    "duckdb::LocalSourceState::~LocalSourceState()"
+   ],
+   [
+    2,
+    "profiler[libc_dl_lookup]",
+    "ld-linux-x86-64.so.2",
+    "__tls_get_addr <- 0x7f8a03ee0484"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_other]",
+    "libstdc++.so.6.0.36",
+    "std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::reserve(unsigned long) <- void std::__cxx11::basic_string<char, std::char_trait"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize",
+    "duckdb",
+    "duckdb::BoundAggregateFunction::~BoundAggregateFunction()"
+   ],
+   [
+    1,
+    "duckdb:other",
+    "duckdb",
+    "duckdb::MetaTransaction::Commit()"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb_je_free_default"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb_je_arena_extent_alloc_large"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::Vector::Copy(duckdb::Vector const&, duckdb::SelectionVector const&, unsigned long, unsigned long, unsigned long, unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::VectorCacheEntry::VectorCacheEntry(duckdb::Allocator&, duckdb::LogicalType const&, unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::TokenIterator::Current() const"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::DataChunk::GetTypes() const"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::ExpressionFilter::~ExpressionFilter()"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a030f089c"
+   ],
+   [
+    1,
+    "duckdb:bind",
+    "duckdb",
+    "duckdb::MapCastInfo::GetEntry(duckdb::LogicalType const&, duckdb::LogicalType const&) const"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::GetTypeIdSize(duckdb::PhysicalType)"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::ClientContext::ExecuteTaskInternal(duckdb::ClientContextLock&, duckdb::BaseQueryResult&)"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::LogicalGet::~LogicalGet()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::PipelinePrepareFinishEvent::Schedule()"
+   ],
+   [
+    1,
+    "wait:sirius_loop_poll",
+    "libsirius.so.0.0.0",
+    "sirius::parallel::downgrade_executor::processing_loop()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::VectorCacheEntry::ResetFromCache(duckdb::Vector&)"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::string_t duckdb::DecimalToString::Format<duckdb::hugeint_t>(duckdb::hugeint_t, unsigned char, unsigned char, duckdb::StringHeap&)"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::History::Add(char const*, unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::PhysicalHashAggregate::~PhysicalHashAggregate()"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::string_t duckdb::StringCastFromDecimal::Operation<long>(long, unsigned char, unsigned char, duckdb::StringHeap&)"
+   ],
+   [
+    1,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__spawnix <- NSYS_OSRT_system_0"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02eb3fc9"
+   ],
+   [
+    1,
+    "wait:os_wait_or_yield",
+    "libc.so.6",
+    "__errno_location"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- duckdb::Value::~Value()"
+   ],
+   [
+    1,
+    "duckdb:parquet_metadata_bind",
+    "duckdb",
+    "duckdb::ParquetColumnSchema::~ParquetColumnSchema()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait[libc_mem_str]",
+    "libc.so.6",
+    "__memcpy_avx_unaligned_erms <- duckdb::VectorStringBuffer::CopyInternal(duckdb::Vector const&, duckdb::SelectionVector const&, unsigned long, unsigned long, uns"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::ValidityMask& duckdb::ScalarExecutor::PrepareFlatResultValidity<true, true, 0ul, 1ul, 0ul>(std::array<std::reference_wrapper<duckdb::Vector const>, 1ul>"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb_shell::ShellState::RenderQueryResult(duckdb_shell::ShellRenderer&, duckdb::QueryResultStream<duckdb::ChunkFormat>&, duckdb_shell::Page"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02f27380"
+   ],
+   [
+    1,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "_int_malloc <- duckdb::VectorCacheEntry::VectorCacheEntry(duckdb::Allocator&, duckdb::LogicalType const&, unsigned long)"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02eb4040"
+   ],
+   [
+    1,
+    "wait:sirius_loop_poll",
+    "libc.so.6",
+    "__errno_location"
+   ],
+   [
+    1,
+    "sirius:other",
+    "libsirius.so.0.0.0",
+    "duckdb::SiriusContext::release_query_state(sirius::query_id_t, bool)"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- duckdb::PhysicalTableScan::~PhysicalTableScan()"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02f271f0"
+   ],
+   [
+    1,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "do_system <- NSYS_OSRT_system_0"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_other]",
+    "libc.so.6",
+    "__printf_fp_l_buffer <- endTimer()"
+   ],
+   [
+    1,
+    "sirius:other",
+    "libsirius.so.0.0.0",
+    "duckdb::ChunkRetainedCollection::~ChunkRetainedCollection()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "std::_Sp_counted_deleter<duckdb::PipelineTask*, std::default_delete<duckdb::PipelineTask>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- std::_Sp_counted_ptr_inplace<duckdb::TypedKwargs, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispose()"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::ReadSingleParquetFileData::~ReadSingleParquetFileData()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "void std::vector<duckdb::LogicalType, std::allocator<duckdb::LogicalType> >::_M_realloc_append<duckdb::LogicalType const&>(duckdb::LogicalType const&)"
+   ],
+   [
+    1,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- duckdb_parquet::ColumnMetaData::~ColumnMetaData()"
+   ],
+   [
+    1,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "0x7f8a03a0d7f0 <- NSYS_OSRT_fgets_0"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::Event::CompleteDependency()"
+   ],
+   [
+    1,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::ChunkRetainedCollection::FetchRaw()"
+   ],
+   [
+    1,
+    "duckdb:other",
+    "duckdb",
+    "duckdb::DuckTransactionManager::CommitTransaction(duckdb::ClientContext&, duckdb::Transaction&)"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::VectorBuffer::SetVectorSize(unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:parquet_metadata_bind[libc_alloc]",
+    "libc.so.6",
+    "_int_free_create_chunk <- duckdb::BaseFileReader::~BaseFileReader()"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libstdc++.so.6.0.36",
+    "operator delete(void*) <- std::_Rb_tree<duckdb::ProjectionIndex, duckdb::ProjectionIndex, std::_Identity<duckdb::ProjectionIndex>, std::less<duckdb::ProjectionI"
+   ],
+   [
+    1,
+    "sirius:other[libc_alloc]",
+    "libc.so.6",
+    "__libc_free <- sirius::pipeline::sirius_pipeline::~sirius_pipeline()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::TaskSchedulerPool::RelaunchThreads(duckdb::TaskScheduler&, bool)"
+   ],
+   [
+    1,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::VectorCache& std::vector<duckdb::VectorCache, std::allocator<duckdb::VectorCache> >::emplace_back<duckdb::VectorCache>(duckdb::VectorCache&&)"
+   ],
+   [
+    1,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::FlatVector::SetSize(duckdb::Vector&, unsigned long)"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "0x7f8a02eb3fee"
+   ],
+   [
+    1,
+    "sirius:operators[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::Expression::~Expression()"
+   ],
+   [
+    1,
+    "profiler",
+    "libToolsInjection64.so",
+    "NSYS_OSRT_pthread_mutex_lock_1"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc <- duckdb::DecimalTypeInfo::Copy() const"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::Value::~Value()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::PipelineExecutor::ExecutePushInternal(duckdb::DataChunk&, duckdb::ExecutionBudget&, unsigned long)"
+   ],
+   [
+    1,
+    "profiler[libc_other]",
+    "libc.so.6",
+    "__pthread_mutex_trylock@GLIBC_2 <- NSYS_OSRT_pthread_mutex_trylock_0"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::ResultSinkGlobalState::~ResultSinkGlobalState()"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- duckdb::PhysicalResultSink::~PhysicalResultSink()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::StringUtil::BytesToHumanReadableString[abi:cxx11](unsigned long, unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:other[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc <- duckdb::LogManager::CreateLogger(duckdb::LoggingContext, bool, bool)"
+   ],
+   [
+    1,
+    "duckdb:other",
+    "duckdb",
+    "duckdb::RegisteredStateManager::StatesSnapshot()"
+   ],
+   [
+    1,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::PreparedStatementData::~PreparedStatementData()"
+   ],
+   [
+    1,
+    "duckdb:plan_optimize[libc_alloc]",
+    "libc.so.6",
+    "_int_free_chunk <- std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "std::_Hashtable<std::reference_wrapper<duckdb::PhysicalOperator const>, std::pair<std::reference_wrapper<duckdb::PhysicalOperator const> const, duckdb::Operator"
+   ],
+   [
+    1,
+    "duckdb:other",
+    "duckdb",
+    "std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()"
+   ],
+   [
+    1,
+    "sirius:operators",
+    "libsirius.so.0.0.0",
+    "duckdb::ColumnDataCollectionSegment::GetValidityPointer(unsigned char*, unsigned long, unsigned long)"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_alloc]",
+    "libc.so.6",
+    "__libc_malloc <- duckdb::ClientContext::LockContext()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "duckdb::DatabaseInstance::GetLogManager() const"
+   ],
+   [
+    1,
+    "sirius:other",
+    "libsirius.so.0.0.0",
+    "std::_Sp_counted_base<(__gnu_cxx::_Lock_policy)2>::_M_release()"
+   ],
+   [
+    1,
+    "duckdb:executor_wait",
+    "duckdb",
+    "std::_Sp_counted_deleter<duckdb::GlobalSourceState*, std::default_delete<duckdb::GlobalSourceState>, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_M_dispo"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::Vector::SetVectorType(duckdb::VectorType)"
+   ],
+   [
+    1,
+    "duckdb:result_output[libc_other]",
+    "libc.so.6",
+    "__printf_buffer <- endTimer()"
+   ],
+   [
+    1,
+    "duckdb:result_output",
+    "duckdb",
+    "duckdb::BufferPool::EvictBlocksInternal(duckdb::QueryContext, duckdb::EvictionQueue&, duckdb::MemoryTag, unsigned long, unsigned long, duckdb::unique_ptr<duckdb"
+   ],
+   [
+    1,
+    "duckdb:executor_wait[libc_other]",
+    "libc.so.6",
+    "__GI_strtoul <- duckdb::StringUtil::ToUnsigned(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)"
+   ]
+  ]
+ }
+}

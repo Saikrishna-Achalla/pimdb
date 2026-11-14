@@ -1,0 +1,13 @@
+OP minmax_i64 arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 reduce_minmax_i64 minmax8 items=60175 lbytes=481464
+LAUNCH 1 reduce_minmax_final minmax8 items=4 lbytes=80
+HOST readback_minmax bytes=16
+RESULT min=90400 max=9494950
+LAUNCHES 2
+DONE
+PERF: core0: lmem: reqs=1156, bank_stalls=2731 (utility=30%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=198 (r=36, w=162), lat=661.9 cyc, bank_st=0 (utility=100%)
+PERF: instrs=64948, cycles=161362, IPC=0.402
+wall_s=2.990507991 rc=0

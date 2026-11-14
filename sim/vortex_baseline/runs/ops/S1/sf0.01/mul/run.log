@@ -1,0 +1,10 @@
+OP mul arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 binop_i64 mul items=60175 lbytes=1444200
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=23231 (r=15068, w=8163), lat=1758.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=45005, cycles=293535, IPC=0.153
+wall_s=4.139040682 rc=0

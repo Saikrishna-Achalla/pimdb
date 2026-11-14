@@ -1,0 +1,348 @@
+diff --git a/src/base/request.h b/src/base/request.h
+index 3e71245..a3d8d71 100644
+--- a/src/base/request.h
++++ b/src/base/request.h
+@@ -59,7 +59,12 @@ enum class Opcode {
+                        // first half = operand a, second half = operand b (optionally range-checked, fused into mask);
+                        // acc64[reg] += mask ? a*b : 0
+     ISR_RD_MASK = 20,  // Read per-bank predicate masks of [channel_mask] channels to GPR
+-    MAX = 21
++    ISR_PCMP_ABK = 21,  // dbpu: compare-class all-bank column read into the PU (range/equality compare -> mask register)
++    ISR_PALU_ABK = 22,  // dbpu: ALU-class all-bank column read (add/sub/shift/widen/select/sum/compaction source)
++    ISR_PMUL_ABK = 23,  // dbpu: multiply-class all-bank column read/slot (32x32 partial products; MAC, MUL)
++    ISR_PGAG_ABK = 24,  // dbpu: group-aggregate-class all-bank column read (key decode + 8 group accumulators)
++    ISR_PWB_ABK = 25,  // dbpu: all-bank internal write of one 256-bit PU result word into the open row
++    MAX = 26
+     // ISR_WR_HBK,    // [NOT_IMPLEMENTED] Write data from [GPR] to [8 banks]
+     // ISR_WR_ABK,    // [NOT_IMPLEMENTED] Write data from [GPR] to [all banks]
+     // ISR_WR_GPR,    // [NOT_IMPLEMENTED] Write data from [host] to [GPR]
+@@ -437,6 +442,42 @@ public:
+                                                       "bank" // target_level
+         );
+ 
++
++        aim_opcode_to_str[Opcode::ISR_PCMP_ABK] = "ISR_PCMP_ABK";
++        opcode_str_to_aim_ISR["ISR_PCMP_ABK"] = AiMISR(Opcode::ISR_PCMP_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, false, false, "bank");
++
++        aim_opcode_to_str[Opcode::ISR_PALU_ABK] = "ISR_PALU_ABK";
++        opcode_str_to_aim_ISR["ISR_PALU_ABK"] = AiMISR(Opcode::ISR_PALU_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, false, false, "bank");
++
++        aim_opcode_to_str[Opcode::ISR_PMUL_ABK] = "ISR_PMUL_ABK";
++        opcode_str_to_aim_ISR["ISR_PMUL_ABK"] = AiMISR(Opcode::ISR_PMUL_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, false, false, "bank");
++
++        aim_opcode_to_str[Opcode::ISR_PGAG_ABK] = "ISR_PGAG_ABK";
++        opcode_str_to_aim_ISR["ISR_PGAG_ABK"] = AiMISR(Opcode::ISR_PGAG_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, false, false, "bank");
++
++        aim_opcode_to_str[Opcode::ISR_PWB_ABK] = "ISR_PWB_ABK";
++        opcode_str_to_aim_ISR["ISR_PWB_ABK"] = AiMISR(Opcode::ISR_PWB_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, false, false, "bank");
++
+         str_to_type["R"] = Type::Read;
+         type_to_str[Type::Read] = "R";
+         str_to_type["W"] = Type::Write;
+diff --git a/src/dram/impl/GDDR6.cpp b/src/dram/impl/GDDR6.cpp
+index 776523a..889373a 100644
+--- a/src/dram/impl/GDDR6.cpp
++++ b/src/dram/impl/GDDR6.cpp
+@@ -63,6 +63,14 @@ public:
+              1,    // nCWLGB
+              1,    // nWPRE
+              32,   // nMODCH
++             2,   // nCCDCMP (dbpu)
++             2,   // nCCDALU (dbpu)
++             2,   // nCCDMUL (dbpu)
++             2,   // nCCDGAG (dbpu)
++             2,   // nPULAT (dbpu)
++             6,   // nPULATMUL (dbpu)
++             11,   // nPUWTR (dbpu)
++             33,   // nPUWR (dbpu)
+              570   // tCK_ps
+          }},
+ 
+@@ -101,6 +109,14 @@ public:
+              1,    // nCWLGB
+              1,    // nWPRE
+              32,   // nMODCH
++             2,   // nCCDCMP (dbpu)
++             2,   // nCCDALU (dbpu)
++             2,   // nCCDMUL (dbpu)
++             2,   // nCCDGAG (dbpu)
++             2,   // nPULAT (dbpu)
++             6,   // nPULATMUL (dbpu)
++             11,   // nPUWTR (dbpu)
++             33,   // nPUWR (dbpu)
+              570   // tCK_ps
+          }},
+ 
+@@ -139,6 +155,14 @@ public:
+              1,    // nCWLGB
+              1,    // nWPRE
+              32,   // nMODCH
++             2,   // nCCDCMP (dbpu)
++             2,   // nCCDALU (dbpu)
++             2,   // nCCDMUL (dbpu)
++             2,   // nCCDGAG (dbpu)
++             2,   // nPULAT (dbpu)
++             6,   // nPULATMUL (dbpu)
++             11,   // nPUWTR (dbpu)
++             33,   // nPUWR (dbpu)
+              570   // tCK_ps
+          }},
+ 
+@@ -177,6 +201,14 @@ public:
+              1,    // nCWLGB
+              1,    // nWPRE
+              32,   // nMODCH
++             2,   // nCCDCMP (dbpu)
++             2,   // nCCDALU (dbpu)
++             2,   // nCCDMUL (dbpu)
++             2,   // nCCDGAG (dbpu)
++             2,   // nPULAT (dbpu)
++             6,   // nPULATMUL (dbpu)
++             11,   // nPUWTR (dbpu)
++             33,   // nPUWR (dbpu)
+              570   // tCK_ps
+          }},
+ 
+@@ -215,6 +247,14 @@ public:
+              1,    // nCWLGB
+              1,    // nWPRE
+              32,   // nMODCH
++             2,   // nCCDCMP (dbpu)
++             2,   // nCCDALU (dbpu)
++             2,   // nCCDMUL (dbpu)
++             2,   // nCCDGAG (dbpu)
++             2,   // nPULAT (dbpu)
++             6,   // nPULATMUL (dbpu)
++             11,   // nPUWTR (dbpu)
++             33,   // nPUWR (dbpu)
+              500   // tCK_ps
+          }},
+     };
+@@ -263,6 +303,11 @@ public:
+         "TMOD",
+         "SYNC",
+         "EOC",
++        "CMP16",
++        "ALU16",
++        "MUL16",
++        "GAG16",
++        "PUWR16",
+         "UNKNOWN"};
+ 
+     inline static const ImplLUT m_command_scopes = LUT(
+@@ -293,6 +338,11 @@ public:
+                                   {"TMOD", "channel"},
+                                   {"SYNC", "channel"},
+                                   {"EOC", "channel"},
++                                  {"CMP16", "channel"},
++                                  {"ALU16", "channel"},
++                                  {"MUL16", "channel"},
++                                  {"GAG16", "channel"},
++                                  {"PUWR16", "channel"},
+                               });
+ 
+     inline static const ImplLUT m_command_meta = LUT<DRAMCommandMeta>(
+@@ -324,6 +374,11 @@ public:
+                         {"TMOD", {false, false, false, false}},
+                         {"SYNC", {false, false, false, false}},
+                         {"EOC", {false, false, false, false}},
++                        {"CMP16", {false, false, true, false}},
++                        {"ALU16", {false, false, true, false}},
++                        {"MUL16", {false, false, true, false}},
++                        {"GAG16", {false, false, true, false}},
++                        {"PUWR16", {false, false, true, false}},
+                     });
+ 
+     inline static constexpr ImplDef m_requests = {
+@@ -354,6 +409,11 @@ public:
+         "ISR_CMP_ABK",
+         "ISR_MMAC_ABK",
+         "ISR_RD_MASK",
++        "ISR_PCMP_ABK",
++        "ISR_PALU_ABK",
++        "ISR_PMUL_ABK",
++        "ISR_PGAG_ABK",
++        "ISR_PWB_ABK",
+         "MAX"};
+ 
+     inline static const ImplLUT m_request_translations = LUT(
+@@ -387,6 +447,11 @@ public:
+                                         {"ISR_CMP_ABK", "MAC16"},    // 18 - aimdb: compare all banks (MAC16 timing)
+                                         {"ISR_MMAC_ABK", "MAC16"},   // 19 - aimdb: paired-column masked MAC all banks (MAC16 timing)
+                                         {"ISR_RD_MASK", "RDMAC16"},  // 20 - aimdb: read predicate masks (RDMAC16 timing)
++                                        {"ISR_PCMP_ABK", "CMP16"},  // dbpu
++                                        {"ISR_PALU_ABK", "ALU16"},  // dbpu
++                                        {"ISR_PMUL_ABK", "MUL16"},  // dbpu
++                                        {"ISR_PGAG_ABK", "GAG16"},  // dbpu
++                                        {"ISR_PWB_ABK", "PUWR16"},  // dbpu
+                                         {"MAX", "UNKNOWN"},          // 17 - Unknown and illegal
+                                     });
+ 
+@@ -418,16 +483,24 @@ public:
+         "nWTRS",
+         "nWTRL",
+         "nFAW",
+-        "nRFC",
+-        "nREFI",
+-        "nRREFD",
++        "nRFC",     // dbpu: order fixed to match the presets (upstream had nREFI/nRFCpb swapped)
+         "nRFCpb",
++        "nRREFD",
++        "nREFI",
+         "nCLREG",
+         "nCLGB",
+         "nCWLREG",
+         "nCWLGB",
+         "nWPRE",
+         "nMODCH",
++        "nCCDCMP",
++        "nCCDALU",
++        "nCCDMUL",
++        "nCCDGAG",
++        "nPULAT",
++        "nPULATMUL",
++        "nPUWTR",
++        "nPUWR",
+         "tCK_ps"};
+ 
+     /************************************************
+@@ -679,8 +752,10 @@ private:
+             }
+         }(m_organization.density);
+ 
+-        m_timing_vals("nRFC") = JEDEC_rounding(tRFC_TABLE[0][density_id], tCK_ps);
+-        m_timing_vals("nREFI") = JEDEC_rounding(tREFI_BASE, tCK_ps);
++        if (density_id != -1) {  // dbpu: upstream indexed tRFC_TABLE[0][-1] for the AiM density
++            m_timing_vals("nRFC") = JEDEC_rounding(tRFC_TABLE[0][density_id], tCK_ps);
++            m_timing_vals("nREFI") = JEDEC_rounding(tREFI_BASE, tCK_ps);
++        }
+ 
+         // Overwrite timing parameters with any user-provided value
+         // Rate and tCK should not be overwritten
+@@ -774,6 +849,12 @@ private:
+         m_command_latencies("WRA16") = m_timing_vals("nCWL") + m_timing_vals("nBL") + m_timing_vals("nRP");
+         m_command_latencies("SYNC") = 1;
+         m_command_latencies("EOC") = 1;
++        m_command_latencies("REFab") = 1;  // dbpu: refresh can now fire
++        m_command_latencies("CMP16") = 1;
++        m_command_latencies("ALU16") = 1;
++        m_command_latencies("MUL16") = 1;
++        m_command_latencies("GAG16") = 1;
++        m_command_latencies("PUWR16") = 1;
+ 
+ // Populate the timing constraints
+ #define V(timing) (m_timing_vals(timing))
+@@ -908,7 +989,28 @@ private:
+                                       {.level = "channel", .preceding = {"PREA"}, .following = {"PRE", "PRE4", "PREA"}, .latency = V("nRP")},
+                                       {.level = "channel", .preceding = {"PRE", "PRE4"}, .following = {"PREA"}, .latency = V("nRP")},
+ 
+-                                      {.level = "channel", .preceding = {"TMOD"}, .following = {"ACT", "PREA", "PRE", "RD", "WR", "RDA", "WRA", "REFab", "REFpb", "ACT4", "ACT16", "PRE4", "MAC", "MAC16", "AF16", "EWMUL16", "RDCP", "WRCP", "WRGB", "RDMAC16", "RDAF16", "WRMAC16", "WRA16", "SYNC", "EOC"}, .latency = V("nMODCH")},
++                                      {.level = "channel", .preceding = {"TMOD"}, .following = {"ACT", "PREA", "PRE", "RD", "WR", "RDA", "WRA", "REFab", "REFpb", "ACT4", "ACT16", "PRE4", "MAC", "MAC16", "AF16", "EWMUL16", "RDCP", "WRCP", "WRGB", "RDMAC16", "RDAF16", "WRMAC16", "WRA16", "SYNC", "EOC", "CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nMODCH")},
++
++
++                                      /****** dbpu: database processing-unit commands (all-bank, lockstep) ******/
++                                      // ACT16 -> first PU column access (same row-to-column delays as MAC16 / write)
++                                      {.level = "channel", .preceding = {"ACT", "ACT4", "ACT16"}, .following = {"CMP16", "ALU16", "MUL16", "GAG16"}, .latency = V("nRCDRDMAC")},
++                                      {.level = "channel", .preceding = {"ACT", "ACT4", "ACT16"}, .following = {"PUWR16"}, .latency = V("nRCDWR")},
++                                      // each PU command occupies the bank column path for its class interval
++                                      {.level = "channel", .preceding = {"CMP16"}, .following = {"RD", "RDA", "MAC", "RDCP", "RDMAC16", "RDAF16", "MAC16", "EWMUL16", "CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nCCDCMP")},
++                                      {.level = "channel", .preceding = {"ALU16"}, .following = {"RD", "RDA", "MAC", "RDCP", "RDMAC16", "RDAF16", "MAC16", "EWMUL16", "CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nCCDALU")},
++                                      {.level = "channel", .preceding = {"MUL16"}, .following = {"RD", "RDA", "MAC", "RDCP", "RDMAC16", "RDAF16", "MAC16", "EWMUL16", "CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nCCDMUL")},
++                                      {.level = "channel", .preceding = {"GAG16"}, .following = {"RD", "RDA", "MAC", "RDCP", "RDMAC16", "RDAF16", "MAC16", "EWMUL16", "CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nCCDGAG")},
++                                      {.level = "channel", .preceding = {"MAC16", "EWMUL16", "RDMAC16", "RDAF16", "PUWR16"}, .following = {"CMP16", "ALU16", "MUL16", "GAG16", "PUWR16"}, .latency = V("nCCDL")},
++                                      // result write-back waits for the PU pipeline; next read after a write waits tWTR-like turnaround
++                                      {.level = "channel", .preceding = {"CMP16", "ALU16", "GAG16"}, .following = {"PUWR16"}, .latency = V("nPULAT")},
++                                      {.level = "channel", .preceding = {"MUL16"}, .following = {"PUWR16"}, .latency = V("nPULATMUL")},
++                                      {.level = "channel", .preceding = {"PUWR16"}, .following = {"CMP16", "ALU16", "MUL16", "GAG16", "MAC16", "EWMUL16", "RD", "RDA", "RDCP"}, .latency = V("nPUWTR")},
++                                      // register read-out waits for the deepest pipeline to drain
++                                      {.level = "channel", .preceding = {"CMP16", "ALU16", "MUL16", "GAG16"}, .following = {"RDMAC16", "RDAF16"}, .latency = V("nPULATMUL")},
++                                      // column access -> precharge (read: tRTP, internal write: write recovery)
++                                      {.level = "channel", .preceding = {"CMP16", "ALU16", "MUL16", "GAG16"}, .following = {"PRE", "PRE4", "PREA"}, .latency = V("nRTP")},
++                                      {.level = "channel", .preceding = {"PUWR16"}, .following = {"PRE", "PRE4", "PREA"}, .latency = V("nPUWR")},
+ 
+                                       /****************************************************** Bank Group ******************************************************/
+                                       /// CAS <-> CAS
+@@ -1047,6 +1149,11 @@ private:
+         m_preqs[m_levels["channel"]][m_commands["MAC16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
+         m_preqs[m_levels["channel"]][m_commands["AF16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
+         m_preqs[m_levels["channel"]][m_commands["EWMUL16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
++        m_preqs[m_levels["channel"]][m_commands["CMP16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
++        m_preqs[m_levels["channel"]][m_commands["ALU16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
++        m_preqs[m_levels["channel"]][m_commands["MUL16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
++        m_preqs[m_levels["channel"]][m_commands["GAG16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
++        m_preqs[m_levels["channel"]][m_commands["PUWR16"]] = Lambdas::Preq::Channel::RequireAllRowsOpen<GDDR6>;
+     };
+ 
+     // Not implemented
+diff --git a/src/dram_controller/impl/refresh/all_bank_refresh.cpp b/src/dram_controller/impl/refresh/all_bank_refresh.cpp
+index efcbccf..acf4a3b 100644
+--- a/src/dram_controller/impl/refresh/all_bank_refresh.cpp
++++ b/src/dram_controller/impl/refresh/all_bank_refresh.cpp
+@@ -20,10 +20,13 @@ private:
+     int m_nrefi = -1;
+     int m_ref_req_id = -1;
+     Clk_t m_next_refresh_cycle = -1;
++    bool m_has_rank = true;
++    bool m_no_rank_fix = false;  // dbpu: GDDR6 has no rank level -> upstream never refreshes
+ 
+ public:
+     void init() override {
+         m_ctrl = cast_parent<IDRAMController>();
++        m_no_rank_fix = param<bool>("refresh_without_rank").desc("dbpu: issue one REFab per channel when the DRAM has no rank level").default_val(false);
+     };
+ 
+     void setup(IFrontEnd *frontend, IMemorySystem *memory_system) override {
+@@ -36,6 +39,8 @@ public:
+         m_ref_req_id = m_dram->m_requests("all-bank-refresh");
+ 
+         m_next_refresh_cycle = m_nrefi;
++        m_has_rank = (m_num_ranks > 0);
++        if (!m_has_rank && m_no_rank_fix) m_num_ranks = 1;
+     };
+ 
+     void tick() override {
+@@ -46,7 +51,7 @@ public:
+             for (int r = 0; r < m_num_ranks; r++) {
+                 std::vector<int> addr_vec(m_dram_org_levels, -1);
+                 addr_vec[0] = m_ctrl->m_channel_id;
+-                addr_vec[1] = r;
++                if (m_has_rank) addr_vec[1] = r;
+                 Request req(addr_vec, m_ref_req_id);
+ 
+                 bool is_success = m_ctrl->priority_send(req);
+diff --git a/src/memory_system/impl/aim_DRAM_system.cpp b/src/memory_system/impl/aim_DRAM_system.cpp
+index bf7f13d..9ab4a02 100644
+--- a/src/memory_system/impl/aim_DRAM_system.cpp
++++ b/src/memory_system/impl/aim_DRAM_system.cpp
+@@ -270,6 +270,11 @@ public:
+                     case Opcode::ISR_CMP_ABK:
+                     case Opcode::ISR_MMAC_ABK:
+                     case Opcode::ISR_RD_MASK:
++                    case Opcode::ISR_PCMP_ABK:
++                    case Opcode::ISR_PALU_ABK:
++                    case Opcode::ISR_PMUL_ABK:
++                    case Opcode::ISR_PGAG_ABK:
++                    case Opcode::ISR_PWB_ABK:
+                     case Opcode::ISR_WR_ABK: {
+                         // Decoding opcode
+                         AiMISR aim_ISR = AiMISRInfo::convert_AiM_opcode_to_AiM_ISR(opcode);

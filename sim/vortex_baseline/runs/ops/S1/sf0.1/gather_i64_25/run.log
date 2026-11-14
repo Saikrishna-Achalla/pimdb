@@ -1,0 +1,15 @@
+OP gather_i64 arg=25 cores=1 warps=32 threads=1024
+TABLE rows=600572
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=32 target=33 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x000055a50db89240 HEAD_ADDR=0x000055a50db992c0 CMPL_ADDR=0x000055a50db993c0
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000000840
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 0 gather_i64 gather8 items=299798 lbytes=5995960
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=31008
+PERF: memory: reqs=131667 (r=93551, w=38116), lat=1950.6 cyc, bank_st=0 (utility=100%)
+PERF: instrs=211462, cycles=1614537, IPC=0.131
+wall_s=14.006566329 rc=0

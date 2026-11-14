@@ -1,0 +1,296 @@
+{
+ "label": "q9 sf10_b77",
+ "results_dir": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q9/sf10_b77",
+ "nsys_sqlite": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q9/sf10_b77/traces/q9_nsys.sqlite",
+ "warm_ms": 31.0,
+ "warm_min_ms": 29.0,
+ "warm_max_ms": 33.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 270.5,
+ "result_rows": 175,
+ "gpu_equals_cpu": true,
+ "compare_mode": "exact",
+ "timing_log_planning_ms": 6.0,
+ "timing_log_engine_ms": 24.0,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "lineitem": 59986052,
+  "orders": 15000000,
+  "part": 2000000,
+  "partsupp": 8000000,
+  "supplier": 100000,
+  "nation": 25
+ },
+ "pinned_bytes": 1707707648,
+ "pool_peak_after_pin_bytes": 1852707328,
+ "pool_peak_end_bytes": 2446984276,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  706,
+  706,
+  706,
+  706,
+  706
+ ],
+ "nsys_median": {
+  "planning_ms": 6.999808,
+  "engine_ms": 31.000064,
+  "gpu_busy_ms": 17.68974,
+  "kernels": 706,
+  "gpu_ops": 962,
+  "kernel_ms": 18.085004,
+  "lt5us": 420,
+  "ge100us": 15,
+  "ge100us_ms": 11.356626,
+  "grid_lt48": 125,
+  "grid_1": 42
+ },
+ "rep_iter": {
+  "iter": 6,
+  "planning_ms": 7.000064,
+  "engine_ms": 31.000064,
+  "gpu_busy_ms": 17.68974,
+  "kernels": 706,
+  "gpu_ops": 962,
+  "kernel_ms": 18.085004,
+  "lt5us": 420,
+  "ge100us": 16,
+  "ge100us_ms": 11.471154,
+  "grid_lt48": 125,
+  "grid_1": 42,
+  "families": {
+   "transform_kernel": {
+    "launches": 409,
+    "ns": 3045148,
+    "phase": "gather/copy/concat",
+    "grid_max": 4176,
+    "grid_min": 1
+   },
+   "static_kernel": {
+    "launches": 78,
+    "ns": 3549788,
+    "phase": "hash group-by/agg",
+    "grid_max": 58594,
+    "grid_min": 1
+   },
+   "insert_if_n": {
+    "launches": 7,
+    "ns": 7251191,
+    "phase": "hash join build",
+    "grid_max": 117188,
+    "grid_min": 1
+   },
+   "find_if_n": {
+    "launches": 5,
+    "ns": 658368,
+    "phase": "hash join probe",
+    "grid_max": 25051,
+    "grid_min": 454
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 68,
+    "ns": 62976,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 40,
+    "grid_min": 1
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 68,
+    "ns": 643200,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 5011,
+    "grid_min": 1
+   },
+   "DeviceScanInitKernel": {
+    "launches": 14,
+    "ns": 16192,
+    "phase": "gather/copy/concat",
+    "grid_max": 10,
+    "grid_min": 1
+   },
+   "DeviceScanKernel": {
+    "launches": 14,
+    "ns": 282944,
+    "phase": "gather/copy/concat",
+    "grid_max": 1193,
+    "grid_min": 1
+   },
+   "gather_chars_fn_char_parallel": {
+    "launches": 8,
+    "ns": 103328,
+    "phase": "gather/copy/concat",
+    "grid_max": 13602,
+    "grid_min": 6
+   },
+   "fused_membership_mask_kernel": {
+    "launches": 4,
+    "ns": 252800,
+    "phase": "scan/filter",
+    "grid_max": 4096,
+    "grid_min": 4096
+   },
+   "hash_csr_build_count_kernel": {
+    "launches": 1,
+    "ns": 33568,
+    "phase": "hash join build",
+    "grid_max": 1701,
+    "grid_min": 1701
+   },
+   "hash_csr_build_fill_kernel": {
+    "launches": 1,
+    "ns": 29984,
+    "phase": "hash join build",
+    "grid_max": 1701,
+    "grid_min": 1701
+   },
+   "hash_csr_probe_count_kernel": {
+    "launches": 2,
+    "ns": 351648,
+    "phase": "hash join probe",
+    "grid_max": 12526,
+    "grid_min": 227
+   },
+   "fused_concatenate_kernel": {
+    "launches": 6,
+    "ns": 334143,
+    "phase": "gather/copy/concat",
+    "grid_max": 12526,
+    "grid_min": 12526
+   },
+   "hash_csr_retrieve_kernel": {
+    "launches": 2,
+    "ns": 212671,
+    "phase": "hash join probe",
+    "grid_max": 392,
+    "grid_min": 96
+   },
+   "InitTileStateKernel": {
+    "launches": 2,
+    "ns": 1376,
+    "phase": "gather/copy/concat",
+    "grid_max": 49,
+    "grid_min": 49
+   },
+   "BatchMemcpyKernel": {
+    "launches": 2,
+    "ns": 727071,
+    "phase": "gather/copy/concat",
+    "grid_max": 6263,
+    "grid_min": 6263
+   },
+   "MultiBlockBatchMemcpyKernel": {
+    "launches": 2,
+    "ns": 4256,
+    "phase": "gather/copy/concat",
+    "grid_max": 1440,
+    "grid_min": 1440
+   },
+   "DeviceReduceKernel": {
+    "launches": 2,
+    "ns": 52064,
+    "phase": "expression eval",
+    "grid_max": 1440,
+    "grid_min": 114
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 2,
+    "ns": 4000,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 2,
+    "ns": 2720,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "mapping_indices_kernel": {
+    "launches": 3,
+    "ns": 98624,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 3
+   },
+   "fused_concatenate_string_offset_kernel": {
+    "launches": 1,
+    "ns": 1504,
+    "phase": "gather/copy/concat",
+    "grid_max": 2,
+    "grid_min": 2
+   },
+   "fused_concatenate_string_chars_kernel": {
+    "launches": 1,
+    "ns": 1504,
+    "phase": "gather/copy/concat",
+    "grid_max": 10,
+    "grid_min": 10
+   },
+   "single_pass_shmem_aggs_kernel": {
+    "launches": 1,
+    "ns": 7552,
+    "phase": "hash group-by/agg",
+    "grid_max": 3,
+    "grid_min": 3
+   },
+   "DeviceMergeSortBlockSortKernel": {
+    "launches": 1,
+    "ns": 356384,
+    "phase": "sort/top-N",
+    "grid_max": 1,
+    "grid_min": 1
+   }
+  },
+  "phases": {
+   "expression eval": {
+    "launches": 34,
+    "ns": 1266751
+   },
+   "hash join build": {
+    "launches": 10,
+    "ns": 7639734
+   },
+   "hash join probe": {
+    "launches": 14,
+    "ns": 1268127
+   },
+   "cub scan/select/reduce": {
+    "launches": 139,
+    "ns": 704736
+   },
+   "gather/copy/concat": {
+    "launches": 421,
+    "ns": 3465019
+   },
+   "string ops": {
+    "launches": 4,
+    "ns": 291904
+   },
+   "other": {
+    "launches": 15,
+    "ns": 100128
+   },
+   "scan/filter": {
+    "launches": 61,
+    "ns": 2049823
+   },
+   "hash group-by/agg": {
+    "launches": 7,
+    "ns": 942398
+   },
+   "sort/top-N": {
+    "launches": 1,
+    "ns": 356384
+   }
+  }
+ }
+}

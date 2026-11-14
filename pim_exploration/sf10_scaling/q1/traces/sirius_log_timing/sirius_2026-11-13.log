@@ -1,0 +1,1649 @@
+[2026-11-13 19:39:43.605] [info] [sirius_context.cpp:2283] Loaded Sirius configuration from file: /home/sai/cs254_project/pim_exploration/sf10_scaling/scripts/sirius.yaml
+[2026-11-13 19:39:43.808] [info] [spill_chunked_converters.cpp:333] [spill] registered chunked GPU->HOST spill converter (copy_chunk_bytes = 1073741824)
+[2026-11-13 19:39:43.808] [info] [sirius_context.cpp:947] SiriusContext: topology summary — 1 GPU(s), 1 NUMA node(s), host='Kira.CS.UCLA.EDU'
+[2026-11-13 19:39:43.808] [info] [sirius_context.cpp:952]   GPU 0: NVIDIA GeForce RTX 5070 (numa=0, pci=00000000:01:00.0)
+[2026-11-13 19:39:43.875] [info] [telemetry_context.cpp:137] Telemetry context initialized (engine=siriusDB, 1 GPU device group(s))
+[2026-11-13 19:39:43.875] [warning] [sirius_context.cpp:971] SiriusContext: disk memory space is not configured; spilling GPU or HOST data to disk is disabled. If queries run out of GPU/HOST memory, downgrades to disk will not be possible.
+[2026-11-13 19:39:43.875] [info] [sirius_context.cpp:983] SiriusContext: 1 host memory space(s) created for 1 NUMA node(s)
+[2026-11-13 19:39:43.887] [info] [sirius_context.cpp:1053] SiriusContext: cuDF pinned memory resource configured (NUMA-aware, max slab 8192 B, fallback node=0)
+[2026-11-13 19:39:43.888] [warning] [uring_reactor.cpp:200] [cucascade] uring_reactor: fixed buffers disabled: Cannot allocate memory
+[2026-11-13 19:39:43.889] [warning] [uring_reactor.cpp:200] [cucascade] uring_reactor: fixed buffers disabled: Cannot allocate memory
+[2026-11-13 19:39:43.889] [warning] [uring_reactor.cpp:200] [cucascade] uring_reactor: fixed buffers disabled: Cannot allocate memory
+[2026-11-13 19:39:43.889] [warning] [uring_reactor.cpp:200] [cucascade] uring_reactor: fixed buffers disabled: Cannot allocate memory
+[2026-11-13 19:39:43.889] [info] [sirius_context.cpp:2231] Connection opened.
+[2026-11-13 19:39:43.889] [info] [sirius_context.cpp:2257] Extension loaded: sirius
+[2026-11-13 19:39:43.890] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=1 SQL: SET enable_duckdb_fallback = false;
+[2026-11-13 19:39:43.890] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=2 SQL: CREATE VIEW lineitem AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/lineitem/part.0.parquet']);
+[2026-11-13 19:39:43.892] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=3 SQL: CALL pin_table('/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/lineitem/*.parquet', tier='gpu', name='lineitem', cols=['l_returnflag','l_linestatus','l_quantity','l_extendedprice','l_discount','l_tax','l_shipdate']);
+[2026-11-13 19:39:43.892] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=1 query=3 outcome=-
+[2026-11-13 19:39:43.892] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=1 query=3 allocated=318767104 bytes peak=318767104 bytes free_blocks=768
+[2026-11-13 19:39:43.892] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=1 query=3 allocated=0 bytes peak=0 bytes reserved=0 bytes
+[2026-11-13 19:39:43.892] [info] [sirius_context.cpp:533] QueryBegin: pin_table
+[2026-11-13 19:39:44.074] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.074] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=1 query=3 allocated=321912832 bytes peak=321912832 bytes free_blocks=765
+[2026-11-13 19:39:44.074] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=1 query=3 allocated=1679621120 bytes peak=1782749440 bytes reserved=0 bytes
+[2026-11-13 19:39:44.074] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=1 query=3 outcome=ok
+[2026-11-13 19:39:44.075] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=4 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.090] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=3 query=4 outcome=-
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=3 query=4 allocated=321912832 bytes peak=321912832 bytes free_blocks=765
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=3 query=4 allocated=1679621120 bytes peak=1782749440 bytes reserved=0 bytes
+[2026-11-13 19:39:44.090] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.090] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.090] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.090] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.090] [info] [sirius_engine.cpp:253] query 3 telemetry_query=01a1d823c05a7138bb16d3258f7dc81f
+[2026-11-13 19:39:44.090] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=168 hits=0 h2d=0 miss=555 evictions=0]
+[2026-11-13 19:39:44.090] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.115] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.115] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.115] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.116] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.125] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.125] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.126] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.127] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.133] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.142] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.142] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=3 query=4 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.142] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=3 query=4 allocated=1679621120 bytes peak=3565431528 bytes reserved=0 bytes
+[2026-11-13 19:39:44.142] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=3 query=4 outcome=ok
+[2026-11-13 19:39:44.142] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.143] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=5 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.148] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=5 query=5 outcome=-
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=5 query=5 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=5 query=5 allocated=1679621120 bytes peak=3565431528 bytes reserved=0 bytes
+[2026-11-13 19:39:44.148] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.148] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.148] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.148] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.148] [info] [sirius_engine.cpp:253] query 5 telemetry_query=01a1d823c09473928ad0e696858540a1
+[2026-11-13 19:39:44.148] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.148] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.158] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.158] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.159] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.160] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.168] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.168] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.169] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.169] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.175] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.175] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.176] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.178] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.178] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=5 query=5 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.178] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=5 query=5 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.178] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=5 query=5 outcome=ok
+[2026-11-13 19:39:44.178] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.179] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=6 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.183] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=7 query=6 outcome=-
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=7 query=6 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=7 query=6 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.183] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.183] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.183] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.183] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.183] [info] [sirius_engine.cpp:253] query 7 telemetry_query=01a1d823c0b772acaaaf7bc89c4d4cfc
+[2026-11-13 19:39:44.183] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.183] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.193] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.193] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.193] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.195] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.203] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.203] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.204] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.204] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.210] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.210] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.210] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.211] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.213] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.213] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=7 query=6 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.213] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=7 query=6 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.213] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=7 query=6 outcome=ok
+[2026-11-13 19:39:44.213] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.213] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=7 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.218] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=9 query=7 outcome=-
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=9 query=7 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=9 query=7 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.218] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.218] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.218] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.218] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.218] [info] [sirius_engine.cpp:253] query 9 telemetry_query=01a1d823c0da74caaa1d9232a4b6b7c0
+[2026-11-13 19:39:44.218] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.218] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.228] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.228] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.228] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.229] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.237] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.237] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.239] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.239] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.244] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.245] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.247] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.247] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=9 query=7 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.247] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=9 query=7 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.247] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=9 query=7 outcome=ok
+[2026-11-13 19:39:44.247] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.247] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=8 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.251] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=11 query=8 outcome=-
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=11 query=8 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=11 query=8 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.251] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.251] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.251] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.251] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.251] [info] [sirius_engine.cpp:253] query 11 telemetry_query=01a1d823c0fb744f951cdb4b1c396760
+[2026-11-13 19:39:44.251] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.251] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.261] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.262] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.262] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.263] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.271] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.271] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.272] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.272] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.278] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.278] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.278] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.279] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.281] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.281] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=11 query=8 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.281] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=11 query=8 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.281] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=11 query=8 outcome=ok
+[2026-11-13 19:39:44.281] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.282] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=9 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.286] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=13 query=9 outcome=-
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=13 query=9 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=13 query=9 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.286] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.286] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.287] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.287] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.287] [info] [sirius_engine.cpp:253] query 13 telemetry_query=01a1d823c11f75548ee7f14563c96ce0
+[2026-11-13 19:39:44.287] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.287] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.296] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.297] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.297] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.299] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.305] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.306] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.306] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.309] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.313] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.313] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.314] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.315] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.316] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.316] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=13 query=9 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.316] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=13 query=9 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.316] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=13 query=9 outcome=ok
+[2026-11-13 19:39:44.316] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.317] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=10 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.321] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=15 query=10 outcome=-
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=15 query=10 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=15 query=10 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.321] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.321] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.321] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.321] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.321] [info] [sirius_engine.cpp:253] query 15 telemetry_query=01a1d823c14176b8abfd1ff0dea77e6a
+[2026-11-13 19:39:44.321] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.321] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.331] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.331] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.332] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.334] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.340] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.341] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.341] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.345] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.348] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.349] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.351] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.351] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=15 query=10 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.351] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=15 query=10 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.351] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=15 query=10 outcome=ok
+[2026-11-13 19:39:44.351] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.352] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=11 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.356] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=17 query=11 outcome=-
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=17 query=11 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=17 query=11 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.356] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.356] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.356] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.356] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.356] [info] [sirius_engine.cpp:253] query 17 telemetry_query=01a1d823c16477b7a1a8cbcefd9e2c0e
+[2026-11-13 19:39:44.356] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.356] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.366] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.366] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.367] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.367] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.375] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.376] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.376] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.378] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.382] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.382] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.383] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.385] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.385] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=17 query=11 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.385] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=17 query=11 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.385] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=17 query=11 outcome=ok
+[2026-11-13 19:39:44.385] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.386] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=12 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.390] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=19 query=12 outcome=-
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=19 query=12 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=19 query=12 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.390] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.390] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.390] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.390] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.390] [info] [sirius_engine.cpp:253] query 19 telemetry_query=01a1d823c18677f2b4739a392bbecb33
+[2026-11-13 19:39:44.390] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.390] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.399] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.400] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.400] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.403] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.408] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.410] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.410] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.414] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.416] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.417] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.418] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.418] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.419] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.419] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=19 query=12 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.419] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=19 query=12 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.419] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=19 query=12 outcome=ok
+[2026-11-13 19:39:44.419] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.419] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=13 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.424] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=21 query=13 outcome=-
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=21 query=13 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=21 query=13 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.424] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.424] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.424] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.424] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.424] [info] [sirius_engine.cpp:253] query 21 telemetry_query=01a1d823c1a871d782e1f9de16006570
+[2026-11-13 19:39:44.424] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.424] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.433] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.433] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.435] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.438] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.443] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.443] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.445] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.446] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.450] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.450] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.451] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.451] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.451] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.451] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.452] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.453] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.453] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=21 query=13 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.453] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=21 query=13 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.453] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=21 query=13 outcome=ok
+[2026-11-13 19:39:44.453] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.454] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=14 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.459] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=23 query=14 outcome=-
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=23 query=14 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=23 query=14 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.459] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.459] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.459] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.459] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.459] [info] [sirius_engine.cpp:253] query 23 telemetry_query=01a1d823c1cb77809764f819229e7bd0
+[2026-11-13 19:39:44.459] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.459] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.469] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.469] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.469] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.472] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.477] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.478] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.479] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.481] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.485] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.485] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.486] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.488] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.488] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=23 query=14 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.488] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=23 query=14 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.488] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=23 query=14 outcome=ok
+[2026-11-13 19:39:44.488] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.489] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=15 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.493] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=25 query=15 outcome=-
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=25 query=15 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=25 query=15 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.493] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.493] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.493] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.493] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.493] [info] [sirius_engine.cpp:253] query 25 telemetry_query=01a1d823c1ed75fbbace2b8980249c74
+[2026-11-13 19:39:44.493] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.493] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.503] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.503] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.504] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.506] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.512] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.513] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.514] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.515] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.519] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.520] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.520] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.520] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.521] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.523] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.523] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=25 query=15 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.523] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=25 query=15 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.523] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=25 query=15 outcome=ok
+[2026-11-13 19:39:44.523] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.523] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=16 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.527] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=27 query=16 outcome=-
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=27 query=16 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=27 query=16 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.527] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.527] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.527] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.527] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.527] [info] [sirius_engine.cpp:253] query 27 telemetry_query=01a1d823c20f74acb98c846c4e0d9762
+[2026-11-13 19:39:44.527] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.527] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.537] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.537] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.537] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.538] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.546] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.547] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.547] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.549] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.554] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.554] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.554] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.554] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.555] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.556] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.556] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=27 query=16 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.556] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=27 query=16 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.556] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=27 query=16 outcome=ok
+[2026-11-13 19:39:44.556] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.557] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=17 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.562] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=29 query=17 outcome=-
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=29 query=17 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=29 query=17 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.562] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.562] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.562] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.562] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.562] [info] [sirius_engine.cpp:253] query 29 telemetry_query=01a1d823c23275b3af5d004715e71d78
+[2026-11-13 19:39:44.563] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.563] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.572] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.572] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.573] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.574] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.581] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.582] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.583] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.584] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.588] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.588] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.589] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.591] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.592] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.592] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=29 query=17 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.592] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=29 query=17 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.592] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=29 query=17 outcome=ok
+[2026-11-13 19:39:44.592] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.593] [info] [sirius_context.cpp:310] QueryBegin: instance=0x55c87f0e0e30 connection=1 query=18 SQL: select l_returnflag, l_linestatus, sum(l_quantity) as sum_qty, sum(l_extendedprice) as sum_base_price, sum(l_extendedprice * (1 - l_discount)) as sum_disc_price, sum(l_extendedprice * (1 - l_discount) * (1 + l_tax)) as sum_charge, avg(l_quantity) as avg_qty, avg(l_extendedprice) as avg_price, avg(l_discount) as avg_disc, count(*) as count_order from lineitem where l_shipdate <= date '1995-08-19' group by l_returnflag, l_linestatus order by l_returnflag, l_linestatus;
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:1974] Transparent execution: Sirius physical plan generated successfully
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:2008] Transparent execution: physical plan replaced with GPU operator
+[2026-11-13 19:39:44.597] [info] [physical_sirius_execution.cpp:201] Transparent GPU execution: executing query
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:718] [window] begin instance=0x55c87f0e0e30 connection=1 window=31 query=18 outcome=-
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=31 query=18 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryBegin instance=0x55c87f0e0e30 connection=1 window=31 query=18 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.597] [info] [sirius_context.cpp:533] QueryBegin: transparent_execution
+[2026-11-13 19:39:44.597] [info] [physical_sirius_execution.cpp:290] Transparent execution: reusing finalize-validated Sirius plan
+[2026-11-13 19:39:44.597] [info] [sirius_engine.cpp:366] [gpu_alloc] query allocated 1 GPU(s): [0]
+[2026-11-13 19:39:44.597] [info] [sirius_engine.cpp:412] Query Plan:
+=== Pipeline Overview ===
+Pipeline #0: GPU_SCAN (id=0) -> PROJECTION (id=1) -> PROJECTION (id=2) -> HASH_GROUP_BY (id=3)
+  Output: -> PARTITION [port: default, barrier: FULL]
+Pipeline #1: PARTITION (id=4)
+  Input: <- Pipeline #0 [on: PARTITION (id=4), port: default, barrier: FULL]
+  Dependencies: Pipeline #0
+  Output: -> MERGE_GROUP_BY [port: default, barrier: FULL]
+Pipeline #2: MERGE_GROUP_BY (id=5) -> PROJECTION (id=6) -> ORDER_BY (id=7)
+  Input: <- Pipeline #1 [on: MERGE_GROUP_BY (id=5), port: default, barrier: FULL]
+  Dependencies: Pipeline #1
+  Output: -> SORT_SAMPLE [port: default, barrier: PIPELINE]
+Pipeline #3: SORT_SAMPLE (id=8) -> SORT_PARTITION (id=9)
+  Input: <- Pipeline #2 [on: SORT_SAMPLE (id=8), port: default, barrier: PIPELINE]
+  Dependencies: Pipeline #2
+  Output: -> MERGE_SORT [port: default, barrier: FULL]
+Pipeline #4: MERGE_SORT (id=10)
+  Input: <- Pipeline #3 [on: MERGE_SORT (id=10), port: default, barrier: FULL]
+  Dependencies: Pipeline #3
+  Output: -> RESULT_COLLECTOR [port: default, barrier: FULL]
+Pipeline #5: RESULT_COLLECTOR (id=11)
+  Input: <- Pipeline #4 [on: RESULT_COLLECTOR (id=11), port: default, barrier: FULL]
+  Dependencies: Pipeline #4
+
+=== Query Plan DAG ===
+┌──────────────────────────┐
+│ Pipeline #5              │
+│ RESULT_COLLECTOR (id=11) │
+│ Input(#4): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #4              │
+│ MERGE_SORT (id=10)       │
+│ Input(#3): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #3              │
+│ SORT_PARTITION (id=9)    │
+│ SORT_SAMPLE (id=8)       │
+│ Input(#2): PIPELINE      │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #2              │
+│ ORDER_BY (id=7)          │
+│ PROJECTION (id=6)        │
+│ MERGE_GROUP_BY (id=5)    │
+│ Input(#1): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #1              │
+│ PARTITION (id=4)         │
+│ Input(#0): FULL          │
+└────────────┬─────────────┘
+             │              
+┌──────────────────────────┐
+│ Pipeline #0              │
+│ HASH_GROUP_BY (id=3)     │
+│ PROJECTION (id=2)        │
+│ PROJECTION (id=1)        │
+│ GPU_SCAN (id=0)          │
+└──────────────────────────┘
+
+[2026-11-13 19:39:44.597] [info] [sirius_engine.cpp:253] query 31 telemetry_query=01a1d823c2557795ae260671055ae6a4
+[2026-11-13 19:39:44.597] [info] [sirius_scan_manager.cpp:1553] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]
+[2026-11-13 19:39:44.597] [info] [sirius_scan_manager.cpp:4173] [sirius_scan_manager] assigned pinned entry 'lineitem' to operator '0'
+[2026-11-13 19:39:44.607] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.608] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.608] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.609] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.616] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.618] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.618] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.619] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.624] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.624] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'HASH_GROUP_BY' (id=3) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.625] [warning] [gpu_pipeline_task.cpp:83] gpu_pipeline_task: operator 'PARTITION' (id=4) output batch 0 column count mismatch: got 9, expected 8
+[2026-11-13 19:39:44.627] [info] [sirius_context.cpp:584] QueryEnd
+[2026-11-13 19:39:44.627] [info] [sirius_context.cpp:237] [host_pool] HOST:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=31 query=18 allocated=322961408 bytes peak=324009984 bytes free_blocks=764
+[2026-11-13 19:39:44.627] [info] [sirius_context.cpp:252] [gpu_pool] GPU:0 QueryEnd instance=0x55c87f0e0e30 connection=1 window=31 query=18 allocated=1679621120 bytes peak=3565772880 bytes reserved=0 bytes
+[2026-11-13 19:39:44.627] [info] [sirius_context.cpp:718] [window] end instance=0x55c87f0e0e30 connection=1 window=31 query=18 outcome=ok
+[2026-11-13 19:39:44.627] [info] [physical_sirius_execution.cpp:527] Transparent GPU execution: query completed
+[2026-11-13 19:39:44.627] [info] [sirius_context.cpp:2248] Connection closed.
+[2026-11-13 19:39:44.631] [info] [task_scheduler.cpp:298] Task queue interrupted, exiting management event loop.
+[2026-11-13 19:39:44.632] [info] [gpu_pipeline_executor.cpp:143] GPU Pipeline Executor: task queue interrupted, stopping publisher loop
+[2026-11-13 19:39:44.632] [info] [sirius_scan_manager.cpp:1434] [sirius_scan_manager] cache summary: fs_cache: global[reads=168 hits=0 h2d=0 miss=555 evictions=0] last_cycle[reads=0 hits=0 h2d=0 miss=0 evictions=0]

@@ -1,0 +1,10 @@
+OP pred_i16 arg=0 cores=1 warps=16 threads=512
+TABLE rows=600572
+LAUNCH 0 cmp_i16 pred items=600572 lbytes=1801716
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=28500 (r=18795, w=9705), lat=638.1 cyc, bank_st=0 (utility=100%)
+PERF: instrs=331288, cycles=699601, IPC=0.474
+wall_s=9.191409797 rc=0

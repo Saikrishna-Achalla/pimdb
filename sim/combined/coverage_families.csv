@@ -1,0 +1,74 @@
+family,class,reason,launches,nsys_ms,queries,tier_note02
+sort: merge-sort block sort,N,sort,17,10.955,Q2 Q3 Q4 Q7 Q9 Q12 Q13 Q16 Q18 Q20 Q21 Q22,T5
+AST compute_column (no nulls),E,AST expression -> PCMP / EWALU / EWMUL (brief: AST predicates and arithmetic count as executable),51,5.2721,Q2 Q4 Q5 Q6 Q7 Q8 Q10 Q12 Q14 Q15 Q16 Q17 Q19 Q20 Q22,T5
+sirius: fused membership mask (dyn filter),N,hash/bloom membership (large key set),33,2.5898,Q2 Q3 Q5 Q7 Q8 Q9 Q10 Q18 Q19 Q20 Q21,T3
+strings: gather chars (char-parallel),N,strings,171,2.1233,Q2 Q4 Q5 Q7 Q8 Q9 Q10 Q12 Q14 Q15 Q16 Q18 Q19 Q20 Q21 Q22,T3
+sort: merge-sort merge,N,sort,10,2.0225,Q3 Q16,T3
+transform: gather fixed-width 1-4 B,N,gather,513,2.0037,Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T3
+cub scan: string offsets (gather-strings sizes),N,strings (offsets),188,1.8476,Q2 Q4 Q5 Q7 Q8 Q9 Q10 Q12 Q14 Q15 Q16 Q18 Q19 Q20 Q21 Q22,T2
+cub select: boolean-mask compaction,E,"COMPACT, bank-local only (global order needs a host prefix)",121,1.2725,Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T2
+cub: tile-state / histogram init,B,bookkeeping (tiny setup/finalize),450,0.7976,Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T4
+cuco: hash-join build insert (pair),N,hash build,42,0.625,Q2 Q3 Q5 Q7 Q8 Q9 Q10 Q11 Q14 Q16 Q17 Q18 Q19 Q20 Q21,T3
+cuco: dyn-filter key-set insert,N,hash build,36,0.6116,Q2 Q3 Q5 Q7 Q8 Q9 Q10 Q11 Q12 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T3
+sort: merge-sort partition,N,sort,10,0.5617,Q3 Q16,T4
+for_each: group-by hash aggregate,N,hash group-by with a large group count,12,0.5542,Q3 Q9 Q10 Q13 Q15 Q17 Q18 Q20 Q21,T3
+for_each: dyn-filter membership (cuco set),N,hash membership,12,0.5431,Q2 Q5 Q9 Q11 Q12 Q16 Q17 Q18 Q22,T3
+groupby: mapping_indices (cuco insert+find),N,hash group-by with a large group count,11,0.5209,Q3 Q9 Q10 Q13 Q15 Q17 Q18 Q20 Q21,T3
+cuco: hash-join probe find,N,hash probe,42,0.5103,Q2 Q3 Q5 Q7 Q8 Q9 Q10 Q11 Q14 Q16 Q17 Q18 Q19 Q20 Q21,T3
+for_each: binop compare,E,PCMP (column vs constant/column compare),31,0.4604,Q2 Q3 Q4 Q5 Q7 Q8 Q10 Q11 Q18 Q20 Q21 Q22,T1
+transform: cast integral widen,E,EWALU widen 4->8 B,127,0.379,Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T1
+sort: radix sort,N,sort,29,0.3335,Q4 Q5 Q7 Q8 Q10 Q11 Q15 Q16,T3
+strings: gather chars (string-parallel),N,strings,14,0.3133,Q2 Q10,T3
+transform: fill constant / sequence,B,bookkeeping (tiny setup/finalize),47,0.2816,Q2 Q3 Q4 Q5 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q15 Q16 Q17 Q18 Q20 Q21 Q22,T1
+transform: misc elementwise (not/unique flag/other),N,adjacent-element / list op,10,0.2724,Q2 Q11 Q16 Q18,T1
+transform: gather fixed-width 8 B,N,gather,40,0.2572,Q2 Q4 Q7 Q8 Q9 Q10 Q11 Q13 Q15 Q16 Q17 Q18 Q21 Q22,T3
+for_each: cuco hash-table init (fill),B,bookkeeping (tiny setup/finalize),110,0.2514,Q2 Q3 Q4 Q5 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q14 Q15 Q16 Q17 Q18 Q19 Q20 Q21 Q22,T1
+for_each: dyn-filter membership (bloom),N,bloom membership,6,0.2409,Q4 Q20 Q21,T3
+strings: LIKE multi-literal,N,strings/LIKE,3,0.2219,Q13 Q16,T5
+join: conditional / mixed (AST) join,N,join,8,0.2163,Q2 Q11 Q17 Q21 Q22,T5
+for_each: binop mul/div,E,EWMUL,21,0.2022,Q3 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q14 Q15 Q17 Q19 Q20,T2
+cub select: hash-join output compaction,N,join retrieve,42,0.1772,Q2 Q3 Q5 Q7 Q8 Q9 Q10 Q11 Q14 Q16 Q17 Q18 Q19 Q20 Q21,T2
+hyperloglog add_if_shmem,N,hash (HLL group-count estimate; planner pre-check),11,0.1753,Q4 Q7 Q10 Q16 Q18 Q21,T3
+cub reduce-by-key (sort-based group-by),N,sort-based group-by (large group count),7,0.1617,Q2 Q11 Q16 Q18,T2
+"cub reduce: block partial (min/max, sum)",N,MIN/MAX not in the ISA (Sirius SUM-widening pre-check; a small extension),23,0.1609,Q3 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q13 Q14 Q15 Q17 Q18 Q20 Q22,T1
+cub reduce: final single-tile / assign_min_max,B,bookkeeping (tiny setup/finalize),64,0.1472,Q2 Q3 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q13 Q14 Q15 Q17 Q18 Q19 Q20 Q22,T4
+transform: small scatter (flags/sequence),N,scatter,45,0.1332,Q3 Q4 Q5 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q15 Q16 Q17 Q18 Q20 Q21 Q22,T3
+csr join: probe count,N,join,9,0.1295,Q2 Q7 Q9 Q10 Q12 Q15 Q17 Q20,T3
+"transform: cast decimal/wide (to/from int128, fixed_point)",N,128-bit / floating-point cast not in the ISA (widen 4->8 B only),35,0.1237,Q3 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 Q14 Q15 Q17 Q18 Q19 Q20 Q22,T2
+csr join: retrieve,N,join,9,0.1232,Q2 Q7 Q9 Q10 Q12 Q15 Q17 Q20,T3
+cuco: semi-join probe contains,N,hash probe,8,0.1222,Q4 Q16 Q18 Q20 Q22,T3
+for_each: binop add/sub,E,EWALU add/sub,13,0.1193,Q3 Q5 Q7 Q8 Q9 Q10 Q11 Q14 Q15 Q19,T1
+cub scan: int exclusive sum (positions),N,global prefix scan (inter-bank carry),15,0.1156,Q2 Q7 Q9 Q10 Q11 Q12 Q15 Q16 Q17 Q18 Q20,T2
+for_each: fill / label_segments / misc,B,bookkeeping (tiny setup/finalize),27,0.1142,Q2 Q3 Q4 Q5 Q7 Q8 Q9 Q10 Q11 Q12 Q13 Q15 Q16 Q17 Q18 Q20 Q21 Q22,T4
+thrust find (is-sorted / first-less),B,bookkeeping (tiny setup/finalize),20,0.1119,Q2 Q8 Q11 Q13 Q15 Q17 Q18 Q22,T4
+csr join: build (count),N,join,9,0.1001,Q2 Q7 Q9 Q10 Q12 Q15 Q17 Q20,T3
+transform: dictionary encode (cuco set find),N,hash,5,0.0898,Q4 Q7 Q16,T3
+groupby: mapping_indices (cuco insert+find),E,small-group aggregation: single GROUP BY with <= 8 result groups (Q4/5/7/8/12/22) -> GAGG,6,0.0892,Q4 Q5 Q7 Q8 Q12 Q22,T3
+cuco: semi-join build insert (filtered_join),N,hash build,8,0.0865,Q4 Q16 Q18 Q20 Q22,T3
+cub select: hash-table slot extract,N,hash group-by with a large group count,15,0.0863,Q3 Q9 Q10 Q13 Q15 Q16 Q17 Q18 Q20 Q21,T2
+transform: string op (substr etc.),N,strings,7,0.086,Q2 Q9 Q14 Q16 Q22,T5
+sort: top-k,N,sort,17,0.0834,Q10,T2
+csr join: build (fill),N,join,9,0.0792,Q2 Q7 Q9 Q10 Q12 Q15 Q17 Q20,T3
+copy / concatenate,N,data movement between tables,12,0.0772,Q12 Q19 Q22,T1
+groupby: single_pass_shmem_aggs,N,hash group-by with a large group count,7,0.075,Q3 Q13 Q15 Q17 Q18 Q20 Q21,T3
+groupby: single_pass_shmem_aggs,E,small-group aggregation: single GROUP BY with <= 8 result groups (Q4/5/7/8/12/22) -> GAGG,6,0.0682,Q4 Q5 Q7 Q8 Q12 Q22,T3
+sirius: dense-count join accumulate/emit,N,join,4,0.0565,Q13,T3
+cub select: other,E,mask compaction (bank-local),6,0.0544,Q2 Q11 Q16 Q18 Q21,T2
+cub select: hash-table slot extract,E,small-group aggregation: single GROUP BY with <= 8 result groups (Q4/5/7/8/12/22) -> GAGG,10,0.0484,Q4 Q5 Q7 Q8 Q12 Q22,T2
+for_each: group-by hash aggregate,E,small-group aggregation: single GROUP BY with <= 8 result groups (Q4/5/7/8/12/22) -> GAGG,7,0.0469,Q4 Q5 Q7 Q8 Q12 Q22,T3
+cub select: gather_mask compaction,E,"COMPACT, bank-local only",8,0.0436,Q4 Q16 Q18 Q20 Q22,T2
+cub scan: long sizes -> offsets,N,strings offsets,9,0.0402,Q2 Q7 Q9 Q10 Q12 Q15 Q17 Q20,T2
+cub scan: constant-size offsets,N,strings/lists offsets,13,0.0358,Q2 Q3 Q5 Q8 Q10 Q11 Q20 Q21,T2
+"cub reduce: block partial (min/max, sum)",E,SUM reduction (+RD_MAC read-out),9,0.033,Q6 Q11 Q13 Q14 Q17 Q22,T1
+copy_range (constant fill),B,bookkeeping (tiny setup/finalize),15,0.0302,Q6 Q11 Q14 Q15 Q16 Q17 Q19 Q20 Q22,T1
+validity bitmask build (valid_if),N,built from gathered/string data,8,0.03,Q4 Q7 Q16 Q22,T1
+transform: dyn-filter key convert (convert_to_rep),E,element-wise conversion (EWALU),12,0.0276,Q2 Q5 Q7 Q8 Q11 Q20 Q21,T1
+"for_each: dyn-filter membership (needle, small set)",E,small-set IN-list = OR-ed PCMP (assumes <= 8 keys; key count not checked),9,0.0244,Q2 Q5 Q7 Q8 Q11 Q20 Q21,T1
+cuco: bloom-filter add (dyn filter build),N,hash build,4,0.0236,Q4 Q20 Q21,T3
+for_each: binary search (lower_bound),N,binary search (data-dependent addressing),5,0.018,Q4 Q7 Q16,T3
+transform: gather index-column (indexalator),N,gather,5,0.0142,Q4 Q7 Q16,T3
+copy_if_else,N,select/blend not in the ISA,4,0.0116,Q8 Q12 Q14,T1
+transform: datetime extract,N,needs division (not in the ISA),3,0.0099,Q7 Q8 Q9,T2
+cub select: other,N,pair/zip select,2,0.0067,Q2 Q17,T2
+for_each: binop mul/div,N,divide not in the ISA,1,0.0067,Q17,T2
+transform: misc elementwise (not/unique flag/other),E,mask NOT,2,0.0046,Q16 Q22,T1

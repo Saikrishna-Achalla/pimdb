@@ -1,0 +1,40 @@
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         7.0      27.0      17.456       25.82     212     337
+   5         8.0      27.0      17.290       26.45     212     337
+   6         7.0      28.0      17.193       26.06     212     337
+   7         7.0      26.0      17.297       24.90     212     337
+   8         8.0      26.0      17.202       24.84     212     337
+median: planning 7.0 ms, engine 27.0 ms, GPU busy 17.290 ms (64% of the engine window), first->last GPU op 25.82 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                      251.0   15.452
+  cuStreamSynchronize                        119.0    8.870
+  cudaLaunchKernel                           212.0    1.205
+  cudaMallocFromPoolAsync                    285.0    0.873
+  cudaMemcpyBatchAsync                        95.0    0.491
+  cudaFreeAsync                              284.6    0.296
+  cudaMemcpyAsync                             20.0    0.195
+  cudaEventRecord                            112.0    0.110
+  cudaEventCreateWithFlags                    36.0    0.106
+  cudaStreamWaitEvent                         79.0    0.091
+  cudaMemsetAsync                            120.0    0.082
+  cudaStreamGetDevice                        165.0    0.071
+  cudaEventDestroy                            36.0    0.049
+  cuKernelGetName                            212.0    0.033
+  cudaEventSynchronize                        12.0    0.021
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 18105.1 us of kernels):
+  insert_if_n                                     7258.6 us  40.1%
+  transform_kernel                                3391.1 us  18.7%
+  static_kernel                                   2684.4 us  14.8%
+  fused_membership_mask_kernel                    1166.2 us   6.4%
+  BatchMemcpyKernel                                729.4 us   4.0%
+  find_if_n                                        637.1 us   3.5%
+  DeviceSelectSweepKernel                          556.7 us   3.1%
+  DeviceMergeSortBlockSortKernel                   353.8 us   2.0%
+  hash_csr_probe_count_kernel                      332.8 us   1.8%
+  fused_concatenate_kernel                         292.2 us   1.6%
+  DeviceScanKernel                                 237.5 us   1.3%
+  hash_csr_retrieve_kernel                         203.9 us   1.1%

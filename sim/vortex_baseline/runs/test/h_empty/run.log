@@ -1,0 +1,12 @@
+OP empty arg=2 cores=1 warps=32 threads=1024
+LAUNCH 0 empty_kernel empty_1wg items=0 lbytes=0
+LAUNCH 1 empty_kernel empty_1wg items=0 lbytes=0
+LAUNCH 2 empty_kernel empty_full items=0 lbytes=0
+LAUNCH 3 empty_kernel empty_full items=0 lbytes=0
+LAUNCHES 4
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=660 (r=19, w=641), lat=662.5 cyc, bank_st=0 (utility=100%)
+PERF: instrs=11600, cycles=81757, IPC=0.142
+wall_s=1.073461502 rc=0

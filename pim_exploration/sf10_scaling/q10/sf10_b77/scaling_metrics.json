@@ -1,0 +1,329 @@
+{
+ "label": "q10 sf10_b77",
+ "results_dir": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q10/sf10_b77",
+ "nsys_sqlite": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q10/sf10_b77/traces/q10_nsys.sqlite",
+ "warm_ms": 25.5,
+ "warm_min_ms": 25.0,
+ "warm_max_ms": 28.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 243.5,
+ "result_rows": 20,
+ "gpu_equals_cpu": true,
+ "compare_mode": "exact",
+ "timing_log_planning_ms": 5.0,
+ "timing_log_engine_ms": 20.0,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "lineitem": 59986052,
+  "orders": 15000000,
+  "customer": 1500000,
+  "nation": 25
+ },
+ "pinned_bytes": 1403013632,
+ "pool_peak_after_pin_bytes": 1430476032,
+ "pool_peak_end_bytes": 2127927473,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  530,
+  530,
+  530,
+  530,
+  530
+ ],
+ "nsys_median": {
+  "planning_ms": 5.999872,
+  "engine_ms": 24.0,
+  "gpu_busy_ms": 13.444019,
+  "kernels": 530,
+  "gpu_ops": 1180,
+  "kernel_ms": 13.466669,
+  "lt5us": 313,
+  "ge100us": 21,
+  "ge100us_ms": 7.405817,
+  "grid_lt48": 213,
+  "grid_1": 150
+ },
+ "rep_iter": {
+  "iter": 6,
+  "planning_ms": 5.999872,
+  "engine_ms": 24.0,
+  "gpu_busy_ms": 13.444019,
+  "kernels": 530,
+  "gpu_ops": 1180,
+  "kernel_ms": 13.493683,
+  "lt5us": 314,
+  "ge100us": 21,
+  "ge100us_ms": 7.405817,
+  "grid_lt48": 213,
+  "grid_1": 150,
+  "families": {
+   "transform_kernel": {
+    "launches": 134,
+    "ns": 1177630,
+    "phase": "gather/copy/concat",
+    "grid_max": 561,
+    "grid_min": 1
+   },
+   "compute_column_kernel": {
+    "launches": 3,
+    "ns": 604160,
+    "phase": "expression eval",
+    "grid_max": 39063,
+    "grid_min": 39063
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 36,
+    "ns": 33504,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 15,
+    "grid_min": 2
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 36,
+    "ns": 498112,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1793,
+    "grid_min": 131
+   },
+   "static_kernel": {
+    "launches": 39,
+    "ns": 3083581,
+    "phase": "hash group-by/agg",
+    "grid_max": 4483,
+    "grid_min": 1
+   },
+   "insert_if_n": {
+    "launches": 3,
+    "ns": 62176,
+    "phase": "hash join build",
+    "grid_max": 4478,
+    "grid_min": 1
+   },
+   "DeviceScanInitKernel": {
+    "launches": 76,
+    "ns": 54976,
+    "phase": "gather/copy/concat",
+    "grid_max": 4,
+    "grid_min": 1
+   },
+   "DeviceScanKernel": {
+    "launches": 76,
+    "ns": 588160,
+    "phase": "gather/copy/concat",
+    "grid_max": 427,
+    "grid_min": 1
+   },
+   "fused_membership_mask_kernel": {
+    "launches": 30,
+    "ns": 1743518,
+    "phase": "scan/filter",
+    "grid_max": 4096,
+    "grid_min": 2930
+   },
+   "fused_concatenate_kernel": {
+    "launches": 3,
+    "ns": 54432,
+    "phase": "gather/copy/concat",
+    "grid_max": 4483,
+    "grid_min": 4483
+   },
+   "find_if_n": {
+    "launches": 2,
+    "ns": 105568,
+    "phase": "hash join probe",
+    "grid_max": 8965,
+    "grid_min": 8965
+   },
+   "add_n": {
+    "launches": 1,
+    "ns": 43072,
+    "phase": "scan/filter",
+    "grid_max": 4483,
+    "grid_min": 4483
+   },
+   "gather_chars_fn_char_parallel": {
+    "launches": 26,
+    "ns": 793695,
+    "phase": "gather/copy/concat",
+    "grid_max": 11912,
+    "grid_min": 1
+   },
+   "gather_chars_fn_string_parallel": {
+    "launches": 9,
+    "ns": 1984095,
+    "phase": "gather/copy/concat",
+    "grid_max": 65536,
+    "grid_min": 5
+   },
+   "fused_concatenate_string_offset_kernel": {
+    "launches": 4,
+    "ns": 26112,
+    "phase": "gather/copy/concat",
+    "grid_max": 1489,
+    "grid_min": 1489
+   },
+   "hash_csr_build_count_kernel": {
+    "launches": 1,
+    "ns": 54816,
+    "phase": "hash join build",
+    "grid_max": 4483,
+    "grid_min": 4483
+   },
+   "hash_csr_build_fill_kernel": {
+    "launches": 1,
+    "ns": 41568,
+    "phase": "hash join build",
+    "grid_max": 4483,
+    "grid_min": 4483
+   },
+   "hash_csr_probe_count_kernel": {
+    "launches": 1,
+    "ns": 26624,
+    "phase": "hash join probe",
+    "grid_max": 1489,
+    "grid_min": 1489
+   },
+   "hash_csr_retrieve_kernel": {
+    "launches": 1,
+    "ns": 45088,
+    "phase": "hash join probe",
+    "grid_max": 141,
+    "grid_min": 141
+   },
+   "InitTileStateKernel": {
+    "launches": 7,
+    "ns": 4928,
+    "phase": "gather/copy/concat",
+    "grid_max": 18,
+    "grid_min": 18
+   },
+   "BatchMemcpyKernel": {
+    "launches": 7,
+    "ns": 1581149,
+    "phase": "gather/copy/concat",
+    "grid_max": 2242,
+    "grid_min": 2242
+   },
+   "MultiBlockBatchMemcpyKernel": {
+    "launches": 7,
+    "ns": 13664,
+    "phase": "gather/copy/concat",
+    "grid_max": 1440,
+    "grid_min": 1440
+   },
+   "add_if_shmem": {
+    "launches": 4,
+    "ns": 505919,
+    "phase": "other",
+    "grid_max": 48,
+    "grid_min": 48
+   },
+   "DeviceReduceKernel": {
+    "launches": 1,
+    "ns": 16224,
+    "phase": "expression eval",
+    "grid_max": 1121,
+    "grid_min": 1121
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 1,
+    "ns": 1440,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 1,
+    "ns": 832,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "mapping_indices_kernel": {
+    "launches": 1,
+    "ns": 220320,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 240
+   },
+   "DeviceTopKHistogramKernel": {
+    "launches": 1,
+    "ns": 4864,
+    "phase": "sort/top-N",
+    "grid_max": 144,
+    "grid_min": 144
+   },
+   "DeviceTopKKernel": {
+    "launches": 15,
+    "ns": 65536,
+    "phase": "sort/top-N",
+    "grid_max": 144,
+    "grid_min": 144
+   },
+   "DeviceTopKLastFilterKernel": {
+    "launches": 1,
+    "ns": 800,
+    "phase": "sort/top-N",
+    "grid_max": 144,
+    "grid_min": 144
+   },
+   "DeviceRadixSortSingleTileKernel": {
+    "launches": 2,
+    "ns": 57120,
+    "phase": "sort/top-N",
+    "grid_max": 1,
+    "grid_min": 1
+   }
+  },
+  "phases": {
+   "expression eval": {
+    "launches": 43,
+    "ns": 1786110
+   },
+   "cub scan/select/reduce": {
+    "launches": 131,
+    "ns": 589184
+   },
+   "gather/copy/concat": {
+    "launches": 270,
+    "ns": 5567739
+   },
+   "other": {
+    "launches": 11,
+    "ns": 525727
+   },
+   "scan/filter": {
+    "launches": 33,
+    "ns": 1812510
+   },
+   "hash join build": {
+    "launches": 6,
+    "ns": 140672
+   },
+   "hash join probe": {
+    "launches": 6,
+    "ns": 197664
+   },
+   "string ops": {
+    "launches": 8,
+    "ns": 14400
+   },
+   "hash group-by/agg": {
+    "launches": 3,
+    "ns": 2731357
+   },
+   "sort/top-N": {
+    "launches": 19,
+    "ns": 128320
+   }
+  }
+ }
+}

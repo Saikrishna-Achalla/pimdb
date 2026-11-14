@@ -1,0 +1,16 @@
+OP mul arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 binop_i64 mul items=60175 lbytes=1444200
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=25150 (r=15067, w=10083), lat=1436.3 cyc, bank_st=0 (utility=100%)
+PERF: instrs=61517, cycles=89917, IPC=0.684
+wall_s=6.121298268 rc=0

@@ -1,0 +1,18 @@
+[19:40:18] q6 stage sql: done earlier (REDO=1 to rerun)
+[19:40:18] q6 stage timing: done earlier (REDO=1 to rerun)
+[19:40:18] q6 stage pcie: done earlier (REDO=1 to rerun)
+[19:40:18] q6 stage selftest: start
+negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q6_nsys.sql': ["pinned tables [] != referenced tables ['lineitem']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned [] vs referenced ['lineitem']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter2: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter3: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '168', 'hits': '0', 'h2d': '441', 'miss': '64', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '168', 'hits': '503', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned [] vs referenced ['lineitem']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter2: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']; iter3: 0 assigned for 1 GPU_SCANs, missing tables ['lineitem']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '168', 'hits': '0', 'h2d': '441', 'miss': '64', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '168', 'hits': '503', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 641 copies, 356160398 B total, largest single 3818456 B (limits: single <= 65536 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 308 copies, 8653698 B total, largest single 275200 B (result CSV is 23 B; limit 262144 B)
+SELFTEST: PASS (verification detected the unpinned table)
+[19:40:25] q6 stage selftest: ok (7 s)
+[19:40:25] q6 pipeline finished in 7 s

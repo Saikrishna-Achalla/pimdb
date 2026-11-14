@@ -1,0 +1,15 @@
+OP mul arg=0 cores=1 warps=16 threads=512
+TABLE rows=600572
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=32 target=33 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x00005622c89270c0 HEAD_ADDR=0x00005622c8937140 CMPL_ADDR=0x00005622c8937240
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000000840
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 0 binop_i64 mul items=600572 lbytes=14413728
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=225572 (r=150179, w=75393), lat=1805.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=396880, cycles=2804022, IPC=0.142
+wall_s=21.344075142 rc=0

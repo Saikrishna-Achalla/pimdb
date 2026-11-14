@@ -1,0 +1,11 @@
+group,families,launches,nsys_total_us,nsys_time_share,ncu_dram_rd_MB,ncu_dram_wr_MB,ncu_dram_share,tiers
+"G1 gather fixed-width (1-16 B, index column)",3,558,2275.008,0.0574,505.5634,21.6853,0.1961,T3
+G2 dyn-filter / semi-join membership probe,4,60,3398.206,0.0857,435.5184,0.0509,0.162,T1 T3
+G3 boolean-mask compaction (+ position scan),7,228,1844.99,0.0465,202.2968,4.1667,0.0768,T2
+G4 string gather (chars + offsets scan),4,386,4320.102,0.109,224.8604,0.0013,0.0836,T2 T3
+"G5 hash build / insert (join, filter, group-key map, csr, bloom)",8,235,2387.328,0.0602,133.2912,22.1447,0.0578,T1 T3
+"G6 hash probe (join find/contains/csr, dict encode)",5,73,974.944,0.0246,64.0289,0.0771,0.0238,T3
+G7 group-by aggregate (atomic update),5,54,1137.952,0.0287,145.5434,7.1552,0.0568,T2 T3
+G8 element-wise map (compare/add/mul/cast/fill),11,321,1978.752,0.0499,314.923,28.7329,0.1278,T1 T2
+G9 AST expression (compute_column),1,51,5272.13,0.133,295.545,0.0282,0.1099,T5
+G10 sort (merge/radix/top-k) + reduce,6,115,14149.948,0.3569,97.8265,1.4479,0.0369,T1 T2 T3 T4 T5

@@ -1,0 +1,151 @@
+{
+ "label": "q6 sf10_b77",
+ "results_dir": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q6/sf10_b77",
+ "nsys_sqlite": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q6/sf10_b77/traces/q6_nsys.sqlite",
+ "warm_ms": 14.0,
+ "warm_min_ms": 14.0,
+ "warm_max_ms": 25.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 41.5,
+ "result_rows": 1,
+ "gpu_equals_cpu": true,
+ "compare_mode": "exact",
+ "timing_log_planning_ms": 4.0,
+ "timing_log_engine_ms": 10.0,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "lineitem": 59986052
+ },
+ "pinned_bytes": 839822080,
+ "pool_peak_after_pin_bytes": 882459648,
+ "pool_peak_end_bytes": 1217189268,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  423,
+  423,
+  423,
+  423,
+  423
+ ],
+ "nsys_median": {
+  "planning_ms": 4.0,
+  "engine_ms": 12.0,
+  "gpu_busy_ms": 7.365426,
+  "kernels": 423,
+  "gpu_ops": 1646,
+  "kernel_ms": 7.216819,
+  "lt5us": 360,
+  "ge100us": 28,
+  "ge100us_ms": 6.311763,
+  "grid_lt48": 227,
+  "grid_1": 143
+ },
+ "rep_iter": {
+  "iter": 6,
+  "planning_ms": 4.000256,
+  "engine_ms": 11.999744,
+  "gpu_busy_ms": 7.365426,
+  "kernels": 423,
+  "gpu_ops": 1646,
+  "kernel_ms": 7.22002,
+  "lt5us": 360,
+  "ge100us": 28,
+  "ge100us_ms": 6.304374,
+  "grid_lt48": 227,
+  "grid_1": 143,
+  "families": {
+   "compute_column_kernel": {
+    "launches": 28,
+    "ns": 6304374,
+    "phase": "expression eval",
+    "grid_max": 16765,
+    "grid_min": 16713
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 28,
+    "ns": 21472,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 3,
+    "grid_min": 3
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 28,
+    "ns": 353790,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 373,
+    "grid_min": 372
+   },
+   "transform_kernel": {
+    "launches": 140,
+    "ns": 244640,
+    "phase": "expression eval",
+    "grid_max": 162,
+    "grid_min": 1
+   },
+   "static_kernel": {
+    "launches": 28,
+    "ns": 108224,
+    "phase": "expression eval",
+    "grid_max": 81,
+    "grid_min": 79
+   },
+   "DeviceReduceKernel": {
+    "launches": 56,
+    "ns": 79296,
+    "phase": "expression eval",
+    "grid_max": 41,
+    "grid_min": 20
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 57,
+    "ns": 61792,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 28,
+    "ns": 23616,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "copy_range_kernel": {
+    "launches": 29,
+    "ns": 21056,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "fused_concatenate_kernel": {
+    "launches": 1,
+    "ns": 1760,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   }
+  },
+  "phases": {
+   "expression eval": {
+    "launches": 225,
+    "ns": 6617078
+   },
+   "cub scan/select/reduce": {
+    "launches": 112,
+    "ns": 428606
+   },
+   "gather/copy/concat": {
+    "launches": 86,
+    "ns": 174336
+   }
+  }
+ }
+}

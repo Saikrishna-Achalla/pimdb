@@ -1,0 +1,74 @@
+  Q cfg       plan  xflr SF  B_MB   wall    cpu    busy  busy%   idle  kern   ops  <5us  g<48   pinMB  peakMB  ns/row
+  1 sf10_main  4.0  10.8 10   262   34.0   84.0  27.103   79.7   6.90   873  1936   511   501    1680    3566   0.567
+  1 sf1_main   2.0  14.2  1   262    7.5   28.0   3.542   47.2   3.96   186   412   128   124     168     696   1.250
+  1 sf10_b77   4.0  11.3 10    77   42.5   84.0  28.372   66.8  14.13  3865  8580  2380  2129    1680    2057   0.708
+  1 sf1_pipe   1.5  12.3  1    77    8.0   26.5   3.079   38.5   4.92   465  1030   310   279     168     520   1.333
+  3 sf10_main  7.5   3.0 10   262   15.5  134.0   4.527   29.2  10.97   138   263    72    41    1030    2675   0.203
+  3 sf1_main   2.0   8.1  1   262    5.0   25.5   1.240   24.8   3.76    85   159    62    40     103     360   0.653
+  3 sf10_b77   5.0   3.0 10    77   13.0  129.0   4.571   35.2   8.43   309   600   165    89    1030    1531   0.170
+  3 sf1_pipe   2.0   8.2  1    77    5.0   26.5   1.258   25.2   3.74    92   180    66    41     103     360   0.653
+  6 sf10_main  3.5   5.4 10   262   12.0   40.0   6.758   56.3   5.24   108   428    73    45     840    2348   0.200
+  6 sf1_main   2.0   5.5  1   262    3.0   12.0   0.687   22.9   2.31    15    59    12     6      84     348   0.500
+  6 sf10_b77   4.0   5.9 10    77   14.0   41.5   7.365   52.6   6.63   423  1646   360   227     840    1217   0.233
+  6 sf1_pipe   1.0   6.0  1    77    3.0   12.0   0.748   24.9   2.25    47   195    41    26      84     348   0.500
+  9 sf10_main  6.5   6.8 10   262   31.0  274.0  17.290   55.8  13.71   212   337    63    42    1708    3674   0.364
+  9 sf1_main   3.0   6.7  1   262    9.0   53.0   1.564   17.4   7.44   124   216    86    43     157     457   1.057
+  9 sf10_b77   6.0   7.0 10    77   31.0  270.5  17.690   57.1  13.31   706   962   420   125    1708    2447   0.364
+  9 sf1_pipe   3.0   7.0  1    77    9.0   52.5   1.637   18.2   7.36   144   260    92    45     157     457   1.057
+ 10 sf10_main  6.0   6.3 10   262   26.0  246.0  13.065   50.2  12.94   300   642   153   135    1403    3384   0.340
+ 10 sf1_main   2.0   9.5  1   262    9.0   55.0   1.976   22.0   7.02   229   496   168   132     140     448   1.176
+ 10 sf10_b77   5.0   6.4 10    77   25.5  243.5  13.444   52.7  12.06   530  1180   313   213    1403    2128   0.333
+ 10 sf1_pipe   2.0   9.6  1    77   10.0   51.5   1.999   20.0   8.00   238   523   174   135     140     448   1.307
+ 13 sf10_main  2.0   2.2 10   262    6.0  326.0   3.061   51.0   2.94    48    75    19    17     913    2734   0.364
+ 13 sf1_main   1.0   3.3  1   262    3.0   87.0   0.444   14.8   2.56    30    54    22    15      91     274   1.818
+ 13 sf10_b77   2.0   2.2 10    77    6.0  316.0   3.014   50.2   2.99    96   131    27    25     913    2345   0.364
+ 13 sf1_pipe   1.0   3.3  1    77    3.0   86.0   0.450   15.0   2.55    36    61    23    16      91     274   1.818
+ 16 sf10_main  2.0  74.3 10   262   33.0   81.5  17.052   51.7  15.95   175   360    75    68     154     404   3.267
+ 16 sf1_main   2.0 365.8  1   262   17.0   32.0   7.515   44.2   9.48   156   338   100    85      14      39  16.832
+ 16 sf10_b77   2.0  73.7 10    77   31.0   75.5  16.919   54.6  14.08   209   473    92    82     154     404   3.069
+ 16 sf1_pipe   2.0 364.4  1    77   19.0   28.5   7.486   39.4  11.51   156   338   100    85      14      39  18.812
+ 18 sf10_main  8.0  25.2 10   262   42.0  209.0  27.299   65.0  14.70   291   586   131   145     729    2811   0.549
+ 18 sf1_main   2.5  17.2  1   262    8.0   41.5   1.863   23.3   6.14   127   238    95    98      73     283   1.046
+ 18 sf10_b77   8.0  23.7 10    77   39.0  208.5  25.750   66.0  13.25   784  1620   287   316     729    2032   0.510
+ 18 sf1_pipe   2.5  17.2  1    77    8.0   43.0   1.865   23.3   6.13   127   238    95    98      73     283   1.046
+
+Q1 asked_sf10main_vs_sf1pipeline    launches 465->873 (x1.88), wall x4.25, busy x8.80, kern x10.67, idle x1.40, busy% 38.5->79.7, added launches {'const': 0, 'mid': 0, 'grew': 408, 'new': 0, 'gone': 0}
+Q1 fixed_config_main                launches 186->873 (x4.69), wall x4.53, busy x7.65, kern x11.41, idle x1.74, busy% 47.2->79.7, added launches {'const': 0, 'mid': 0, 'grew': 680, 'new': 7, 'gone': 0}
+Q1 fixed_batch_77MB                 launches 465->3865 (x8.31), wall x5.31, busy x9.22, kern x10.01, idle x2.87, busy% 38.5->66.8, added launches {'const': 0, 'mid': 0, 'grew': 3400, 'new': 0, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 2992, 'wall_delta_ms': 8.5, 'busy_delta_ms': 1.269, 'wall_us_per_extra_launch': 2.84, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=30: wall 93 ms, busy 79 ms (86%), kernels 2400; SF100: busy% 88, kernels 7743, wall 299 ms; SF100 w/ 5x faster GPU: busy% 59
+Q3 asked_sf10main_vs_sf1pipeline    launches 92->138 (x1.50), wall x3.10, busy x3.60, kern x3.75, idle x2.93, busy% 25.2->29.2, added launches {'const': -1, 'mid': 33, 'grew': 11, 'new': 4, 'gone': -1}
+Q3 fixed_config_main                launches 85->138 (x1.62), wall x3.10, busy x3.65, kern x3.81, idle x2.92, busy% 24.8->29.2, added launches {'const': -1, 'mid': 27, 'grew': 24, 'new': 4, 'gone': -1}
+Q3 fixed_batch_77MB                 launches 92->309 (x3.36), wall x2.60, busy x3.63, kern x3.92, idle x2.25, busy% 25.2->35.2, added launches {'const': -1, 'mid': 0, 'grew': 215, 'new': 4, 'gone': -1}
+   SF10 b77 vs main: {'extra_launches_b77': 171, 'wall_delta_ms': -2.5, 'busy_delta_ms': 0.044, 'wall_us_per_extra_launch': -14.62, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=40: wall 51 ms, busy 15 ms (31%), kernels 315; SF100: busy% 31, kernels 668, wall 120 ms; SF100 w/ 5x faster GPU: busy% 8
+Q6 asked_sf10main_vs_sf1pipeline    launches 47->108 (x2.30), wall x4.00, busy x9.04, kern x9.48, idle x2.33, busy% 24.9->56.3, added launches {'const': 0, 'mid': 0, 'grew': 60, 'new': 1, 'gone': 0}
+Q6 fixed_config_main                launches 15->108 (x7.20), wall x4.00, busy x9.84, kern x10.16, idle x2.27, busy% 22.9->56.3, added launches {'const': 0, 'mid': 0, 'grew': 92, 'new': 1, 'gone': 0}
+Q6 fixed_batch_77MB                 launches 47->423 (x9.00), wall x4.67, busy x9.85, kern x10.01, idle x2.95, busy% 24.9->52.6, added launches {'const': 0, 'mid': 0, 'grew': 375, 'new': 1, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 315, 'wall_delta_ms': 2.0, 'busy_delta_ms': 0.607, 'wall_us_per_extra_launch': 6.35, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=46: wall 48 ms, busy 31 ms (65%), kernels 480; SF100: busy% 66, kernels 1038, wall 102 ms; SF100 w/ 5x faster GPU: busy% 28
+Q9 asked_sf10main_vs_sf1pipeline    launches 144->212 (x1.47), wall x3.44, busy x10.56, kern x11.32, idle x1.86, busy% 18.2->55.8, added launches {'const': -2, 'mid': 58, 'grew': 0, 'new': 12, 'gone': 0}
+Q9 fixed_config_main                launches 124->212 (x1.71), wall x3.44, busy x11.06, kern x12.06, idle x1.84, busy% 17.4->55.8, added launches {'const': -2, 'mid': 6, 'grew': 72, 'new': 12, 'gone': 0}
+Q9 fixed_batch_77MB                 launches 144->706 (x4.90), wall x3.44, busy x10.80, kern x11.29, idle x1.81, busy% 18.2->57.1, added launches {'const': 1, 'mid': 3, 'grew': 543, 'new': 15, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 494, 'wall_delta_ms': 0.0, 'busy_delta_ms': 0.4, 'wall_us_per_extra_launch': 0.0, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=29: wall 77 ms, busy 50 ms (65%), kernels 398; SF100: busy% 70, kernels 1092, wall 251 ms; SF100 w/ 5x faster GPU: busy% 31
+Q10 asked_sf10main_vs_sf1pipeline    launches 238->300 (x1.26), wall x2.60, busy x6.54, kern x6.91, idle x1.62, busy% 20.0->50.2, added launches {'const': 2, 'mid': 30, 'grew': 5, 'new': 25, 'gone': 0}
+Q10 fixed_config_main                launches 229->300 (x1.31), wall x2.89, busy x6.61, kern x7.02, idle x1.84, busy% 22.0->50.2, added launches {'const': 4, 'mid': 24, 'grew': 18, 'new': 25, 'gone': 0}
+Q10 fixed_batch_77MB                 launches 238->530 (x2.23), wall x2.55, busy x6.73, kern x7.05, idle x1.51, busy% 20.0->52.7, added launches {'const': -4, 'mid': 0, 'grew': 267, 'new': 29, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 230, 'wall_delta_ms': -0.5, 'busy_delta_ms': 0.379, 'wall_us_per_extra_launch': -2.17, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=32: wall 68 ms, busy 40 ms (59%), kernels 474; SF100: busy% 63, kernels 1010, wall 196 ms; SF100 w/ 5x faster GPU: busy% 26
+Q13 asked_sf10main_vs_sf1pipeline    launches 36->48 (x1.33), wall x2.00, busy x6.81, kern x6.97, idle x1.15, busy% 15.0->51.0, added launches {'const': 0, 'mid': 10, 'grew': 2, 'new': 0, 'gone': 0}
+Q13 fixed_config_main                launches 30->48 (x1.60), wall x2.00, busy x6.90, kern x7.41, idle x1.15, busy% 14.8->51.0, added launches {'const': 0, 'mid': 6, 'grew': 12, 'new': 0, 'gone': 0}
+Q13 fixed_batch_77MB                 launches 36->96 (x2.67), wall x2.00, busy x6.70, kern x7.44, idle x1.17, busy% 15.0->50.2, added launches {'const': 0, 'mid': 0, 'grew': 60, 'new': 0, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 48, 'wall_delta_ms': 0.0, 'busy_delta_ms': -0.048, 'wall_us_per_extra_launch': 0.0, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=39: wall 16 ms, busy 11 ms (73%), kernels 106; SF100: busy% 81, kernels 228, wall 36 ms; SF100 w/ 5x faster GPU: busy% 46
+Q16 asked_sf10main_vs_sf1pipeline    launches 156->175 (x1.12), wall x1.74, busy x2.28, kern x2.27, idle x1.39, busy% 39.4->51.7, added launches {'const': -8, 'mid': 9, 'grew': 0, 'new': 18, 'gone': 0}
+Q16 fixed_config_main                launches 156->175 (x1.12), wall x1.94, busy x2.27, kern x2.26, idle x1.68, busy% 44.2->51.7, added launches {'const': -8, 'mid': 9, 'grew': 0, 'new': 18, 'gone': 0}
+Q16 fixed_batch_77MB                 launches 156->209 (x1.34), wall x1.63, busy x2.26, kern x2.27, idle x1.22, busy% 39.4->54.6, added launches {'const': 4, 'mid': 21, 'grew': 2, 'new': 26, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 34, 'wall_delta_ms': -2.0, 'busy_delta_ms': -0.133, 'wall_us_per_extra_launch': -58.82, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=269: wall 493 ms, busy 292 ms (59%), kernels 722; SF100: busy% 58, kernels 365, wall 193 ms; SF100 w/ 5x faster GPU: busy% 22
+Q18 asked_sf10main_vs_sf1pipeline    launches 127->291 (x2.29), wall x5.25, busy x14.63, kern x15.24, idle x2.40, busy% 23.3->65.0, added launches {'const': -2, 'mid': 8, 'grew': 119, 'new': 39, 'gone': 0}
+Q18 fixed_config_main                launches 127->291 (x2.29), wall x5.25, busy x14.65, kern x15.24, idle x2.40, busy% 23.3->65.0, added launches {'const': -2, 'mid': 8, 'grew': 119, 'new': 39, 'gone': 0}
+Q18 fixed_batch_77MB                 launches 127->784 (x6.17), wall x4.88, busy x13.80, kern x17.46, idle x2.16, busy% 23.3->66.0, added launches {'const': -2, 'mid': 0, 'grew': 505, 'new': 154, 'gone': 0}
+   SF10 b77 vs main: {'extra_launches_b77': 493, 'wall_delta_ms': -3.0, 'busy_delta_ms': -1.549, 'wall_us_per_extra_launch': -6.09, 'note': 'inferred; wall from 1 ms .timer medians'}
+   modeled: SFmax(12GB)=38: wall 148 ms, busy 106 ms (72%), kernels 801; SF100: busy% 74, kernels 1931, wall 382 ms; SF100 w/ 5x faster GPU: busy% 36

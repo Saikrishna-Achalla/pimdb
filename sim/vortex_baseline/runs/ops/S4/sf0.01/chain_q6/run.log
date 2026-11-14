@@ -1,0 +1,32 @@
+OP chain_q6 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 filter_conj q6.filter items=60175 lbytes=661925
+LAUNCH 1 mask_count q6.compact items=60175 lbytes=60239
+LAUNCH 2 scan_tiles q6.compact items=16 lbytes=132
+HOST readback_count bytes=4
+LAUNCH 3 mask_scatter q6.compact items=60175 lbytes=65003
+LAUNCH 4 gather_i32 q6.gather_price items=1191 lbytes=14292
+LAUNCH 5 gather_i32 q6.gather_disc items=1191 lbytes=14292
+LAUNCH 6 cast_i32_i64 q6.cast_price items=1191 lbytes=14292
+LAUNCH 7 cast_i32_i64 q6.cast_disc items=1191 lbytes=14292
+LAUNCH 8 binop_i64 q6.mul items=1191 lbytes=28584
+LAUNCH 9 reduce_minmax_i64 q6.minmax items=1191 lbytes=9784
+LAUNCH 10 reduce_minmax_final q6.minmax items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 11 reduce_sum_i64 q6.sum items=1191 lbytes=9656
+LAUNCH 12 reduce_sum_final q6.sum items=16 lbytes=136
+HOST readback_scalar bytes=8
+RESULT q6 revenue_x1e4=11930532253 selected=1191
+LAUNCHES 13
+DONE
+PERF: core0: lmem: reqs=578, bank_stalls=8372 (utility=6%)
+PERF: core0: coalescer: misses=470
+PERF: core1: lmem: reqs=0, bank_stalls=7121 (utility=0%)
+PERF: core1: coalescer: misses=382
+PERF: core2: lmem: reqs=0, bank_stalls=6963 (utility=0%)
+PERF: core2: coalescer: misses=376
+PERF: core3: lmem: reqs=0, bank_stalls=7116 (utility=0%)
+PERF: core3: coalescer: misses=306
+PERF: memory: reqs=264 (r=36, w=228), lat=665.1 cyc, bank_st=0 (utility=100%)
+PERF: instrs=356617, cycles=481670, IPC=0.740
+wall_s=11.716393520 rc=0

@@ -1,0 +1,16 @@
+OP cast arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 cast_i32_i64 cast items=60175 lbytes=722100
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=13866 (r=3783, w=10083), lat=654.2 cyc, bank_st=0 (utility=100%)
+PERF: instrs=56987, cycles=61722, IPC=0.923
+wall_s=2.982780692 rc=0

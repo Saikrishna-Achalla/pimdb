@@ -1,0 +1,11 @@
+q3: profiled 29 launches
+  check fused_membership_mask_kernel {'profiled': 8, 'planned': 8, 'in_iteration5': 8, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 1.0}
+  check static_kernel {'profiled': 19, 'planned': 19, 'in_iteration5': 19, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 1.0}
+  check DeviceMergeSortBlockSortKernel {'profiled': 2, 'planned': 2, 'in_iteration5': 2, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 1.0}
+family                             SF    n    ncu_us   GB/s  %672 maxL%  inst/B L2hit waves med/max lanes top stalls
+fused_membership_mask_kernel      sf1    3     290.0  136.8  20.4  21.4   1.620  54.9  17.07/ 17.07  21.2 long_scoreboard=41%, wait=19%, barrier=10%, short_scoreboard=9%
+fused_membership_mask_kernel     sf10    8    2103.0  187.1  27.8  30.5   1.181  58.3  17.07/ 17.07  21.6 long_scoreboard=54%, wait=16%, short_scoreboard=9%, selected=5%
+static_kernel                     sf1   14     136.4  137.0  20.4  28.5   1.258  25.1   0.61/ 20.36  30.9 long_scoreboard=31%, no_instructions=19%, wait=14%, not_selected=12%
+static_kernel                    sf10   19     959.4  200.3  29.8  60.2   1.264  27.8   8.13/101.73  30.0 long_scoreboard=36%, wait=18%, not_selected=13%, short_scoreboard=11%
+DeviceMergeSortBlockSortKernel    sf1    2     760.2    0.5   0.1   0.1   3.677  93.8   0.01/  0.02  27.0 long_scoreboard=56%, barrier=20%, wait=11%, no_instructions=4%
+DeviceMergeSortBlockSortKernel   sf10    2     741.8    3.3   0.5   0.6   5.697  95.1   0.08/  0.14  27.3 long_scoreboard=67%, wait=12%, selected=5%, no_instructions=5%

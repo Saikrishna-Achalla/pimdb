@@ -1,0 +1,10 @@
+OP probe arg=8 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 probe_sorted_i32 probe items=60175 lbytes=300875
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: memory: reqs=5371 (r=3789, w=1582), lat=643.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=205552, cycles=285086, IPC=0.721
+wall_s=3.528303958 rc=0

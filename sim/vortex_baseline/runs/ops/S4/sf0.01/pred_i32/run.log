@@ -1,0 +1,16 @@
+OP pred_i32 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=60175
+LAUNCH 0 cmp_i32 pred items=60175 lbytes=300875
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=0
+PERF: core1: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core1: coalescer: misses=0
+PERF: core2: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core2: coalescer: misses=0
+PERF: core3: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core3: coalescer: misses=0
+PERF: memory: reqs=7289 (r=3787, w=3502), lat=1007.9 cyc, bank_st=0 (utility=100%)
+PERF: instrs=53331, cycles=40934, IPC=1.303
+wall_s=2.797134739 rc=0

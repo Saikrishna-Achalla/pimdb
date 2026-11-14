@@ -1,0 +1,66 @@
+OP chain_q1 arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 cmp_i16 q1.filter items=60175 lbytes=180525
+LAUNCH 1 mask_count q1.compact items=60175 lbytes=60295
+LAUNCH 2 scan_tiles q1.compact items=30 lbytes=244
+HOST readback_count bytes=4
+LAUNCH 3 mask_scatter q1.compact items=60175 lbytes=297523
+LAUNCH 4 gather_i32 q1.gather_qty items=59307 lbytes=711684
+LAUNCH 5 gather_i32 q1.gather_price items=59307 lbytes=711684
+LAUNCH 6 gather_i32 q1.gather_disc items=59307 lbytes=711684
+LAUNCH 7 gather_i32 q1.gather_tax items=59307 lbytes=711684
+LAUNCH 8 str_gather_len q1.gather_returnflag items=59307 lbytes=948912
+LAUNCH 9 tile_sum_i32 q1.gather_returnflag items=59307 lbytes=237344
+LAUNCH 10 scan_tiles q1.gather_returnflag items=29 lbytes=236
+HOST readback_chars_size bytes=4
+LAUNCH 11 tile_scan_apply_i32 q1.gather_returnflag items=59307 lbytes=474576
+LAUNCH 12 str_gather_chars q1.gather_returnflag items=59307 lbytes=1067526
+LAUNCH 13 str_gather_len q1.gather_linestatus items=59307 lbytes=948912
+LAUNCH 14 tile_sum_i32 q1.gather_linestatus items=59307 lbytes=237344
+LAUNCH 15 scan_tiles q1.gather_linestatus items=29 lbytes=236
+HOST readback_chars_size bytes=4
+LAUNCH 16 tile_scan_apply_i32 q1.gather_linestatus items=59307 lbytes=474576
+LAUNCH 17 str_gather_chars q1.gather_linestatus items=59307 lbytes=1067526
+LAUNCH 18 cast_i32_i64 q1.cast_qty items=59307 lbytes=711684
+LAUNCH 19 cast_i32_i64 q1.cast_price items=59307 lbytes=711684
+LAUNCH 20 cast_i32_i64 q1.cast_disc items=59307 lbytes=711684
+LAUNCH 21 cast_i32_i64 q1.cast_tax items=59307 lbytes=711684
+LAUNCH 22 cast_i32_i64 q1.cast_sum_qty items=59307 lbytes=711684
+LAUNCH 23 cast_i32_i64 q1.cast_sum_disc items=59307 lbytes=711684
+LAUNCH 24 binop_s_i64 q1.sub items=59307 lbytes=948912
+LAUNCH 25 binop_i64 q1.mul_disc_price items=59307 lbytes=1423368
+LAUNCH 26 binop_s_i64 q1.add items=59307 lbytes=948912
+LAUNCH 27 binop_i64 q1.mul_charge items=59307 lbytes=1423368
+LAUNCH 28 reduce_minmax_i64 q1.minmax_qty items=59307 lbytes=474520
+LAUNCH 29 reduce_minmax_final q1.minmax_qty items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 30 reduce_minmax_i64 q1.minmax_price items=59307 lbytes=474520
+LAUNCH 31 reduce_minmax_final q1.minmax_price items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 32 reduce_minmax_i64 q1.minmax_disc_price items=59307 lbytes=474520
+LAUNCH 33 reduce_minmax_final q1.minmax_disc_price items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 34 reduce_minmax_i64 q1.minmax_charge items=59307 lbytes=474520
+LAUNCH 35 reduce_minmax_final q1.minmax_charge items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 36 reduce_minmax_i64 q1.minmax_disc items=59307 lbytes=474520
+LAUNCH 37 reduce_minmax_final q1.minmax_disc items=4 lbytes=80
+HOST readback_minmax bytes=16
+LAUNCH 38 fill_i32 q1.groupby items=16 lbytes=64
+LAUNCH 39 fill_i64 q1.groupby items=96 lbytes=768
+LAUNCH 40 gb_map_str q1.groupby items=59307 lbytes=1304754
+LAUNCH 41 gb_agg_sum q1.groupby items=59307 lbytes=2609508
+HOST readback_groupby_table bytes=64
+HOST readback_groupby_acc bytes=768
+GROUP N F 897100 1238480137 117982572080 12282485056933 1662 348
+GROUP R F 38144900 53459444535 5079964544067 528524219358903 74253 14902
+GROUP N O 74280200 104150284145 9897375186346 1029418531523350 145704 29181
+GROUP A F 38045600 53234821165 5058224414861 526165934000839 74501 14876
+RESULT q1 selected=59307
+LAUNCHES 42
+DONE
+PERF: core0: lmem: reqs=356610, bank_stalls=1210804 (utility=23%)
+PERF: core0: coalescer: misses=149167
+PERF: memory: reqs=42588 (r=41300, w=1288), lat=1351.6 cyc, bank_st=0 (utility=100%)
+PERF: instrs=2061124, cycles=7375421, IPC=0.279
+wall_s=29.610102138 rc=0

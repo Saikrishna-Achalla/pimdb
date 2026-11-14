@@ -1,0 +1,10 @@
+OP xp_store arg=1 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 xp_store_blocked xp items=60175 lbytes=240700
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=7520
+PERF: memory: reqs=8830 (r=4428, w=4402), lat=922.2 cyc, bank_st=0 (utility=100%)
+PERF: instrs=29196, cycles=127887, IPC=0.228
+wall_s=1.457702378 rc=0

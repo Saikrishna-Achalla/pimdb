@@ -1,0 +1,7 @@
+source,what,configured_gbs,cycles,time_us,achieved_gbs,pct_of_configured,dram_bytes,full_5070_equivalent_us,note
+"owner rtx5070q (measured in simulation, q6_latency_sf0.1.log)",stream read DRAM probe n=1048576 iters=1,3.5,11741307,4674.1,1.795,51.3,8439040,,16 D$ MSHRs and 64 resident lanes cap requests in flight
+"owner rtx5070q (measured in simulation, q6_latency_sf0.1.log)",stream read DRAM probe n=1048576 iters=3,3.5,35628879,14183.5,1.774,50.7,25219264,,16 D$ MSHRs and 64 resident lanes cap requests in flight
+owner rtx5070q (q6_latency_sf0.1.log),"Q6 SF0.1, one fused kernel, 9 B/row",3.5,14524984,5782.2,0.94,26.8,5433856,30.12,"modeled projection to the full GPU: time x 1/192 (bandwidth share), assumes linear scaling"
+"owner rtx5070q, MEMORY_LATENCY=0 (q6_l2_sf0.1.log)","Q6 SF0.1, fused kernel",3.5,5079997,2022.3,2.687,76.8,5433856,10.53,no added DRAM latency
+"this work S1 (simulated, results/calibration.csv)","stream read 16 MB, 1024 threads",14.0,3053805,1215.7,13.801,98.6,16803328,,"128 MSHRs, 1024 resident lanes, 4 narrow channels"
+"this work S1 (simulated, results/chains_totals.csv)","Q6 SF0.1, 13 general kernels, 10 B/row read (2+4+4) + intermediates",14.0,3008728,1197.74,9.105,65.0,10905344,24.95,simulator time only (no host gaps); projection x 1/48 is modeled

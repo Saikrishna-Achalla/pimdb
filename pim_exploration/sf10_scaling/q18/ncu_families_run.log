@@ -1,0 +1,17 @@
+[19:58:36] q18 ncu --set full -k regex:^(transform_kernel)$ -s 502 -c 40
+[20:02:26] q18 transform_kernel done in 230 s
+[20:02:26] q18 ncu --set full -k regex:^(static_kernel)$ -s 160 -c 34
+[20:05:36] q18 static_kernel done in 190 s
+[20:05:36] q18 ncu --set full -k regex:^(_kernel_agent)$ -s 40 -c 10
+[20:06:53] q18 _kernel_agent done in 77 s
+q18: profiled 84 launches
+  check transform_kernel {'profiled': 40, 'planned': 40, 'in_iteration5': 104, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 0.8230302053463918}
+  check static_kernel {'profiled': 34, 'planned': 34, 'in_iteration5': 34, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 1.0}
+  check _kernel_agent {'profiled': 10, 'planned': 10, 'in_iteration5': 10, 'multiset_equal_planned': True, 'subset_of_iteration5_multiset': True, 'profiled_share_of_family_nsys_ns': 1.0}
+family                             SF    n    ncu_us   GB/s  %672 maxL%  inst/B L2hit waves med/max lanes top stalls
+transform_kernel                  sf1   51     677.3  396.0  58.9  89.7   0.155  39.2   0.00/ 13.57  30.6 long_scoreboard=82%, wait=5%, lg_throttle=3%, branch_resolving=3%
+transform_kernel                 sf10   40    8152.0  526.7  78.4  94.0   0.108  25.1   8.41/ 46.02  31.0 long_scoreboard=87%, wait=4%, lg_throttle=3%, branch_resolving=2%
+static_kernel                     sf1   14     247.3  337.6  50.2  92.2   0.476  13.3   0.52/ 40.70  30.1 long_scoreboard=50%, wait=14%, no_instructions=7%, short_scoreboard=6%
+static_kernel                    sf10   34    3306.2  431.4  64.2  93.2   0.359   8.7  39.24/138.06  30.0 long_scoreboard=56%, wait=13%, short_scoreboard=7%, drain=6%
+_kernel_agent                     sf1    2     143.2  552.2  82.2  83.1   0.145   4.6  13.59/ 27.14  31.8 barrier=34%, long_scoreboard=30%, wait=9%, short_scoreboard=6%
+_kernel_agent                    sf10   10    2427.5  547.1  81.4  88.2   0.132   9.2  25.49/ 92.04  31.6 barrier=43%, long_scoreboard=22%, mio_throttle=8%, wait=7%

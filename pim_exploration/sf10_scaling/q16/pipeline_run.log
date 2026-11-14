@@ -1,0 +1,122 @@
+[19:41:26] q16 stage sql: start
+[19:41:26] q16 stage sql: ok (0 s)
+[19:41:26] q16 stage timing: start
+Sirius (pinned, GPU): 15 iterations, first 96.0 ms, warmup=3, timed=12
+  warm median 33.0 ms  min 32.0  max 34.0  stdev 0.71
+  timed: 33 34 32 33 33 33 32 32 33 33 34 34
+  Sirius log split (median, 1 ms resolution): planning 2 ms, engine 24 ms, gap_to_next_statement 7 ms (11 gaps for 12 timed iterations (none after the last))
+DuckDB CPU: first 96.0 ms, warm median 81.5 ms (min 71.0, max 85.0)
+result: 27840 rows; consistent across 15 GPU iterations: True (modes ['exact']); vs DuckDB CPU: exact (max rel diff 0.0, tol 1e-09) 
+
+[19:41:28] q16 stage timing: ok (2 s)
+[19:41:28] q16 stage pcie: start
+PCIe verification, TPC-H Q16 tpch_parquet_sf10 (tables: part partsupp supplier; rows {'part': 2000000, 'partsupp': 8000000, 'supplier': 100000})
+Sirius logs: /home/sai/cs254_project/pim_exploration/sf10_scaling/q16/traces/sirius_log_timing (1 process(es); last used)
+             /home/sai/cs254_project/pim_exploration/sf10_scaling/q16/traces/sirius_log_nsys (1)
+nsys trace: /home/sai/cs254_project/pim_exploration/sf10_scaling/q16/traces/q16_nsys.sqlite
+
+[PASS] sql:pin_tier_gpu: every pinned SQL script pins each referenced table once with tier='gpu'
+[PASS] timing_log:iterations_found: 15 query iterations (expected 15)
+[PASS] timing_log:pin_tier_gpu: 3 CALL pin_table statements, all tier='gpu', tables ['part', 'partsupp', 'supplier']
+[PASS] timing_log:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (3), all of ['part', 'partsupp', 'supplier'] present
+[PASS] timing_log:no_cache_assign_error: 0 cache-assignment errors
+[PASS] timing_log:fs_cache_zero_every_iteration: 16 cache summaries for 15 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..15 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] timing_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] timing_log:no_host_staged_filter_publication: 15 filter publication(s) logged in query iterations; 0 carry a transport line, all 'peer copies' (device-side), 0 host-staged; no transport line was logged, so this check does not show how those filters move (see H2D byte bound, ncu_sysmem_check.txt)
+[PASS] timing_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 154242048 B at QueryBegin and QueryEnd; iterations 2..15: host_pool allocated and peak unchanged
+[PASS] nsys_log:iterations_found: 8 query iterations (expected 8)
+[PASS] nsys_log:pin_tier_gpu: 3 CALL pin_table statements, all tier='gpu', tables ['part', 'partsupp', 'supplier']
+[PASS] nsys_log:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (3), all of ['part', 'partsupp', 'supplier'] present
+[PASS] nsys_log:no_cache_assign_error: 0 cache-assignment errors
+[PASS] nsys_log:fs_cache_zero_every_iteration: 9 cache summaries for 8 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..8 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] nsys_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] nsys_log:no_host_staged_filter_publication: 8 filter publication(s) logged in query iterations; 0 carry a transport line, all 'peer copies' (device-side), 0 host-staged; no transport line was logged, so this check does not show how those filters move (see H2D byte bound, ncu_sysmem_check.txt)
+[PASS] nsys_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 154242048 B at QueryBegin and QueryEnd; iterations 2..8: host_pool allocated and peak unchanged
+[PASS] nsys:windows: 8 iteration windows from the nsys-run Sirius log (5 measured, 3 warmup); kernels per iteration [175, 175, 175, 175, 175, 175, 175, 175]
+[PASS] no_parquet_decode_kernels: 0 decode/decompress kernels among 1400 kernels of all 8 iterations
+[PASS] h2d_measured_iterations: per measured iteration: up to 85 copies, 6976 B total, largest single 852 B (limits: single <= 50000 B, total <= 1048576 B)
+[PASS] d2h_measured_iterations: per measured iteration: up to 74 copies, 1404055 B total, largest single 1354568 B (result CSV is 1010031 B; limit 4040124 B)
+[PASS] no_other_host_copies: 0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration
+[PASS] unified_memory: UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault tables only when a fault occurs (present: none); faults per measured iteration [0, 0, 0, 0, 0]; managed-memory API calls in the whole trace: none
+
+Determinism (not a PCIe criterion):
+[PASS] nsys:kernels_per_iteration_stable: measured iterations: [175, 175, 175, 175, 175]
+
+Byte limits {'h2d_max_single': 50000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 4040124} (defaults {'h2d_max_single': 50000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 4040124}).
+Tables below the single-copy byte limit (< 8192 rows): none -- for these the evidence is the log checks (pinned entry per scan, fs_cache, pool counters) and the ncu sysmem-aperture check (ncu_sysmem_check.txt), not byte counts.
+Copies are classified by source/destination memory kind: only Device/Device Static/Array on both ends is on-device.
+Not covered here: kernels reading device-mapped pinned host memory in place (no memcpy) -> ncu_sysmem_check.txt.
+
+GPU memory: pinned footprint after pin_table = 154242048 B; gpu_pool high-water = 403838587 B (gpu_pool peak is a process-lifetime high-water mark (it includes the pin phase))
+
+Pin phase copies : D2D (on device): 16 copies, 61302080 B, largest 32000000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 16}; D2H: 142 copies, 874033 B, largest 126720 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 131, 'Device->Pageable': 11}; H2D: 191 copies, 28066007 B, largest 1048576 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 181, 'Pageable->Device': 10}
+After pin (all iterations + gaps): D2D (on device): 168 copies, 491346328 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 168}; D2H: 595 copies, 11232460 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 490, 'Device->Pageable': 105}; H2D: 682 copies, 56015 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 618, 'Pageable->Device': 64}
+
+Per iteration (nsys run):
+  iter  1 warmup   kernels=  175 kernel_time= 16831.0 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  2 warmup   kernels=  175 kernel_time= 16701.6 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  3 warmup   kernels=  175 kernel_time= 16860.0 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  4 measured kernels=  175 kernel_time= 16696.2 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  5 measured kernels=  175 kernel_time= 16880.8 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  6 measured kernels=  175 kernel_time= 16837.0 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  7 measured kernels=  175 kernel_time= 16806.5 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+  iter  8 measured kernels=  175 kernel_time= 16745.9 us um_faults=0 | D2D (on device): 21 copies, 61418291 B, largest 24535128 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 21}; D2H: 74 copies, 1404055 B, largest 1354568 B (cudaMemcpyBatchAsync_v13000) {'Device->Pageable': 13, 'Device->Pinned': 61}; H2D: 85 copies, 6976 B, largest 852 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 77, 'Pageable->Device': 8}
+
+OVERALL: PASS
+
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         3.0      27.0      16.944       25.76     175     360
+   5         3.0      26.0      17.126       24.94     175     360
+   6         2.0      26.0      17.081       24.44     175     360
+   7         2.0      27.0      17.052       25.64     175     360
+   8         2.0      26.0      16.992       24.20     175     360
+median: planning 2.0 ms, engine 26.0 ms, GPU busy 17.052 ms (66% of the engine window), first->last GPU op 24.94 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                      290.0   16.139
+  cuStreamSynchronize                         48.0    1.163
+  cudaLaunchKernel                           175.0    0.687
+  cudaMemcpyBatchAsync                       170.0    0.485
+  cudaMallocFromPoolAsync                    248.0    0.323
+  cudaFreeAsync                              248.0    0.150
+  cudaEventRecord                            124.0    0.088
+  cudaMemcpyAsync                             10.0    0.081
+  cudaStreamWaitEvent                        112.0    0.079
+  cudaStreamGetDevice                        142.0    0.048
+  cuKernelGetName                            172.0    0.024
+  cudaMemsetAsync                             50.0    0.024
+  cudaEventCreateWithFlags                    16.0    0.012
+  cudaEventDestroy                            16.0    0.011
+  cudaEventSynchronize                         3.0    0.005
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 16793.3 us of kernels):
+  DeviceMergeSortBlockSortKernel                  7141.2 us  42.5%
+  DeviceMergeSortMergeKernel                      4931.1 us  29.4%
+  BatchMemcpyKernel                               1452.9 us   8.7%
+  DeviceMergeSortPartitionKernel                   646.2 us   3.8%
+  transform_kernel                                 638.4 us   3.8%
+  compute_column_kernel                            455.9 us   2.7%
+  add_if_shmem                                     315.9 us   1.9%
+  DeviceScanKernel                                 251.8 us   1.5%
+  insert_if_n                                      248.6 us   1.5%
+  static_kernel                                    196.4 us   1.2%
+  gather_chars_fn_char_parallel                    170.9 us   1.0%
+  DeviceSelectSweepKernel                          141.8 us   0.8%
+
+[19:41:36] q16 stage pcie: ok (8 s)
+[19:41:36] q16 stage selftest: start
+negative control: 'partsupp' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q16_nsys.sql': ["pinned tables ['part', 'supplier'] != referenced tables ['part', 'partsupp', 'supplier']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['part', 'supplier'] vs referenced ['part', 'partsupp', 'supplier']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']; iter2: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']; iter3: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '8', 'hits': '0', 'h2d': '31', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '8', 'hits': '31', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['part', 'supplier'] vs referenced ['part', 'partsupp', 'supplier']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']; iter2: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']; iter3: 2 assigned for 3 GPU_SCANs, missing tables ['partsupp']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '8', 'hits': '0', 'h2d': '31', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '8', 'hits': '31', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 109 copies, 20695163 B total, largest single 2528929 B (limits: single <= 50000 B, total <= 1048576 B)
+SELFTEST: PASS (verification detected the unpinned table)
+[19:41:43] q16 stage selftest: ok (7 s)
+[19:41:43] q16 pipeline finished in 17 s

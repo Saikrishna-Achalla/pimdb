@@ -1,0 +1,44 @@
+{
+  "name": "S1_c2",
+  "description": "Variant of S1: NUM_CORES=2, L2_NUM_BANKS=2",
+  "core": {
+    "VX_CFG_NUM_WARPS": 32,
+    "VX_CFG_NUM_THREADS": 32,
+    "VX_CFG_ISSUE_WIDTH": 4,
+    "VX_CFG_DCACHE_SIZE": 131072,
+    "VX_CFG_DCACHE_NUM_WAYS": 4,
+    "VX_CFG_DCACHE_MSHR_SIZE": 128,
+    "VX_CFG_EXT_A_ENABLE": true
+  },
+  "chip": {
+    "VX_CFG_NUM_CLUSTERS": 1,
+    "VX_CFG_NUM_CORES": 2,
+    "VX_CFG_SOCKET_SIZE": 1,
+    "VX_CFG_MEM_BLOCK_SIZE": 64,
+    "VX_CFG_L2_ENABLE": true,
+    "VX_CFG_L3_ENABLE": false,
+    "VX_CFG_L2_SIZE": 1048576,
+    "VX_CFG_L2_NUM_WAYS": 16,
+    "VX_CFG_L2_NUM_BANKS": 2,
+    "VX_CFG_L2_MSHR_SIZE": 128,
+    "VX_CFG_CACHE_WRITE_VALIDATE": 1,
+    "VX_CFG_CACHE_SET_HASH": 1
+  },
+  "platform": {
+    "VX_CFG_PLATFORM_CLOCK_RATE": 2512,
+    "VX_CFG_PLATFORM_MEMORY_TYPE": "GDDR6",
+    "VX_CFG_PLATFORM_MEMORY_NUM_BANKS": 4,
+    "VX_CFG_PLATFORM_MEMORY_DATA_RATE": 1750,
+    "VX_CFG_PLATFORM_MEMORY_PEAK_BW": 14000,
+    "VX_CFG_PLATFORM_MEMORY_LATENCY": 503,
+    "VX_CFG_PLATFORM_MEMORY_SCHED_QUEUE_SIZE": 32,
+    "VX_CFG_PLATFORM_MEMORY_ROW_VISIT_BITS": 2
+  },
+  "sources": {
+    "variant_of": "S1",
+    "changes": [
+      "NUM_CORES=2",
+      "L2_NUM_BANKS=2"
+    ]
+  }
+}

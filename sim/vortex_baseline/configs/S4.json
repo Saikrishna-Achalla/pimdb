@@ -1,0 +1,55 @@
+{
+  "name": "S4",
+  "description": "Scaled-down RTX 5070, f = 4/48 = 1/12: four Vortex cores (each = one 5070 SM), DRAM bandwidth and L2 scaled by 1/12; L3 off. Cross-check that S1 results scale.",
+  "core": {
+    "VX_CFG_NUM_WARPS": 32,
+    "VX_CFG_NUM_THREADS": 32,
+    "VX_CFG_ISSUE_WIDTH": 4,
+    "VX_CFG_DCACHE_SIZE": 131072,
+    "VX_CFG_DCACHE_NUM_WAYS": 4,
+    "VX_CFG_DCACHE_MSHR_SIZE": 128,
+    "VX_CFG_EXT_A_ENABLE": true
+  },
+  "chip": {
+    "VX_CFG_NUM_CLUSTERS": 1,
+    "VX_CFG_NUM_CORES": 4,
+    "VX_CFG_SOCKET_SIZE": 1,
+    "VX_CFG_MEM_BLOCK_SIZE": 64,
+    "VX_CFG_L2_ENABLE": true,
+    "VX_CFG_L3_ENABLE": false,
+    "VX_CFG_L2_SIZE": 4194304,
+    "VX_CFG_L2_NUM_WAYS": 16,
+    "VX_CFG_L2_NUM_BANKS": 4,
+    "VX_CFG_L2_MSHR_SIZE": 128,
+    "VX_CFG_CACHE_WRITE_VALIDATE": 1,
+    "VX_CFG_CACHE_SET_HASH": 1
+  },
+  "platform": {
+    "VX_CFG_PLATFORM_CLOCK_RATE": 2512,
+    "VX_CFG_PLATFORM_MEMORY_TYPE": "GDDR6",
+    "VX_CFG_PLATFORM_MEMORY_NUM_BANKS": 16,
+    "VX_CFG_PLATFORM_MEMORY_DATA_RATE": 1750,
+    "VX_CFG_PLATFORM_MEMORY_PEAK_BW": 56000,
+    "VX_CFG_PLATFORM_MEMORY_LATENCY": 503,
+    "VX_CFG_PLATFORM_MEMORY_SCHED_QUEUE_SIZE": 32,
+    "VX_CFG_PLATFORM_MEMORY_ROW_VISIT_BITS": 2
+  },
+  "sources": {
+    "scaling": "f = cores/48 = 4/48 = 1/12 (one Vortex core = one 5070 SM).",
+    "NUM_WARPS, NUM_THREADS, ISSUE_WIDTH": "32 warps x 32 threads, issue 4 (brief's S1 starting point; threads per warp fixed at 32 by rule 3; the 5070 holds up to 48 warps/SM, so 32 is below the real occupancy limit).",
+    "DCACHE_SIZE": "128 KB per core = the sm_120 unified L1/shared size per SM. INFERENCE (not recorded in any measurement here; note 08 sec. 7). 4 ways = Vortex default (real associativity unknown).",
+    "DCACHE_MSHR_SIZE, L2_MSHR_SIZE": "128 each: Little's law at 14 GB/s = 5.57 B/cycle x ~760-cycle loaded latency = 4.2 KB = 66 x 64 B lines in flight; 128 leaves 2x headroom so MSHRs never cap the request rate (default 16 caps at ~1.4 B/cycle).",
+    "L2_SIZE, L2_NUM_WAYS, L2_NUM_BANKS": "48 MB / 12 = 4 MB, 16 ways. 4 banks: hits 4 x 64 = 256 B/cycle (faithful share 1,138/12 = 95 B/cycle); 4 banks also keep the simx per-bank fill gate (~1 fill per 8 cycles = 8 B/cycle/bank, note 08 sec. 1.3) at 32 B/cycle, above the 22.3 B/cycle DRAM rate. Same per-bank load as S1 (1 bank for 5.6 B/cycle).",
+    "L3_ENABLE": "off (brief rule 2).",
+    "PLATFORM_CLOCK_RATE": "2512 MHz: the 5070's boost clock as reported by Nsight Compute device__attribute_clock_rate (owner's rtx5070q profile). The latency micro-benchmark ran at 2.866 GHz; latencies are converted through ns.",
+    "PLATFORM_MEMORY_TYPE, NUM_BANKS, DATA_RATE, PEAK_BW": "672 GB/s / 12 = 56 GB/s = 22.3 B/core-cycle, modelled as 16 narrow GDDR6 x16 channels x 2 B x 1750 MT/s = 56.0 GB/s: the same per-channel rate as S1, 4x the channels, so per-channel behaviour (row locality, queueing) is identical to S1.",
+    "PLATFORM_MEMORY_LATENCY": "503 added core cycles on every DRAM read: calibrated so that the unloaded load-to-use latency of a DRAM miss (pointer chase over 32 MB, results/calibration.csv) is 752.7 cycles = 299.6 ns, matching the 5070's measured 858 cycles @ 2.866 GHz = 299 ns (gpu_bw/latency.cu). 518 (owner's value) gave 767 cycles. The remaining ~250 cycles are cache pipeline + Ramulator GDDR6 row miss.",
+    "SCHED_QUEUE_SIZE, ROW_VISIT_BITS": "owner's patched knobs (vortex_dram_knobs.patch); Ramulator defaults (32 entries; 128 B row visit) unless calibration changes them (calibration.csv).",
+    "EXT_A_ENABLE": "RISC-V A extension on: OpenCL global/local atomics (the 5070 has atomic units in L2 and shared memory); needed by the group-by kernel. Requires write-through L1 (Vortex default here).",
+    "CACHE_WRITE_VALIDATE": "1 (project patch vortex_l2_write_validate.patch): a store that overwrites a whole 64 B sector allocates it in the write-back L2 without a fill read, as NVIDIA L2s do for full 32 B-sector writes. Upstream simx always fetches on a write miss, which added ~1 read per written byte (runs/test/chain_q1: cast 4->8 B read 754 KB for 237 KB of input).",
+    "CACHE_SET_HASH": "1 (project patch vortex_cache_set_hash.patch): XOR-hashed set index in L1 and L2, as GPU caches hash. Without it the Vortex per-thread stacks (8 KB apart) map to 8 L2 sets (4 L1 sets) and every register spill thrashes them: tile_scan_apply_i32 wrote 20.5k DRAM lines for a 3.7k-line output (runs/test).",
+    "calibration": "stream read (vx_membw, 16 MB): S1 13.80 GB/s = 98.6 % of 14.0; S4 52.6 GB/s = 93.9 % of 56.0 (results/calibration.csv); brief threshold 85 %. Option C (narrow channels) reached it on the first attempt; 1 x 7000 MT/s reached only 77 %.",
+    "DCACHE_NUM_BANKS (default 1)": "Vortex default for 32 lanes: 1 bank x 64 B words = 64 B/cycle; the 5070 SM L1 measured 116 B/cycle (gpu_bw/membw.cu). Not raised: no kernel here is L1-bandwidth-bound.",
+    "LMEM (default 64 KB)": "VX_CFG_LMEM_LOG_SIZE default 16 = 64 KB local memory per core (the 5070 allows up to 100 KB shared per SM)."
+  }
+}

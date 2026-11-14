@@ -1,0 +1,137 @@
+OP chain_q1 arg=0 cores=4 warps=32 threads=4096
+TABLE rows=600572
+LAUNCH 0 cmp_i16 q1.filter items=600572 lbytes=1801716
+LAUNCH 1 mask_count q1.compact items=600572 lbytes=600636
+LAUNCH 2 scan_tiles q1.compact items=16 lbytes=132
+HOST readback_count bytes=4
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=110 target=111 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000001bc0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 3 mask_scatter q1.compact items=600572 lbytes=2968060
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=135 target=136 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000002200
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 4 gather_i32 q1.gather_qty items=591856 lbytes=7102272
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=160 target=161 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000002840
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 5 gather_i32 q1.gather_price items=591856 lbytes=7102272
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=185 target=186 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000002e80
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 6 gather_i32 q1.gather_disc items=591856 lbytes=7102272
+LAUNCH 7 gather_i32 q1.gather_tax items=591856 lbytes=7102272
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=235 target=236 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000003b00
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 8 str_gather_len q1.gather_returnflag items=591856 lbytes=9469696
+LAUNCH 9 tile_sum_i32 q1.gather_returnflag items=591856 lbytes=2367488
+LAUNCH 10 scan_tiles q1.gather_returnflag items=16 lbytes=132
+HOST readback_chars_size bytes=4
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=311 target=312 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000004e00
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 11 tile_scan_apply_i32 q1.gather_returnflag items=591856 lbytes=4734916
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=336 target=337 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000005440
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 12 str_gather_chars q1.gather_returnflag items=591856 lbytes=10653408
+LAUNCH 13 str_gather_len q1.gather_linestatus items=591856 lbytes=9469696
+LAUNCH 14 tile_sum_i32 q1.gather_linestatus items=591856 lbytes=2367488
+LAUNCH 15 scan_tiles q1.gather_linestatus items=16 lbytes=132
+HOST readback_chars_size bytes=4
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=437 target=438 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000006d80
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 16 tile_scan_apply_i32 q1.gather_linestatus items=591856 lbytes=4734916
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=462 target=463 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x00000000000073c0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 17 str_gather_chars q1.gather_linestatus items=591856 lbytes=10653408
+LAUNCH 18 cast_i32_i64 q1.cast_qty items=591856 lbytes=7102272
+LAUNCH 19 cast_i32_i64 q1.cast_price items=591856 lbytes=7102272
+LAUNCH 20 cast_i32_i64 q1.cast_disc items=591856 lbytes=7102272
+LAUNCH 21 cast_i32_i64 q1.cast_tax items=591856 lbytes=7102272
+LAUNCH 22 cast_i32_i64 q1.cast_sum_qty items=591856 lbytes=7102272
+LAUNCH 23 cast_i32_i64 q1.cast_sum_disc items=591856 lbytes=7102272
+LAUNCH 24 binop_s_i64 q1.sub items=591856 lbytes=9469696
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=662 target=663 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x000000000000a5c0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 25 binop_i64 q1.mul_disc_price items=591856 lbytes=14204544
+LAUNCH 26 binop_s_i64 q1.add items=591856 lbytes=9469696
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=712 target=713 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x000000000000b240
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 27 binop_i64 q1.mul_charge items=591856 lbytes=14204544
+LAUNCH 28 reduce_minmax_i64 q1.minmax_qty items=591856 lbytes=4735104
+LAUNCH 29 reduce_minmax_final q1.minmax_qty items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 30 reduce_minmax_i64 q1.minmax_price items=591856 lbytes=4735104
+LAUNCH 31 reduce_minmax_final q1.minmax_price items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 32 reduce_minmax_i64 q1.minmax_disc_price items=591856 lbytes=4735104
+LAUNCH 33 reduce_minmax_final q1.minmax_disc_price items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 34 reduce_minmax_i64 q1.minmax_charge items=591856 lbytes=4735104
+LAUNCH 35 reduce_minmax_final q1.minmax_charge items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 36 reduce_minmax_i64 q1.minmax_disc items=591856 lbytes=4735104
+LAUNCH 37 reduce_minmax_final q1.minmax_disc items=16 lbytes=272
+HOST readback_minmax bytes=16
+LAUNCH 38 fill_i32 q1.groupby items=16 lbytes=64
+LAUNCH 39 fill_i64 q1.groupby items=96 lbytes=768
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=1042 target=1043 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x00000000000104c0
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 40 gb_map_str q1.groupby items=591856 lbytes=13020832
+[VXDRV] Warning: CP has not retired a command in 10s.
+[VXDRV]   Q_SEQNUM=1067 target=1068 CP_CTRL=0x00000001 CP_STATUS=0x00000001 Q_ERROR=0x00000000
+[VXDRV]   RING_BASE=0x0000563595def580 HEAD_ADDR=0x0000563595dff600 CMPL_ADDR=0x0000563595dff700
+[VXDRV]   RING_SIZE_LOG2=16 Q_CONTROL=0x00000001 Q_TAIL=0x0000000000010b00
+[VXDRV]   The ring was accepted but nothing is executing. Set VORTEX_CP_POLL_TIMEOUT_S=<sec> to abort instead of spinning.
+LAUNCH 41 gb_agg_sum q1.groupby items=591856 lbytes=26041664
+HOST readback_groupby_table bytes=64
+HOST readback_groupby_acc bytes=768
+GROUP N F 9525700 13373779584 1271323726512 132286291229445 18597 3765
+GROUP R F 378552300 533795052647 50718185329420 5274405503049367 741346 148301
+GROUP N O 745929700 1051227000890 99862383383847 10385578376585467 1462802 292000
+GROUP A F 377420000 532075388069 50540962666828 5256751331449234 741087 147790
+RESULT q1 selected=591856
+LAUNCHES 42
+DONE
+PERF: core0: lmem: reqs=888576, bank_stalls=2600121 (utility=25%)
+PERF: core0: coalescer: misses=500346
+PERF: core1: lmem: reqs=888576, bank_stalls=2594981 (utility=26%)
+PERF: core1: coalescer: misses=500390
+PERF: core2: lmem: reqs=888576, bank_stalls=2594882 (utility=26%)
+PERF: core2: coalescer: misses=463247
+PERF: core3: lmem: reqs=888480, bank_stalls=2577402 (utility=26%)
+PERF: core3: coalescer: misses=428478
+PERF: memory: reqs=416019 (r=410891, w=5128), lat=1335.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=17436804, cycles=14297646, IPC=1.220
+wall_s=363.109864880 rc=0

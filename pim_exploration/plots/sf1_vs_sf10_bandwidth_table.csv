@@ -1,0 +1,9 @@
+query,family,label,sf1_pct_of_672,sf10_pct_of_672,sf1_launches,sf10_launches
+Q18,_kernel_agent,reduce_by_key,82.177,81.415,2,10
+Q18,transform_kernel,gather / unique_copy / cast,58.928,78.372,51,40
+Q9,transform_kernel,gather / cast,46.765,70.338,64,40
+Q18,static_kernel,static_kernel,50.236,64.197,14,34
+Q3,fused_membership_mask_kernel,fused membership mask,20.361,27.839,3,8
+Q6,DeviceSelectSweepKernel,select / compaction sweep,20.231,24.785,3,7
+Q9,insert_if_n,hash-join build insert,30.937,20.934,7,7
+Q6,compute_column_kernel,AST compute_column,11.25,12.889,3,7

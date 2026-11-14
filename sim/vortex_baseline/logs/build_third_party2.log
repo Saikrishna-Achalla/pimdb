@@ -1,0 +1,10 @@
+make -C /home/sai/cs254_project/sim/vortex/third_party
+make[1]: Entering directory '/home/sai/cs254_project/sim/vortex/third_party'
+SPECIALIZE_TYPE=RISCV SOFTFLOAT_OPTS="-fPIC -DSOFTFLOAT_ROUND_ODD -DINLINE_LEVEL=5 -DSOFTFLOAT_FAST_DIV32TO16 -DSOFTFLOAT_FAST_DIV64TO32 -DTHREAD_LOCAL=_Thread_local" make -C softfloat/build/Linux-x86_64-GCC
+make[2]: Entering directory '/home/sai/cs254_project/sim/vortex/third_party/softfloat/build/Linux-x86_64-GCC'
+make[2]: Nothing to be done for 'all'.
+make[2]: Leaving directory '/home/sai/cs254_project/sim/vortex/third_party/softfloat/build/Linux-x86_64-GCC'
+mkdir -p ramulator_ext
+g++ -std=c++20 -O3 -DNDEBUG -fPIC -isystem ramulator/src -isystem ramulator/ext/spdlog/include -isystem ramulator/ext/yaml-cpp/include -c ramulator/src/dram/impl/GDDR6.cpp -o ramulator_ext/gddr6.o
+g++ -shared ramulator_ext/gddr6.o -Lramulator -lramulator -o ramulator_ext/libramulator-vortex.so
+make[1]: Leaving directory '/home/sai/cs254_project/sim/vortex/third_party'

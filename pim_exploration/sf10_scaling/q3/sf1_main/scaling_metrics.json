@@ -1,0 +1,226 @@
+{
+ "label": "q3 sf1_main",
+ "results_dir": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q3/sf1_main",
+ "nsys_sqlite": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q3/sf1_main/traces/q3_nsys.sqlite",
+ "warm_ms": 5.0,
+ "warm_min_ms": 5.0,
+ "warm_max_ms": 6.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 25.5,
+ "result_rows": 10,
+ "gpu_equals_cpu": true,
+ "compare_mode": "exact",
+ "timing_log_planning_ms": 2.0,
+ "timing_log_engine_ms": 3.0,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "lineitem": 6001215,
+  "orders": 1500000,
+  "customer": 150000
+ },
+ "pinned_bytes": 103067392,
+ "pool_peak_after_pin_bytes": 199478016,
+ "pool_peak_end_bytes": 359553878,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  85,
+  85,
+  85,
+  85,
+  85
+ ],
+ "nsys_median": {
+  "planning_ms": 2.999808,
+  "engine_ms": 7.000064,
+  "gpu_busy_ms": 1.240158,
+  "kernels": 85,
+  "gpu_ops": 159,
+  "kernel_ms": 1.215006,
+  "lt5us": 62,
+  "ge100us": 2,
+  "ge100us_ms": 0.653535,
+  "grid_lt48": 40,
+  "grid_1": 20
+ },
+ "rep_iter": {
+  "iter": 7,
+  "planning_ms": 2.000128,
+  "engine_ms": 6.999808,
+  "gpu_busy_ms": 1.240158,
+  "kernels": 85,
+  "gpu_ops": 159,
+  "kernel_ms": 1.215006,
+  "lt5us": 62,
+  "ge100us": 2,
+  "ge100us_ms": 0.650303,
+  "grid_lt48": 40,
+  "grid_1": 20,
+  "families": {
+   "DeviceScanInitKernel": {
+    "launches": 1,
+    "ns": 736,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "DeviceScanKernel": {
+    "launches": 1,
+    "ns": 1440,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "static_kernel": {
+    "launches": 13,
+    "ns": 109696,
+    "phase": "hash group-by/agg",
+    "grid_max": 11722,
+    "grid_min": 59
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 7,
+    "ns": 4960,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 9,
+    "grid_min": 1
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 7,
+    "ns": 53984,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1042,
+    "grid_min": 6
+   },
+   "transform_kernel": {
+    "launches": 37,
+    "ns": 57088,
+    "phase": "gather/copy/concat",
+    "grid_max": 286,
+    "grid_min": 1
+   },
+   "insert_if_n": {
+    "launches": 4,
+    "ns": 32768,
+    "phase": "hash join build",
+    "grid_max": 1144,
+    "grid_min": 236
+   },
+   "fused_membership_mask_kernel": {
+    "launches": 2,
+    "ns": 200096,
+    "phase": "scan/filter",
+    "grid_max": 4096,
+    "grid_min": 4096
+   },
+   "find_if_n": {
+    "launches": 2,
+    "ns": 25408,
+    "phase": "hash join probe",
+    "grid_max": 1144,
+    "grid_min": 235
+   },
+   "DeviceReduceKernel": {
+    "launches": 1,
+    "ns": 1120,
+    "phase": "expression eval",
+    "grid_max": 30,
+    "grid_min": 30
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 1,
+    "ns": 1024,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 1,
+    "ns": 992,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "mapping_indices_kernel": {
+    "launches": 1,
+    "ns": 14720,
+    "phase": "hash group-by/agg",
+    "grid_max": 235,
+    "grid_min": 235
+   },
+   "single_pass_shmem_aggs_kernel": {
+    "launches": 1,
+    "ns": 6816,
+    "phase": "hash group-by/agg",
+    "grid_max": 235,
+    "grid_min": 235
+   },
+   "DeviceMergeSortBlockSortKernel": {
+    "launches": 2,
+    "ns": 599007,
+    "phase": "sort/top-N",
+    "grid_max": 3,
+    "grid_min": 1
+   },
+   "DeviceMergeSortPartitionKernel": {
+    "launches": 2,
+    "ns": 19136,
+    "phase": "sort/top-N",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "DeviceMergeSortMergeKernel": {
+    "launches": 2,
+    "ns": 86015,
+    "phase": "sort/top-N",
+    "grid_max": 3,
+    "grid_min": 3
+   }
+  },
+  "phases": {
+   "cub scan/select/reduce": {
+    "launches": 15,
+    "ns": 56640
+   },
+   "expression eval": {
+    "launches": 13,
+    "ns": 108832
+   },
+   "gather/copy/concat": {
+    "launches": 29,
+    "ns": 50112
+   },
+   "other": {
+    "launches": 7,
+    "ns": 6240
+   },
+   "scan/filter": {
+    "launches": 4,
+    "ns": 212640
+   },
+   "hash join build": {
+    "launches": 4,
+    "ns": 22752
+   },
+   "hash join probe": {
+    "launches": 4,
+    "ns": 30880
+   },
+   "hash group-by/agg": {
+    "launches": 3,
+    "ns": 22752
+   },
+   "sort/top-N": {
+    "launches": 6,
+    "ns": 704158
+   }
+  }
+ }
+}

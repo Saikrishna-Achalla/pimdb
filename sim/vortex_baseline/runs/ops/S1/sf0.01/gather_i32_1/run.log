@@ -1,0 +1,10 @@
+OP gather_i32 arg=1 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 gather_i32 gather4 items=1207 lbytes=14484
+LAUNCHES 1
+DONE
+PERF: core0: lmem: reqs=0, bank_stalls=0 (utility=0%)
+PERF: core0: coalescer: misses=299
+PERF: memory: reqs=1863 (r=1146, w=717), lat=1403.0 cyc, bank_st=0 (utility=100%)
+PERF: instrs=6142, cycles=39077, IPC=0.157
+wall_s=2.288660299 rc=0

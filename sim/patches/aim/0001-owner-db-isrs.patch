@@ -1,0 +1,104 @@
+diff --git a/src/base/request.h b/src/base/request.h
+index 7d09884..679f53d 100644
+--- a/src/base/request.h
++++ b/src/base/request.h
+@@ -51,7 +51,13 @@ enum class Opcode {
+     ISR_WR_ABK = 15,   // Write [16 x 16 bits] from [GPR * 32] to [16 banks] of channel [#channel_address]
+     ISR_EOC = 16,      // End of compute for the current kernel
+     ISR_SYNC = 17,
+-    MAX = 18
++    // ---- aimdb: database-query extensions (timing modeled on MAC16 / RDMAC16) ----
++    ISR_CMP_ABK = 18,  // All-bank INT32 range compare of [opsize] columns vs. GB-broadcast [lo,hi); AND into per-bank predicate mask
++    ISR_MMAC_ABK = 19, // All-bank paired-column masked INT MAC over [opsize] columns of one open row:
++                       // first half = operand a, second half = operand b (optionally range-checked, fused into mask);
++                       // acc64[reg] += mask ? a*b : 0
++    ISR_RD_MASK = 20,  // Read per-bank predicate masks of [channel_mask] channels to GPR
++    MAX = 21
+     // ISR_WR_HBK,    // [NOT_IMPLEMENTED] Write data from [GPR] to [8 banks]
+     // ISR_WR_ABK,    // [NOT_IMPLEMENTED] Write data from [GPR] to [all banks]
+     // ISR_WR_GPR,    // [NOT_IMPLEMENTED] Write data from [host] to [GPR]
+@@ -397,6 +403,38 @@ public:
+                                                   "DMA"  // target_level
+         );
+ 
++        aim_opcode_to_str[Opcode::ISR_CMP_ABK] = "ISR_CMP_ABK";
++        opcode_str_to_aim_ISR["ISR_CMP_ABK"] = AiMISR(Opcode::ISR_CMP_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, // channel_count_eq_one
++                                                      false, // AiM_DMA_blocking
++                                                      false, // require_reg_RW_mod
++                                                      "bank" // target_level
++        );
++
++        aim_opcode_to_str[Opcode::ISR_MMAC_ABK] = "ISR_MMAC_ABK";
++        opcode_str_to_aim_ISR["ISR_MMAC_ABK"] = AiMISR(Opcode::ISR_MMAC_ABK,
++                                                      {AiMISR::Field::opsize,
++                                                       AiMISR::Field::channel_mask,
++                                                       AiMISR::Field::row_addr},
++                                                      false, // channel_count_eq_one
++                                                      false, // AiM_DMA_blocking
++                                                      false, // require_reg_RW_mod
++                                                      "bank" // target_level
++        );
++
++        aim_opcode_to_str[Opcode::ISR_RD_MASK] = "ISR_RD_MASK";
++        opcode_str_to_aim_ISR["ISR_RD_MASK"] = AiMISR(Opcode::ISR_RD_MASK,
++                                                      {AiMISR::Field::GPR_addr_0,
++                                                       AiMISR::Field::channel_mask},
++                                                      false, // channel_count_eq_one
++                                                      true,  // AiM_DMA_blocking
++                                                      true,  // require_reg_RW_mod
++                                                      "bank" // target_level
++        );
++
+         str_to_type["R"] = Type::Read;
+         type_to_str[Type::Read] = "R";
+         str_to_type["W"] = Type::Write;
+@@ -578,4 +616,4 @@ void AiMISR::is_field_value_legal(AiMISR::Field field, T value) {
+ 
+ } // namespace Ramulator
+ 
+-#endif // RAMULATOR_BASE_REQUEST_H
+\ No newline at end of file
++#endif // RAMULATOR_BASE_REQUEST_H
+\ No newline at end of file
+diff --git a/src/dram/impl/GDDR6.cpp b/src/dram/impl/GDDR6.cpp
+index 40e6123..d7744bd 100644
+--- a/src/dram/impl/GDDR6.cpp
++++ b/src/dram/impl/GDDR6.cpp
+@@ -351,6 +351,9 @@ public:
+         "ISR_WR_ABK",
+         "ISR_SYNC",
+         "ISR_EOC",
++        "ISR_CMP_ABK",
++        "ISR_MMAC_ABK",
++        "ISR_RD_MASK",
+         "MAX"};
+ 
+     inline static const ImplLUT m_request_translations = LUT(
+@@ -381,6 +384,9 @@ public:
+                                         {"ISR_WR_ABK", "WRA16"},     // 1 - Write single bank
+                                         {"ISR_SYNC", "SYNC"},        // 16 - Unknown and illegal
+                                         {"ISR_EOC", "EOC"},          // 16 - Unknown and illegal
++                                        {"ISR_CMP_ABK", "MAC16"},    // 18 - aimdb: compare all banks (MAC16 timing)
++                                        {"ISR_MMAC_ABK", "MAC16"},   // 19 - aimdb: paired-column masked MAC all banks (MAC16 timing)
++                                        {"ISR_RD_MASK", "RDMAC16"},  // 20 - aimdb: read predicate masks (RDMAC16 timing)
+                                         {"MAX", "UNKNOWN"},          // 17 - Unknown and illegal
+                                     });
+ 
+diff --git a/src/memory_system/impl/aim_DRAM_system.cpp b/src/memory_system/impl/aim_DRAM_system.cpp
+index bec0943..668af92 100644
+--- a/src/memory_system/impl/aim_DRAM_system.cpp
++++ b/src/memory_system/impl/aim_DRAM_system.cpp
+@@ -251,6 +251,9 @@ public:
+                     case Opcode::ISR_MAC_ABK:
+                     case Opcode::ISR_AF:
+                     case Opcode::ISR_EWMUL:
++                    case Opcode::ISR_CMP_ABK:
++                    case Opcode::ISR_MMAC_ABK:
++                    case Opcode::ISR_RD_MASK:
+                     case Opcode::ISR_WR_ABK: {
+                         // Decoding opcode
+                         AiMISR aim_ISR = AiMISRInfo::convert_AiM_opcode_to_AiM_ISR(opcode);

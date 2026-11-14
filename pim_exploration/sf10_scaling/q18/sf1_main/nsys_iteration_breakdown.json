@@ -1,0 +1,492 @@
+[
+ {
+  "iter": 4,
+  "planning_ms": 3.000064,
+  "engine_ms": 9.999872,
+  "gpu_busy_ms": 1.868158,
+  "gpu_span_ms": 8.610858,
+  "kernels": 127,
+  "gpu_ops": 238,
+  "kernel_ns_by_name": {
+   "static_kernel": 178176,
+   "DeviceCompactInitKernel": 6272,
+   "DeviceSelectSweepKernel": 80288,
+   "transform_kernel": 650623,
+   "DeviceScanInitKernel": 4992,
+   "DeviceScanKernel": 54048,
+   "gather_chars_fn_char_parallel": 60224,
+   "insert_if_n": 33440,
+   "init_found_pos_pointer": 672,
+   "find_kernel": 62752,
+   "DeviceReduceKernel": 58080,
+   "DeviceReduceSingleTileKernel": 3008,
+   "single_thread_kernel": 1856,
+   "_kernel_agent": 144287,
+   "fused_membership_mask_kernel": 79808,
+   "contains_if_n": 3136,
+   "find_if_n": 8736,
+   "add_if_shmem": 5632,
+   "mapping_indices_kernel": 9120,
+   "single_pass_shmem_aggs_kernel": 6240,
+   "DeviceMergeSortBlockSortKernel": 276608
+  },
+  "api": {
+   "cuStreamSynchronize": {
+    "calls": 62,
+    "cpu_ms": 0.361549
+   },
+   "cudaMallocFromPoolAsync": {
+    "calls": 183,
+    "cpu_ms": 0.177087
+   },
+   "cudaStreamWaitEvent": {
+    "calls": 63,
+    "cpu_ms": 0.048839
+   },
+   "cudaStreamSynchronize": {
+    "calls": 179,
+    "cpu_ms": 1.712645
+   },
+   "cudaMemcpyBatchAsync": {
+    "calls": 90,
+    "cpu_ms": 0.366847
+   },
+   "cuKernelGetName": {
+    "calls": 126,
+    "cpu_ms": 0.020696
+   },
+   "cudaLaunchKernel": {
+    "calls": 127,
+    "cpu_ms": 0.465926
+   },
+   "cudaStreamGetDevice": {
+    "calls": 100,
+    "cpu_ms": 0.052014
+   },
+   "cudaEventRecord": {
+    "calls": 77,
+    "cpu_ms": 0.042034
+   },
+   "cudaFreeAsync": {
+    "calls": 183,
+    "cpu_ms": 0.099136
+   },
+   "cudaMemcpyAsync": {
+    "calls": 16,
+    "cpu_ms": 0.147358
+   },
+   "cudaMemsetAsync": {
+    "calls": 55,
+    "cpu_ms": 0.024861
+   },
+   "cudaEventCreateWithFlags": {
+    "calls": 18,
+    "cpu_ms": 0.010997
+   },
+   "cudaEventSynchronize": {
+    "calls": 3,
+    "cpu_ms": 0.003239
+   },
+   "cudaEventDestroy": {
+    "calls": 18,
+    "cpu_ms": 0.009967
+   },
+   "cudaOccupancyAvailableDynamicSMemPerBlock": {
+    "calls": 1,
+    "cpu_ms": 0.00121
+   }
+  }
+ },
+ {
+  "iter": 5,
+  "planning_ms": 3.000064,
+  "engine_ms": 8.999936,
+  "gpu_busy_ms": 1.859261,
+  "gpu_span_ms": 8.02222,
+  "kernels": 127,
+  "gpu_ops": 238,
+  "kernel_ns_by_name": {
+   "static_kernel": 176832,
+   "DeviceCompactInitKernel": 6240,
+   "DeviceSelectSweepKernel": 81280,
+   "transform_kernel": 648221,
+   "DeviceScanInitKernel": 4864,
+   "DeviceScanKernel": 54752,
+   "gather_chars_fn_char_parallel": 60032,
+   "insert_if_n": 33760,
+   "init_found_pos_pointer": 704,
+   "find_kernel": 62144,
+   "DeviceReduceKernel": 57632,
+   "DeviceReduceSingleTileKernel": 3040,
+   "single_thread_kernel": 1888,
+   "_kernel_agent": 142560,
+   "fused_membership_mask_kernel": 78816,
+   "contains_if_n": 3136,
+   "find_if_n": 8736,
+   "add_if_shmem": 5504,
+   "mapping_indices_kernel": 9184,
+   "single_pass_shmem_aggs_kernel": 6432,
+   "DeviceMergeSortBlockSortKernel": 274016
+  },
+  "api": {
+   "cuStreamSynchronize": {
+    "calls": 62,
+    "cpu_ms": 0.363504
+   },
+   "cudaMallocFromPoolAsync": {
+    "calls": 183,
+    "cpu_ms": 0.173144
+   },
+   "cudaStreamWaitEvent": {
+    "calls": 63,
+    "cpu_ms": 0.043282
+   },
+   "cudaStreamSynchronize": {
+    "calls": 179,
+    "cpu_ms": 1.704386
+   },
+   "cudaMemcpyBatchAsync": {
+    "calls": 90,
+    "cpu_ms": 0.246703
+   },
+   "cuKernelGetName": {
+    "calls": 126,
+    "cpu_ms": 0.01532
+   },
+   "cudaLaunchKernel": {
+    "calls": 127,
+    "cpu_ms": 0.451715
+   },
+   "cudaStreamGetDevice": {
+    "calls": 100,
+    "cpu_ms": 0.040803
+   },
+   "cudaEventRecord": {
+    "calls": 77,
+    "cpu_ms": 0.047054
+   },
+   "cudaFreeAsync": {
+    "calls": 183,
+    "cpu_ms": 0.096679
+   },
+   "cudaMemcpyAsync": {
+    "calls": 16,
+    "cpu_ms": 0.138528
+   },
+   "cudaMemsetAsync": {
+    "calls": 55,
+    "cpu_ms": 0.025039
+   },
+   "cudaEventCreateWithFlags": {
+    "calls": 18,
+    "cpu_ms": 0.011676
+   },
+   "cudaEventSynchronize": {
+    "calls": 3,
+    "cpu_ms": 0.003142
+   },
+   "cudaEventDestroy": {
+    "calls": 18,
+    "cpu_ms": 0.009962
+   },
+   "cudaOccupancyAvailableDynamicSMemPerBlock": {
+    "calls": 1,
+    "cpu_ms": 0.00116
+   }
+  }
+ },
+ {
+  "iter": 6,
+  "planning_ms": 3.000064,
+  "engine_ms": 9.999872,
+  "gpu_busy_ms": 1.862875,
+  "gpu_span_ms": 8.626506,
+  "kernels": 127,
+  "gpu_ops": 238,
+  "kernel_ns_by_name": {
+   "static_kernel": 176991,
+   "DeviceCompactInitKernel": 6240,
+   "DeviceSelectSweepKernel": 80575,
+   "transform_kernel": 648478,
+   "DeviceScanInitKernel": 4800,
+   "DeviceScanKernel": 54976,
+   "gather_chars_fn_char_parallel": 60416,
+   "insert_if_n": 32640,
+   "init_found_pos_pointer": 704,
+   "find_kernel": 61855,
+   "DeviceReduceKernel": 58560,
+   "DeviceReduceSingleTileKernel": 3008,
+   "single_thread_kernel": 1792,
+   "_kernel_agent": 143200,
+   "fused_membership_mask_kernel": 79872,
+   "contains_if_n": 3104,
+   "find_if_n": 8320,
+   "add_if_shmem": 5632,
+   "mapping_indices_kernel": 9088,
+   "single_pass_shmem_aggs_kernel": 6368,
+   "DeviceMergeSortBlockSortKernel": 277408
+  },
+  "api": {
+   "cuStreamSynchronize": {
+    "calls": 62,
+    "cpu_ms": 0.35971
+   },
+   "cudaMallocFromPoolAsync": {
+    "calls": 183,
+    "cpu_ms": 0.188612
+   },
+   "cudaStreamWaitEvent": {
+    "calls": 63,
+    "cpu_ms": 0.048976
+   },
+   "cudaStreamSynchronize": {
+    "calls": 179,
+    "cpu_ms": 1.702706
+   },
+   "cudaMemcpyBatchAsync": {
+    "calls": 90,
+    "cpu_ms": 0.264704
+   },
+   "cuKernelGetName": {
+    "calls": 126,
+    "cpu_ms": 0.018466
+   },
+   "cudaLaunchKernel": {
+    "calls": 127,
+    "cpu_ms": 0.495704
+   },
+   "cudaStreamGetDevice": {
+    "calls": 100,
+    "cpu_ms": 0.053386
+   },
+   "cudaEventRecord": {
+    "calls": 77,
+    "cpu_ms": 0.045008
+   },
+   "cudaFreeAsync": {
+    "calls": 183,
+    "cpu_ms": 0.097589
+   },
+   "cudaMemcpyAsync": {
+    "calls": 16,
+    "cpu_ms": 0.152235
+   },
+   "cudaMemsetAsync": {
+    "calls": 55,
+    "cpu_ms": 0.029686
+   },
+   "cudaEventCreateWithFlags": {
+    "calls": 18,
+    "cpu_ms": 0.012774
+   },
+   "cudaEventSynchronize": {
+    "calls": 3,
+    "cpu_ms": 0.003488
+   },
+   "cudaEventDestroy": {
+    "calls": 18,
+    "cpu_ms": 0.010215
+   },
+   "cudaOccupancyAvailableDynamicSMemPerBlock": {
+    "calls": 1,
+    "cpu_ms": 0.0012
+   }
+  }
+ },
+ {
+  "iter": 7,
+  "planning_ms": 2.999808,
+  "engine_ms": 9.000192,
+  "gpu_busy_ms": 1.865883,
+  "gpu_span_ms": 8.397066,
+  "kernels": 127,
+  "gpu_ops": 238,
+  "kernel_ns_by_name": {
+   "static_kernel": 177888,
+   "DeviceCompactInitKernel": 6272,
+   "DeviceSelectSweepKernel": 83104,
+   "transform_kernel": 648416,
+   "DeviceScanInitKernel": 4896,
+   "DeviceScanKernel": 54144,
+   "gather_chars_fn_char_parallel": 60320,
+   "insert_if_n": 33152,
+   "init_found_pos_pointer": 672,
+   "find_kernel": 62304,
+   "DeviceReduceKernel": 58111,
+   "DeviceReduceSingleTileKernel": 3008,
+   "single_thread_kernel": 1952,
+   "_kernel_agent": 144095,
+   "fused_membership_mask_kernel": 78975,
+   "contains_if_n": 3424,
+   "find_if_n": 9248,
+   "add_if_shmem": 5568,
+   "mapping_indices_kernel": 8928,
+   "single_pass_shmem_aggs_kernel": 6272,
+   "DeviceMergeSortBlockSortKernel": 274335
+  },
+  "api": {
+   "cuStreamSynchronize": {
+    "calls": 62,
+    "cpu_ms": 0.329899
+   },
+   "cudaMallocFromPoolAsync": {
+    "calls": 183,
+    "cpu_ms": 0.182857
+   },
+   "cudaStreamWaitEvent": {
+    "calls": 63,
+    "cpu_ms": 0.045635
+   },
+   "cudaStreamSynchronize": {
+    "calls": 179,
+    "cpu_ms": 1.676955
+   },
+   "cudaMemcpyBatchAsync": {
+    "calls": 90,
+    "cpu_ms": 0.252134
+   },
+   "cuKernelGetName": {
+    "calls": 126,
+    "cpu_ms": 0.018267
+   },
+   "cudaLaunchKernel": {
+    "calls": 127,
+    "cpu_ms": 0.467574
+   },
+   "cudaStreamGetDevice": {
+    "calls": 100,
+    "cpu_ms": 0.039179
+   },
+   "cudaEventRecord": {
+    "calls": 77,
+    "cpu_ms": 0.044716
+   },
+   "cudaFreeAsync": {
+    "calls": 183,
+    "cpu_ms": 0.096095
+   },
+   "cudaMemcpyAsync": {
+    "calls": 16,
+    "cpu_ms": 0.14839
+   },
+   "cudaMemsetAsync": {
+    "calls": 55,
+    "cpu_ms": 0.026861
+   },
+   "cudaEventCreateWithFlags": {
+    "calls": 18,
+    "cpu_ms": 0.013467
+   },
+   "cudaEventSynchronize": {
+    "calls": 3,
+    "cpu_ms": 0.003292
+   },
+   "cudaEventDestroy": {
+    "calls": 18,
+    "cpu_ms": 0.010462
+   },
+   "cudaOccupancyAvailableDynamicSMemPerBlock": {
+    "calls": 1,
+    "cpu_ms": 0.001055
+   }
+  }
+ },
+ {
+  "iter": 8,
+  "planning_ms": 4.000256,
+  "engine_ms": 8.999936,
+  "gpu_busy_ms": 1.861658,
+  "gpu_span_ms": 8.576394,
+  "kernels": 127,
+  "gpu_ops": 238,
+  "kernel_ns_by_name": {
+   "static_kernel": 176575,
+   "DeviceCompactInitKernel": 6336,
+   "DeviceSelectSweepKernel": 80191,
+   "transform_kernel": 647488,
+   "DeviceScanInitKernel": 4928,
+   "DeviceScanKernel": 55168,
+   "gather_chars_fn_char_parallel": 60448,
+   "insert_if_n": 33120,
+   "init_found_pos_pointer": 704,
+   "find_kernel": 62112,
+   "DeviceReduceKernel": 58656,
+   "DeviceReduceSingleTileKernel": 3296,
+   "single_thread_kernel": 1824,
+   "_kernel_agent": 142591,
+   "fused_membership_mask_kernel": 79423,
+   "contains_if_n": 3136,
+   "find_if_n": 8288,
+   "add_if_shmem": 5696,
+   "mapping_indices_kernel": 8960,
+   "single_pass_shmem_aggs_kernel": 6400,
+   "DeviceMergeSortBlockSortKernel": 276127
+  },
+  "api": {
+   "cuStreamSynchronize": {
+    "calls": 62,
+    "cpu_ms": 0.30193
+   },
+   "cudaMallocFromPoolAsync": {
+    "calls": 183,
+    "cpu_ms": 0.255392
+   },
+   "cudaStreamWaitEvent": {
+    "calls": 63,
+    "cpu_ms": 0.066488
+   },
+   "cudaStreamSynchronize": {
+    "calls": 179,
+    "cpu_ms": 1.663861
+   },
+   "cudaMemcpyBatchAsync": {
+    "calls": 90,
+    "cpu_ms": 0.375516
+   },
+   "cuKernelGetName": {
+    "calls": 126,
+    "cpu_ms": 0.021139
+   },
+   "cudaLaunchKernel": {
+    "calls": 127,
+    "cpu_ms": 0.671915
+   },
+   "cudaStreamGetDevice": {
+    "calls": 100,
+    "cpu_ms": 0.042683
+   },
+   "cudaEventRecord": {
+    "calls": 77,
+    "cpu_ms": 0.064288
+   },
+   "cudaFreeAsync": {
+    "calls": 183,
+    "cpu_ms": 0.134756
+   },
+   "cudaMemcpyAsync": {
+    "calls": 16,
+    "cpu_ms": 0.175545
+   },
+   "cudaMemsetAsync": {
+    "calls": 55,
+    "cpu_ms": 0.036474
+   },
+   "cudaEventCreateWithFlags": {
+    "calls": 18,
+    "cpu_ms": 0.01605
+   },
+   "cudaEventSynchronize": {
+    "calls": 3,
+    "cpu_ms": 0.005309
+   },
+   "cudaEventDestroy": {
+    "calls": 18,
+    "cpu_ms": 0.013027
+   },
+   "cudaOccupancyAvailableDynamicSMemPerBlock": {
+    "calls": 1,
+    "cpu_ms": 0.001792
+   }
+  }
+ }
+]

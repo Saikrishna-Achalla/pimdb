@@ -1,0 +1,6 @@
+Sirius (pinned, GPU): 15 iterations, first 79.0 ms, warmup=3, timed=12
+  warm median 42.5 ms  min 42.0  max 45.0  stdev 0.85
+  timed: 45 43 43 42 43 42 43 42 43 42 42 42
+  Sirius log split (median, 1 ms resolution): planning 4 ms, engine 38 ms, gap_to_next_statement 1 ms (11 gaps for 12 timed iterations (none after the last))
+DuckDB CPU: first 98.0 ms, warm median 84.0 ms (min 81.0, max 87.0)
+result: 4 rows; consistent across 15 GPU iterations: True (modes ['exact']); vs DuckDB CPU: ordered-with-tolerance (max rel diff 1.3875963246238943e-16, tol 1e-09) 

@@ -1,0 +1,237 @@
+{
+ "label": "q1 sf10_main",
+ "results_dir": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q1",
+ "nsys_sqlite": "/home/sai/cs254_project/pim_exploration/sf10_scaling/q1/traces/q1_nsys.sqlite",
+ "warm_ms": 34.0,
+ "warm_min_ms": 34.0,
+ "warm_max_ms": 36.0,
+ "timed": 12,
+ "warmup": 3,
+ "cpu_ms": 84.0,
+ "result_rows": 4,
+ "gpu_equals_cpu": true,
+ "compare_mode": "ordered-with-tolerance",
+ "timing_log_planning_ms": 4.0,
+ "timing_log_engine_ms": 29.5,
+ "pcie_overall": "PASS",
+ "table_rows": {
+  "lineitem": 59986052
+ },
+ "pinned_bytes": 1679621120,
+ "pool_peak_after_pin_bytes": 1782749440,
+ "pool_peak_end_bytes": 3565772880,
+ "pool_peak_note": "process-lifetime high-water; if end == after_pin, the query never exceeded the pin-phase peak",
+ "measured_iters": [
+  4,
+  5,
+  6,
+  7,
+  8
+ ],
+ "kernels_per_iter": [
+  873,
+  873,
+  873,
+  873,
+  873
+ ],
+ "nsys_median": {
+  "planning_ms": 4.999936,
+  "engine_ms": 32.0,
+  "gpu_busy_ms": 27.102818,
+  "kernels": 873,
+  "gpu_ops": 1936,
+  "kernel_ms": 44.832743,
+  "lt5us": 511,
+  "ge100us": 78,
+  "ge100us_ms": 29.314326,
+  "grid_lt48": 501,
+  "grid_1": 429
+ },
+ "rep_iter": {
+  "iter": 5,
+  "planning_ms": 4.999936,
+  "engine_ms": 30.000128,
+  "gpu_busy_ms": 27.102818,
+  "kernels": 873,
+  "gpu_ops": 1936,
+  "kernel_ms": 45.527041,
+  "lt5us": 513,
+  "ge100us": 72,
+  "ge100us_ms": 29.314326,
+  "grid_lt48": 501,
+  "grid_1": 429,
+  "families": {
+   "static_kernel": {
+    "launches": 100,
+    "ns": 5393519,
+    "phase": "expression eval",
+    "grid_max": 11030,
+    "grid_min": 1
+   },
+   "DeviceCompactInitKernel": {
+    "launches": 25,
+    "ns": 38368,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 8,
+    "grid_min": 1
+   },
+   "DeviceSelectSweepKernel": {
+    "launches": 25,
+    "ns": 1500506,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 981,
+    "grid_min": 1
+   },
+   "transform_kernel": {
+    "launches": 295,
+    "ns": 7140103,
+    "phase": "gather/copy/concat",
+    "grid_max": 1003,
+    "grid_min": 1
+   },
+   "DeviceScanInitKernel": {
+    "launches": 54,
+    "ns": 60384,
+    "phase": "gather/copy/concat",
+    "grid_max": 9,
+    "grid_min": 1
+   },
+   "DeviceScanKernel": {
+    "launches": 54,
+    "ns": 2525944,
+    "phase": "gather/copy/concat",
+    "grid_max": 1051,
+    "grid_min": 1
+   },
+   "InitTileStateKernel": {
+    "launches": 24,
+    "ns": 30015,
+    "phase": "gather/copy/concat",
+    "grid_max": 44,
+    "grid_min": 9
+   },
+   "BatchMemcpyKernel": {
+    "launches": 24,
+    "ns": 3147988,
+    "phase": "gather/copy/concat",
+    "grid_max": 5515,
+    "grid_min": 1103
+   },
+   "MultiBlockBatchMemcpyKernel": {
+    "launches": 24,
+    "ns": 117280,
+    "phase": "gather/copy/concat",
+    "grid_max": 1440,
+    "grid_min": 1440
+   },
+   "DeviceReduceKernel": {
+    "launches": 60,
+    "ns": 2600854,
+    "phase": "expression eval",
+    "grid_max": 1440,
+    "grid_min": 552
+   },
+   "DeviceReduceSingleTileKernel": {
+    "launches": 60,
+    "ns": 156608,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "single_thread_kernel": {
+    "launches": 60,
+    "ns": 86240,
+    "phase": "cub scan/select/reduce",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "mapping_indices_kernel": {
+    "launches": 13,
+    "ns": 5212909,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 1
+   },
+   "single_pass_shmem_aggs_kernel": {
+    "launches": 13,
+    "ns": 17277379,
+    "phase": "hash group-by/agg",
+    "grid_max": 240,
+    "grid_min": 1
+   },
+   "gather_chars_fn_char_parallel": {
+    "launches": 28,
+    "ns": 83136,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "fused_concatenate_string_offset_kernel": {
+    "launches": 2,
+    "ns": 3168,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "fused_concatenate_string_chars_kernel": {
+    "launches": 2,
+    "ns": 3424,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "fused_concatenate_kernel": {
+    "launches": 7,
+    "ns": 10688,
+    "phase": "gather/copy/concat",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "compute_column_kernel": {
+    "launches": 2,
+    "ns": 11328,
+    "phase": "expression eval",
+    "grid_max": 1,
+    "grid_min": 1
+   },
+   "DeviceMergeSortBlockSortKernel": {
+    "launches": 1,
+    "ns": 127200,
+    "phase": "sort/top-N",
+    "grid_max": 1,
+    "grid_min": 1
+   }
+  },
+  "phases": {
+   "expression eval": {
+    "launches": 317,
+    "ns": 11223226
+   },
+   "cub scan/select/reduce": {
+    "launches": 110,
+    "ns": 1625114
+   },
+   "gather/copy/concat": {
+    "launches": 284,
+    "ns": 9600733
+   },
+   "other": {
+    "launches": 118,
+    "ns": 428000
+   },
+   "hash group-by/agg": {
+    "launches": 39,
+    "ns": 22515376
+   },
+   "string ops": {
+    "launches": 4,
+    "ns": 7392
+   },
+   "sort/top-N": {
+    "launches": 1,
+    "ns": 127200
+   }
+  }
+ }
+}

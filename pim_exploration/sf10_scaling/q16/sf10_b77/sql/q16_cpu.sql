@@ -1,0 +1,470 @@
+CREATE VIEW part AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/part/part.0.parquet']);
+CREATE VIEW partsupp AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/partsupp/part.0.parquet']);
+CREATE VIEW supplier AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/supplier/part.0.parquet']);
+.mode csv
+.timer on
+.print __ITER__ 1
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 2
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 3
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 4
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 5
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 6
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 7
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 8
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 9
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 10
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 11
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 12
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 13
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 14
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;
+.print __ITER__ 15
+select
+  p.p_brand,
+  p.p_type,
+  p.p_size,
+  count(distinct ps.ps_suppkey) as supplier_cnt
+from
+  partsupp ps,
+  part p
+where
+  p.p_partkey = ps.ps_partkey
+  and p.p_brand <> 'Brand#21'
+  and p.p_type not like 'MEDIUM PLATED%'
+  and p.p_size in (38, 2, 8, 31, 44, 5, 14, 24)
+  and ps.ps_suppkey not in (
+    select
+      s.s_suppkey
+    from
+      supplier s
+    where
+      s.s_comment like '%Customer%Complaints%'
+  )
+group by
+  p.p_brand,
+  p.p_type,
+  p.p_size
+order by
+  supplier_cnt desc,
+  p.p_brand,
+  p.p_type,
+  p.p_size;

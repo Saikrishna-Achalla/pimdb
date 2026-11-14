@@ -1,0 +1,9 @@
+OP reduce_i64 arg=0 cores=1 warps=32 threads=1024
+TABLE rows=60175
+LAUNCH 0 reduce_sum_i64 reduce8 items=60175 lbytes=481432
+LAUNCH 1 reduce_sum_final reduce8 items=4 lbytes=40
+HOST readback_scalar bytes=8
+RESULT sum=215218976047
+LAUNCHES 2
+DONE
+wall_s=2.558221194 rc=0
