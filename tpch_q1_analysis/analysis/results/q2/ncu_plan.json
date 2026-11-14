@@ -1,0 +1,172 @@
+{
+ "N3": 1270,
+ "N4": 1499,
+ "N5": 1728,
+ "pin_plus_iteration1_if_iterations_2_3_equal": 812,
+ "per_iteration_counts": [
+  229,
+  229
+ ],
+ "cross_run_prefix_multisets_equal": true,
+ "added_iteration_multisets_equal": true,
+ "order_positions_differing_iter4_vs_iter5": 2,
+ "x4_vs_x5_prefix_positions_differing": 10,
+ "nsys_kernels_per_warm_iter": 229,
+ "stable": true,
+ "unstable_reasons": [],
+ "skip": 1499,
+ "count": 229,
+ "threshold": 1000,
+ "coverage": 0.9,
+ "policy": "full_all",
+ "families": [
+  {
+   "func": "DeviceMergeSortBlockSortKernel",
+   "count": 2,
+   "time_us": 950.624,
+   "pct": 45.635676539265084
+  },
+  {
+   "func": "DeviceScanKernel",
+   "count": 41,
+   "time_us": 399.808,
+   "pct": 19.193191593953546
+  },
+  {
+   "func": "gather_chars_fn_char_parallel",
+   "count": 31,
+   "time_us": 212.576,
+   "pct": 10.20492810618164
+  },
+  {
+   "func": "transform_kernel",
+   "count": 46,
+   "time_us": 123.168,
+   "pct": 5.912805702347303
+  },
+  {
+   "func": "DeviceScanInitKernel",
+   "count": 41,
+   "time_us": 73.056,
+   "pct": 3.5071279341280572
+  },
+  {
+   "func": "fused_membership_mask_kernel",
+   "count": 1,
+   "time_us": 49.76,
+   "pct": 2.3887796485191104
+  },
+  {
+   "func": "DeviceSelectSweepKernel",
+   "count": 12,
+   "time_us": 49.184,
+   "pct": 2.361128179918889
+  },
+  {
+   "func": "insert_if_n",
+   "count": 8,
+   "time_us": 39.328,
+   "pct": 1.8879808283151038
+  },
+  {
+   "func": "static_kernel",
+   "count": 14,
+   "time_us": 35.232,
+   "pct": 1.6913481627135307
+  },
+  {
+   "func": "find_if_n",
+   "count": 4,
+   "time_us": 28.224,
+   "pct": 1.3549219614108394
+  },
+  {
+   "func": "gather_chars_fn_string_parallel",
+   "count": 6,
+   "time_us": 24.864,
+   "pct": 1.193621727909549
+  },
+  {
+   "func": "DeviceCompactInitKernel",
+   "count": 12,
+   "time_us": 21.472,
+   "pct": 1.0307853017082462
+  },
+  {
+   "func": "compute_column_kernel",
+   "count": 1,
+   "time_us": 16.32,
+   "pct": 0.7834582770062677
+  },
+  {
+   "func": "hash_csr_probe_count_kernel",
+   "count": 1,
+   "time_us": 11.52,
+   "pct": 0.5530293720044243
+  },
+  {
+   "func": "hash_csr_build_count_kernel",
+   "count": 1,
+   "time_us": 10.848,
+   "pct": 0.5207693253041662
+  },
+  {
+   "func": "hash_csr_build_fill_kernel",
+   "count": 1,
+   "time_us": 9.536,
+   "pct": 0.4577854246036623
+  },
+  {
+   "func": "_kernel_agent",
+   "count": 2,
+   "time_us": 6.56,
+   "pct": 0.31491950350251935
+  },
+  {
+   "func": "hash_csr_retrieve_kernel",
+   "count": 1,
+   "time_us": 6.528,
+   "pct": 0.3133833108025071
+  },
+  {
+   "func": "filter_join_indices_kernel",
+   "count": 1,
+   "time_us": 5.984,
+   "pct": 0.28726803490229813
+  },
+  {
+   "func": "find_kernel",
+   "count": 1,
+   "time_us": 4.352,
+   "pct": 0.20892220720167137
+  },
+  {
+   "func": "DeviceReduceSingleTileKernel",
+   "count": 1,
+   "time_us": 2.464,
+   "pct": 0.1182868379009463
+  },
+  {
+   "func": "init_found_pos_pointer",
+   "count": 1,
+   "time_us": 1.664,
+   "pct": 0.07988202040063906
+  }
+ ],
+ "full_families": [
+  "DeviceMergeSortBlockSortKernel",
+  "DeviceScanKernel",
+  "gather_chars_fn_char_parallel",
+  "transform_kernel",
+  "DeviceScanInitKernel",
+  "fused_membership_mask_kernel",
+  "DeviceSelectSweepKernel",
+  "insert_if_n",
+  "static_kernel",
+  "find_if_n"
+ ],
+ "full_regex": "^(DeviceMergeSortBlockSortKernel|DeviceScanKernel|gather_chars_fn_char_parallel|transform_kernel|DeviceScanInitKernel|fused_membership_mask_kernel|DeviceSelectSweepKernel|insert_if_n|static_kernel|find_if_n)$",
+ "full_regex_skip": 976,
+ "full_regex_count": 200,
+ "full_regex_time_pct": 94.1378886567531
+}

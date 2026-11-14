@@ -1,0 +1,19 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+expression: AST                                    3     798.0   81.8    60.33   75.6
+cub/thrust: select/compact                         6      50.1    5.1     6.19  123.5
+expression: binary op                              9      45.2    4.6     3.21   71.0
+expression: cast/unary                            13      33.7    3.5     2.00   59.3
+gather/scatter: fixed-width                        6      24.0    2.5     6.98  291.1
+cub/thrust: reduce/find                            6      16.2    1.7     0.07    4.1
+copy / concatenate                                 4       7.8    0.8     0.01    1.8
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+compute_column_kernel                              3     798.0   81.8    60.33   75.6
+DeviceSelectSweepKernel                            3      45.5    4.7     6.18  136.0
+transform_kernel                                  15      45.0    4.6     7.99  177.7
+static_kernel                                      3      25.4    2.6     2.19   86.3
+DeviceReduceKernel                                 6      20.5    2.1     1.94   94.8
+DeviceReduceSingleTileKernel                       7      20.1    2.1     0.12    5.8
+single_thread_kernel                               3       8.0    0.8     0.01    1.2
+copy_range_kernel                                  4       7.8    0.8     0.01    1.8
+DeviceCompactInitKernel                            3       4.6    0.5     0.01    1.8

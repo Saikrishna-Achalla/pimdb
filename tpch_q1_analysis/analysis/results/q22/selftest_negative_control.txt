@@ -1,0 +1,11 @@
+negative control: 'orders' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q22_nsys.sql': ["pinned tables ['customer'] != referenced tables ['customer', 'orders']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['customer'] vs referenced ['customer', 'orders']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 2 assigned for 3 GPU_SCANs, missing tables ['orders']; iter2: 2 assigned for 3 GPU_SCANs, missing tables ['orders']; iter3: 2 assigned for 3 GPU_SCANs, missing tables ['orders']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '2', 'hits': '0', 'h2d': '5', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '2', 'hits': '5', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['customer'] vs referenced ['customer', 'orders']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 2 assigned for 3 GPU_SCANs, missing tables ['orders']; iter2: 2 assigned for 3 GPU_SCANs, missing tables ['orders']; iter3: 2 assigned for 3 GPU_SCANs, missing tables ['orders']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '2', 'hits': '0', 'h2d': '5', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '2', 'hits': '5', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 120 copies, 4007306 B total, largest single 1979877 B (limits: single <= 65536 B, total <= 1048576 B)
+SELFTEST: PASS (verification detected the unpinned table)

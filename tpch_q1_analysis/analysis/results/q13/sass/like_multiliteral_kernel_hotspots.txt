@@ -1,0 +1,84 @@
+# like_multiliteral_kernel: family 213.6 us (37.3% of warm GPU time, 2 launches); hotspots for its longest launch pos 1 (106.8 us, grid 2930.0, block 256.0; q13_warm_full.ncu-rep row 1, selection verified by duration)
+# void sirius::<unnamed>::like_multiliteral_kernel<int>(const unsigned long *, const T1 *, int, const unsigned int *, int, sirius::like_multiliteral_pattern_desc, bool, bool *)
+static instructions=936  executed(warp)=2.833e+07  stall samples=10970
+static instructions ever executed: 333 (35.6% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic         528   1.566e+07   55.3   66.3
+Control Flow           161    5.36e+06   18.9   11.8
+Move/Special            81   4.962e+06   17.5   15.5
+Const Load              44   1.214e+06    4.3    3.8
+Uniform datapath        14   5.062e+05    1.8    1.0
+Global Load             94   4.828e+05    1.7    1.2
+FP Arithmetic           13   1.205e+05    0.4    0.2
+Global Store             1   2.344e+04    0.1    0.1
+
+Top 25 instructions by stall samples:
+  +0x00cb0 samp=  2545 (23.2%) exe=   249265 thr=20.0 [long_sb=2465,not_selected=37]  LOP3.LUT R25, R18, R2, RZ, 0x3c, !PT
+  +0x007f0 samp=   624 ( 5.7%) exe=   249265 thr=20.0 [long_sb=598,wait=13]  MOV R8, R19
+  +0x00270 samp=   539 ( 4.9%) exe=    23438 thr=31.0 [long_sb=494,math=23]  SHF.R.S32.HI R15, RZ, 0x1f, R14
+  +0x03890 samp=   200 ( 1.8%) exe=   249265 thr=20.0 [branch_resolving=117,wait=43]  SHF.R.S32.HI R9, RZ, 0x1f, R12
+  +0x008b0 samp=   194 ( 1.8%) exe=   249265 thr=20.0 [short_sb=144,not_selected=20]  LEA R18, P0, R9, UR10, 0x3
+  +0x008c0 samp=   165 ( 1.5%) exe=   249265 thr=20.0 [not_selected=71,math=60]  LEA.HI.X R19, R9, UR11, R24, 0x3, P0
+  +0x00c50 samp=   163 ( 1.5%) exe=   249265 thr=20.0 [not_selected=78,math=51]  LOP3.LUT R20, R7, R0, RZ, 0x3c, !PT
+  +0x00db0 samp=   157 ( 1.4%) exe=   249265 thr=20.0 [not_selected=69,math=59]  PLOP3.LUT P0, PT, PT, PT, PT, 0x80, 0x8
+  +0x038c0 samp=   150 ( 1.4%) exe=   249265 thr=20.0 [not_selected=70,math=41]  SHF.R.S64 R8, R8, 0x3, R9
+  +0x00890 samp=   140 ( 1.3%) exe=   249265 thr=20.0 [wait=113,not_selected=14]  @P0   BRA 0x7f15ea185df0
+  +0x00e20 samp=   140 ( 1.3%) exe=   249265 thr=20.0 [wait=111,not_selected=20]  @!P1  BRA 0x7f15ea188d70
+  +0x038f0 samp=   137 ( 1.2%) exe=   249265 thr=20.0 [wait=114,not_selected=13]  @P0   BRA P1, 0x7f15ea185cc0
+  +0x00140 samp=   130 ( 1.2%) exe=    23438 thr=31.0 [long_sb=84,not_selected=30]  R2UR UR4, R2
+  +0x00c20 samp=   127 ( 1.2%) exe=   249265 thr=20.0 [branch_resolving=82,wait=34]  ISETP.NE.U32.AND P0, PT, R4, 0x1, PT
+  +0x00d80 samp=   126 ( 1.1%) exe=   249265 thr=20.0 [branch_resolving=78,wait=28]  UMOV.64 UR10, 0x101010101010101
+  +0x00d40 samp=   121 ( 1.1%) exe=   249265 thr=20.0 [math=59,not_selected=48]  SHF.L.W.U32.HI R23, R26, 0x18, R22
+  +0x00860 samp=   119 ( 1.1%) exe=   249265 thr=20.0 [wait=102,not_selected=13]  @P0   BRA 0x7f15ea186100
+  +0x03870 samp=   117 ( 1.1%) exe=   347141 thr=14.0 [no_inst=36,wait=36]  NOP
+  +0x00ce0 samp=   100 ( 0.9%) exe=   249265 thr=20.0 [math=39,not_selected=36]  LOP3.LUT R26, R23, R8, R5, 0x90, !PT
+  +0x01950 samp=   100 ( 0.9%) exe=    73634 thr= 1.0 [short_sb=63,math=17]  LOP3.LUT R28, R28, R32, RZ, 0xc0, !PT
+  +0x00ee0 samp=    95 ( 0.9%) exe=    95626 thr= 1.0 [wait=40,not_selected=36]  @!P0  LOP3.LUT R30, R20, R24, RZ, 0xc0, !PT
+  +0x018b0 samp=    86 ( 0.8%) exe=    66096 thr= 1.0 [branch_resolving=24,long_sb=21]  SHF.L.U64.HI R28, R36, R41, R37
+  +0x00d60 samp=    85 ( 0.8%) exe=   249265 thr=20.0 [wait=56,not_selected=19]  NOP
+  +0x008d0 samp=    84 ( 0.8%) exe=   249265 thr=20.0 [wait=46,not_selected=27]  LDG.E.64.CONSTANT R18, desc[UR8][R18.64+0x8]
+  +0x03920 samp=    78 ( 0.7%) exe=    23438 thr=31.0 [branch_resolving=48,wait=22]  LDC.U8 R0, c[0x0][0x510]
+
+hot PCs (>0.2% samples each) span +0x140 .. +0x39d0, n=100
+
+stall reasons (sum over instructions): long_sb=33.4%, wait=23.2%, not_selected=14.1%, selected=8.8%, math=7.8%, branch_resolving=5.5%, short_sb=4.9%, no_inst=1.8%
+
+context around +0x00cb0 (exe = warp-level executions, samp = stall samples):
+     +0x00c30 exe=  249265 samp=   15 thr=20.0  BSSY.RECONVERGENT B1, 0x7f15ea186280
+     +0x00c40 exe=  249265 samp=   14 thr=20.0  MOV.64 R22, 0x8080808080808080
+     +0x00c50 exe=  249265 samp=  163 thr=20.0  LOP3.LUT R20, R7, R0, RZ, 0x3c, !PT
+     +0x00c60 exe=  249265 samp=   21 thr=20.0  LOP3.LUT R21, R8, R3, RZ, 0x3c, !PT
+     +0x00c70 exe=  249265 samp=   69 thr=20.0  @!P0  BRA 0x7f15ea186260
+     +0x00c80 exe=  249265 samp=   73 thr=20.0  LOP3.LUT R22, R7, R2, RZ, 0x3c, !PT
+     +0x00c90 exe=  249265 samp=    8 thr=20.0  UMOV.64 UR10, 0x101010101010101
+     +0x00ca0 exe=  249265 samp=   13 thr=20.0  LOP3.LUT R23, R8, R5, RZ, 0x3c, !PT
+  >> +0x00cb0 exe=  249265 samp= 2545 thr=20.0  LOP3.LUT R25, R18, R2, RZ, 0x3c, !PT
+     +0x00cc0 exe=  249265 samp=   36 thr=20.0  IADD.64 R22, R22, -UR10
+     +0x00cd0 exe=  249265 samp=   18 thr=20.0  IADD R25, R25, -0x1
+
+context around +0x007f0 (exe = warp-level executions, samp = stall samples):
+     +0x00770 exe=   23438 samp=    2 thr=31.0  NOP
+     +0x00780 exe=   23438 samp=    6 thr=31.0  BSYNC.RECONVERGENT B1
+     +0x00790 exe=   23438 samp=   13 thr=31.0  ISETP.GE.S64.AND P0, PT, R16, R8, PT
+     +0x007a0 exe=   23438 samp=    9 thr=31.0  @P0   BRA 0x7f15ea188e00
+     +0x007b0 exe=   23438 samp=    2 thr=31.0  HFMA2 R6, -RZ, RZ, 0, 0
+     +0x007c0 exe=  249265 samp=   71 thr=20.0  MOV R9, R16
+     +0x007d0 exe=  249265 samp=    8 thr=20.0  MOV R24, R17
+     +0x007e0 exe=  249265 samp=    8 thr=20.0  IADD.64 R16, R16, 0x1
+  >> +0x007f0 exe=  249265 samp=  624 thr=20.0  MOV R8, R19
+     +0x00800 exe=  249265 samp=   11 thr=20.0  MOV R7, R18
+     +0x00810 exe=  249265 samp=    9 thr=20.0  BSSY.RECONVERGENT B1, 0x7f15ea186120
+
+context around +0x00270 (exe = warp-level executions, samp = stall samples):
+     +0x001f0 exe=       0 samp=    0 thr= 0.0  @!P0  BRA 0x7f15ea188e00
+     +0x00200 exe=   23438 samp=    5 thr=31.0  LEA R2, P0, R10, UR6, 0x2
+     +0x00210 exe=   23438 samp=    1 thr=31.0  LDCU UR10, c[0x0][0x50c]
+     +0x00220 exe=   23438 samp=    4 thr=31.0  LEA.HI.X R3, R10, UR7, R11, 0x2, P0
+     +0x00230 exe=   23438 samp=    7 thr=31.0  LDG.E.CONSTANT R14, desc[UR8][R2.64]
+     +0x00240 exe=   23438 samp=    1 thr=31.0  LDG.E.CONSTANT R12, desc[UR8][R2.64+0x4]
+     +0x00250 exe=   23438 samp=    2 thr=31.0  PRMT R20, RZ, 0x7610, R20
+     +0x00260 exe=   23438 samp=    6 thr=31.0  USHF.R.S32.HI UR11, URZ, 0x1f, UR10
+  >> +0x00270 exe=   23438 samp=  539 thr=31.0  SHF.R.S32.HI R15, RZ, 0x1f, R14
+     +0x00280 exe=   23438 samp=    8 thr=31.0  SHF.R.S32.HI R13, RZ, 0x1f, R12
+     +0x00290 exe=   23438 samp=    3 thr=31.0  IADD.64 R4, -R14, R12

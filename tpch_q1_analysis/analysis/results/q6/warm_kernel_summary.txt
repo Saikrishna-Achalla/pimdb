@@ -1,0 +1,22 @@
+ncu list passes: pin+3 iters=303, pin+4=350, pin+5=397 launches; launches added per iteration [47, 47]; nsys kernels per measured iteration 47
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 38 positions; x4 vs first N4 of x5 at 93 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 47 kernels, serialized GPU time 973.0 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 2.43 us; <5 us: 38; <10 us: 41; time in <10 us kernels: 126.5 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['compute_column_kernel', 'DeviceSelectSweepKernel', 'transform_kernel', 'static_kernel'] -> 24 kernels, 94.3% of time
+
+family (function base)                     count   time_us    pct   avg_us
+compute_column_kernel                          3     799.5   82.2   266.50
+DeviceSelectSweepKernel                        3      47.0    4.8    15.68
+transform_kernel                              15      45.7    4.7     3.04
+static_kernel                                  3      25.6    2.6     8.53
+DeviceReduceKernel                             6      20.4    2.1     3.39
+DeviceReduceSingleTileKernel                   7      16.5    1.7     2.35
+copy_range_kernel                              4       6.9    0.7     1.73
+single_thread_kernel                           3       6.1    0.6     2.03
+DeviceCompactInitKernel                        3       5.4    0.6     1.80
+
+phase                        count   time_us    pct
+expression eval                 25     875.6   90.0
+cub scan/select/reduce          12      65.4    6.7
+gather/copy/concat              10      32.1    3.3

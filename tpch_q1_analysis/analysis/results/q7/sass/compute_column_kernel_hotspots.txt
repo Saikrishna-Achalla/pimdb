@@ -1,0 +1,88 @@
+# compute_column_kernel: family 366.0 us (19.8% of warm GPU time, 6 launches); hotspots for its longest launch pos 63 (110.9 us, grid 15630.0, block 128.0; q7_warm_full.ncu-rep row 63, selection verified by duration)
+# void cudf::compute_column_kernel<128, 0, 0>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+static instructions=16400  executed(warp)=2.169e+07  stall samples=11116
+static instructions ever executed: 239 (1.5% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        5738    1.05e+07   48.4   49.6
+Control Flow          2096   3.313e+06   15.3    8.2
+Global Load           1399   2.876e+06   13.3   18.1
+Const Load             236   1.938e+06    8.9    2.3
+Local (spill)           32   1.125e+06    5.2   12.9
+Move/Special          3713   6.877e+05    3.2    2.8
+Other                  325   3.751e+05    1.7    3.8
+Shared Load             65   2.501e+05    1.2    0.5
+Uniform datapath         3   1.876e+05    0.9    0.4
+Global Store           494   1.876e+05    0.9    0.9
+Shared Store           494   1.876e+05    0.9    0.5
+FP Arithmetic         1805   6.252e+04    0.3    0.0
+
+Top 25 instructions by stall samples:
+  +0x18180 samp=   631 ( 5.7%) exe=   125036 thr=31.0 [long_sb=623,not_selected=4]  ISETP.GT.AND P0, PT, R6, 0x14, PT
+  +0x00170 samp=   346 ( 3.1%) exe=    62518 thr=31.0 [lg=184,mio=106]  STL.64 [R1+0x58], R6
+  +0x002f0 samp=   289 ( 2.6%) exe=   187554 thr=31.0 [long_sb=283,selected=3]  SHF.L.U64.HI R5, R10, 0x2, R11
+  +0x17d30 samp=   283 ( 2.5%) exe=   187554 thr=31.0 [long_sb=264,wait=8]  IMAD.WIDE R8, R11, 0x4, R4
+  +0x18170 samp=   282 ( 2.5%) exe=   125036 thr=31.0 [long_sb=212,lg=29]  LD.E.U16 R12, desc[UR8][R8.64]
+  +0x002c0 samp=   266 ( 2.4%) exe=   187554 thr=31.0 [lg=81,mio=67]  LDL.LU.64 R10, [R1+0x48]
+  +0x3ac80 samp=   233 ( 2.1%) exe=    62518 thr=31.0 [long_sb=228,not_selected=2]  MOV R5, R6
+  +0x18150 samp=   215 ( 1.9%) exe=   125036 thr=31.0 [long_sb=203,selected=4]  IMAD.WIDE R8, R15, 0x20, R8
+  +0x18020 samp=   213 ( 1.9%) exe=   125036 thr=31.0 [long_sb=206,not_selected=4]  ISETP.NE.U32.AND P0, PT, R8, 0x1, PT
+  +0x17ea0 samp=   192 ( 1.7%) exe=   125036 thr=31.0 [branch_resolving=103,lg=30]  LDG.E R7, desc[UR8][R24.64]
+  +0x17eb0 samp=   191 ( 1.7%) exe=   125036 thr=31.0 [long_sb=180,wait=4]  ISETP.NE.U32.AND P0, PT, R7, 0x1, PT
+  +0x17de0 samp=   176 ( 1.6%) exe=   187554 thr=31.0 [long_sb=169,not_selected=4]  ISETP.GT.AND P0, PT, R10, 0xe, PT
+  +0x00320 samp=   162 ( 1.5%) exe=   187554 thr=31.0 [lg=60,mio=41]  LDG.E R8, desc[UR8][R8.64]
+  +0x00380 samp=   152 ( 1.4%) exe=   187554 thr=31.0 [lg=68,mio=35]  STL.64 [R1+0x48], R10
+  +0x001b0 samp=   149 ( 1.3%) exe=    62518 thr=31.0 [lg=60,mio=47]  STL [R1+0x60], R4
+  +0x00340 samp=   142 ( 1.3%) exe=   187554 thr=31.0 [lg=64,mio=30]  LDG.E R6, desc[UR8][R6.64]
+  +0x17d90 samp=   134 ( 1.2%) exe=   187554 thr=31.0 [lg=56,mio=41]  LDG.E R10, desc[UR8][R24.64+0x4]
+  +0x17f00 samp=   133 ( 1.2%) exe=   125036 thr=31.0 [long_sb=122,math=6]  @!P0  IMAD.WIDE R8, R25, 0x40, R8
+  +0x17d60 samp=   122 ( 1.1%) exe=   187554 thr=31.0 [mio=41,lg=39]  LDG.E R15, desc[UR8][R8.64+0x4]
+  +0x17f50 samp=   118 ( 1.1%) exe=   125036 thr=31.0 [long_sb=113,selected=4]  @!P0  SHF.R.S32.HI R13, RZ, 0x1f, R12
+  +0x17d50 samp=   117 ( 1.1%) exe=   187554 thr=31.0 [lg=54,mio=45]  LDG.E R25, desc[UR8][R8.64]
+  +0x19ab0 samp=   117 ( 1.1%) exe=    62518 thr=31.0 [long_sb=109,selected=4]  ISETP.NE.U32.AND P0, PT, R6, RZ, PT
+  +0x17d70 samp=   114 ( 1.0%) exe=   187554 thr=31.0 [lg=50,mio=23]  LDG.E R7, desc[UR8][R8.64+0x8]
+  +0x17d10 samp=   113 ( 1.0%) exe=   187554 thr=31.0 [no_inst=72,long_sb=16]  LDL.LU R11, [R1+0x50]
+  +0x001f0 samp=   112 ( 1.0%) exe=    62518 thr=31.0 [lg=66,mio=31]  STL [R1+0x50], RZ
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x3acd0, n=113
+
+stall reasons (sum over instructions): long_sb=36.5%, wait=16.8%, lg=11.7%, mio=8.4%, no_inst=8.4%, not_selected=5.8%, selected=4.2%, short_sb=3.5%
+
+context around +0x18180 (exe = warp-level executions, samp = stall samples):
+     +0x18100 exe=       0 samp=    0 thr= 0.0  @!P0  LD.E.U16 R12, desc[UR8][R10.64]
+     +0x18110 exe=       0 samp=    0 thr= 0.0  @P0   PRMT R12, R15, 0x7610, R12
+     +0x18120 exe=       0 samp=    0 thr= 0.0  BRA 0x7f7f96624c80
+     +0x18130 exe=  125036 samp=   83 thr=31.0  LDG.E R15, desc[UR8][R14.64+0xc]
+     +0x18140 exe=  125036 samp=    1 thr=31.0  LDC.64 R8, c[0x0][0x3a0]
+     +0x18150 exe=  125036 samp=  215 thr=31.0  IMAD.WIDE R8, R15, 0x20, R8
+     +0x18160 exe=  125036 samp=   93 thr=31.0  LDG.E.64 R8, desc[UR8][R8.64+0x10]
+     +0x18170 exe=  125036 samp=  282 thr=31.0  LD.E.U16 R12, desc[UR8][R8.64]
+  >> +0x18180 exe=  125036 samp=  631 thr=31.0  ISETP.GT.AND P0, PT, R6, 0x14, PT
+     +0x18190 exe=  125036 samp=   44 thr=31.0  @P0   BRA 0x7f7f96626d00
+     +0x181a0 exe=  125036 samp=   17 thr=31.0  ISETP.GT.AND P0, PT, R6, 0x9, PT
+
+context around +0x00170 (exe = warp-level executions, samp = stall samples):
+     +0x000f0 exe=   62518 samp=   20 thr=31.0  @!P0  EXIT
+     +0x00100 exe=   62518 samp=    6 thr=31.0  S2UR UR5, SR_CgaCtaId
+     +0x00110 exe=   62518 samp=    1 thr=31.0  LDCU UR10, c[0x0][0x370]
+     +0x00120 exe=   62518 samp=    1 thr=31.0  MOV.64 R2, R4
+     +0x00130 exe=   62518 samp=    1 thr=31.0  UMOV UR4, 0x400
+     +0x00140 exe=   62518 samp=    1 thr=31.0  LDCU.64 UR8, c[0x0][0x358]
+     +0x00150 exe=   62518 samp=   25 thr=31.0  IMAD.WIDE.U32 R6, R7, UR10, RZ
+     +0x00160 exe=   62518 samp=   25 thr=31.0  ULEA UR5, UR5, UR4, 0x18
+  >> +0x00170 exe=   62518 samp=  346 thr=31.0  STL.64 [R1+0x58], R6
+     +0x00180 exe=   62518 samp=    4 thr=31.0  UMOV UR4, URZ
+     +0x00190 exe=   62518 samp=    1 thr=31.0  IADD R4, R7, UR4
+
+context around +0x002f0 (exe = warp-level executions, samp = stall samples):
+     +0x00270 exe=   62518 samp=    4 thr=31.0  IMAD.WIDE.U32 R18, R4, 0x7, R16
+     +0x00280 exe=   62518 samp=   18 thr=31.0  IMAD.SHL.U32 R22, R4, 0x2, RZ
+     +0x00290 exe=   62518 samp=    1 thr=31.0  IADD R19, R19, R7
+     +0x002a0 exe=   62518 samp=   10 thr=31.0  IADD.64 R20, R18, -R20
+     +0x002b0 exe=   62518 samp=   16 thr=31.0  IADD.64 R22, R20, -R22
+     +0x002c0 exe=  187554 samp=  266 thr=31.0  LDL.LU.64 R10, [R1+0x48]
+     +0x002d0 exe=  187554 samp=    6 thr=31.0  LDCU.64 UR4, c[0x0][0x3c0]
+     +0x002e0 exe=  187554 samp=    4 thr=31.0  LDCU.128 UR12, c[0x0][0x3b0]
+  >> +0x002f0 exe=  187554 samp=  289 thr=31.0  SHF.L.U64.HI R5, R10, 0x2, R11
+     +0x00300 exe=  187554 samp=    5 thr=31.0  IMAD.SHL.U32 R4, R10, 0x4, RZ
+     +0x00310 exe=  187554 samp=   35 thr=31.0  IADD.64 R8, R4, UR4

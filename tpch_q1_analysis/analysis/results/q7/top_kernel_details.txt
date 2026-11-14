@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 207; total 1851.2 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 198 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (12.8% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=236.8us grid=1 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.01 ipc=0.24 inst=1.3e+05 thread_eff=12.2
+  SM%=0.2 Mem%=0.4 DRAM%=0.1 DRAM=0.09MB (0.4 GB/s) L1hit=50.7 L2hit=86.3 SM busy max/avg=48.00 active_frac=0.02
+  pipes%: alu=3.3 fma=0.3 lsu=9.9 adu=1.7 cbu=0.4 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=8.84e+03 st_req=1 atom=0 | shared ld=1.42e+03 st=1.36e+03 bank_conf=0
+  stalls%: barrier=79.5, wait=6.2, long_scoreboard=5.8, selected=2.1, no_instructions=1.9, lg_throttle=1.3, branch_resolving=1.1, short_scoreboard=1.1
+== pos 63 [expression eval / expression: AST] compute_column_kernel  (6.0% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 0>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=110.9us grid=15630 blk=128 regs=40 smem=2048B occ ach/theo=91.2/100.0 waves=27.14 ipc=1.92 inst=2.17e+07 thread_eff=32.0
+  SM%=88.0 Mem%=88.0 DRAM%=5.6 DRAM=4.09MB (36.8 GB/s) L1hit=96.7 L2hit=95.0 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=18.7 fma=5.5 lsu=89.6 adu=26.6 cbu=1.0 xu=0.0 uniform=0.4 fp64=0.0
+  global ld_req=2.81e+06 st_req=6.25e+04 atom=0 | shared ld=1.25e+05 st=1.25e+05 bank_conf=6.41e+05
+  stalls%: long_scoreboard=36.5, wait=16.8, lg_throttle=11.7, mio_throttle=8.4, no_instructions=8.4, not_selected=5.8, selected=4.2, short_scoreboard=3.5
+== pos 54 [expression eval / expression: AST] compute_column_kernel  (5.9% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 0>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=109.8us grid=15629 blk=128 regs=40 smem=2048B occ ach/theo=91.2/100.0 waves=27.13 ipc=1.92 inst=2.17e+07 thread_eff=32.0
+  SM%=88.5 Mem%=88.5 DRAM%=5.6 DRAM=4.09MB (37.2 GB/s) L1hit=96.6 L2hit=95.0 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=18.7 fma=5.5 lsu=89.6 adu=26.6 cbu=1.0 xu=0.0 uniform=0.4 fp64=0.0
+  global ld_req=2.81e+06 st_req=6.25e+04 atom=0 | shared ld=1.25e+05 st=1.25e+05 bank_conf=6.4e+05
+  stalls%: long_scoreboard=36.0, wait=18.1, lg_throttle=11.4, mio_throttle=8.6, no_instructions=7.9, not_selected=5.8, selected=4.4, short_scoreboard=3.2
+== pos 55 [expression eval / expression: AST] compute_column_kernel  (5.8% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 0>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=107.1us grid=15627 blk=128 regs=40 smem=2048B occ ach/theo=91.1/100.0 waves=27.13 ipc=1.92 inst=2.17e+07 thread_eff=32.0
+  SM%=88.3 Mem%=88.3 DRAM%=5.8 DRAM=4.09MB (38.2 GB/s) L1hit=96.7 L2hit=95.0 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=18.7 fma=5.5 lsu=89.8 adu=26.7 cbu=1.0 xu=0.0 uniform=0.4 fp64=0.0
+  global ld_req=2.81e+06 st_req=6.25e+04 atom=0 | shared ld=1.25e+05 st=1.25e+05 bank_conf=6.41e+05
+  stalls%: long_scoreboard=36.0, wait=16.8, lg_throttle=11.6, mio_throttle=8.8, no_instructions=8.2, not_selected=5.5, selected=4.8, short_scoreboard=3.4
+== pos 98 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (5.1% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=94.8us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=78.8/83.3 waves=17.07 ipc=2.21 inst=2.19e+07 thread_eff=19.7
+  SM%=54.4 Mem%=32.9 DRAM%=17.7 DRAM=11.08MB (116.9 GB/s) L1hit=52.1 L2hit=79.5 SM busy max/avg=1.01 active_frac=0.97
+  pipes%: alu=25.5 fma=5.2 lsu=14.9 adu=20.6 cbu=2.7 xu=7.3 uniform=4.9 fp64=0.0
+  global ld_req=4.28e+05 st_req=4.69e+04 atom=7.75e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=4.08e+03
+  stalls%: long_scoreboard=35.5, wait=20.6, barrier=13.5, short_scoreboard=9.5, selected=5.8, not_selected=5.1, no_instructions=4.1, branch_resolving=3.9
+== pos 70 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (3.9% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=73.0us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=78.4/83.3 waves=17.07 ipc=2.29 inst=1.77e+07 thread_eff=18.0
+  SM%=56.6 Mem%=17.1 DRAM%=11.2 DRAM=5.43MB (74.4 GB/s) L1hit=86.3 L2hit=37.6 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=25.3 fma=4.6 lsu=17.4 adu=24.6 cbu=3.4 xu=6.2 uniform=5.0 fp64=0.0
+  global ld_req=3.48e+05 st_req=6.25e+04 atom=8.19e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=4.34e+03
+  stalls%: long_scoreboard=32.1, wait=20.9, barrier=12.7, short_scoreboard=10.0, selected=6.3, not_selected=5.8, no_instructions=4.8, branch_resolving=4.7
+== pos 56 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (3.9% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=72.9us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=78.5/83.3 waves=17.07 ipc=2.30 inst=1.77e+07 thread_eff=18.0
+  SM%=56.6 Mem%=17.0 DRAM%=11.3 DRAM=5.44MB (74.6 GB/s) L1hit=86.3 L2hit=37.6 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=25.3 fma=4.6 lsu=17.4 adu=24.6 cbu=3.4 xu=6.3 uniform=5.0 fp64=0.0
+  global ld_req=3.48e+05 st_req=6.25e+04 atom=8.19e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=4.28e+03
+  stalls%: long_scoreboard=32.5, wait=20.1, barrier=13.5, short_scoreboard=10.0, selected=6.2, not_selected=5.9, branch_resolving=5.1, no_instructions=4.5
+== pos 57 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (3.9% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=72.1us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=78.5/83.3 waves=17.07 ipc=2.29 inst=1.77e+07 thread_eff=18.0
+  SM%=56.6 Mem%=17.0 DRAM%=11.4 DRAM=5.43MB (75.3 GB/s) L1hit=86.3 L2hit=37.6 SM busy max/avg=1.01 active_frac=0.97
+  pipes%: alu=25.2 fma=4.6 lsu=17.4 adu=24.5 cbu=3.4 xu=6.2 uniform=5.0 fp64=0.0
+  global ld_req=3.48e+05 st_req=6.25e+04 atom=8.19e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=4.35e+03
+  stalls%: long_scoreboard=33.8, wait=20.2, barrier=12.8, short_scoreboard=10.7, selected=6.0, not_selected=5.3, branch_resolving=4.6, no_instructions=4.5

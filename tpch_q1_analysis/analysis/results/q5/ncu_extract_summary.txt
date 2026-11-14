@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=133 (full metrics: 133) gpu_time_us=940.2 dram_MB=81.66 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+ 50 compute_column_kernel                 85.9   9.1  11719  128  85.8   5.4   35.9  91.1 20.35   3.09
+ 69 static_kernel                         62.9   6.7   5863  256  62.9  30.8  203.3  84.4 20.36  12.79
+ 51 fused_membership_mask_kernel          62.4   6.6   4096  256  52.5  15.6  103.4  77.6 17.07   6.45
+ 68 static_kernel                         62.4   6.6   5859  256  62.9  30.9  204.7  84.8 20.34  12.78
+128 DeviceRadixSortSingleTileKernel       37.0   3.9      1  256   1.2   0.0    0.3  16.7  0.01   0.01
+ 93 gather_chars_fn_char_parallel         36.8   3.9   5692  128  60.7   8.3   54.7  87.2  9.88   2.01
+ 97 find_if_n                             28.4   3.0   1423  128  42.9   9.1   60.3  85.6  2.47   1.71
+ 72 DeviceSelectSweepKernel               22.0   2.3    522  384  37.5  21.1  139.3  43.4  5.44   3.06
+ 73 DeviceSelectSweepKernel               21.5   2.3    521  384  37.8  21.6  142.5  44.0  5.43   3.06
+ 84 find_if_n                             19.9   2.1   1423  128  35.4  12.1   79.8  82.5  2.47   1.59
+103 DeviceScanKernel                      14.0   1.5      3  224   0.4   3.3   21.8  14.4  0.02   0.30
+116 mapping_indices_kernel                13.5   1.4     57  128   4.7   2.0   13.0   8.2  0.24   0.18
+ 57 insert_if_n                           13.3   1.4    236  128   4.7   6.4   42.5  25.9  0.41   0.57
+ 83 insert_if_n                           13.1   1.4    357  128   7.1   9.8   64.7  43.5  0.62   0.85
+ 92 DeviceScanKernel                      12.8   1.4     68  224   9.7  11.4   75.1  20.6  0.35   0.96
+ 58 find_if_n                             12.8   1.4    357  128  21.3   8.1   53.3  54.7  0.62   0.68
+ 65 gather_chars_fn_char_parallel         12.2   1.3   1428  128  46.1   9.1   60.1  80.0  2.48   0.73
+ 64 DeviceScanKernel                      12.0   1.3     17  224   2.5   4.5   29.5  14.1  0.09   0.35
+ 53 DeviceSelectSweepKernel               11.8   1.3    261  384  33.9  20.0  131.8  43.3  2.72   1.56
+122 single_pass_shmem_aggs_kernel         10.0   1.1     57  128   2.6   2.7   17.8   8.0  0.30   0.18
+ 96 insert_if_n                            9.9   1.1     79  128   2.6   3.6   23.9  10.4  0.14   0.24
+ 32 fused_membership_mask_kernel           9.4   1.0    586  256  29.0   6.0   39.7  67.4  2.44   0.37
+ 46 DeviceScanKernel                       9.4   1.0     12  224   2.2   2.8   18.1  14.5  0.06   0.17
+ 67 insert_if_n                            8.8   0.9    357  128   8.0  14.2   93.6  50.8  0.62   0.82
+ 47 gather_chars_fn_char_parallel          8.1   0.9    944  128  46.0   4.7   31.1  74.8  1.64   0.25
+time-weighted stall mix (kernels with full metrics): long_scoreboard=39.7%, wait=14.0%, no_instructions=11.0%, barrier=8.1%, short_scoreboard=7.9%, selected=5.2%, not_selected=3.7%, branch_resolving=3.3%
+sm clock (MHz) median: 2256

@@ -1,0 +1,25 @@
+[PASS] ncu_list_x3:iterations_found: 3 query iterations (expected 3)
+[PASS] ncu_list_x3:pin_tier_gpu: 2 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'part']
+[PASS] ncu_list_x3:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (2), all of ['lineitem', 'part'] present
+[PASS] ncu_list_x3:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x3:fs_cache_zero_every_iteration: 4 cache summaries for 3 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..3 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x3:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x3:no_host_staged_filter_publication: 0 dynamic-filter publications, all through peer copies (device-side)
+[PASS] ncu_list_x3:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 89738240 B at QueryBegin and QueryEnd; iterations 2..3: host_pool allocated and peak unchanged
+[PASS] ncu_list_x4:iterations_found: 4 query iterations (expected 4)
+[PASS] ncu_list_x4:pin_tier_gpu: 2 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'part']
+[PASS] ncu_list_x4:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (2), all of ['lineitem', 'part'] present
+[PASS] ncu_list_x4:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x4:fs_cache_zero_every_iteration: 5 cache summaries for 4 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..4 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x4:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x4:no_host_staged_filter_publication: 0 dynamic-filter publications, all through peer copies (device-side)
+[PASS] ncu_list_x4:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 89738240 B at QueryBegin and QueryEnd; iterations 2..4: host_pool allocated and peak unchanged
+[PASS] ncu_list_x5:iterations_found: 5 query iterations (expected 5)
+[PASS] ncu_list_x5:pin_tier_gpu: 2 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'part']
+[PASS] ncu_list_x5:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (2), all of ['lineitem', 'part'] present
+[PASS] ncu_list_x5:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x5:fs_cache_zero_every_iteration: 6 cache summaries for 5 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..5 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x5:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x5:no_host_staged_filter_publication: 0 dynamic-filter publications, all through peer copies (device-side)
+[PASS] ncu_list_x5:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 89738240 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged
+OVERALL ncu list logs: PASS

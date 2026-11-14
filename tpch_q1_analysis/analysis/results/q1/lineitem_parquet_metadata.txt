@@ -1,0 +1,39 @@
+┌─────────────────┬────────────┬──────────────┬────────────┬────────────┬─────────────┐
+│       col       │    phys    │     comp     │ row_groups │  comp_MB   │  uncomp_MB  │
+│     varchar     │  varchar   │   varchar    │   int64    │   double   │   double    │
+├─────────────────┼────────────┼──────────────┼────────────┼────────────┼─────────────┤
+│ l_comment       │ BYTE_ARRAY │ SNAPPY       │         56 │ 703.227304 │ 1637.461028 │
+│ l_commitdate    │ INT32      │ UNCOMPRESSED │         56 │   90.74457 │    90.74457 │
+│ l_discount      │ INT64      │ UNCOMPRESSED │         56 │  30.210692 │   30.210692 │
+│ l_extendedprice │ INT64      │ SNAPPY       │         56 │   183.1924 │  183.192613 │
+│ l_linenumber    │ INT32      │ SNAPPY       │         56 │  15.817552 │   22.703116 │
+│ l_linestatus    │ BYTE_ARRAY │ SNAPPY       │         56 │   9.433891 │    9.476225 │
+│ l_orderkey      │ INT32      │ SNAPPY       │         56 │  19.058426 │   37.841849 │
+│ l_partkey       │ INT32      │ SNAPPY       │         56 │ 168.836646 │   168.83675 │
+│ l_quantity      │ INT64      │ UNCOMPRESSED │         56 │   45.22473 │    45.22473 │
+│ l_receiptdate   │ INT32      │ UNCOMPRESSED │         56 │  90.763342 │   90.763342 │
+│ l_returnflag    │ BYTE_ARRAY │ SNAPPY       │         56 │  14.722303 │   14.722191 │
+│ l_shipdate      │ INT32      │ UNCOMPRESSED │         56 │  90.757994 │   90.757994 │
+│ l_shipinstruct  │ BYTE_ARRAY │ UNCOMPRESSED │         56 │  15.207268 │   15.207268 │
+│ l_shipmode      │ BYTE_ARRAY │ UNCOMPRESSED │         56 │  22.704792 │   22.704792 │
+│ l_suppkey       │ INT32      │ SNAPPY       │         56 │  138.34626 │  138.346353 │
+│ l_tax           │ INT64      │ UNCOMPRESSED │         56 │  30.209793 │   30.209793 │
+└─────────────────┴────────────┴──────────────┴────────────┴────────────┴─────────────┘
+  16 rows                                                                   6 columns
+┌──────────┬──────────┐
+│    n     │   pass   │
+│  int64   │  int64   │
+├──────────┼──────────┤
+│ 59986052 │ 31569869 │
+└──────────┴──────────┘
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ /home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf10/lineitem/part.0.parquet │
+│                                                                                        │
+│ l_returnflag                                                                   varchar │
+│ l_linestatus                                                                   varchar │
+│ l_quantity                                                                     decimal │
+│ l_extendedprice                                                                decimal │
+│ l_discount                                                                     decimal │
+│ l_tax                                                                          decimal │
+│ l_shipdate                                                                     date    │
+└────────────────────────────────────────────────────────────────────────────────────────┘

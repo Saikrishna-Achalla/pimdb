@@ -1,0 +1,102 @@
+# DeviceMergeSortBlockSortKernel: family 6246.8 us (64.1% of warm GPU time, 2 launches); hotspots for its longest launch pos 141 (3998.5 us, grid 5.0, block 256.0; q16_warm_full.ncu-rep row 141, selection verified by duration)
+# void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator<0, nullate::DYNAMIC, lexicographic::sorting_physical_element_comparator>>, 
+static instructions=13648  executed(warp)=1.66e+07  stall samples=40621
+static instructions ever executed: 4219 (30.9% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        5853   6.123e+06   36.9   71.1
+Move/Special          3081   5.662e+06   34.1    5.3
+Control Flow          1236    2.27e+06   13.7    7.2
+Other                  700   1.879e+06   11.3    3.0
+Local (spill)         1042   4.283e+05    2.6    0.8
+FP Arithmetic          299   1.475e+05    0.9    0.1
+Const Load             692   5.254e+04    0.3   12.4
+Shared Load            200   1.701e+04    0.1    0.0
+Uniform datapath        28        8475    0.1    0.0
+Shared Store           376        6808    0.0    0.1
+Barrier/Fence           38         728    0.0    0.0
+Global Load             35         688    0.0    0.0
+Global Store            68         673    0.0    0.0
+
+Top 25 instructions by stall samples:
+  +0x2d130 samp=  8050 (19.8%) exe=   272657 thr=13.0 [long_sb=7989,selected=29]  ISETP.NE.U32.AND P3, PT, R12, R13, PT
+  +0x2d360 samp=  7107 (17.5%) exe=   272657 thr=13.0 [long_sb=7041,wait=36]  ISETP.NE.U32.AND P1, PT, R6, R7, PT
+  +0x08bf0 samp=  2266 ( 5.6%) exe=        8 thr=32.0 [barrier=2266]  LDC.64 R30, c[0x0][0x3f0]
+  +0x10300 samp=  1523 ( 3.7%) exe=    38305 thr=18.0 [long_sb=1519,selected=4]  IMAD.WIDE.U32 R6, R0, 0x4, R6
+  +0x102a0 samp=  1469 ( 3.6%) exe=    38305 thr=18.0 [long_sb=1463,selected=6]  ISETP.NE.U32.AND P0, PT, R5, RZ, PT
+  +0x103d0 samp=  1369 ( 3.4%) exe=    38305 thr=18.0 [long_sb=1361,selected=6]  ISETP.NE.U32.AND P0, PT, R6, RZ, PT
+  +0x104c0 samp=  1271 ( 3.1%) exe=    38305 thr=18.0 [long_sb=1265,selected=6]  @P0   IADD.64 R10, R12, R10
+  +0x34e90 samp=  1037 ( 2.6%) exe=    27191 thr=15.0 [long_sb=1024,wait=11]  ISETP.GE.AND P0, PT, R0, R5, PT
+  +0x2cf40 samp=   891 ( 2.2%) exe=    21386 thr=16.0 [long_sb=884,wait=3]  @!P1  SHF.R.S32.HI R7, RZ, 0x1f, R5
+  +0x11fc0 samp=   599 ( 1.5%) exe=    11190 thr=27.0 [long_sb=595,selected=2]  ISETP.GE.S64.AND P1, PT, R8, R6, PT
+  +0x10700 samp=   576 ( 1.4%) exe=    38305 thr=18.0 [long_sb=573,selected=3]  ISETP.GT.AND P1, PT, R12, 0xd, PT
+  +0x2cc50 samp=   552 ( 1.4%) exe=    21386 thr=16.0 [long_sb=549,selected=3]  ISETP.NE.U32.AND P1, PT, R8, 0x3, PT
+  +0x10340 samp=   527 ( 1.3%) exe=    38305 thr=18.0 [long_sb=465,branch_resolving=35]  ISETP.GT.AND P0, PT, R5, R8, PT
+  +0x06e70 samp=   479 ( 1.2%) exe=       32 thr=32.0 [barrier=479]  @!P0  BRA 0x7f9b6618c480
+  +0x2d140 samp=   451 ( 1.1%) exe=   272657 thr=13.0 [wait=414,selected=36]  @P3   BRA 0x7f9b661b2410
+  +0x2d370 samp=   416 ( 1.0%) exe=   272657 thr=13.0 [wait=374,selected=40]  @P1   BRA 0x7f9b661b2640
+  +0x062f0 samp=   398 ( 1.0%) exe=       32 thr=32.0 [barrier=398]  LDC.64 R26, c[0x0][0x3e8]
+  +0x101f0 samp=   384 ( 0.9%) exe=    11190 thr=27.0 [long_sb=384]  ISETP.GE.AND P0, PT, R0, 0x1, PT
+  +0x2d110 samp=   300 ( 0.7%) exe=   272657 thr=13.0 [wait=261,selected=35]  LD.E.U8 R12, desc[UR8][R8.64]
+  +0x2d340 samp=   296 ( 0.7%) exe=   272657 thr=13.0 [wait=254,selected=40]  LD.E.U8 R6, desc[UR8][R10.64]
+  +0x00bd0 samp=   288 ( 0.7%) exe=       32 thr=32.0 [barrier=288]  LDC.64 R2, c[0x0][0x3d0]
+  +0x0a600 samp=   272 ( 0.7%) exe=        8 thr=32.0 [barrier=272]  LDC.64 R34, c[0x0][0x400]
+  +0x10fa0 samp=   261 ( 0.6%) exe=     5729 thr=10.0 [long_sb=260,wait=1]  ISETP.GE.AND P1, PT, R8, R6, PT
+  +0x2d400 samp=   248 ( 0.6%) exe=   267386 thr=13.0 [wait=212,selected=33]  @!P2  BRA P3, 0x7f9b661b2500
+  +0x098f0 samp=   241 ( 0.6%) exe=        8 thr=32.0 [barrier=241]  LDC.64 R34, c[0x0][0x400]
+
+hot PCs (>0.2% samples each) span +0x9a0 .. +0x34e90, n=52
+
+stall reasons (sum over instructions): long_sb=64.4%, barrier=13.4%, wait=12.5%, selected=5.0%, branch_resolving=2.1%, no_inst=1.5%, math=0.3%, not_selected=0.3%
+
+context around +0x2d130 (exe = warp-level executions, samp = stall samples):
+     +0x2d0b0 exe=   21386 samp=    2 thr=16.0  MOV.64 R8, R28
+     +0x2d0c0 exe=   21386 samp=    7 thr=16.0  HFMA2 R5, -RZ, RZ, 0, 0
+     +0x2d0d0 exe=  272657 samp=  188 thr=13.0  R2UR UR8, R14
+     +0x2d0e0 exe=  272657 samp=   68 thr=13.0  R2UR UR9, R15
+     +0x2d0f0 exe=  272657 samp=   80 thr=13.0  R2UR UR10, R14
+     +0x2d100 exe=  272657 samp=   90 thr=13.0  R2UR UR11, R15
+     +0x2d110 exe=  272657 samp=  300 thr=13.0  LD.E.U8 R12, desc[UR8][R8.64]
+     +0x2d120 exe=  272657 samp=  124 thr=13.0  LD.E.U8 R13, desc[UR10][R6.64]
+  >> +0x2d130 exe=  272657 samp= 8050 thr=13.0  ISETP.NE.U32.AND P3, PT, R12, R13, PT
+     +0x2d140 exe=  272657 samp=  451 thr=13.0  @P3   BRA 0x7f9b661b2410
+     +0x2d150 exe=  267386 samp=  179 thr=13.0  IADD R5, R5, 0x1
+
+context around +0x2d360 (exe = warp-level executions, samp = stall samples):
+     +0x2d2e0 exe=   21386 samp=   39 thr=16.0  @!P2  BRA 0x7f9b661b2610
+     +0x2d2f0 exe=   21386 samp=   18 thr=16.0  MOV R5, RZ
+     +0x2d300 exe=  272657 samp=  197 thr=13.0  R2UR UR8, R14
+     +0x2d310 exe=  272657 samp=   75 thr=13.0  R2UR UR9, R15
+     +0x2d320 exe=  272657 samp=   80 thr=13.0  R2UR UR10, R14
+     +0x2d330 exe=  272657 samp=   75 thr=13.0  R2UR UR11, R15
+     +0x2d340 exe=  272657 samp=  296 thr=13.0  LD.E.U8 R6, desc[UR8][R10.64]
+     +0x2d350 exe=  272657 samp=  127 thr=13.0  LD.E.U8 R7, desc[UR10][R28.64]
+  >> +0x2d360 exe=  272657 samp= 7107 thr=13.0  ISETP.NE.U32.AND P1, PT, R6, R7, PT
+     +0x2d370 exe=  272657 samp=  416 thr=13.0  @P1   BRA 0x7f9b661b2640
+     +0x2d380 exe=  267386 samp=  148 thr=13.0  IADD R5, R5, 0x1
+
+context around +0x08bf0 (exe = warp-level executions, samp = stall samples):
+     +0x08b70 exe=       8 samp=    0 thr=32.0  LDC.64 R22, c[0x0][0x3d8]
+     +0x08b80 exe=       8 samp=    0 thr=32.0  LDC.64 R26, c[0x0][0x3e0]
+     +0x08b90 exe=       8 samp=    0 thr=32.0  LDC.64 R28, c[0x0][0x3e8]
+     +0x08ba0 exe=       8 samp=    0 thr=32.0  LEA R16, R17, R16, 0x18
+     +0x08bb0 exe=       8 samp=    0 thr=32.0  IMAD R24, R40, 0x44, R16
+     +0x08bc0 exe=       8 samp=    0 thr=32.0  BAR.SYNC.DEFER_BLOCKING 0x0
+     +0x08bd0 exe=       8 samp=    0 thr=32.0  LOP3.LUT R55, R40, 0x3fe, RZ, 0xc0, !PT
+     +0x08be0 exe=       8 samp=    0 thr=32.0  IMAD R55, R55, 0x11, RZ
+  >> +0x08bf0 exe=       8 samp= 2266 thr=32.0  LDC.64 R30, c[0x0][0x3f0]
+     +0x08c00 exe=       8 samp=    0 thr=32.0  VIMNMX.S32 R55, R55, R57, PT
+     +0x08c10 exe=       8 samp=    0 thr=32.0  STL.64 [R1+0xa8], R20
+
+context around +0x10300 (exe = warp-level executions, samp = stall samples):
+     +0x10280 exe=   38305 samp=   48 thr=18.0  LDL.U8 R5, [R2+0x58]
+     +0x10290 exe=   38305 samp=    6 thr=18.0  BSSY.RECONVERGENT B0, 0x7f9b66195540
+     +0x102a0 exe=   38305 samp= 1469 thr=18.0  ISETP.NE.U32.AND P0, PT, R5, RZ, PT
+     +0x102b0 exe=   38305 samp=    4 thr=18.0  MOV R5, RZ
+     +0x102c0 exe=   38305 samp=   59 thr=18.0  @!P0  BRA 0x7f9b66195520
+     +0x102d0 exe=   38305 samp=   23 thr=18.0  LDL.64 R6, [R2+0x48]
+     +0x102e0 exe=   38305 samp=    5 thr=18.0  R2UR UR8, R14
+     +0x102f0 exe=   38305 samp=    5 thr=18.0  R2UR UR9, R15
+  >> +0x10300 exe=   38305 samp= 1523 thr=18.0  IMAD.WIDE.U32 R6, R0, 0x4, R6
+     +0x10310 exe=   38305 samp=   69 thr=18.0  LD.E R5, desc[UR8][R6.64]
+     +0x10320 exe=   38305 samp=   13 thr=18.0  NOP

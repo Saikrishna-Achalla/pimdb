@@ -1,0 +1,37 @@
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         3.0       3.0       0.757        2.43      47     195
+   5         3.0       3.0       0.748        2.68      47     195
+   6         1.0       4.0       0.739        2.79      47     195
+   7         2.0       3.0       0.739        2.64      47     195
+   8         2.0       3.0       0.751        2.50      47     195
+median: planning 2.0 ms, engine 3.0 ms, GPU busy 0.748 ms (25% of the engine window), first->last GPU op 2.64 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                      207.0    1.754
+  cudaMemcpyBatchAsync                       128.0    0.554
+  cudaLaunchKernel                            47.0    0.359
+  cudaMallocFromPoolAsync                    117.0    0.317
+  cudaFreeAsync                              117.0    0.195
+  cudaMemcpyAsync                             15.0    0.117
+  cudaEventRecord                             88.0    0.101
+  cudaStreamWaitEvent                         76.0    0.092
+  cuStreamSynchronize                         14.0    0.048
+  cudaEventCreateWithFlags                    13.0    0.043
+  cudaEventDestroy                            13.0    0.043
+  cudaMemsetAsync                             17.0    0.027
+  cudaStreamGetDevice                         92.0    0.025
+  cudaEventSynchronize                         3.0    0.010
+  cuKernelGetName                             47.0    0.009
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 722.0 us of kernels):
+  compute_column_kernel                            627.7 us  86.9%
+  DeviceSelectSweepKernel                           36.2 us   5.0%
+  transform_kernel                                  24.6 us   3.4%
+  static_kernel                                     10.7 us   1.5%
+  DeviceReduceKernel                                 7.8 us   1.1%
+  DeviceReduceSingleTileKernel                       7.3 us   1.0%
+  copy_range_kernel                                  2.9 us   0.4%
+  single_thread_kernel                               2.5 us   0.3%
+  DeviceCompactInitKernel                            2.3 us   0.3%

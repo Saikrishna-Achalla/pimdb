@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 92; total 1735.7 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 77 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (36.5% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=633.8us grid=3 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.02 ipc=0.34 inst=1.43e+06 thread_eff=28.6
+  SM%=0.6 Mem%=1.7 DRAM%=0.1 DRAM=0.32MB (0.5 GB/s) L1hit=12.7 L2hit=96.1 SM busy max/avg=16.89 active_frac=0.06
+  pipes%: alu=4.6 fma=0.4 lsu=10.7 adu=1.6 cbu=0.9 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=1.07e+05 st_req=353 atom=0 | shared ld=9.83e+03 st=4.08e+03 bank_conf=1.2e+04
+  stalls%: long_scoreboard=59.1, barrier=16.0, wait=10.9, no_instructions=4.1, selected=3.9, branch_resolving=3.3, short_scoreboard=0.9, not_selected=0.6
+== pos 87 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (7.3% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=126.4us grid=1 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.01 ipc=0.28 inst=8e+04 thread_eff=19.2
+  SM%=0.3 Mem%=0.6 DRAM%=0.1 DRAM=0.09MB (0.7 GB/s) L1hit=42.4 L2hit=82.3 SM busy max/avg=48.00 active_frac=0.02
+  pipes%: alu=3.4 fma=0.4 lsu=12.5 adu=3.0 cbu=0.5 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=3.07e+03 st_req=1 atom=0 | shared ld=1.42e+03 st=1.36e+03 bank_conf=0
+  stalls%: barrier=71.8, long_scoreboard=7.4, wait=7.0, no_instructions=3.9, mio_throttle=2.1, branch_resolving=1.8, lg_throttle=1.8, selected=1.8
+== pos 31 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (6.3% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=110.2us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=80.3/83.3 waves=17.07 ipc=2.15 inst=2.47e+07 thread_eff=21.4
+  SM%=53.3 Mem%=21.7 DRAM%=21.7 DRAM=15.83MB (143.6 GB/s) L1hit=40.3 L2hit=48.2 SM busy max/avg=1.02 active_frac=0.98
+  pipes%: alu=24.0 fma=4.5 lsu=14.7 adu=21.0 cbu=2.8 xu=6.5 uniform=5.2 fp64=0.0
+  global ld_req=4.89e+05 st_req=9.37e+04 atom=7.18e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=3.53e+03
+  stalls%: long_scoreboard=43.0, wait=18.6, short_scoreboard=9.2, barrier=8.9, selected=5.9, not_selected=4.6, branch_resolving=4.4, no_instructions=3.6
+== pos 34 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (6.3% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=110.2us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=80.4/83.3 waves=17.07 ipc=2.15 inst=2.47e+07 thread_eff=21.4
+  SM%=53.2 Mem%=21.7 DRAM%=21.7 DRAM=15.82MB (143.6 GB/s) L1hit=40.4 L2hit=48.6 SM busy max/avg=1.01 active_frac=0.97
+  pipes%: alu=24.0 fma=4.5 lsu=14.7 adu=21.0 cbu=2.8 xu=6.5 uniform=5.2 fp64=0.0
+  global ld_req=4.9e+05 st_req=9.38e+04 atom=7.15e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=3.65e+03
+  stalls%: long_scoreboard=42.1, wait=19.2, short_scoreboard=9.6, barrier=9.0, selected=5.6, not_selected=5.0, branch_resolving=3.9, no_instructions=3.8
+== pos 12 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (4.0% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=69.6us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=78.0/83.3 waves=17.07 ipc=2.07 inst=1.49e+07 thread_eff=20.4
+  SM%=50.9 Mem%=25.3 DRAM%=17.4 DRAM=8.03MB (115.4 GB/s) L1hit=43.4 L2hit=75.2 SM busy max/avg=1.01 active_frac=0.97
+  pipes%: alu=22.6 fma=4.0 lsu=16.6 adu=23.4 cbu=3.3 xu=5.2 uniform=4.4 fp64=0.0
+  global ld_req=2.88e+05 st_req=4.69e+04 atom=8.19e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=4.86e+03
+  stalls%: long_scoreboard=36.4, wait=19.0, barrier=13.5, short_scoreboard=9.4, selected=5.5, no_instructions=4.8, branch_resolving=4.5, not_selected=4.5
+== pos 79 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (3.7% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=63.6us grid=3 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.02 ipc=0.35 inst=1.03e+05 thread_eff=30.0
+  SM%=0.5 Mem%=1.6 DRAM%=0.6 DRAM=0.27MB (4.2 GB/s) L1hit=9.5 L2hit=75.8 SM busy max/avg=23.03 active_frac=0.04
+  pipes%: alu=4.7 fma=0.3 lsu=11.2 adu=1.7 cbu=0.8 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=6.97e+03 st_req=353 atom=0 | shared ld=1.46e+03 st=817 bank_conf=1.5e+03
+  stalls%: long_scoreboard=67.2, no_instructions=8.4, wait=8.0, selected=4.7, barrier=3.7, branch_resolving=2.3, short_scoreboard=2.3, mio_throttle=2.0
+== pos 81 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (3.6% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=62.4us grid=3 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.02 ipc=0.31 inst=1.26e+05 thread_eff=29.1
+  SM%=0.6 Mem%=1.8 DRAM%=0.7 DRAM=0.31MB (4.9 GB/s) L1hit=10.6 L2hit=77.3 SM busy max/avg=16.83 active_frac=0.06
+  pipes%: alu=4.2 fma=0.3 lsu=9.9 adu=1.4 cbu=0.8 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=8.83e+03 st_req=353 atom=0 | shared ld=1.63e+03 st=817 bank_conf=1.43e+03
+  stalls%: long_scoreboard=58.3, barrier=13.3, wait=10.8, no_instructions=7.5, selected=4.3, branch_resolving=2.5, short_scoreboard=1.3, mio_throttle=1.0
+== pos 30 [expression eval / expression: binary op] static_kernel  (1.9% of GPU time)
+   void for_each::static_kernel<for_each::policy_selector, int, DeviceFor::__op_wrapper_t<int, binops::binary_op_device_dispatcher<binops::Greater>, cuda::counting_iterator<int, long>>>(T2, T3)
+  dur=32.8us grid=5859 blk=256 regs=40 smem=0B occ ach/theo=87.7/100.0 waves=20.34 ipc=2.85 inst=8.72e+06 thread_eff=32.0
+  SM%=63.5 Mem%=30.0 DRAM%=28.0 DRAM=6.09MB (185.4 GB/s) L1hit=43.7 L2hit=24.6 SM busy max/avg=1.07 active_frac=0.88
+  pipes%: alu=26.4 fma=2.7 lsu=33.7 adu=55.4 cbu=0.8 xu=0.0 uniform=13.8 fp64=0.0
+  global ld_req=1.87e+05 st_req=9.37e+04 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=34.3, wait=17.2, not_selected=16.9, short_scoreboard=12.0, selected=6.1, no_instructions=5.6, branch_resolving=2.1, drain=1.8

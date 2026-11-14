@@ -1,0 +1,48 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+expression: AST                                    6     366.0   19.8    12.83   35.1
+dynamic filter: membership probe                   6     324.8   17.5    27.79   85.6
+sort / top-N                                       3     263.5   14.2     0.12    0.4
+gather: strings                                   48     260.8   14.1     5.22   20.0
+gather/scatter: fixed-width                       49     163.1    8.8    30.20  185.2
+cub/thrust: select/compact                        28     121.9    6.6     8.57   70.3
+hash join: build (insert)                          6      61.6    3.3     5.03   81.6
+hash join: probe (find/count/retrieve)             6      58.9    3.2     2.57   43.7
+fill / sequence / init                             5      42.8    2.3     0.69   16.1
+group-by / aggregation                             3      34.9    1.9     0.39   11.1
+dynamic filter: build key set (cuco insert)        3      30.9    1.7     2.80   90.7
+expression: binary op                              5      29.5    1.6     1.15   38.9
+expression: cast/unary                            13      26.3    1.4     0.52   19.7
+hash join: output/compaction                       4      16.4    0.9     0.83   50.8
+cub/thrust: scan                                   4      12.4    0.7     0.69   55.8
+hash-table init (cuco, other)                      6      12.2    0.7     0.02    1.5
+other: static_kernel                               3       8.0    0.4     0.07    9.1
+hash join: hash-table init                         4       6.2    0.3     0.01    1.8
+dynamic filter: key conversion                     2       4.2    0.2     0.02    5.0
+other: transform_kernel                            2       4.1    0.2     0.04    9.8
+cub/thrust: reduce/find                            1       2.8    0.2     0.00    1.2
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+compute_column_kernel                              6     366.0   19.8    12.83   35.1
+fused_membership_mask_kernel                       5     322.2   17.4    27.76   86.2
+DeviceMergeSortBlockSortKernel                     1     236.8   12.8     0.09    0.4
+transform_kernel                                  67     215.4   11.6    31.10  144.4
+DeviceScanKernel                                  18     140.0    7.6     2.79   19.9
+DeviceSelectSweepKernel                           16     111.9    6.0     9.36   83.6
+gather_chars_fn_char_parallel                     16     103.2    5.6     3.07   29.8
+static_kernel                                     18      55.0    3.0     1.23   22.3
+insert_if_n                                        7      54.7    3.0     3.10   56.7
+find_if_n                                          4      39.6    2.1     0.99   24.9
+DeviceScanInitKernel                              18      30.0    1.6     0.05    1.7
+DeviceRadixSortSingleTileKernel                    2      26.7    1.4     0.03    1.2
+DeviceCompactInitKernel                           16      26.3    1.4     0.05    1.7
+mapping_indices_kernel                             1      22.0    1.2     0.20    9.0
+hash_csr_build_count_kernel                        1      20.2    1.1     2.36  117.3
+add_if_shmem                                       2      18.0    1.0     0.35   19.5
+hash_csr_build_fill_kernel                         1      17.7    1.0     2.37  133.9
+hash_csr_probe_count_kernel                        1      10.8    0.6     0.90   83.7
+single_pass_shmem_aggs_kernel                      1      10.0    0.5     0.16   16.3
+hash_csr_retrieve_kernel                           1       8.5    0.5     0.68   80.0
+valid_if_n_kernel                                  2       7.1    0.4     0.01    1.7
+DeviceReduceKernel                                 1       3.8    0.2     0.07   17.7
+single_thread_kernel                               1       2.8    0.2     0.00    1.2
+DeviceReduceSingleTileKernel                       1       2.7    0.1     0.01    5.1

@@ -1,0 +1,84 @@
+# static_kernel: family 142.2 us (32.3% of warm GPU time, 9 launches); hotspots for its longest launch pos 7 (60.5 us, grid 5863.0, block 256.0; q17_warm_full.ncu-rep row 7, selection verified by duration)
+# void for_each::static_kernel<for_each::policy_selector, int, sirius::membership_probe_functor<sirius::integral_probe_adapter<int, int>, sirius::set_lookup<cuco::static_set_ref<int, 1, std::equal_to<int>, cuco::double_hashing<1, cuco::XXHash_32<int>, cuco::XXHash_32<int>>, cuco::bucket_storage_ref<in
+static instructions=2896  executed(warp)=1.797e+07  stall samples=5958
+static instructions ever executed: 580 (20.0% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        1602   9.945e+06   55.3   69.6
+Control Flow           424   2.789e+06   15.5   10.9
+Move/Special           383   1.706e+06    9.5    4.5
+Const Load             194   1.291e+06    7.2    6.1
+Uniform datapath        65    9.38e+05    5.2    3.9
+FP Arithmetic           74   6.566e+05    3.7    2.3
+Global Load            146   5.507e+05    3.1    2.4
+Global Store             8    9.38e+04    0.5    0.3
+
+Top 25 instructions by stall samples:
+  +0x003e0 samp=   700 (11.7%) exe=    46896 thr=32.0 [long_sb=688,not_selected=7]  IMAD R0, R34, -0x3d4d51c3, R29
+  +0x019e0 samp=   695 (11.7%) exe=    46896 thr=32.0 [long_sb=684,math=4]  IMAD R29, R24, -0x3d4d51c3, R29
+  +0x02da0 samp=   122 ( 2.0%) exe=    46896 thr=32.0 [branch_resolving=95,wait=20]  ISETP.EQ.U32.OR P0, PT, R24, -0x80000000, P0
+  +0x016f0 samp=    99 ( 1.7%) exe=    46896 thr=32.0 [branch_resolving=75,wait=14]  ISETP.EQ.U32.OR P0, PT, R34, -0x80000000, P0
+  +0x00d60 samp=    78 ( 1.3%) exe=    46896 thr=32.0 [long_sb=73,selected=2]  ISETP.NE.U32.AND P1, PT, R34, R3, PT
+  +0x00e50 samp=    78 ( 1.3%) exe=    61396 thr=16.0 [long_sb=73,not_selected=2]  ISETP.NE.U32.AND P2, PT, R34, R3, PT
+  +0x024a0 samp=    75 ( 1.3%) exe=    61314 thr=16.0 [long_sb=73,selected=1]  ISETP.NE.U32.AND P2, PT, R24, R9, PT
+  +0x02e50 samp=    68 ( 1.1%) exe=        8 thr=32.0 [drain=44,branch_resolving=15]  LDC.64 R4, c[0x0][0x3e0]
+  +0x02530 samp=    66 ( 1.1%) exe=    52372 thr= 6.0 [long_sb=64,not_selected=1]  ISETP.NE.U32.AND P2, PT, R24, R9, PT
+  +0x023a0 samp=    63 ( 1.1%) exe=    46896 thr=32.0 [long_sb=61,not_selected=1]  ISETP.NE.U32.AND P1, PT, R24, R7, PT
+  +0x025c0 samp=    55 ( 0.9%) exe=    47224 thr= 3.0 [long_sb=50,not_selected=2]  ISETP.NE.U32.AND P2, PT, R24, R5, PT
+  +0x00ee0 samp=    51 ( 0.9%) exe=    52393 thr= 6.0 [long_sb=46,not_selected=2]  ISETP.NE.U32.AND P2, PT, R34, R3, PT
+  +0x02d80 samp=    50 ( 0.8%) exe=   142368 thr=10.0 [wait=18,branch_resolving=17]  NOP
+  +0x00f70 samp=    49 ( 0.8%) exe=    47149 thr= 3.0 [long_sb=45,selected=2]  ISETP.NE.U32.AND P2, PT, R34, R5, PT
+  +0x00000 samp=    48 ( 0.8%) exe=    46904 thr=32.0 [no_inst=31,not_selected=12]  LDC R1, c[0x0][0x37c]
+  +0x02890 samp=    47 ( 0.8%) exe=   140636 thr=10.0 [no_inst=27,branch_resolving=17]  PLOP3.LUT P0, PT, PT, PT, PT, 0x8, 0x80
+  +0x016d0 samp=    43 ( 0.7%) exe=   142363 thr=10.0 [no_inst=27,branch_resolving=12]  NOP
+  +0x001f0 samp=    38 ( 0.6%) exe=    46896 thr=32.0 [not_selected=16,math=15]  IADD.64 R22, R26, R6
+  +0x00320 samp=    37 ( 0.6%) exe=    46896 thr=32.0 [short_sb=23,not_selected=9]  ISETP.NE.U64.AND P0, PT, R4, RZ, PT
+  +0x02440 samp=    36 ( 0.6%) exe=    67442 thr=22.0 [wait=13,no_inst=12]  LOP3.LUT R6, R6, 0xffff, RZ, 0xc0, !PT
+  +0x02480 samp=    34 ( 0.6%) exe=    67442 thr=22.0 [wait=30,not_selected=3]  @!P1  BRA 0x7efdca5df090
+  +0x02610 samp=    34 ( 0.6%) exe=    47224 thr= 3.0 [wait=31,not_selected=2]  @!P1  BRA 0x7efdca5df580
+  +0x02de0 samp=    33 ( 0.6%) exe=    46896 thr=32.0 [wait=15,branch_resolving=12]  LOP3.LUT R2, R2, 0xffff, RZ, 0xc0, !PT
+  +0x024f0 samp=    32 ( 0.5%) exe=    61314 thr=16.0 [wait=27,not_selected=2]  @!P1  BRA 0x7efdca5df580
+  +0x00e00 samp=    31 ( 0.5%) exe=    67608 thr=22.0 [wait=14,math=5]  LOP3.LUT R3, R3, 0xffff, RZ, 0xc0, !PT
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x2e50, n=137
+
+stall reasons (sum over instructions): long_sb=31.9%, wait=27.0%, not_selected=11.7%, selected=7.5%, short_sb=6.2%, branch_resolving=6.2%, no_inst=3.7%, math=3.1%
+
+context around +0x003e0 (exe = warp-level executions, samp = stall samples):
+     +0x00360 exe=       0 samp=    0 thr= 0.0  IMAD.WIDE R4, R3, 0x4, R4
+     +0x00370 exe=       0 samp=    0 thr= 0.0  LDG.E R5, desc[UR40][R4.64]
+     +0x00380 exe=       0 samp=    0 thr= 0.0  SHF.R.U32.HI R0, RZ, R32, R5
+     +0x00390 exe=       0 samp=    0 thr= 0.0  LOP3.LUT P0, RZ, R0, 0x1, RZ, 0xc0, !PT
+     +0x003a0 exe=       0 samp=    0 thr= 0.0  PRMT R0, R2, 0x7610, R0
+     +0x003b0 exe=       0 samp=    0 thr= 0.0  @!P0  BRA 0x7efdca5ddf10
+     +0x003c0 exe=   46896 samp=    8 thr=32.0  LDG.E R34, desc[UR40][R24.64]
+     +0x003d0 exe=   46896 samp=    1 thr=32.0  ULOP3.LUT UP0, URZ, UR37, 0x3fffffff, URZ, 0xc0, !UPT
+  >> +0x003e0 exe=   46896 samp=  700 thr=32.0  IMAD R0, R34, -0x3d4d51c3, R29
+     +0x003f0 exe=   46896 samp=   16 thr=32.0  SHF.L.W.U32.HI R0, R0, 0x11, R0
+     +0x00400 exe=   46896 samp=   20 thr=32.0  IMAD R0, R0, 0x27d4eb2f, RZ
+
+context around +0x019e0 (exe = warp-level executions, samp = stall samples):
+     +0x01960 exe=       0 samp=    0 thr= 0.0  SHF.R.S32.HI R3, RZ, 0x5, R26
+     +0x01970 exe=       0 samp=    0 thr= 0.0  IMAD.WIDE R4, R3, 0x4, R4
+     +0x01980 exe=       0 samp=    0 thr= 0.0  LDG.E R5, desc[UR40][R4.64]
+     +0x01990 exe=       0 samp=    0 thr= 0.0  SHF.R.U32.HI R32, RZ, R32, R5
+     +0x019a0 exe=       0 samp=    0 thr= 0.0  LOP3.LUT P0, RZ, R32, 0x1, RZ, 0xc0, !PT
+     +0x019b0 exe=       0 samp=    0 thr= 0.0  @!P0  BRA 0x7efdca5df5c0
+     +0x019c0 exe=   46896 samp=   10 thr=32.0  LDG.E R24, desc[UR40][R24.64+0x400]
+     +0x019d0 exe=   46896 samp=    0 thr=32.0  ULOP3.LUT UP0, URZ, UR37, 0x3fffffff, URZ, 0xc0, !UPT
+  >> +0x019e0 exe=   46896 samp=  695 thr=32.0  IMAD R29, R24, -0x3d4d51c3, R29
+     +0x019f0 exe=   46896 samp=    7 thr=32.0  SHF.L.W.U32.HI R29, R29, 0x11, R29
+     +0x01a00 exe=   46896 samp=   12 thr=32.0  IMAD R29, R29, 0x27d4eb2f, RZ
+
+context around +0x02da0 (exe = warp-level executions, samp = stall samples):
+     +0x02d20 exe=       0 samp=    0 thr= 0.0  SEL R6, R6, 0x2, P0
+     +0x02d30 exe=       0 samp=    0 thr= 0.0  PLOP3.LUT P0, PT, PT, PT, PT, 0x80, 0x8
+     +0x02d40 exe=       0 samp=    0 thr= 0.0  ISETP.NE.U32.AND P1, PT, R6, 0x1, PT
+     +0x02d50 exe=       0 samp=    0 thr= 0.0  @P1   BRA 0x7efdca5df1a0
+     +0x02d60 exe=       0 samp=    0 thr= 0.0  BRA 0x7efdca5df580
+     +0x02d70 exe=       0 samp=    0 thr= 0.0  PLOP3.LUT P0, PT, PT, PT, PT, 0x8, 0x80
+     +0x02d80 exe=  142368 samp=   50 thr=10.0  NOP
+     +0x02d90 exe=  142368 samp=    5 thr=10.0  BSYNC.RECONVERGENT B0
+  >> +0x02da0 exe=   46896 samp=  122 thr=32.0  ISETP.EQ.U32.OR P0, PT, R24, -0x80000000, P0
+     +0x02db0 exe=   46896 samp=    9 thr=32.0  SEL R2, RZ, 0x1, !P0
+     +0x02dc0 exe=   46896 samp=   14 thr=32.0  NOP

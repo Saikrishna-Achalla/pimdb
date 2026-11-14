@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=238 (full metrics: 238) gpu_time_us=3116.5 dram_MB=268.65 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): ['pos8:l2_hit=103.6']
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+121 static_kernel                        309.1   9.9    225  256  18.9  10.5   69.6  23.7  2.34  21.50
+119 mapping_indices_kernel               264.9   8.5    240  128  24.0   9.8   65.1  33.4  1.00  17.25
+116 transform_kernel                     152.5   4.9     57  256  12.9  19.0  125.4  19.8  0.30  19.13
+ 13 fused_membership_mask_kernel         105.4   3.4   4096  256  53.7  18.5  122.5  79.8 17.07  12.91
+ 17 fused_membership_mask_kernel         105.0   3.4   4096  256  53.6  18.6  122.9  79.5 17.07  12.90
+ 99 gather_chars_fn_string_parallel      102.6   3.3  28733  128  44.8  14.3   94.8  87.9 49.88   9.72
+ 77 gather_chars_fn_string_parallel       94.8   3.0  28733  128  47.6   6.1   40.3  89.4 49.88   3.82
+  1 compute_column_kernel                 85.5   2.7  11719  128  86.0   5.5   36.1  91.0 20.35   3.09
+ 14 static_kernel                         59.8   1.9   5859  256  52.6  38.2  252.5  91.5 20.34  15.09
+ 92 gather_chars_fn_char_parallel         59.4   1.9   3592  128  67.8  10.9   71.8  90.0  6.24   4.27
+ 12 static_kernel                         57.3   1.8   5863  256  55.4  39.8  263.3  91.3 20.36  15.10
+ 69 gather_chars_fn_char_parallel         53.5   1.7   3592  128  72.0   5.7   37.9  90.1  6.24   2.03
+ 89 gather_chars_fn_char_parallel         49.0   1.6   3592  128  59.0  10.7   70.6  88.2  6.24   3.46
+ 66 gather_chars_fn_char_parallel         42.4   1.4   3592  128  68.4   6.3   41.6  87.6  6.24   1.76
+112 add_if_shmem                          40.8   1.3     48  512  24.6  33.0  217.9  32.2  1.00   8.90
+ 95 gather_chars_fn_char_parallel         38.0   1.2   3592  128  64.6  12.4   81.9  91.0  6.24   3.11
+141 gather_chars_fn_string_parallel       37.6   1.2   9481  128  40.2  17.7  116.8  83.4 16.46   4.39
+219 DeviceRadixSortSingleTileKernel       36.7   1.2      1  256   1.2   0.1    0.3  16.7  0.01   0.01
+ 54 gather_chars_fn_string_parallel       36.7   1.2   9481  128  40.4  18.9  124.8  87.0 16.46   4.58
+180 DeviceRadixSortSingleTileKernel       36.7   1.2      1  256   1.2   0.1    0.3  16.7  0.01   0.01
+ 73 gather_chars_fn_char_parallel         35.4   1.1   3592  128  68.3   7.0   46.6  89.4  6.24   1.65
+138 gather_chars_fn_char_parallel         26.0   0.8   1186  128  50.6  14.7   97.5  81.1  2.06   2.53
+ 46 gather_chars_fn_char_parallel         25.2   0.8   1186  128  51.6  16.4  108.3  79.3  2.06   2.73
+111 add_if_shmem                          23.9   0.8     48  512  29.7  21.8  144.1  33.7  1.00   3.44
+ 22 DeviceSelectSweepKernel               22.2   0.7    521  384  35.8  20.9  138.1  45.5  5.43   3.06
+time-weighted stall mix (kernels with full metrics): long_scoreboard=47.8%, wait=13.3%, no_instructions=8.4%, barrier=7.3%, short_scoreboard=5.7%, selected=4.9%, not_selected=3.9%, branch_resolving=2.3%
+sm clock (MHz) median: 2276

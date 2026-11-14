@@ -1,0 +1,24 @@
+kernels: orig=186 u4=186
+total GPU kernel time (ncu, serialized): orig=3208.7 us  u4=3097.8 us  delta=+110.9 us (3.5%)
+total DRAM: orig=884.0 MB  u4=884.3 MB
+
+phase                              orig_us     u4_us  speedup
+other                                911.4     915.0    1.00x
+copy/concat/gather                   702.0     704.0    1.00x
+group-by: other                      584.2     587.9    0.99x
+group-by: shmem aggs (patched)       485.6     368.5    1.32x
+cub scan/select/reduce               342.5     341.9    1.00x
+sort                                 160.5     157.8    1.02x
+expression (AST)                      22.5      22.8    0.99x
+
+single_pass_shmem_aggs_kernel launches (paired by batch: large, small, merge):
+            us  regs  grid occ_ach occ_th  DRAM_MB   GB/s   ipc  warp_inst
+orig     360.5    72   240    41.2   58.3    117.9  326.9  1.07    4.1e+07
+orig      93.1    72   240    39.6   58.3     23.3  250.2  1.03   9.73e+06
+orig      32.0    72     1     6.0   33.3      0.1    3.4  0.05   3.14e+03
+u4       262.0    91   240    40.7   41.7    117.9  450.1  1.32   3.02e+07
+u4        73.7    91   240    38.3   41.7     23.3  315.7  1.23   8.15e+06
+u4        32.7    91     1     6.2   33.3      0.1    3.7  0.05   3.77e+03
+shmem aggs total: orig=485.6 us  u4=368.5 us  speedup=1.32x  saved=117.1 us
+stalls orig: long_scoreboard=48%, wait=20%, branch_resolving=9%, short_scoreboard=6%, selected=6%, no_instructions=5%
+stalls u4:   long_scoreboard=42%, wait=20%, short_scoreboard=9%, no_instructions=7%, branch_resolving=7%, selected=7%

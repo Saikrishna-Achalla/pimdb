@@ -1,0 +1,187 @@
+{
+ "N3": 1174,
+ "N4": 1381,
+ "N5": 1588,
+ "pin_plus_iteration1_if_iterations_2_3_equal": 760,
+ "per_iteration_counts": [
+  207,
+  207
+ ],
+ "cross_run_prefix_multisets_equal": true,
+ "added_iteration_multisets_equal": true,
+ "order_positions_differing_iter4_vs_iter5": 19,
+ "x4_vs_x5_prefix_positions_differing": 77,
+ "nsys_kernels_per_warm_iter": 207,
+ "stable": true,
+ "unstable_reasons": [],
+ "skip": 1381,
+ "count": 207,
+ "threshold": 1000,
+ "coverage": 0.9,
+ "policy": "full_all",
+ "families": [
+  {
+   "func": "compute_column_kernel",
+   "count": 6,
+   "time_us": 366.56,
+   "pct": 19.666586546715653
+  },
+  {
+   "func": "fused_membership_mask_kernel",
+   "count": 5,
+   "time_us": 322.88,
+   "pct": 17.32307797960375
+  },
+  {
+   "func": "DeviceMergeSortBlockSortKernel",
+   "count": 1,
+   "time_us": 236.736,
+   "pct": 12.701301376918586
+  },
+  {
+   "func": "transform_kernel",
+   "count": 67,
+   "time_us": 226.4,
+   "pct": 12.146756858840092
+  },
+  {
+   "func": "DeviceScanKernel",
+   "count": 18,
+   "time_us": 139.808,
+   "pct": 7.5009442708512175
+  },
+  {
+   "func": "DeviceSelectSweepKernel",
+   "count": 16,
+   "time_us": 113.344,
+   "pct": 6.081104281839096
+  },
+  {
+   "func": "gather_chars_fn_char_parallel",
+   "count": 16,
+   "time_us": 100.096,
+   "pct": 5.370325859286474
+  },
+  {
+   "func": "insert_if_n",
+   "count": 7,
+   "time_us": 56.288,
+   "pct": 3.019949867802081
+  },
+  {
+   "func": "static_kernel",
+   "count": 18,
+   "time_us": 55.648,
+   "pct": 2.9856127459396355
+  },
+  {
+   "func": "find_if_n",
+   "count": 4,
+   "time_us": 39.264,
+   "pct": 2.106582426261031
+  },
+  {
+   "func": "DeviceScanInitKernel",
+   "count": 18,
+   "time_us": 31.84,
+   "pct": 1.7082718126566632
+  },
+  {
+   "func": "DeviceCompactInitKernel",
+   "count": 16,
+   "time_us": 28.416,
+   "pct": 1.5245682106925798
+  },
+  {
+   "func": "DeviceRadixSortSingleTileKernel",
+   "count": 2,
+   "time_us": 25.44,
+   "pct": 1.3649005940322083
+  },
+  {
+   "func": "mapping_indices_kernel",
+   "count": 1,
+   "time_us": 21.312,
+   "pct": 1.1434261580194347
+  },
+  {
+   "func": "hash_csr_build_count_kernel",
+   "count": 1,
+   "time_us": 20.768,
+   "pct": 1.114239604436356
+  },
+  {
+   "func": "add_if_shmem",
+   "count": 2,
+   "time_us": 17.696,
+   "pct": 0.9494214194966178
+  },
+  {
+   "func": "hash_csr_build_fill_kernel",
+   "count": 1,
+   "time_us": 17.536,
+   "pct": 0.9408371390310064
+  },
+  {
+   "func": "hash_csr_probe_count_kernel",
+   "count": 1,
+   "time_us": 10.912,
+   "pct": 0.5854479277546956
+  },
+  {
+   "func": "single_pass_shmem_aggs_kernel",
+   "count": 1,
+   "time_us": 9.664,
+   "pct": 0.518490540122927
+  },
+  {
+   "func": "hash_csr_retrieve_kernel",
+   "count": 1,
+   "time_us": 9.088,
+   "pct": 0.48758713044672597
+  },
+  {
+   "func": "valid_if_n_kernel",
+   "count": 2,
+   "time_us": 6.272,
+   "pct": 0.3365037942519658
+  },
+  {
+   "func": "DeviceReduceKernel",
+   "count": 1,
+   "time_us": 3.584,
+   "pct": 0.19228788242969475
+  },
+  {
+   "func": "DeviceReduceSingleTileKernel",
+   "count": 1,
+   "time_us": 2.304,
+   "pct": 0.12361363870480377
+  },
+  {
+   "func": "single_thread_kernel",
+   "count": 1,
+   "time_us": 2.016,
+   "pct": 0.1081619338667033
+  }
+ ],
+ "full_families": [
+  "compute_column_kernel",
+  "fused_membership_mask_kernel",
+  "DeviceMergeSortBlockSortKernel",
+  "transform_kernel",
+  "DeviceScanKernel",
+  "DeviceSelectSweepKernel",
+  "gather_chars_fn_char_parallel",
+  "insert_if_n",
+  "static_kernel",
+  "find_if_n",
+  "DeviceScanInitKernel",
+  "DeviceCompactInitKernel",
+  "DeviceRadixSortSingleTileKernel"
+ ],
+ "full_regex": "^(compute_column_kernel|fused_membership_mask_kernel|DeviceMergeSortBlockSortKernel|transform_kernel|DeviceScanKernel|DeviceSelectSweepKernel|gather_chars_fn_char_parallel|insert_if_n|static_kernel|find_if_n|DeviceScanInitKernel|DeviceCompactInitKernel|DeviceRadixSortSingleTileKernel)$",
+ "full_regex_skip": 981,
+ "full_regex_count": 194,
+ "full_regex_time_pct": 93.49998283143907
+}

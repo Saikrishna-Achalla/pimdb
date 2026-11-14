@@ -1,0 +1,128 @@
+# DeviceMergeSortBlockSortKernel: family 353.0 us (16.8% of warm GPU time, 2 launches); hotspots for its longest launch pos 108 (178.0 us, grid 1.0, block 256.0; q18_warm_full.ncu-rep row 108, selection verified by duration)
+# void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator<0, nullate::DYNAMIC, lexicographic::sorting_physical_element_comparator>>, 
+static instructions=13648  executed(warp)=9.366e+04  stall samples=400
+static instructions ever executed: 2143 (15.7% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        5853   2.888e+04   30.8   10.2
+Move/Special          3081   2.534e+04   27.1    2.0
+Control Flow          1236   1.448e+04   15.5    2.5
+Local (spill)         1042   1.165e+04   12.4    6.0
+Other                  700        4305    4.6    0.2
+Const Load             692        3057    3.3   77.8
+Shared Load            200        2602    2.8    0.2
+FP Arithmetic          299        1543    1.6    0.2
+Shared Store           376        1368    1.5    0.8
+Barrier/Fence           38         152    0.2    0.0
+Global Load             35         144    0.2    0.0
+Global Store            68         128    0.1    0.0
+Uniform datapath        28           8    0.0    0.0
+
+Top 25 instructions by stall samples:
+  +0x08bf0 samp=   252 (63.0%) exe=        8 thr=32.0 [barrier=252]  LDC.64 R30, c[0x0][0x3f0]
+  +0x098f0 samp=    27 ( 6.8%) exe=        8 thr=32.0 [barrier=27]  LDC.64 R34, c[0x0][0x400]
+  +0x0a600 samp=    26 ( 6.5%) exe=        8 thr=32.0 [barrier=26]  LDC.64 R34, c[0x0][0x400]
+  +0x0ca30 samp=     2 ( 0.5%) exe=      136 thr=32.0 [long_sb=2]  ISETP.GE.AND P1, PT, R25, R0, PT
+  +0x101f0 samp=     2 ( 0.5%) exe=      195 thr= 3.0 [long_sb=2]  ISETP.GE.AND P0, PT, R0, 0x1, PT
+  +0x10200 samp=     2 ( 0.5%) exe=      195 thr= 3.0 [wait=2]  @!P0  BRA 0x7fb7627b0df0
+  +0x102a0 samp=     2 ( 0.5%) exe=      287 thr= 2.0 [long_sb=2]  ISETP.NE.U32.AND P0, PT, R5, RZ, PT
+  +0x10340 samp=     2 ( 0.5%) exe=      287 thr= 2.0 [branch_resolving=1,selected=1]  ISETP.GT.AND P0, PT, R5, R8, PT
+  +0x103d0 samp=     2 ( 0.5%) exe=      287 thr= 2.0 [long_sb=2]  ISETP.NE.U32.AND P0, PT, R6, RZ, PT
+  +0x34e90 samp=     2 ( 0.5%) exe=      184 thr= 1.0 [long_sb=1,wait=1]  ISETP.GE.AND P0, PT, R0, R5, PT
+  +0x34f10 samp=     2 ( 0.5%) exe=      195 thr= 3.0 [branch_resolving=2]  MOV R6, R48
+  +0x34f40 samp=     2 ( 0.5%) exe=        0 thr= 0.0 [branch_resolving=2]  IADD R22, P1, RZ, -R20
+  +0x00000 samp=     1 ( 0.2%) exe=        8 thr=32.0 [no_inst=1]  LDC R1, c[0x0][0x37c]
+  +0x00090 samp=     1 ( 0.2%) exe=        8 thr=32.0 [short_sb=1]  IADD R56, R2, UR8
+  +0x07840 samp=     1 ( 0.2%) exe=        8 thr=32.0 [long_sb=1]  MOV R0, R4
+  +0x07e10 samp=     1 ( 0.2%) exe=        8 thr=32.0 [lg=1]  STL.64 [R1+0x288], R6
+  +0x08320 samp=     1 ( 0.2%) exe=        8 thr=32.0 [wait=1]  STL.64 [R1+0x1d8], R16
+  +0x08450 samp=     1 ( 0.2%) exe=        8 thr=32.0 [lg=1]  STL.64 [R1+0x1f8], R24
+  +0x08600 samp=     1 ( 0.2%) exe=      128 thr=32.0 [branch_resolving=1]  IADD R24, R24, 0x1
+  +0x088e0 samp=     1 ( 0.2%) exe=       17 thr= 4.0 [no_inst=1]  MOV R2, R1
+  +0x08a20 samp=     1 ( 0.2%) exe=      136 thr= 4.0 [wait=1]  @!P0  STL [R49+-0x4], R4
+  +0x08e70 samp=     1 ( 0.2%) exe=        8 thr=32.0 [mio=1]  STS [R24+0x20], R12
+  +0x093f0 samp=     1 ( 0.2%) exe=        8 thr=32.0 [lg=1]  STL.64 [R1+0x170], R22
+  +0x09600 samp=     1 ( 0.2%) exe=      136 thr=32.0 [wait=1]  STL [R1+0x3e0], R0
+  +0x09640 samp=     1 ( 0.2%) exe=       17 thr= 2.0 [long_sb=1]  ISETP.GE.AND P1, PT, R49, R0, PT
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x34f40, n=89
+
+stall reasons (sum over instructions): barrier=77.0%, wait=5.2%, long_sb=4.5%, lg=3.2%, no_inst=2.5%, branch_resolving=2.5%, selected=2.2%, short_sb=1.5%
+
+context around +0x08bf0 (exe = warp-level executions, samp = stall samples):
+     +0x08b70 exe=       8 samp=    0 thr=32.0  LDC.64 R22, c[0x0][0x3d8]
+     +0x08b80 exe=       8 samp=    0 thr=32.0  LDC.64 R26, c[0x0][0x3e0]
+     +0x08b90 exe=       8 samp=    0 thr=32.0  LDC.64 R28, c[0x0][0x3e8]
+     +0x08ba0 exe=       8 samp=    0 thr=32.0  LEA R16, R17, R16, 0x18
+     +0x08bb0 exe=       8 samp=    0 thr=32.0  IMAD R24, R40, 0x44, R16
+     +0x08bc0 exe=       8 samp=    0 thr=32.0  BAR.SYNC.DEFER_BLOCKING 0x0
+     +0x08bd0 exe=       8 samp=    0 thr=32.0  LOP3.LUT R55, R40, 0x3fe, RZ, 0xc0, !PT
+     +0x08be0 exe=       8 samp=    0 thr=32.0  IMAD R55, R55, 0x11, RZ
+  >> +0x08bf0 exe=       8 samp=  252 thr=32.0  LDC.64 R30, c[0x0][0x3f0]
+     +0x08c00 exe=       8 samp=    0 thr=32.0  VIMNMX.S32 R55, R55, R57, PT
+     +0x08c10 exe=       8 samp=    0 thr=32.0  STL.64 [R1+0xa8], R20
+
+context around +0x098f0 (exe = warp-level executions, samp = stall samples):
+     +0x09870 exe=       8 samp=    0 thr=32.0  LDL.64 R16, [R1+0x260]
+     +0x09880 exe=       8 samp=    0 thr=32.0  LDL.64 R14, [R1+0x278]
+     +0x09890 exe=       8 samp=    0 thr=32.0  LDC.64 R30, c[0x0][0x3f0]
+     +0x098a0 exe=       8 samp=    0 thr=32.0  LDL.64 R8, [R1+0x298]
+     +0x098b0 exe=       8 samp=    0 thr=32.0  LDL R0, [R1+0x2a0]
+     +0x098c0 exe=       8 samp=    0 thr=32.0  LDC.64 R32, c[0x0][0x3f8]
+     +0x098d0 exe=       8 samp=    0 thr=32.0  S2R R37, SR_TID.X
+     +0x098e0 exe=       8 samp=    0 thr=32.0  BAR.SYNC.DEFER_BLOCKING 0x0
+  >> +0x098f0 exe=       8 samp=   27 thr=32.0  LDC.64 R34, c[0x0][0x400]
+     +0x09900 exe=       8 samp=    0 thr=32.0  STL.64 [R1+0xb0], R22
+     +0x09910 exe=       8 samp=    0 thr=32.0  LDC.64 R18, c[0x0][0x428]
+
+context around +0x0a600 (exe = warp-level executions, samp = stall samples):
+     +0x0a580 exe=       8 samp=    0 thr=32.0  LDL.64 R16, [R1+0x260]
+     +0x0a590 exe=       8 samp=    0 thr=32.0  LDL.64 R14, [R1+0x278]
+     +0x0a5a0 exe=       8 samp=    0 thr=32.0  LDC.64 R30, c[0x0][0x3f0]
+     +0x0a5b0 exe=       8 samp=    0 thr=32.0  LDL.64 R8, [R1+0x298]
+     +0x0a5c0 exe=       8 samp=    0 thr=32.0  LDL R0, [R1+0x2a0]
+     +0x0a5d0 exe=       8 samp=    0 thr=32.0  LDC.64 R32, c[0x0][0x3f8]
+     +0x0a5e0 exe=       8 samp=    0 thr=32.0  S2R R37, SR_TID.X
+     +0x0a5f0 exe=       8 samp=    0 thr=32.0  BAR.SYNC.DEFER_BLOCKING 0x0
+  >> +0x0a600 exe=       8 samp=   26 thr=32.0  LDC.64 R34, c[0x0][0x400]
+     +0x0a610 exe=       8 samp=    0 thr=32.0  STL.64 [R1+0xb0], R22
+     +0x0a620 exe=       8 samp=    0 thr=32.0  LDC.64 R18, c[0x0][0x428]
+
+context around +0x0ca30 (exe = warp-level executions, samp = stall samples):
+     +0x0c9b0 exe=       8 samp=    0 thr=32.0  IADD R0, R56, 0x130
+     +0x0c9c0 exe=       8 samp=    0 thr=32.0  STL.64 [R1+0x178], R18
+     +0x0c9d0 exe=     136 samp=    1 thr=32.0  LDL R0, [R1+0x3e8]
+     +0x0c9e0 exe=     136 samp=    0 thr=32.0  IADD R50, R50, 0x1
+     +0x0c9f0 exe=     136 samp=    0 thr=32.0  BSSY.RECONVERGENT B2, 0x7fb762788a10
+     +0x0ca00 exe=     136 samp=    0 thr=32.0  PLOP3.LUT P0, PT, PT, PT, PT, 0x8, 0x80
+     +0x0ca10 exe=     136 samp=    0 thr=32.0  MOV R55, R58
+     +0x0ca20 exe=     136 samp=    0 thr=32.0  ISETP.NE.U32.AND P2, PT, R50, 0x11, PT
+  >> +0x0ca30 exe=     136 samp=    2 thr=32.0  ISETP.GE.AND P1, PT, R25, R0, PT
+     +0x0ca40 exe=     136 samp=    0 thr=32.0  P2R R0, PR, RZ, 0x4
+     +0x0ca50 exe=     136 samp=    0 thr=32.0  STL [R1+0x3e0], R0
+
+context around +0x101f0 (exe = warp-level executions, samp = stall samples):
+     +0x10170 exe=       0 samp=    0 thr= 0.0  @P4   EXIT
+     +0x10180 exe=       0 samp=    0 thr= 0.0  STG.E desc[UR6][R2.64+0x800], R39
+     +0x10190 exe=       0 samp=    0 thr= 0.0  EXIT
+     +0x101a0 exe=     195 samp=    1 thr= 3.0  LDC R2, c[0x0][0x2f8]
+     +0x101b0 exe=     195 samp=    0 thr= 3.0  IADD R2, R0, -R2
+     +0x101c0 exe=     195 samp=    0 thr= 3.0  LDL R0, [R2+0xc]
+     +0x101d0 exe=     195 samp=    0 thr= 3.0  BSSY.RECONVERGENT B4, 0x7fb7627b0e10
+     +0x101e0 exe=     195 samp=    1 thr= 3.0  HFMA2 R54, -RZ, RZ, 0, 5.9604644775390625e-08
+  >> +0x101f0 exe=     195 samp=    2 thr= 3.0  ISETP.GE.AND P0, PT, R0, 0x1, PT
+     +0x10200 exe=     195 samp=    2 thr= 3.0  @!P0  BRA 0x7fb7627b0df0
+     +0x10210 exe=     195 samp=    0 thr= 3.0  LDC.64 R14, c[0x0][0x358]
+
+context around +0x10200 (exe = warp-level executions, samp = stall samples):
+     +0x10180 exe=       0 samp=    0 thr= 0.0  STG.E desc[UR6][R2.64+0x800], R39
+     +0x10190 exe=       0 samp=    0 thr= 0.0  EXIT
+     +0x101a0 exe=     195 samp=    1 thr= 3.0  LDC R2, c[0x0][0x2f8]
+     +0x101b0 exe=     195 samp=    0 thr= 3.0  IADD R2, R0, -R2
+     +0x101c0 exe=     195 samp=    0 thr= 3.0  LDL R0, [R2+0xc]
+     +0x101d0 exe=     195 samp=    0 thr= 3.0  BSSY.RECONVERGENT B4, 0x7fb7627b0e10
+     +0x101e0 exe=     195 samp=    1 thr= 3.0  HFMA2 R54, -RZ, RZ, 0, 5.9604644775390625e-08
+     +0x101f0 exe=     195 samp=    2 thr= 3.0  ISETP.GE.AND P0, PT, R0, 0x1, PT
+  >> +0x10200 exe=     195 samp=    2 thr= 3.0  @!P0  BRA 0x7fb7627b0df0
+     +0x10210 exe=     195 samp=    0 thr= 3.0  LDC.64 R14, c[0x0][0x358]
+     +0x10220 exe=     195 samp=    0 thr= 3.0  SHF.R.S32.HI R17, RZ, 0x1f, R4

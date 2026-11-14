@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 156; total 9744.2 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 141 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (41.0% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=3998.5us grid=5 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.03 ipc=0.40 inst=1.66e+07 active_lanes_per_inst(of 32)=15.3
+  SM%=1.1 Mem%=2.1 DRAM%=0.0 DRAM=1.06MB (0.3 GB/s) L1hit=65.1 L2hit=98.0 SM busy max/avg=10.64 active_frac=0.09
+  pipes%: alu=6.8 fma=0.2 lsu=11.2 adu=0.4 cbu=0.3 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=1.79e+06 st_req=574 atom=0 | shared ld=1.57e+04 st=6.8e+03 bank_conf=1.32e+04
+  stalls%: long_scoreboard=64.4, barrier=13.4, wait=12.5, selected=5.0, branch_resolving=2.1, no_instructions=1.5, math_pipe_throttle=0.3, not_selected=0.3
+== pos 90 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (23.1% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=2248.4us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.7/66.7 waves=0.15 ipc=0.64 inst=8.56e+07 active_lanes_per_inst(of 32)=15.6
+  SM%=10.6 Mem%=10.6 DRAM%=0.1 DRAM=2.06MB (0.9 GB/s) L1hit=65.8 L2hit=98.9 SM busy max/avg=1.84 active_frac=0.54
+  pipes%: alu=10.5 fma=0.3 lsu=19.7 adu=1.0 cbu=0.8 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=9.87e+06 st_req=3.72e+03 atom=0 | shared ld=9.83e+04 st=3.81e+04 bank_conf=1.37e+05
+  stalls%: long_scoreboard=56.1, wait=19.7, selected=8.0, barrier=5.6, branch_resolving=5.0, no_instructions=3.2, not_selected=0.9, short_scoreboard=0.7
+== pos 98 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.7% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=261.8us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.15 ipc=0.51 inst=7.99e+06 active_lanes_per_inst(of 32)=19.3
+  SM%=8.5 Mem%=9.7 DRAM%=1.1 DRAM=1.97MB (7.5 GB/s) L1hit=64.8 L2hit=92.1 SM busy max/avg=1.87 active_frac=0.54
+  pipes%: alu=8.4 fma=0.2 lsu=15.7 adu=0.8 cbu=0.6 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=9.15e+05 st_req=3.72e+03 atom=0 | shared ld=1.63e+04 st=7.62e+03 bank_conf=2e+04
+  stalls%: long_scoreboard=59.4, wait=15.5, barrier=9.3, selected=6.5, branch_resolving=3.8, no_instructions=3.2, not_selected=0.7, short_scoreboard=0.6
+== pos 96 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.6% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=258.0us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.8/66.7 waves=0.15 ipc=0.53 inst=7.13e+06 active_lanes_per_inst(of 32)=19.2
+  SM%=7.6 Mem%=8.6 DRAM%=1.1 DRAM=1.79MB (6.9 GB/s) L1hit=68.1 L2hit=90.4 SM busy max/avg=2.13 active_frac=0.47
+  pipes%: alu=8.8 fma=0.2 lsu=16.3 adu=0.8 cbu=0.6 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=8.15e+05 st_req=3.72e+03 atom=0 | shared ld=1.53e+04 st=7.62e+03 bank_conf=1.96e+04
+  stalls%: long_scoreboard=60.5, wait=17.1, selected=6.4, barrier=6.0, branch_resolving=4.0, no_instructions=3.3, short_scoreboard=0.8, not_selected=0.7
+== pos 100 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.6% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=257.7us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.15 ipc=0.51 inst=7.82e+06 active_lanes_per_inst(of 32)=19.1
+  SM%=8.5 Mem%=10.5 DRAM%=1.2 DRAM=1.99MB (7.7 GB/s) L1hit=54.0 L2hit=92.6 SM busy max/avg=1.83 active_frac=0.54
+  pipes%: alu=8.4 fma=0.2 lsu=15.7 adu=0.8 cbu=0.6 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=8.96e+05 st_req=3.72e+03 atom=0 | shared ld=1.63e+04 st=7.62e+03 bank_conf=2.05e+04
+  stalls%: long_scoreboard=60.4, wait=15.6, barrier=8.1, selected=6.4, branch_resolving=3.7, no_instructions=3.4, short_scoreboard=0.8, not_selected=0.5
+== pos 94 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.5% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=246.9us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.15 ipc=0.56 inst=8.3e+06 active_lanes_per_inst(of 32)=18.6
+  SM%=9.2 Mem%=9.2 DRAM%=1.1 DRAM=1.87MB (7.6 GB/s) L1hit=72.6 L2hit=91.4 SM busy max/avg=1.80 active_frac=0.54
+  pipes%: alu=9.3 fma=0.2 lsu=16.9 adu=0.8 cbu=0.6 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=9.52e+05 st_req=3.72e+03 atom=0 | shared ld=1.63e+04 st=7.62e+03 bank_conf=2.2e+04
+  stalls%: long_scoreboard=59.8, wait=18.2, selected=6.8, barrier=5.1, branch_resolving=4.1, no_instructions=3.2, not_selected=0.9, short_scoreboard=0.7
+== pos 92 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.5% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=239.3us grid=28 blk=256 regs=64 smem=17424B occ ach/theo=16.7/66.7 waves=0.15 ipc=0.60 inst=8.45e+06 active_lanes_per_inst(of 32)=17.6
+  SM%=9.6 Mem%=9.6 DRAM%=1.1 DRAM=1.77MB (7.4 GB/s) L1hit=73.3 L2hit=90.1 SM busy max/avg=1.84 active_frac=0.53
+  pipes%: alu=10.1 fma=0.2 lsu=18.0 adu=0.8 cbu=0.6 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=9.7e+05 st_req=3.72e+03 atom=0 | shared ld=1.63e+04 st=7.62e+03 bank_conf=2.19e+04
+  stalls%: long_scoreboard=58.7, wait=18.5, selected=7.7, barrier=4.8, branch_resolving=4.4, no_instructions=3.0, short_scoreboard=0.9, not_selected=0.9
+== pos 147 [sort/top-N / sort / top-N] DeviceMergeSortMergeKernel  (2.2% of GPU time)
+   void merge_sort::DeviceMergeSortMergeKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_comparator
+  dur=213.2us grid=5 blk=256 regs=64 smem=17424B occ ach/theo=16.8/66.7 waves=0.03 ipc=0.24 inst=2.84e+05 active_lanes_per_inst(of 32)=24.2
+  SM%=0.4 Mem%=0.9 DRAM%=0.3 DRAM=0.47MB (2.2 GB/s) L1hit=55.3 L2hit=76.2 SM busy max/avg=19.40 active_frac=0.05
+  pipes%: alu=3.8 fma=0.1 lsu=7.8 adu=0.7 cbu=0.3 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=2.8e+04 st_req=574 atom=0 | shared ld=1.78e+03 st=1.36e+03 bank_conf=221
+  stalls%: barrier=45.6, long_scoreboard=37.6, wait=7.4, selected=3.9, branch_resolving=1.6, short_scoreboard=1.3, no_instructions=1.0, lg_throttle=0.5

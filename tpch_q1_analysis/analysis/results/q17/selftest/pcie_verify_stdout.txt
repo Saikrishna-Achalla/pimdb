@@ -1,0 +1,52 @@
+ERROR: PCIe verification FAILED for q17: sql:pin_tier_gpu, timing_log:pin_tier_gpu, timing_log:pinned_entry_per_gpu_scan, timing_log:fs_cache_zero_every_iteration, nsys_log:pin_tier_gpu, nsys_log:pinned_entry_per_gpu_scan, nsys_log:fs_cache_zero_every_iteration, no_parquet_decode_kernels, h2d_measured_iterations, d2h_measured_iterations
+PCIe verification, TPC-H Q17 SF1 (tables: lineitem part; rows {'lineitem': 6001215, 'part': 200000})
+Sirius logs: /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q17/selftest/traces/sirius_log_nsys (1 process(es); last used)
+             /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q17/selftest/traces/sirius_log_nsys (1)
+nsys trace: /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q17/selftest/traces/q17_nsys.sqlite
+
+[FAIL] sql:pin_tier_gpu: {'q17_nsys.sql': ["pinned tables ['part'] != referenced tables ['lineitem', 'part']"]}
+[PASS] timing_log:iterations_found: 5 query iterations (expected 5)
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['part'] vs referenced ['lineitem', 'part']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter2: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter3: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']
+[PASS] timing_log:no_cache_assign_error: 0 cache-assignment errors
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '12', 'hits': '0', 'h2d': '48', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '12', 'hits': '48', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[PASS] timing_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] timing_log:no_host_staged_filter_publication: 5 filter publication(s) logged in query iterations; 0 carry a transport line, all 'peer copies' (device-side), 0 host-staged; no transport line was logged, so this check does not show how those filters move (see H2D byte bound, ncu_sysmem_check.txt)
+[PASS] timing_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 5515520 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged
+[PASS] nsys_log:iterations_found: 5 query iterations (expected 5)
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['part'] vs referenced ['lineitem', 'part']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter2: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter3: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']
+[PASS] nsys_log:no_cache_assign_error: 0 cache-assignment errors
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '12', 'hits': '0', 'h2d': '48', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '12', 'hits': '48', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[PASS] nsys_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] nsys_log:no_host_staged_filter_publication: 5 filter publication(s) logged in query iterations; 0 carry a transport line, all 'peer copies' (device-side), 0 host-staged; no transport line was logged, so this check does not show how those filters move (see H2D byte bound, ncu_sysmem_check.txt)
+[PASS] nsys_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 5515520 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged
+[PASS] nsys:windows: 5 iteration windows from the nsys-run Sirius log (2 measured, 3 warmup); kernels per iteration [142, 142, 142, 142, 142]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 83 copies, 37943030 B total, largest single 3810961 B (limits: single <= 65536 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 69 copies, 639276 B total, largest single 71040 B (result CSV is 29 B; limit 262144 B)
+[PASS] no_other_host_copies: 0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration
+[PASS] unified_memory: UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault tables only when a fault occurs (present: none); faults per measured iteration [0, 0]; managed-memory API calls in the whole trace: none
+
+Determinism (not a PCIe criterion):
+[PASS] nsys:kernels_per_iteration_stable: measured iterations: [142, 142]
+
+Byte limits {'h2d_max_single': 65536, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144} (defaults {'h2d_max_single': 65536, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144}).
+Tables below the single-copy byte limit (< 8192 rows): none -- for these the evidence is the log checks (pinned entry per scan, fs_cache, pool counters) and the ncu sysmem-aperture check (ncu_sysmem_check.txt), not byte counts.
+Copies are classified by source/destination memory kind: only Device/Device Static/Array on both ends is on-device.
+Not covered here: kernels reading device-mapped pinned host memory in place (no memcpy) -> ncu_sysmem_check.txt.
+
+GPU memory: pinned footprint after pin_table = 5515520 B; gpu_pool high-water = 983718384 B (gpu_pool peak is a process-lifetime high-water mark (it includes the pin phase))
+
+Pin phase copies : D2D (on device): 10 copies, 8630366 B, largest 1600000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 10}; D2H: 55 copies, 24736 B, largest 5120 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 50, 'Device->Pageable': 5}; H2D: 58 copies, 298827 B, largest 137790 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 56, 'Pageable->Device': 2}
+After pin (all iterations + gaps): D2D (on device): 95 copies, 766430 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 95}; D2H: 348 copies, 3196400 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 317, 'Device->Pageable': 31}; H2D: 455 copies, 189715444 B, largest 3810961 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 440, 'Pageable->Device': 15}
+
+Per iteration (nsys run):
+  iter  1 warmup   kernels=  142 kernel_time=  2781.6 us um_faults=0 | D2D (on device): 19 copies, 153286 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 19}; D2H: 69 copies, 639276 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 63, 'Device->Pageable': 6}; H2D: 119 copies, 37943030 B, largest 1048576 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 116, 'Pageable->Device': 3}
+  iter  2 warmup   kernels=  142 kernel_time=  3282.7 us um_faults=0 | D2D (on device): 19 copies, 153286 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 19}; D2H: 69 copies, 639276 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 63, 'Device->Pageable': 6}; H2D: 83 copies, 37943030 B, largest 3810961 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 80, 'Pageable->Device': 3}
+  iter  3 warmup   kernels=  142 kernel_time=  3788.9 us um_faults=0 | D2D (on device): 19 copies, 153286 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 19}; D2H: 69 copies, 639276 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 63, 'Device->Pageable': 6}; H2D: 83 copies, 37943030 B, largest 3810961 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 80, 'Pageable->Device': 3}
+  iter  4 measured kernels=  142 kernel_time=  3721.4 us um_faults=0 | D2D (on device): 19 copies, 153286 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 19}; D2H: 69 copies, 639276 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 63, 'Device->Pageable': 6}; H2D: 83 copies, 37943030 B, largest 3810961 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 80, 'Pageable->Device': 3}
+  iter  5 measured kernels=  142 kernel_time=  3616.9 us um_faults=0 | D2D (on device): 19 copies, 153286 B, largest 28120 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 19}; D2H: 69 copies, 639276 B, largest 71040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 63, 'Device->Pageable': 6}; H2D: 83 copies, 37943030 B, largest 3810961 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 80, 'Pageable->Device': 3}
+
+OVERALL: FAIL
+

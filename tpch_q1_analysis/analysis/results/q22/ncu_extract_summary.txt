@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=124 (full metrics: 124) gpu_time_us=876.9 dram_MB=70.24 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): ['pos29:l2_hit=102.6', 'pos60:l2_hit=113.2']
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+ 69 static_kernel                         56.4   6.4   2930  256  40.0  17.0  112.6  93.0 10.17   6.35
+ 39 compute_column_kernel                 44.7   5.1   1172  128  66.0   3.3   22.1  69.5  2.71   0.99
+  5 gather_chars_fn_char_parallel         43.4   4.9   4260  128  64.4  13.8   91.0  90.4  7.40   3.95
+ 15 compute_column_kernel                 42.3   4.8   1065  128  62.9   3.2   21.4  66.5  2.47   0.90
+118 DeviceMergeSortBlockSortKernel        39.7   4.5      1  256   0.4   0.1    1.0  16.7  0.00   0.04
+ 63 static_kernel                         29.8   3.4     38  256   4.7   1.5   10.2  11.3  0.20   0.30
+ 75 contains_if_n                         26.5   3.0   1483  128  41.6   6.2   41.3  85.4  2.57   1.10
+ 45 gather_chars_fn_char_parallel         17.7   2.0   1314  128  49.4  20.0  132.1  78.2  2.28   2.33
+ 37 BatchMemcpyKernel                     17.6   2.0    293  128  17.0  45.5  300.7  47.9  0.68   5.29
+  0 static_kernel                         17.4   2.0    293  256   6.3   6.3   41.9  98.7  1.02   0.73
+ 13 BatchMemcpyKernel                     17.3   2.0    267  128  15.7  42.2  278.7  42.9  0.62   4.82
+ 20 gather_chars_fn_char_parallel         17.1   1.9   1193  128  45.9  18.9  124.4  79.6  2.07   2.12
+ 49 conditional_join                      16.5   1.9    329  128  25.4   3.9   26.1  57.8  0.86   0.43
+ 80 insert_if_n                           15.4   1.8   1483  128  27.7  11.5   76.0  81.2  2.57   1.17
+ 48 compute_conditional_join_output_si    14.2   1.6    329  128  26.5   4.6   30.0  55.7  0.86   0.43
+ 74 insert_if_n                           13.5   1.5    150  128   4.9   4.2   27.7  17.3  0.26   0.37
+ 90 DeviceScanKernel                      13.2   1.5      3  224   0.4   1.7   11.2  14.5  0.02   0.15
+  4 DeviceScanKernel                      12.9   1.5     51  224   7.3  14.1   92.8  14.7  0.27   1.19
+ 44 DeviceScanKernel                      12.8   1.5     16  224   2.2   9.3   61.1  14.2  0.08   0.78
+ 19 DeviceScanKernel                      12.8   1.5     15  224   2.1   8.5   56.1  13.9  0.08   0.72
+ 71 DeviceSelectSweepKernel               12.4   1.4    261  384  39.4  19.1  126.0  42.9  2.72   1.56
+ 52 DeviceScanKernel                      12.3   1.4      8  224   1.1   3.6   23.8  14.6  0.04   0.29
+112 single_pass_shmem_aggs_kernel         12.2   1.4     51  128   2.3   2.1   14.2   6.9  0.27   0.17
+ 30 compute_column_kernel                 11.6   1.3      1  128   0.0   1.2    8.0   2.2  0.00   0.09
+ 53 gather_chars_fn_char_parallel         11.5   1.3    598  128  34.5  11.3   74.8  72.9  1.04   0.86
+time-weighted stall mix (kernels with full metrics): long_scoreboard=42.5%, wait=12.5%, no_instructions=12.2%, barrier=11.1%, short_scoreboard=6.3%, selected=4.8%, branch_resolving=2.9%, not_selected=2.7%
+sm clock (MHz) median: 2242

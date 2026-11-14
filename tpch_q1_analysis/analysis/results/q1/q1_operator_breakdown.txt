@@ -1,0 +1,13 @@
+# Q1 SF10, lineitem pinned on GPU, warm query: 873 kernels. Source: ncu kernel-list pass (gpu__time_duration only, serialized).
+category                                             kernels   time_us    pct
+group-by: hash build + aggregate (cuDF)                   65   19655.2   54.5
+filter gather: string keys (returnflag, linestatus)      164    5490.7   15.2
+projection: price arithmetic (binary ops)                 49    3118.0    8.7
+min/max reductions (stats bounds)                        180    2482.3    6.9
+filter gather: fixed-width columns                        69    2400.9    6.7
+other (fill, scan, misc)                                 263    1508.0    4.2
+filter: predicate + select indices                        49    1094.4    3.0
+ORDER BY / merge sort                                      1     161.8    0.4
+other copies/concat                                       31      97.9    0.3
+expression eval (AST)                                      2      22.9    0.1
+TOTAL kernels=873 gpu_time_us=36032.1

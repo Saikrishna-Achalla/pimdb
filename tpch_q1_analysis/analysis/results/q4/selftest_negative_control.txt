@@ -1,0 +1,12 @@
+negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q4_nsys.sql': ["pinned tables ['orders'] != referenced tables ['lineitem', 'orders']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['orders'] vs referenced ['lineitem', 'orders']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter2: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter3: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '12', 'hits': '0', 'h2d': '31', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '12', 'hits': '31', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['orders'] vs referenced ['lineitem', 'orders']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter2: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']; iter3: 1 assigned for 2 GPU_SCANs, missing tables ['lineitem']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '12', 'hits': '0', 'h2d': '31', 'miss': '1', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '12', 'hits': '31', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 57 copies, 20584858 B total, largest single 3030116 B (limits: single <= 65536 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 47 copies, 659889 B total, largest single 143040 B (result CSV is 105 B; limit 262144 B)
+SELFTEST: PASS (verification detected the unpinned table)

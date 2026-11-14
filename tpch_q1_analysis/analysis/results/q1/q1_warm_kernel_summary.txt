@@ -1,0 +1,22 @@
+kernels=873 total_gpu_time_us=36032.1
+kernel                                        count  total_us    pct   avg_us
+single_pass_shmem_aggs_kernel                    13   14287.4   39.7  1099.03
+input_indexalator>                              150    5439.3   15.1    36.26
+insert_and_find_tag>>                            13    4652.0   12.9   357.84
+static_kernel                                   100    3963.9   11.0    39.64
+identity>                                       120    2359.7    6.5    19.66
+input_indexalator>>                              48    2350.8    6.5    48.98
+transform_kernel                                239    1471.4    4.1     6.16
+DeviceSelectSweepKernel                          25     944.2    2.6    37.77
+NullType>                                         3     173.4    0.5    57.81
+single_thread_kernel                             60     122.6    0.3     2.04
+MultiBlockBatchMemcpyKernel                      24      74.0    0.2     3.09
+DeviceCompactInitKernel                          25      43.9    0.1     1.76
+InitTileStateKernel                              24      42.7    0.1     1.78
+gather                                           14      39.8    0.1     2.84
+                                                  7      23.8    0.1     3.40
+compute_column_kernel                             2      22.9    0.1    11.46
+fused_concatenate_string_chars_kernel             2       8.4    0.0     4.21
+fused_concatenate_string_offset_kernel            2       8.3    0.0     4.14
+DeviceScanInitKernel                              2       3.6    0.0     1.79
+median_us 3.424 kernels<5us 542 kernels<10us 555

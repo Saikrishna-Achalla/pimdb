@@ -1,0 +1,88 @@
+{
+ "N3": 303,
+ "N4": 350,
+ "N5": 397,
+ "pin_plus_iteration1_if_iterations_2_3_equal": 209,
+ "per_iteration_counts": [
+  47,
+  47
+ ],
+ "cross_run_prefix_multisets_equal": true,
+ "added_iteration_multisets_equal": true,
+ "order_positions_differing_iter4_vs_iter5": 38,
+ "x4_vs_x5_prefix_positions_differing": 93,
+ "nsys_kernels_per_warm_iter": 47,
+ "stable": true,
+ "unstable_reasons": [],
+ "skip": 350,
+ "count": 47,
+ "threshold": 1000,
+ "coverage": 0.9,
+ "policy": "full_all",
+ "families": [
+  {
+   "func": "compute_column_kernel",
+   "count": 3,
+   "time_us": 799.488,
+   "pct": 82.16529088696682
+  },
+  {
+   "func": "DeviceSelectSweepKernel",
+   "count": 3,
+   "time_us": 47.04,
+   "pct": 4.834413128555925
+  },
+  {
+   "func": "transform_kernel",
+   "count": 15,
+   "time_us": 45.664,
+   "pct": 4.692998322754629
+  },
+  {
+   "func": "static_kernel",
+   "count": 3,
+   "time_us": 25.6,
+   "pct": 2.630973131186898
+  },
+  {
+   "func": "DeviceReduceKernel",
+   "count": 6,
+   "time_us": 20.352,
+   "pct": 2.0916236392935836
+  },
+  {
+   "func": "DeviceReduceSingleTileKernel",
+   "count": 7,
+   "time_us": 16.48,
+   "pct": 1.6936889532015655
+  },
+  {
+   "func": "copy_range_kernel",
+   "count": 4,
+   "time_us": 6.912,
+   "pct": 0.7103627454204624
+  },
+  {
+   "func": "single_thread_kernel",
+   "count": 3,
+   "time_us": 6.08,
+   "pct": 0.6248561186568882
+  },
+  {
+   "func": "DeviceCompactInitKernel",
+   "count": 3,
+   "time_us": 5.408,
+   "pct": 0.5557930739632322
+  }
+ ],
+ "full_families": [
+  "compute_column_kernel",
+  "DeviceSelectSweepKernel",
+  "transform_kernel",
+  "static_kernel"
+ ],
+ "full_regex": "^(compute_column_kernel|DeviceSelectSweepKernel|transform_kernel|static_kernel)$",
+ "full_regex_skip": 135,
+ "full_regex_count": 24,
+ "full_regex_time_pct": 94.32367546946426
+}

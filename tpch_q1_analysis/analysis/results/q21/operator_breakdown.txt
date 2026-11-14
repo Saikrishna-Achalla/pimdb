@@ -1,0 +1,38 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+sort / top-N                                       2    1297.0   41.2     0.25    0.2
+dynamic filter: membership probe                   9     459.1   14.6    73.88  160.9
+fill / sequence / init                             5     261.1    8.3     6.32   24.2
+cub/thrust: select/compact                        33     203.9    6.5    20.90  102.5
+gather/scatter: fixed-width                       44     184.5    5.9    51.80  280.8
+gather: strings                                   24     181.9    5.8     2.36   13.0
+hash join: output/compaction                       7     178.9    5.7     5.40   30.2
+hash join: build (insert)                          3      97.0    3.1    13.39  138.1
+dynamic filter: build key set (cuco insert)        2      80.9    2.6    13.07  161.5
+expression: binary op                              6      58.9    1.9     9.87  167.5
+hash join: probe (find/count/retrieve)             3      38.9    1.2     4.50  115.5
+group-by / aggregation                             3      38.1    1.2     0.33    8.5
+expression: cast/unary                            10      21.8    0.7     1.08   49.6
+hash-table init (cuco, other)                      5      16.4    0.5     0.01    0.9
+hash join: hash-table init                         3      12.3    0.4     0.01    0.9
+cub/thrust: scan                                   4       8.7    0.3     0.06    6.8
+dynamic filter: key conversion                     1       2.1    0.1     0.01    4.9
+other: transform_kernel                            1       1.8    0.1     0.01    3.4
+other: static_kernel                               1       1.6    0.0     0.00    1.8
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+DeviceMergeSortBlockSortKernel                     2    1297.0   41.2     0.25    0.2
+insert_if_n                                        7     427.4   13.6    32.59   76.2
+fused_membership_mask_kernel                       2     288.3    9.2    24.95   86.5
+static_kernel                                     21     251.0    8.0    58.35  232.5
+transform_kernel                                  58     213.6    6.8    52.91  247.7
+DeviceSelectSweepKernel                           19     194.9    6.2    21.72  111.4
+mixed_join_semi                                    2     158.1    5.0     4.53   28.7
+DeviceScanKernel                                  10      92.7    2.9     0.99   10.7
+gather_chars_fn_char_parallel                      8      82.4    2.6     1.40   17.0
+find_if_n                                          3      38.9    1.2     4.50  115.5
+DeviceCompactInitKernel                           19      29.8    0.9     0.05    1.7
+mapping_indices_kernel                             1      27.4    0.9     0.18    6.7
+DeviceScanInitKernel                              10      15.5    0.5     0.03    1.7
+add_if_n                                           2      11.7    0.4     0.50   42.9
+add_if_shmem                                       1       8.1    0.3     0.18   22.4
+single_pass_shmem_aggs_kernel                      1       8.1    0.3     0.12   14.8

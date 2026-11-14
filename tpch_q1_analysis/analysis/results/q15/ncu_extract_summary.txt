@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=112 (full metrics: 112) gpu_time_us=991.4 dram_MB=50.87 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+  0 compute_column_kernel                158.9  16.0  23450  128  90.6   5.8   38.3  91.2 40.71   6.09
+  1 compute_column_kernel                158.8  16.0  23435  128  90.6   5.8   38.3  91.2 40.69   6.09
+ 32 mapping_indices_kernel                39.6   4.0    240  128  21.9   0.8    5.2  33.2  1.00   0.21
+ 39 mapping_indices_kernel                38.2   3.9    240  128  22.6   0.8    5.3  34.2  1.00   0.20
+ 35 static_kernel                         37.2   3.8    221  256  11.9   7.1   46.8  27.8  2.30   1.74
+ 44 static_kernel                         37.1   3.7    225  256  12.0   7.0   46.3  28.3  2.34   1.72
+  5 DeviceSelectSweepKernel               21.3   2.2    522  384  38.3  21.7  143.4  43.6  5.44   3.06
+  4 DeviceSelectSweepKernel               20.9   2.1    521  384  39.9  22.1  146.2  44.3  5.43   3.06
+ 56 mapping_indices_kernel                20.1   2.0    157  128  11.5   1.9   12.7  22.3  0.65   0.26
+100 DeviceRadixSortSingleTileKernel       15.2   1.5      1  256   1.5   0.2    1.2  16.6  0.02   0.02
+ 62 single_pass_shmem_aggs_kernel         14.0   1.4    157  128   5.6   7.9   52.3  26.9  0.47   0.73
+ 72 hash_csr_probe_count_kernel           10.6   1.1     40  256   1.3   3.5   23.3  16.7  0.21   0.25
+ 21 static_kernel                         10.2   1.0    221  256   9.2  28.7  189.6  76.6  0.92   1.94
+ 18 static_kernel                          9.9   1.0    225  256  10.0  30.1  198.2  83.1  0.94   1.95
+ 75 hash_csr_retrieve_kernel               9.8   1.0     96  256   0.4   0.6    3.6  20.0  0.33   0.04
+ 87 hash_csr_retrieve_kernel               9.2   0.9     96  256   0.5   0.6    3.9  19.3  0.33   0.04
+ 17 static_kernel                          9.1   0.9    221  256  11.4  16.8  110.8  75.2  0.77   1.01
+ 51 DeviceRadixSortSingleTileKernel        8.9   0.9      1  256   1.3   0.3    2.2  16.6  0.02   0.02
+ 71 hash_csr_build_fill_kernel             8.1   0.8      1  256   0.0   1.5    9.8   3.1  0.01   0.08
+ 23 find_kernel                            8.0   0.8     56  128   1.1   1.6   10.5   9.2  0.10   0.08
+ 20 find_kernel                            7.8   0.8     57  128   1.1   1.7   11.2   9.4  0.10   0.09
+ 68 hash_csr_build_count_kernel            7.7   0.8      1  256   0.0   1.5   10.1   2.7  0.01   0.08
+ 16 static_kernel                          7.3   0.7    225  256  14.5  21.3  139.7  72.1  0.78   1.02
+ 53 find_kernel                            7.3   0.7     10  128   0.2   0.5    3.1   7.6  0.02   0.02
+ 84 hash_csr_probe_count_kernel            6.7   0.7     40  256   1.6   1.5    9.7  16.2  0.14   0.07
+time-weighted stall mix (kernels with full metrics): long_scoreboard=33.9%, no_instructions=20.9%, wait=11.6%, barrier=6.0%, short_scoreboard=5.5%, lg_throttle=5.2%, mio_throttle=4.4%, selected=3.9%
+sm clock (MHz) median: 2269

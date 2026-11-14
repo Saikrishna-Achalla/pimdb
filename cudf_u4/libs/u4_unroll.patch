@@ -1,0 +1,152 @@
+diff --git a/cpp/src/groupby/hash/compute_shared_memory_aggs.cu b/cpp/src/groupby/hash/compute_shared_memory_aggs.cu
+index b97de8e..5cce0d8 100644
+--- a/cpp/src/groupby/hash/compute_shared_memory_aggs.cu
++++ b/cpp/src/groupby/hash/compute_shared_memory_aggs.cu
+@@ -36,6 +36,11 @@ namespace {
+ /// Shared memory data alignment
+ CUDF_HOST_DEVICE cudf::size_type constexpr ALIGNMENT = 16;
+ 
++/// Rows per thread per batch in compute_pre_aggregations (row-unrolled load -> atomic)
++#ifndef SHMEM_AGGS_UNROLL
++#define SHMEM_AGGS_UNROLL 4
++#endif
++
+ // Dictionary and nested value columns are rejected before this kernel is launched.
+ struct unsupported_shared_memory_type {};
+ 
+@@ -191,28 +196,41 @@ __device__ void compute_pre_aggregations(cudf::size_type col_start,
+                                          cudf::aggregation::Kind const* d_agg_kinds,
+                                          cudf::size_type agg_location_offset)
+ {
+-  // Aggregates global memory sources to shared memory targets
+-  for (auto source_idx = cudf::detail::grid_1d::global_thread_id(); source_idx < num_input_rows;
+-       source_idx += cudf::detail::grid_1d::grid_stride()) {
+-    if (not row_bitmask or cudf::bit_is_set(row_bitmask, source_idx)) {
+-      auto const target_idx = local_mapping_index[source_idx] + agg_location_offset;
+-      for (auto col_idx = col_start; col_idx < col_end; col_idx++) {
+-        auto const source_col = source.column(col_idx);
+-
+-        cuda::std::byte* target =
+-          reinterpret_cast<cuda::std::byte*>(shmem_agg_storage + shmem_agg_res_offsets[col_idx]);
+-        bool* target_mask =
+-          reinterpret_cast<bool*>(shmem_agg_storage + shmem_agg_mask_offsets[col_idx]);
+-
+-        dispatch_shared_memory_type_and_aggregation(source_col.type(),
+-                                                    d_agg_kinds[col_idx],
+-                                                    shmem_element_aggregator{},
+-                                                    target,
+-                                                    target_mask,
+-                                                    target_idx,
+-                                                    source_col,
+-                                                    source_idx);
+-      }
++  // Aggregates global memory sources to shared memory targets.
++  // Row-unrolled: each thread takes SHMEM_AGGS_UNROLL rows from consecutive grid-stride
++  // iterations (so every row stays in the block that computed its local_mapping_index), loads
++  // their slots, then per column issues all value loads before the shared-memory atomics.
++  constexpr int U    = SHMEM_AGGS_UNROLL;
++  auto const stride  = cudf::detail::grid_1d::grid_stride();
++  for (auto base = cudf::detail::grid_1d::global_thread_id(); base < num_input_rows;
++       base += stride * U) {
++    cudf::size_type src[U];
++    cudf::size_type tgt[U];
++    bool act[U];
++#pragma unroll
++    for (int r = 0; r < U; ++r) {
++      auto const row = base + r * stride;
++      act[r] = row < num_input_rows && (not row_bitmask or cudf::bit_is_set(row_bitmask, row));
++      src[r] = act[r] ? static_cast<cudf::size_type>(row) : 0;
++      tgt[r] = act[r] ? local_mapping_index[row] + agg_location_offset : 0;
++    }
++    for (auto col_idx = col_start; col_idx < col_end; col_idx++) {
++      auto const source_col = source.column(col_idx);
++
++      cuda::std::byte* target =
++        reinterpret_cast<cuda::std::byte*>(shmem_agg_storage + shmem_agg_res_offsets[col_idx]);
++      bool* target_mask =
++        reinterpret_cast<bool*>(shmem_agg_storage + shmem_agg_mask_offsets[col_idx]);
++
++      dispatch_shared_memory_type_and_aggregation(source_col.type(),
++                                                  d_agg_kinds[col_idx],
++                                                  shmem_batch_aggregator<U>{},
++                                                  target,
++                                                  target_mask,
++                                                  tgt,
++                                                  act,
++                                                  source_col,
++                                                  src);
+     }
+   }
+ }
+diff --git a/cpp/src/groupby/hash/shared_memory_aggregator.cuh b/cpp/src/groupby/hash/shared_memory_aggregator.cuh
+index 3008c13..92d9800 100644
+--- a/cpp/src/groupby/hash/shared_memory_aggregator.cuh
++++ b/cpp/src/groupby/hash/shared_memory_aggregator.cuh
+@@ -217,4 +217,67 @@ struct shmem_element_aggregator {
+     update_target_element_shmem<Source, k>{}(target, target_index, source, source_index);
+   }
+ };
++/// SUM/MIN/MAX on fixed-width sources: values can be loaded for a whole batch before the atomics.
++/// (Namespace-scope constant so the host-only trait functions are only constant-evaluated.)
++template <typename Source, cudf::aggregation::Kind k>
++inline constexpr bool shmem_batch_preload_v =
++  (k == cudf::aggregation::SUM && cudf::is_fixed_width<Source>() &&
++   !cudf::is_timestamp<Source>()) ||
++  ((k == cudf::aggregation::MIN || k == cudf::aggregation::MAX) && cudf::is_fixed_width<Source>() &&
++   cudf::has_atomic_support<device_storage_type_t<Source>>());
++
++/**
++ * @brief Batched (row-unrolled) variant of `shmem_element_aggregator`.
++ *
++ * Processes U rows of one column per call. For SUM/MIN/MAX on fixed-width sources it first issues
++ * all U validity checks and value loads, then applies the U shared-memory atomics, so the loads are
++ * in flight together instead of each atomic waiting on its own load. Other aggregation kinds fall
++ * back to the per-element path for each active row.
++ */
++template <int U>
++struct shmem_batch_aggregator {
++  template <typename Source, cudf::aggregation::Kind k>
++  __device__ void operator()(cuda::std::byte* target,
++                             bool* target_mask,
++                             cudf::size_type const (&target_index)[U],
++                             bool const (&active)[U],
++                             cudf::column_device_view source,
++                             cudf::size_type const (&source_index)[U]) const noexcept
++  {
++    constexpr bool preload = shmem_batch_preload_v<Source, k>;
++    if constexpr (preload) {
++      using DeviceTarget = cudf::device_storage_type_t<cudf::detail::target_type_t<Source, k>>;
++      using DeviceSource = cudf::device_storage_type_t<Source>;
++      DeviceSource value[U];
++      bool valid[U];
++#pragma unroll
++      for (int r = 0; r < U; ++r) {
++        valid[r] = active[r] && source.is_valid(source_index[r]);
++        value[r] = valid[r] ? source.element<DeviceSource>(source_index[r]) : DeviceSource{};
++      }
++      DeviceTarget* target_casted = reinterpret_cast<DeviceTarget*>(target);
++#pragma unroll
++      for (int r = 0; r < U; ++r) {
++        if (!valid[r]) { continue; }
++        auto const ti = target_index[r];
++        if (!target_mask[ti]) { cudf::detail::atomic_max(target_mask + ti, true); }
++        if constexpr (k == cudf::aggregation::SUM) {
++          cudf::detail::atomic_add(&target_casted[ti], static_cast<DeviceTarget>(value[r]));
++        } else if constexpr (k == cudf::aggregation::MIN) {
++          cudf::detail::atomic_min(&target_casted[ti], static_cast<DeviceTarget>(value[r]));
++        } else {
++          cudf::detail::atomic_max(&target_casted[ti], static_cast<DeviceTarget>(value[r]));
++        }
++      }
++    } else {
++#pragma unroll
++      for (int r = 0; r < U; ++r) {
++        if (active[r]) {
++          shmem_element_aggregator{}.template operator()<Source, k>(
++            target, target_mask, target_index[r], source, source_index[r]);
++        }
++      }
++    }
++  }
++};
+ }  // namespace cudf::groupby::detail::hash

@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=168 (full metrics: 168) gpu_time_us=676.7 dram_MB=33.32 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+ 80 static_kernel                         19.0   2.8   1563  256  60.5  13.2   87.2  83.0  5.43   1.65
+ 25 static_kernel                         18.8   2.8   1563  256  61.1  13.3   87.8  82.8  5.43   1.65
+ 90 find_if_n                             12.1   1.8    248  128  19.7   2.0   13.4  36.9  0.43   0.16
+125 conditional_join                      10.7   1.6    233  128   6.6   8.0   52.8  38.6  0.61   0.57
+ 34 find_if_n                             10.7   1.6    248  128  22.8   2.3   15.0  38.1  0.43   0.16
+ 89 insert_if_n                           10.4   1.5      4  128   0.1   0.4    2.4   5.4  0.01   0.02
+124 compute_conditional_join_output_si    10.3   1.5    233  128   6.4   8.3   54.7  37.5  0.61   0.56
+ 82 DeviceSelectSweepKernel               10.0   1.5    139  384  22.6  13.1   86.2  41.3  1.45   0.86
+103 static_kernel                          9.4   1.4     62  256   2.8  10.2   67.2  22.7  0.26   0.63
+135 DeviceRadixSortOnesweepKernel          9.4   1.4      9  384   3.2   7.5   49.8  24.5  0.09   0.47
+ 33 insert_if_n                            9.4   1.4      4  128   0.1   0.4    2.5   5.5  0.01   0.02
+ 46 static_kernel                          9.2   1.4     62  256   2.9  10.4   68.6  22.0  0.26   0.63
+139 DeviceRadixSortOnesweepKernel          9.2   1.4      9  384   3.3   7.7   50.9  24.5  0.09   0.47
+137 DeviceRadixSortOnesweepKernel          9.2   1.4      9  384   3.3   7.8   51.3  25.4  0.09   0.47
+141 DeviceRadixSortOnesweepKernel          8.8   1.3      9  384   3.5   8.2   53.6  24.7  0.09   0.47
+ 27 DeviceSelectSweepKernel                8.4   1.2    139  384  26.9  15.5  102.1  39.4  1.45   0.86
+165 DeviceRadixSortOnesweepKernel          7.7   1.1      9  384   2.0   9.3   61.2  25.9  0.09   0.47
+143 DeviceRadixSortOnesweepKernel          7.4   1.1      9  384   1.9   9.7   63.6  24.6  0.09   0.47
+119 _kernel_agent                          7.4   1.1     14  256   3.8   9.5   62.4  16.7  0.15   0.46
+123 static_kernel                          7.3   1.1     59  256   7.6  12.2   80.7  20.7  0.20   0.59
+147 DeviceRadixSortOnesweepKernel          7.1   1.0      9  384   2.0  10.1   66.4  24.2  0.09   0.47
+151 DeviceRadixSortOnesweepKernel          7.1   1.0      9  384   2.0  10.1   66.4  26.0  0.09   0.47
+163 DeviceRadixSortOnesweepKernel          7.1   1.0      9  384   2.0  10.1   66.4  23.8  0.09   0.47
+153 DeviceRadixSortOnesweepKernel          7.0   1.0      9  384   2.0  10.2   67.0  23.5  0.09   0.47
+155 DeviceRadixSortOnesweepKernel          7.0   1.0      9  384   2.0  10.2   67.0  23.8  0.09   0.47
+time-weighted stall mix (kernels with full metrics): no_instructions=31.9%, long_scoreboard=31.9%, short_scoreboard=8.8%, wait=8.3%, barrier=6.0%, selected=3.3%, branch_resolving=2.8%, lg_throttle=1.9%
+sm clock (MHz) median: 2280

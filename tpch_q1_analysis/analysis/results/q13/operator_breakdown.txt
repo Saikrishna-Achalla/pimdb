@@ -1,0 +1,31 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+string ops                                         2     213.6   37.3    79.52  372.3
+sort / top-N                                       1     151.7   26.5     0.08    0.5
+gather/scatter: fixed-width                        8      60.3   10.5    23.91  396.7
+dense count join: accumulate/emit (sirius)         4      55.0    9.6     9.57  173.8
+group-by / aggregation                             3      34.2    6.0     2.13   62.4
+cub/thrust: select/compact                         6      29.8    5.2     2.88   96.9
+cub/thrust: reduce/find                            5      13.3    2.3     1.26   95.0
+expression: binary op                              2       5.2    0.9     0.64  123.6
+hash-table init (cuco, other)                      1       2.3    0.4     0.00    1.2
+other: transform_kernel                            1       2.0    0.3     0.01    3.1
+expression: cast/unary                             1       1.9    0.3     0.01    6.1
+fill / sequence / init                             1       1.7    0.3     0.01    3.7
+other: static_kernel                               1       1.6    0.3     0.00    2.0
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+like_multiliteral_kernel                           2     213.6   37.3    79.52  372.3
+DeviceMergeSortBlockSortKernel                     1     151.7   26.5     0.08    0.5
+transform_kernel                                  11      65.8   11.5    23.94  363.7
+accumulate_kernel                                  3      50.9    8.9     8.36  164.2
+DeviceSelectSweepKernel                            3      25.1    4.4     2.88  114.7
+mapping_indices_kernel                             1      21.0    3.7     1.28   61.0
+single_pass_shmem_aggs_kernel                      1      10.7    1.9     0.72   67.8
+DeviceReduceKernel                                 2       6.8    1.2     1.24  181.8
+static_kernel                                      3       6.3    1.1     0.13   21.0
+DeviceCompactInitKernel                            3       4.7    0.8     0.01    1.8
+DeviceReduceSingleTileKernel                       2       4.2    0.7     0.04    8.8
+find_kernel                                        1       4.2    0.7     0.63  149.3
+emit_kernel                                        1       4.1    0.7     1.21  292.7
+single_thread_kernel                               1       1.8    0.3     0.00    1.4
+init_found_pos_pointer                             1       1.5    0.3     0.00    1.7

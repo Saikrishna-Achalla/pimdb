@@ -1,0 +1,11 @@
+# Q1 SF10, lineitem pinned on GPU, warm query: 873 kernels. Source: ncu kernel-list pass (gpu__time_duration only, serialized).
+category                     kernels   time_us    pct
+hash_groupby                      65   19655.2   54.5
+other(transform/fill/misc)       421    7688.3   21.3
+copy/concat/gather               199    5593.6   15.5
+cub scan/select/reduce           185    2910.2    8.1
+sort/order_by                      1     161.8    0.4
+expression_eval(AST)               2      22.9    0.1
+TOTAL kernels=873 gpu_time_us=36032.1
+kernels <5us: 542; <10us: 555; time in <10us kernels (us): 1434.4
+top-10 kernels share of GPU time: 35.8%

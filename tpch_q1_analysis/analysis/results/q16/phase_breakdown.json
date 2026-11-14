@@ -1,0 +1,76 @@
+{
+ "total_us": 9744.192,
+ "kernels": 156,
+ "phases": [
+  {
+   "phase": "sort/top-N",
+   "kernels": 20,
+   "time_us": 8670.016,
+   "pct": 88.97624348945506,
+   "dram_MB": 14.81344
+  },
+  {
+   "phase": "gather/copy/concat",
+   "kernels": 68,
+   "time_us": 608.448,
+   "pct": 6.244211936710607,
+   "dram_MB": 47.950848
+  },
+  {
+   "phase": "other",
+   "kernels": 20,
+   "time_us": 163.776,
+   "pct": 1.6807550590136155,
+   "dram_MB": 12.612864
+  },
+  {
+   "phase": "expression eval",
+   "kernels": 7,
+   "time_us": 89.92,
+   "pct": 0.9228061187628487,
+   "dram_MB": 4.18944
+  },
+  {
+   "phase": "cub scan/select/reduce",
+   "kernels": 27,
+   "time_us": 89.056,
+   "pct": 0.9139392984046292,
+   "dram_MB": 5.632
+  },
+  {
+   "phase": "hash join probe",
+   "kernels": 4,
+   "time_us": 31.904,
+   "pct": 0.3274155517461068,
+   "dram_MB": 2.084608
+  },
+  {
+   "phase": "hash group-by/agg",
+   "kernels": 4,
+   "time_us": 31.584,
+   "pct": 0.3241315442060255,
+   "dram_MB": 3.774464
+  },
+  {
+   "phase": "scan/filter",
+   "kernels": 2,
+   "time_us": 25.952,
+   "pct": 0.2663330115005944,
+   "dram_MB": 4.264192
+  },
+  {
+   "phase": "string ops",
+   "kernels": 2,
+   "time_us": 19.744,
+   "pct": 0.20262326522301696,
+   "dram_MB": 5.611008
+  },
+  {
+   "phase": "hash join build",
+   "kernels": 2,
+   "time_us": 13.792,
+   "pct": 0.14154072497750456,
+   "dram_MB": 0.561408
+  }
+ ]
+}

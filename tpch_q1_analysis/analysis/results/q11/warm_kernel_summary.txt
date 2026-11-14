@@ -1,0 +1,40 @@
+ncu list passes: pin+3 iters=780, pin+4=948, pin+5=1116 launches; launches added per iteration [168, 168]; nsys kernels per measured iteration 168
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 0 positions; x4 vs first N4 of x5 at 0 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 168 kernels, serialized GPU time 639.1 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 2.75 us; <5 us: 128; <10 us: 163; time in <10 us kernels: 568.4 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['transform_kernel', 'DeviceRadixSortOnesweepKernel', 'static_kernel', 'DeviceSelectSweepKernel', 'insert_if_n', 'find_if_n', 'DeviceRadixSortInitKernel', 'DeviceCompactInitKernel', 'DeviceReduceKernel', 'DeviceScanKernel', 'conditional_join', 'compute_conditional_join_output_size'] -> 153 kernels, 93.4% of time
+
+family (function base)                     count   time_us    pct   avg_us
+transform_kernel                              62     170.7   26.7     2.75
+DeviceRadixSortOnesweepKernel                 16     110.3   17.3     6.89
+static_kernel                                 18     101.6   15.9     5.64
+DeviceSelectSweepKernel                       11      56.1    8.8     5.10
+insert_if_n                                    6      35.1    5.5     5.85
+find_if_n                                      4      32.5    5.1     8.12
+DeviceRadixSortInitKernel                     17      30.6    4.8     1.80
+DeviceCompactInitKernel                       11      19.3    3.0     1.75
+DeviceReduceKernel                             3      10.8    1.7     3.62
+DeviceScanKernel                               3      10.6    1.7     3.52
+conditional_join                               1       9.9    1.5     9.89
+compute_conditional_join_output_size           1       9.3    1.5     9.31
+_kernel_agent                                  2       9.1    1.4     4.54
+DeviceReduceSingleTileKernel                   3       7.0    1.1     2.33
+DeviceRadixSortHistogramKernel                 1       6.1    1.0     6.14
+DeviceScanInitKernel                           3       5.3    0.8     1.76
+find_kernel                                    1       5.2    0.8     5.25
+single_thread_kernel                           2       4.0    0.6     2.00
+DeviceRadixSortExclusiveSumKernel              1       2.3    0.4     2.27
+copy_range_kernel                              1       1.7    0.3     1.73
+init_found_pos_pointer                         1       1.7    0.3     1.66
+
+phase                        count   time_us    pct
+sort/top-N                      35     149.2   23.4
+gather/copy/concat              41     119.5   18.7
+expression eval                 27      94.1   14.7
+cub scan/select/reduce          29      89.8   14.0
+hash join probe                 10      66.3   10.4
+scan/filter                      8      56.4    8.8
+hash join build                  8      34.1    5.3
+hash group-by/agg                5      19.9    3.1
+other                            5       9.8    1.5

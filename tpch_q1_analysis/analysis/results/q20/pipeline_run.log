@@ -1,0 +1,556 @@
+[17:11:32] q20 stage sql: start
+[17:11:32] q20 stage sql: ok (0 s)
+[17:11:32] q20 stage timing: start
+Sirius (pinned, GPU): 15 iterations, first 55.0 ms, warmup=3, timed=12
+  warm median 9.0 ms  min 8.0  max 9.0  stdev 0.49
+  timed: 8 9 8 9 8 9 9 9 8 8 9 9
+  Sirius log split (median, 1 ms resolution): planning 3 ms, engine 5 ms, gap_to_next_statement 0 ms (11 gaps for 12 timed iterations (none after the last))
+DuckDB CPU: first 35.0 ms, warm median 29.0 ms (min 27.0, max 35.0)
+result: 181 rows; consistent across 15 GPU iterations: True (modes ['exact']); vs DuckDB CPU: exact (max rel diff 0.0, tol 1e-09) 
+
+[17:11:34] q20 stage timing: ok (2 s)
+[17:11:34] q20 stage pcie: start
+PCIe verification, TPC-H Q20 SF1 (tables: lineitem part partsupp supplier nation; rows {'lineitem': 6001215, 'part': 200000, 'partsupp': 800000, 'supplier': 10000, 'nation': 25})
+Sirius logs: /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q20/traces/sirius_log_timing (1 process(es); last used)
+             /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q20/traces/sirius_log_nsys (1)
+nsys trace: /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q20/traces/q20_nsys.sqlite
+
+[PASS] sql:pin_tier_gpu: every pinned SQL script pins each referenced table once with tier='gpu'
+[PASS] timing_log:iterations_found: 15 query iterations (expected 15)
+[PASS] timing_log:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] timing_log:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] timing_log:no_cache_assign_error: 0 cache-assignment errors
+[PASS] timing_log:fs_cache_zero_every_iteration: 16 cache summaries for 15 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..15 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] timing_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] timing_log:no_host_staged_filter_publication: 30 filter publication(s) logged in query iterations; 15 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] timing_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..15: host_pool allocated and peak unchanged
+[PASS] nsys_log:iterations_found: 8 query iterations (expected 8)
+[PASS] nsys_log:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] nsys_log:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] nsys_log:no_cache_assign_error: 0 cache-assignment errors
+[PASS] nsys_log:fs_cache_zero_every_iteration: 9 cache summaries for 8 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..8 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] nsys_log:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] nsys_log:no_host_staged_filter_publication: 16 filter publication(s) logged in query iterations; 8 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] nsys_log:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..8: host_pool allocated and peak unchanged
+[PASS] nsys:windows: 8 iteration windows from the nsys-run Sirius log (5 measured, 3 warmup); kernels per iteration [142, 142, 142, 142, 142, 142, 142, 142]
+[PASS] no_parquet_decode_kernels: 0 decode/decompress kernels among 1136 kernels of all 8 iterations
+[PASS] h2d_measured_iterations: per measured iteration: up to 68 copies, 3862 B total, largest single 276 B (limits: single <= 5000 B, total <= 1048576 B)
+[PASS] d2h_measured_iterations: per measured iteration: up to 56 copies, 9581 B total, largest single 9280 B (result CSV is 8319 B; limit 262144 B)
+[PASS] no_other_host_copies: 0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration
+[PASS] unified_memory: UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault tables only when a fault occurs (present: none); faults per measured iteration [0, 0, 0, 0, 0]; managed-memory API calls in the whole trace: none
+
+Determinism (not a PCIe criterion):
+[PASS] nsys:kernels_per_iteration_stable: measured iterations: [142, 142, 142, 142, 142]
+
+Byte limits {'h2d_max_single': 5000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144} (defaults {'h2d_max_single': 5000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144}).
+Tables below the single-copy byte limit (< 8192 rows): ['nation'] -- for these the evidence is the log checks (pinned entry per scan, fs_cache, pool counters) and the ncu sysmem-aperture check (ncu_sysmem_check.txt), not byte counts.
+Copies are classified by source/destination memory kind: only Device/Device Static/Array on both ends is on-device.
+Not covered here: kernels reading device-mapped pinned host memory in place (no memcpy) -> ncu_sysmem_check.txt.
+
+GPU memory: pinned footprint after pin_table = 87107584 B; gpu_pool high-water = 255656676 B (gpu_pool peak is a process-lifetime high-water mark (it includes the pin phase))
+
+Pin phase copies : D2D (on device): 29 copies, 45699273 B, largest 11998684 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 29}; D2H: 295 copies, 964117 B, largest 95040 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 273, 'Device->Pageable': 22}; H2D: 370 copies, 45930263 B, largest 1048576 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 354, 'Pageable->Device': 16}
+After pin (all iterations + gaps): D2D (on device): 139 copies, 116152741 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 139}; D2H: 467 copies, 76722 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 351, 'Device->Pageable': 116}; H2D: 571 copies, 31604 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 545, 'Pageable->Device': 26}
+
+Per iteration (nsys run):
+  iter  1 warmup   kernels=  142 kernel_time=  1220.6 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  2 warmup   kernels=  142 kernel_time=  1233.3 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  3 warmup   kernels=  142 kernel_time=  1231.6 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  4 measured kernels=  142 kernel_time=  1229.9 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  5 measured kernels=  142 kernel_time=  1229.9 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  6 measured kernels=  142 kernel_time=  1227.9 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  7 measured kernels=  142 kernel_time=  1233.6 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+  iter  8 measured kernels=  142 kernel_time=  1233.4 us um_faults=0 | D2D (on device): 17 copies, 14519045 B, largest 3200000 B (cudaMemcpyBatchAsync_v13000) {'Device->Device': 17}; D2H: 56 copies, 9581 B, largest 9280 B (cudaMemcpyBatchAsync_v13000) {'Device->Pinned': 42, 'Device->Pageable': 14}; H2D: 68 copies, 3862 B, largest 276 B (cudaMemcpyBatchAsync_v13000) {'Pinned->Device': 65, 'Pageable->Device': 3}
+
+OVERALL: PASS
+
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         3.0       9.0       1.307        7.99     142     292
+   5         4.0       8.0       1.303        7.17     142     292
+   6         3.0      10.0       1.301        9.43     142     292
+   7         3.0      11.0       1.309        9.45     142     292
+   8         4.0      11.0       1.307        9.76     142     292
+median: planning 3.0 ms, engine 10.0 ms, GPU busy 1.307 ms (13% of the engine window), first->last GPU op 9.43 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                      267.0    1.682
+  cudaLaunchKernel                           142.0    0.626
+  cudaMemcpyBatchAsync                       121.0    0.418
+  cuStreamSynchronize                         98.0    0.351
+  cudaMallocFromPoolAsync                    219.0    0.310
+  cudaFreeAsync                              219.0    0.150
+  cudaMemcpyAsync                             17.0    0.115
+  cudaEventRecord                            113.0    0.084
+  cudaStreamWaitEvent                         86.0    0.072
+  cudaStreamGetDevice                        141.0    0.044
+  cudaMemsetAsync                             57.0    0.043
+  cudaEventCreateWithFlags                    37.0    0.022
+  cuKernelGetName                            142.0    0.020
+  cudaEventDestroy                            37.0    0.018
+  cudaStreamCreateWithFlags                    1.0    0.017
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 1230.9 us of kernels):
+  DeviceMergeSortBlockSortKernel                   316.8 us  25.7%
+  compute_column_kernel                            269.2 us  21.9%
+  fused_membership_mask_kernel                     235.6 us  19.1%
+  DeviceSelectSweepKernel                           69.0 us   5.6%
+  static_kernel                                     58.2 us   4.7%
+  DeviceScanKernel                                  52.0 us   4.2%
+  transform_kernel                                  47.3 us   3.8%
+  contains_if_n                                     44.9 us   3.6%
+  gather_chars_fn_char_parallel                     36.4 us   3.0%
+  insert_if_n                                       26.0 us   2.1%
+  mapping_indices_kernel                            17.0 us   1.4%
+  DeviceCompactInitKernel                           10.0 us   0.8%
+
+[17:11:41] q20 stage pcie: ok (7 s)
+[17:11:41] q20 stage selftest: start
+negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+[FAIL] sql:pin_tier_gpu: {'q20_nsys.sql': ["pinned tables ['nation', 'part', 'partsupp', 'supplier'] != referenced tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']"]}
+[FAIL] timing_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['nation', 'part', 'partsupp', 'supplier'] vs referenced ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[FAIL] timing_log:pinned_entry_per_gpu_scan: iter1: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']; iter2: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']; iter3: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']
+[FAIL] timing_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '18', 'hits': '0', 'h2d': '51', 'miss': '6', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '18', 'hits': '56', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] nsys_log:pin_tier_gpu: non-gpu or missing pins: []; pinned ['nation', 'part', 'partsupp', 'supplier'] vs referenced ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[FAIL] nsys_log:pinned_entry_per_gpu_scan: iter1: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']; iter2: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']; iter3: 4 assigned for 5 GPU_SCANs, missing tables ['lineitem']
+[FAIL] nsys_log:fs_cache_zero_every_iteration: non-zero: ["summary 2 (describes iteration 1): {'reads': '18', 'hits': '0', 'h2d': '51', 'miss': '6', 'evictions': '0'}", "summary 3 (describes iteration 2): {'reads': '18', 'hits': '56', 'h2d': '0', 'miss': '0', 'evictions': '0'}"]
+[FAIL] no_parquet_decode_kernels: found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']
+[FAIL] h2d_measured_iterations: per measured iteration: up to 148 copies, 40186751 B total, largest single 4320440 B (limits: single <= 5000 B, total <= 1048576 B)
+[FAIL] d2h_measured_iterations: per measured iteration: up to 110 copies, 864561 B total, largest single 95040 B (result CSV is 8319 B; limit 262144 B)
+SELFTEST: PASS (verification detected the unpinned table)
+[17:11:47] q20 stage selftest: ok (6 s)
+[17:11:47] q20 pipeline finished in 15 s
+[17:14:51] q20 stage sql: done earlier (REDO=1 to rerun)
+[17:14:51] q20 stage timing: done earlier (REDO=1 to rerun)
+[17:14:51] q20 stage pcie: done earlier (REDO=1 to rerun)
+[17:14:51] q20 stage selftest: done earlier (REDO=1 to rerun)
+[17:14:51] q20 stage list: start
+[PASS] ncu_list_x3:iterations_found: 3 query iterations (expected 3)
+[PASS] ncu_list_x3:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] ncu_list_x3:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] ncu_list_x3:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x3:fs_cache_zero_every_iteration: 4 cache summaries for 3 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..3 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x3:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x3:no_host_staged_filter_publication: 6 filter publication(s) logged in query iterations; 3 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] ncu_list_x3:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..3: host_pool allocated and peak unchanged
+[PASS] ncu_list_x4:iterations_found: 4 query iterations (expected 4)
+[PASS] ncu_list_x4:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] ncu_list_x4:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] ncu_list_x4:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x4:fs_cache_zero_every_iteration: 5 cache summaries for 4 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..4 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x4:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x4:no_host_staged_filter_publication: 8 filter publication(s) logged in query iterations; 4 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] ncu_list_x4:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..4: host_pool allocated and peak unchanged
+[PASS] ncu_list_x5:iterations_found: 5 query iterations (expected 5)
+[PASS] ncu_list_x5:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] ncu_list_x5:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] ncu_list_x5:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_list_x5:fs_cache_zero_every_iteration: 6 cache summaries for 5 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..5 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_list_x5:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_list_x5:no_host_staged_filter_publication: 10 filter publication(s) logged in query iterations; 5 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] ncu_list_x5:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged
+OVERALL ncu list logs: PASS
+
+ncu list passes: pin+3 iters=964, pin+4=1106, pin+5=1248 launches; launches added per iteration [142, 142]; nsys kernels per measured iteration 142
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 8 positions; x4 vs first N4 of x5 at 35 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 142 kernels, serialized GPU time 1769.5 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 2.94 us; <5 us: 94; <10 us: 122; time in <10 us kernels: 456.5 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['DeviceMergeSortBlockSortKernel', 'compute_column_kernel', 'fused_membership_mask_kernel', 'transform_kernel', 'DeviceSelectSweepKernel', 'DeviceScanKernel', 'static_kernel', 'gather_chars_fn_char_parallel', 'contains_if_n', 'insert_if_n', 'DeviceCompactInitKernel'] -> 119 kernels, 93.5% of time
+
+family (function base)                     count   time_us    pct   avg_us
+DeviceMergeSortBlockSortKernel                 1     406.1   22.9   406.08
+compute_column_kernel                          3     342.3   19.3   114.09
+fused_membership_mask_kernel                   2     301.1   17.0   150.56
+transform_kernel                              41     111.4    6.3     2.72
+DeviceSelectSweepKernel                       14     105.2    5.9     7.52
+DeviceScanKernel                              11      97.6    5.5     8.87
+static_kernel                                 16      89.0    5.0     5.56
+gather_chars_fn_char_parallel                  8      69.3    3.9     8.66
+contains_if_n                                  3      65.7    3.7    21.89
+insert_if_n                                    6      42.2    2.4     7.03
+DeviceCompactInitKernel                       14      24.9    1.4     1.78
+mapping_indices_kernel                         1      23.3    1.3    23.33
+DeviceScanInitKernel                          11      19.8    1.1     1.80
+hash_csr_probe_count_kernel                    1      12.9    0.7    12.86
+hash_csr_build_count_kernel                    1      11.2    0.6    11.17
+single_pass_shmem_aggs_kernel                  1       9.6    0.5     9.63
+hash_csr_retrieve_kernel                       1       8.8    0.5     8.77
+hash_csr_build_fill_kernel                     1       7.7    0.4     7.71
+copy_range_kernel                              1       5.2    0.3     5.22
+find_if_n                                      1       5.0    0.3     4.99
+add_if_n                                       1       3.7    0.2     3.71
+DeviceReduceKernel                             1       3.2    0.2     3.20
+DeviceReduceSingleTileKernel                   1       2.3    0.1     2.27
+single_thread_kernel                           1       2.2    0.1     2.18
+
+phase                        count   time_us    pct
+sort/top-N                       1     406.1   22.9
+expression eval                 18     392.2   22.2
+scan/filter                      8     321.7   18.2
+gather/copy/concat              57     279.1   15.8
+cub scan/select/reduce          31     127.2    7.2
+hash join probe                 10     125.3    7.1
+hash group-by/agg                4      76.9    4.3
+hash join build                  4      24.5    1.4
+other                            9      16.4    0.9
+
+[17:15:30] q20 stage list: ok (39 s)
+[17:15:30] q20 stage detail: start
+[17:15:30] q20 ncu --set full on all 142 warm kernels (skip 1106)
+q20_warm_full.ncu-rep: 142 kernels vs 142 expected; multiset match=True (exact names: missing 1, unexpected 1; reconciled on function/grid/block: 1); identical launch order=False
+[PASS] ncu_detail_full:iterations_found: 5 query iterations (expected 5)
+[PASS] ncu_detail_full:pin_tier_gpu: 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+[PASS] ncu_detail_full:pinned_entry_per_gpu_scan: every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+[PASS] ncu_detail_full:no_cache_assign_error: 0 cache-assignment errors
+[PASS] ncu_detail_full:fs_cache_zero_every_iteration: 6 cache summaries for 5 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..5 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]
+[PASS] ncu_detail_full:no_downgrade_or_spill: 0 downgrade/spill/OOM lines in query iterations
+[PASS] ncu_detail_full:no_host_staged_filter_publication: 10 filter publication(s) logged in query iterations; 5 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+[PASS] ncu_detail_full:pool_counters_stable: every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged
+OVERALL ncu detail logs: PASS
+
+q20_warm_full.ncu-rep: 142 kernels, 0 with SM (tex) sysmem-aperture sectors (total 0); all-source sysmem sectors per kernel min/max [265.0, 292.0] (info only); missing metrics none; pcie__read/write_bytes (rate x duration, includes driver/ncu traffic) 512 / 1529344 B -> PASS
+[17:18:56] q20 stage detail: ok (206 s)
+[17:18:56] q20 stage extract: start
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=142 (full metrics: 142) gpu_time_us=1772.4 dram_MB=59.99 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): ['pos82:l2_hit=100.4', 'pos135:l2_hit=112.4']
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+135 DeviceMergeSortBlockSortKernel       406.6  22.9      1  256   0.1   0.0    0.1  16.6  0.00   0.04
+ 63 compute_column_kernel                159.2   9.0  23435  128  90.7   5.8   38.2  91.1 40.69   6.09
+ 70 compute_column_kernel                158.0   8.9  23450  128  90.5   5.8   38.6  91.5 40.71   6.09
+ 72 fused_membership_mask_kernel         150.9   8.5   4096  256  49.2  10.9   72.3  80.6 17.07  10.91
+ 64 fused_membership_mask_kernel         150.8   8.5   4096  256  49.4  10.9   72.0  80.4 17.07  10.85
+ 41 contains_if_n                         42.1   2.4   6250  128  58.5  11.8   77.7  91.9 10.85   3.27
+ 54 static_kernel                         40.2   2.3     18  256   1.8   0.8    5.3  10.7  0.09   0.21
+ 35 compute_column_kernel                 26.8   1.5   1563  128  37.5  40.0  263.9  67.3  3.62   7.07
+ 93 mapping_indices_kernel                22.8   1.3     78  128   6.5   1.5    9.9  11.4  0.33   0.23
+ 74 DeviceSelectSweepKernel               20.6   1.2    522  384  34.2  22.5  148.3  46.0  5.44   3.06
+ 66 DeviceSelectSweepKernel               20.4   1.1    521  384  35.4  22.8  150.3  47.0  5.43   3.06
+ 81 contains_if_n                         14.4   0.8     78  128   5.4   3.0   19.7  13.0  0.14   0.28
+108 hash_csr_probe_count_kernel           13.8   0.8     35  256   4.3   2.3   15.5  14.3  0.12   0.21
+ 27 DeviceScanKernel                      13.0   0.7      1  224   0.1   0.6    3.9  14.1  0.01   0.05
+ 13 DeviceScanKernel                      13.0   0.7      1  224   0.1   0.7    4.6  13.9  0.01   0.06
+ 16 DeviceScanKernel                      12.9   0.7      1  224   0.1   0.7    4.6  13.9  0.01   0.06
+ 30 DeviceScanKernel                      12.7   0.7      1  224   0.1   0.6    4.1  14.4  0.01   0.05
+ 40 insert_if_n                           12.3   0.7     18  128   0.6   0.8    5.4   6.0  0.03   0.07
+ 80 insert_if_n                           11.9   0.7     69  128   2.8   2.8   18.5   9.7  0.12   0.22
+104 hash_csr_build_count_kernel           11.2   0.6     24  256   1.9   1.9   12.6  12.2  0.08   0.14
+134 gather_chars_fn_char_parallel         10.0   0.6      6  128   0.6   0.3    1.9   8.2  0.01   0.02
+ 17 gather_chars_fn_char_parallel          9.7   0.5     12  128   1.2   0.7    4.4   8.2  0.02   0.04
+ 99 single_pass_shmem_aggs_kernel          9.7   0.5     78  128   4.0   4.7   30.6  13.5  0.41   0.30
+130 DeviceScanKernel                       9.3   0.5      1  224   0.1   0.8    5.5  14.5  0.01   0.05
+116 static_kernel                          9.3   0.5     12  256   0.5   5.2   34.0  15.7  0.04   0.32
+time-weighted stall mix (kernels with full metrics): barrier=29.1%, long_scoreboard=28.8%, wait=11.8%, no_instructions=9.6%, short_scoreboard=5.4%, selected=4.1%, branch_resolving=3.0%, not_selected=2.3%
+sm clock (MHz) median: 2271
+phase                                        kernels   time_us    pct  DRAM_MB   GB/s
+sort/top-N                                         1     406.6   22.9     0.04    0.1
+expression eval                                   18     393.6   22.2    20.27   51.5
+scan/filter                                        8     321.2   18.1    22.10   68.8
+gather/copy/concat                                57     281.9   15.9     4.10   14.6
+cub scan/select/reduce                            31     127.2    7.2     7.95   62.5
+hash join probe                                   10     127.1    7.2     4.37   34.4
+hash group-by/agg                                  4      75.6    4.3     0.82   10.8
+hash join build                                    4      24.2    1.4     0.30   12.6
+other                                              9      15.1    0.9     0.03    2.0
+TOTAL kernels=142 gpu_time_us=1772.4 dram_MB=59.99 avg_GB/s=33.8 (ncu: serialized, clock-locked, L2 flushed before each kernel -> DRAM bytes are cold-L2 traffic)
+kernels <5us: 93; <10us: 122; time in <10us kernels: 458.9 us (25.9%)
+kernels with < 1 wave (48 SMs): 131 (1022.0 us); grid < 48 CTAs: 122
+top-10 kernels share of GPU time: 66.5%
+
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+sort / top-N                                       1     406.6   22.9     0.04    0.1
+expression: AST                                    3     343.9   19.4    19.25   56.0
+dynamic filter: membership probe                   5     311.6   17.6    21.85   70.1
+gather: strings                                   24     174.5    9.8     0.64    3.7
+cub/thrust: select/compact                        24     108.1    6.1     7.80   72.2
+gather/scatter: fixed-width                       32     102.2    5.8     3.46   33.8
+hash join: output/compaction                       7      99.3    5.6     3.94   39.7
+group-by / aggregation                             4      75.6    4.3     0.82   10.8
+expression: binary op                              5      28.3    1.6     0.73   25.8
+hash join: probe (find/count/retrieve)             3      27.8    1.6     0.43   15.4
+hash join: build (insert)                          3      22.6    1.3     0.30   13.3
+expression: cast/unary                            10      21.4    1.2     0.29   13.7
+cub/thrust: scan                                   6      17.2    1.0     0.15    8.5
+hash-table init (cuco, other)                      7      11.7    0.7     0.02    1.8
+dynamic filter: build key set (cuco insert)        2       7.6    0.4     0.24   32.0
+copy / concatenate                                 1       5.1    0.3     0.00    0.6
+dynamic filter: key conversion                     1       2.0    0.1     0.01    5.1
+cub/thrust: reduce/find                            1       1.9    0.1     0.00    1.5
+other: transform_kernel                            1       1.9    0.1     0.01    3.3
+hash join: hash-table init                         1       1.6    0.1     0.00    1.9
+other: static_kernel                               1       1.5    0.1     0.00    1.9
+
+# DeviceMergeSortBlockSortKernel: family 406.6 us (22.9% of warm GPU time, 1 launches); hotspots for its longest launch pos 135 (406.6 us, grid 1.0, block 256.0; q20_warm_full.ncu-rep row 135, selection verified by duration)
+# void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, cuda::counting_iterator<int, long>, cub::NullType *, int *, cub::NullType *, unsigned int, cudf::simple_comparator<cudf::string_view>, int, cub::NullType>(bool, T2, T3, T4, T5, T6, T8 *, T9 *, T7, cub::vsm
+static instructions=2256  executed(warp)=1.6e+05  stall samples=912
+static instructions ever executed: 880 (39.0% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        1021   8.065e+04   50.4    8.2
+Move/Special           297   2.768e+04   17.3    1.2
+Control Flow           230   2.417e+04   15.1   87.5
+Global Load             68   1.587e+04    9.9    1.4
+Local (spill)          113        2664    1.7    0.7
+Shared Load            116        2624    1.6    0.2
+Other                   72        1920    1.2    0.2
+Shared Store           138        1368    0.9    0.1
+Uniform datapath        17        1132    0.7    0.3
+FP Arithmetic           44        1025    0.6    0.0
+Const Load              62         649    0.4    0.1
+Barrier/Fence           10         152    0.1    0.0
+Global Store            68         128    0.1    0.0
+
+Top 25 instructions by stall samples:
+  +0x066b0 samp=   776 (85.1%) exe=       64 thr=32.0 [barrier=776]  BSSY.RECONVERGENT B1, 0x7fd9921a0c60
+  +0x06130 samp=    10 ( 1.1%) exe=     2389 thr=10.0 [long_sb=10]  ISETP.NE.U32.AND P3, PT, R16, R17, PT
+  +0x04db0 samp=     9 ( 1.0%) exe=      281 thr=10.0 [long_sb=9]  ISETP.NE.U32.AND P1, PT, R13, R16, PT
+  +0x06320 samp=     9 ( 1.0%) exe=     2389 thr=10.0 [long_sb=8,wait=1]  ISETP.NE.U32.AND P1, PT, R9, R10, PT
+  +0x06330 samp=     5 ( 0.5%) exe=     2389 thr=10.0 [wait=5]  @P1   BRA 0x7fd99219fd00
+  +0x07ae0 samp=     5 ( 0.5%) exe=     1070 thr= 5.0 [long_sb=4,wait=1]  ISETP.NE.U32.AND P1, PT, R13, R16, PT
+  +0x07cd0 samp=     5 ( 0.5%) exe=     1070 thr= 5.0 [long_sb=4,wait=1]  ISETP.NE.U32.AND P1, PT, R9, R10, PT
+  +0x06300 samp=     4 ( 0.4%) exe=     2389 thr=10.0 [no_inst=3,branch_resolving=1]  LDG.E.U8 R9, desc[UR8][R42.64]
+  +0x06140 samp=     3 ( 0.3%) exe=     2389 thr=10.0 [wait=3]  @P3   BRA 0x7fd99219fb10
+  +0x06240 samp=     3 ( 0.3%) exe=      136 thr=11.0 [branch_resolving=3]  ISETP.GE.AND P3, PT, R8, RZ, PT
+  +0x06340 samp=     3 ( 0.3%) exe=     2253 thr= 9.0 [wait=3]  IADD R8, R8, 0x1
+  +0x06f70 samp=     3 ( 0.3%) exe=      316 thr= 6.0 [long_sb=3]  ISETP.NE.U32.AND P1, PT, R13, R14, PT
+  +0x07160 samp=     3 ( 0.3%) exe=      316 thr= 6.0 [long_sb=2,selected=1]  ISETP.NE.U32.AND P1, PT, R9, R10, PT
+  +0x07f20 samp=     3 ( 0.3%) exe=     1088 thr=32.0 [short_sb=3]  ULEA UR4, UR5, UR4, 0x18
+  +0x05d40 samp=     2 ( 0.2%) exe=      136 thr=11.0 [selected=1,wait=1]  LDL R7, [R21]
+  +0x06110 samp=     2 ( 0.2%) exe=     2389 thr=10.0 [branch_resolving=1,no_inst=1]  LDG.E.U8 R16, desc[UR8][R8.64]
+  +0x06120 samp=     2 ( 0.2%) exe=     2389 thr=10.0 [wait=2]  LDG.E.U8 R17, desc[UR8][R10.64]
+  +0x061b0 samp=     2 ( 0.2%) exe=     2253 thr= 9.0 [selected=1,wait=1]  PLOP3.LUT P4, PT, P5, PT, PT, 0x8, 0x80
+  +0x061e0 samp=     2 ( 0.2%) exe=        0 thr= 0.0 [wait=2]  SEL R8, RZ, 0xffffffff, !P3
+  +0x06310 samp=     2 ( 0.2%) exe=     2389 thr=10.0 [selected=1,wait=1]  LDG.E.U8 R10, desc[UR8][R12.64]
+  +0x07490 samp=     2 ( 0.2%) exe=     1088 thr=32.0 [selected=2]  PLOP3.LUT P1, PT, PT, PT, PT, 0x8, 0x80
+  +0x07af0 samp=     2 ( 0.2%) exe=     1070 thr= 5.0 [wait=2]  @P1   BRA 0x7fd9921a14c0
+  +0x07b00 samp=     2 ( 0.2%) exe=     1002 thr= 5.0 [wait=2]  IADD R12, R12, 0x1
+  +0x00000 samp=     1 ( 0.1%) exe=        8 thr=32.0 [no_inst=1]  LDC R1, c[0x0][0x37c]
+  +0x03d20 samp=     1 ( 0.1%) exe=        8 thr=32.0 [wait=1]  VIMNMX.S32 R32, R32, 0x1100, PT
+
+hot PCs (>0.2% samples each) span +0x4db0 .. +0x7f20, n=23
+
+stall reasons (sum over instructions): barrier=85.1%, wait=5.2%, long_sb=4.8%, selected=2.5%, branch_resolving=1.1%, no_inst=0.5%, lg=0.3%, short_sb=0.3%
+
+context around +0x066b0 (exe = warp-level executions, samp = stall samples):
+     +0x06630 exe=      64 samp=    0 thr=32.0  BAR.SYNC.DEFER_BLOCKING 0x0
+     +0x06640 exe=      64 samp=    0 thr=32.0  SHF.R.U32.HI R30, RZ, 0x1, R7
+     +0x06650 exe=      64 samp=    0 thr=32.0  VIMNMX.S32 R31, R32, R31, PT
+     +0x06660 exe=      64 samp=    0 thr=32.0  IMAD R43, R30, 0x11, R31
+     +0x06670 exe=      64 samp=    0 thr=32.0  VIMNMX.S32 R26, R32, R43, PT
+     +0x06680 exe=      64 samp=    0 thr=32.0  LOP3.LUT R34, R34, R27, RZ, 0xc0, !PT
+     +0x06690 exe=      64 samp=    0 thr=32.0  IMAD R43, R34, 0x11, RZ
+     +0x066a0 exe=      64 samp=    0 thr=32.0  VIMNMX.S32 R43, R32, R43, PT
+  >> +0x066b0 exe=      64 samp=  776 thr=32.0  BSSY.RECONVERGENT B1, 0x7fd9921a0c60
+     +0x066c0 exe=      64 samp=    1 thr=32.0  STS [R45+0x4], R23
+     +0x066d0 exe=      64 samp=    0 thr=32.0  IMAD R23, R30, 0x11, R26
+
+context around +0x06130 (exe = warp-level executions, samp = stall samples):
+     +0x060b0 exe=     136 samp=    0 thr=10.0  ISETP.GT.AND P4, PT, R31, RZ, PT
+     +0x060c0 exe=     136 samp=    0 thr=10.0  ISETP.GT.AND P5, PT, R31, RZ, P3
+     +0x060d0 exe=     136 samp=    0 thr=10.0  @!P5  BRA 0x7fd99219fae0
+     +0x060e0 exe=     136 samp=    0 thr=10.0  MOV.64 R10, R42
+     +0x060f0 exe=     136 samp=    0 thr=10.0  MOV.64 R8, R12
+     +0x06100 exe=     136 samp=    0 thr=10.0  HFMA2 R14, -RZ, RZ, 0, 0
+     +0x06110 exe=    2389 samp=    2 thr=10.0  LDG.E.U8 R16, desc[UR8][R8.64]
+     +0x06120 exe=    2389 samp=    2 thr=10.0  LDG.E.U8 R17, desc[UR8][R10.64]
+  >> +0x06130 exe=    2389 samp=   10 thr=10.0  ISETP.NE.U32.AND P3, PT, R16, R17, PT
+     +0x06140 exe=    2389 samp=    3 thr=10.0  @P3   BRA 0x7fd99219fb10
+     +0x06150 exe=    2253 samp=    1 thr= 9.0  IADD R14, R14, 0x1
+
+context around +0x04db0 (exe = warp-level executions, samp = stall samples):
+     +0x04d30 exe=      16 samp=    0 thr=10.0  ISETP.GT.AND P2, PT, R21, RZ, PT
+     +0x04d40 exe=      16 samp=    0 thr=10.0  ISETP.GT.AND P5, PT, R21, RZ, P1
+     +0x04d50 exe=      16 samp=    0 thr=10.0  @!P5  BRA 0x7fd99219e760
+     +0x04d60 exe=      16 samp=    0 thr=10.0  MOV.64 R10, R14
+     +0x04d70 exe=      16 samp=    0 thr=10.0  MOV.64 R8, R18
+     +0x04d80 exe=      16 samp=    0 thr=10.0  HFMA2 R12, -RZ, RZ, 0, 0
+     +0x04d90 exe=     281 samp=    0 thr=10.0  LDG.E.U8 R13, desc[UR8][R8.64]
+     +0x04da0 exe=     281 samp=    0 thr=10.0  LDG.E.U8 R16, desc[UR8][R10.64]
+  >> +0x04db0 exe=     281 samp=    9 thr=10.0  ISETP.NE.U32.AND P1, PT, R13, R16, PT
+     +0x04dc0 exe=     281 samp=    1 thr=10.0  @P1   BRA 0x7fd99219e790
+     +0x04dd0 exe=     265 samp=    0 thr= 9.0  IADD R12, R12, 0x1
+
+context around +0x06320 (exe = warp-level executions, samp = stall samples):
+     +0x062a0 exe=     136 samp=    1 thr=11.0  @!P2  BRA P1, 0x7fd99219fd10
+     +0x062b0 exe=     136 samp=    0 thr=10.0  ISETP.GT.AND P1, PT, R31, RZ, PT
+     +0x062c0 exe=     136 samp=    0 thr=10.0  ISETP.GT.AND P2, PT, R30, RZ, PT
+     +0x062d0 exe=     136 samp=    0 thr=10.0  ISETP.GT.AND P3, PT, R30, RZ, P1
+     +0x062e0 exe=     136 samp=    0 thr=10.0  @!P3  BRA 0x7fd99219fcd0
+     +0x062f0 exe=     136 samp=    0 thr=10.0  MOV R8, RZ
+     +0x06300 exe=    2389 samp=    4 thr=10.0  LDG.E.U8 R9, desc[UR8][R42.64]
+     +0x06310 exe=    2389 samp=    2 thr=10.0  LDG.E.U8 R10, desc[UR8][R12.64]
+  >> +0x06320 exe=    2389 samp=    9 thr=10.0  ISETP.NE.U32.AND P1, PT, R9, R10, PT
+     +0x06330 exe=    2389 samp=    5 thr=10.0  @P1   BRA 0x7fd99219fd00
+     +0x06340 exe=    2253 samp=    3 thr= 9.0  IADD R8, R8, 0x1
+
+# compute_column_kernel: family 343.9 us (19.4% of warm GPU time, 3 launches); hotspots for its longest launch pos 63 (159.2 us, grid 23435.0, block 128.0; q20_warm_full.ncu-rep row 63, selection verified by duration)
+# void cudf::compute_column_kernel<128, 0, 0>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+static instructions=16400  executed(warp)=3.253e+07  stall samples=8099
+static instructions ever executed: 239 (1.5% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic        5738   1.575e+07   48.4   50.7
+Control Flow          2096   4.968e+06   15.3    7.5
+Global Load           1399   4.312e+06   13.3   18.9
+Const Load             236   2.906e+06    8.9    2.4
+Local (spill)           32   1.687e+06    5.2   11.9
+Move/Special          3713   1.031e+06    3.2    2.8
+Other                  325   5.624e+05    1.7    3.7
+Shared Load             65    3.75e+05    1.2    0.7
+Uniform datapath         3   2.812e+05    0.9    0.3
+Global Store           494   2.812e+05    0.9    0.6
+Shared Store           494   2.812e+05    0.9    0.4
+FP Arithmetic         1805   9.374e+04    0.3    0.0
+
+Top 25 instructions by stall samples:
+  +0x18180 samp=   444 ( 5.5%) exe=   187480 thr=31.0 [long_sb=439,selected=3]  ISETP.GT.AND P0, PT, R6, 0x14, PT
+  +0x002f0 samp=   269 ( 3.3%) exe=   281220 thr=31.0 [long_sb=261,math=3]  SHF.L.U64.HI R5, R10, 0x2, R11
+  +0x17d30 samp=   260 ( 3.2%) exe=   281220 thr=31.0 [long_sb=247,wait=6]  IMAD.WIDE R8, R11, 0x4, R4
+  +0x00170 samp=   217 ( 2.7%) exe=    93740 thr=31.0 [lg=105,mio=70]  STL.64 [R1+0x58], R6
+  +0x002c0 samp=   203 ( 2.5%) exe=   281220 thr=31.0 [lg=65,mio=41]  LDL.LU.64 R10, [R1+0x48]
+  +0x18170 samp=   201 ( 2.5%) exe=   187480 thr=31.0 [long_sb=147,lg=29]  LD.E.U16 R12, desc[UR8][R8.64]
+  +0x3ac80 samp=   175 ( 2.2%) exe=    93740 thr=31.0 [long_sb=175]  MOV R5, R6
+  +0x17ea0 samp=   172 ( 2.1%) exe=   187480 thr=31.0 [branch_resolving=97,lg=22]  LDG.E R7, desc[UR8][R24.64]
+  +0x18020 samp=   171 ( 2.1%) exe=   187480 thr=31.0 [long_sb=165,not_selected=2]  ISETP.NE.U32.AND P0, PT, R8, 0x1, PT
+  +0x18150 samp=   152 ( 1.9%) exe=   187480 thr=31.0 [long_sb=146,wait=3]  IMAD.WIDE R8, R15, 0x20, R8
+  +0x17de0 samp=   132 ( 1.6%) exe=   281220 thr=31.0 [long_sb=125,selected=4]  ISETP.GT.AND P0, PT, R10, 0xe, PT
+  +0x17eb0 samp=   127 ( 1.6%) exe=   187480 thr=31.0 [long_sb=121,wait=3]  ISETP.NE.U32.AND P0, PT, R7, 0x1, PT
+  +0x00340 samp=   119 ( 1.5%) exe=   281220 thr=31.0 [lg=53,mio=34]  LDG.E R6, desc[UR8][R6.64]
+  +0x00320 samp=   114 ( 1.4%) exe=   281220 thr=31.0 [lg=38,mio=35]  LDG.E R8, desc[UR8][R8.64]
+  +0x17f00 samp=   113 ( 1.4%) exe=   187480 thr=31.0 [long_sb=106,math=3]  @!P0  IMAD.WIDE R8, R25, 0x40, R8
+  +0x00380 samp=   104 ( 1.3%) exe=   281220 thr=31.0 [mio=33,lg=32]  STL.64 [R1+0x48], R10
+  +0x17d90 samp=    96 ( 1.2%) exe=   281220 thr=31.0 [lg=32,mio=26]  LDG.E R10, desc[UR8][R24.64+0x4]
+  +0x19bb0 samp=    93 ( 1.1%) exe=    93740 thr=31.0 [long_sb=91,not_selected=1]  ISETP.NE.U32.AND P0, PT, R6, RZ, PT
+  +0x17d50 samp=    92 ( 1.1%) exe=   281220 thr=31.0 [mio=43,lg=26]  LDG.E R25, desc[UR8][R8.64]
+  +0x001b0 samp=    90 ( 1.1%) exe=    93740 thr=31.0 [lg=45,mio=27]  STL [R1+0x60], R4
+  +0x17e80 samp=    90 ( 1.1%) exe=   187480 thr=31.0 [short_sb=84,no_inst=2]  SHF.R.S32.HI R9, RZ, 0x1f, R8
+  +0x17d10 samp=    89 ( 1.1%) exe=   281220 thr=31.0 [no_inst=47,long_sb=17]  LDL.LU R11, [R1+0x50]
+  +0x17db0 samp=    84 ( 1.0%) exe=   281220 thr=31.0 [lg=32,mio=22]  STL [R1+0x50], R11
+  +0x17d60 samp=    83 ( 1.0%) exe=   281220 thr=31.0 [lg=35,mio=27]  LDG.E R15, desc[UR8][R8.64+0x4]
+  +0x18130 samp=    80 ( 1.0%) exe=   187480 thr=31.0 [lg=25,no_inst=22]  LDG.E R15, desc[UR8][R14.64+0xc]
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x3acd0, n=109
+
+stall reasons (sum over instructions): long_sb=37.5%, wait=17.4%, lg=11.0%, mio=8.2%, no_inst=7.1%, not_selected=5.6%, selected=4.4%, short_sb=3.5%
+
+context around +0x18180 (exe = warp-level executions, samp = stall samples):
+     +0x18100 exe=       0 samp=    0 thr= 0.0  @!P0  LD.E.U16 R12, desc[UR8][R10.64]
+     +0x18110 exe=       0 samp=    0 thr= 0.0  @P0   PRMT R12, R15, 0x7610, R12
+     +0x18120 exe=       0 samp=    0 thr= 0.0  BRA 0x7fd992667580
+     +0x18130 exe=  187480 samp=   80 thr=31.0  LDG.E R15, desc[UR8][R14.64+0xc]
+     +0x18140 exe=  187480 samp=    2 thr=31.0  LDC.64 R8, c[0x0][0x3a0]
+     +0x18150 exe=  187480 samp=  152 thr=31.0  IMAD.WIDE R8, R15, 0x20, R8
+     +0x18160 exe=  187480 samp=   71 thr=31.0  LDG.E.64 R8, desc[UR8][R8.64+0x10]
+     +0x18170 exe=  187480 samp=  201 thr=31.0  LD.E.U16 R12, desc[UR8][R8.64]
+  >> +0x18180 exe=  187480 samp=  444 thr=31.0  ISETP.GT.AND P0, PT, R6, 0x14, PT
+     +0x18190 exe=  187480 samp=   43 thr=31.0  @P0   BRA 0x7fd992669600
+     +0x181a0 exe=  187480 samp=   18 thr=31.0  ISETP.GT.AND P0, PT, R6, 0x9, PT
+
+context around +0x002f0 (exe = warp-level executions, samp = stall samples):
+     +0x00270 exe=   93740 samp=    1 thr=31.0  IMAD.WIDE.U32 R18, R4, 0x7, R16
+     +0x00280 exe=   93740 samp=   19 thr=31.0  IMAD.SHL.U32 R22, R4, 0x2, RZ
+     +0x00290 exe=   93740 samp=    2 thr=31.0  IADD R19, R19, R7
+     +0x002a0 exe=   93740 samp=    8 thr=31.0  IADD.64 R20, R18, -R20
+     +0x002b0 exe=   93740 samp=   12 thr=31.0  IADD.64 R22, R20, -R22
+     +0x002c0 exe=  281220 samp=  203 thr=31.0  LDL.LU.64 R10, [R1+0x48]
+     +0x002d0 exe=  281220 samp=    6 thr=31.0  LDCU.64 UR4, c[0x0][0x3c0]
+     +0x002e0 exe=  281220 samp=    4 thr=31.0  LDCU.128 UR12, c[0x0][0x3b0]
+  >> +0x002f0 exe=  281220 samp=  269 thr=31.0  SHF.L.U64.HI R5, R10, 0x2, R11
+     +0x00300 exe=  281220 samp=    2 thr=31.0  IMAD.SHL.U32 R4, R10, 0x4, RZ
+     +0x00310 exe=  281220 samp=   27 thr=31.0  IADD.64 R8, R4, UR4
+
+context around +0x17d30 (exe = warp-level executions, samp = stall samples):
+     +0x17cb0 exe=       0 samp=    0 thr= 0.0  @!P0  STG.E.U8 desc[UR8][R16.64], RZ
+     +0x17cc0 exe=       0 samp=    0 thr= 0.0  @!P0  BRA 0x7fd99268a050
+     +0x17cd0 exe=       0 samp=    0 thr= 0.0  LDG.E R25, desc[UR8][R24.64+0xc]
+     +0x17ce0 exe=       0 samp=    0 thr= 0.0  IMAD R4, R25, 0x8, R0
+     +0x17cf0 exe=       0 samp=    0 thr= 0.0  STS.64 [R4], RZ
+     +0x17d00 exe=       0 samp=    0 thr= 0.0  BRA 0x7fd99268a050
+     +0x17d10 exe=  281220 samp=   89 thr=31.0  LDL.LU R11, [R1+0x50]
+     +0x17d20 exe=  281220 samp=    4 thr=31.0  LDC.64 R4, c[0x0][0x3d0]
+  >> +0x17d30 exe=  281220 samp=  260 thr=31.0  IMAD.WIDE R8, R11, 0x4, R4
+     +0x17d40 exe=  281220 samp=   33 thr=31.0  LDC.64 R4, c[0x0][0x390]
+     +0x17d50 exe=  281220 samp=   92 thr=31.0  LDG.E R25, desc[UR8][R8.64]
+
+plots written: /home/sai/cs254_project/tpch_q1_analysis/analysis/results/q20/plots/q20_*.png (peak 436 G warp-inst/s at 2271 MHz)
+[17:19:10] q20 stage extract: ok (14 s)
+[17:19:10] q20 stage validate: start
+PASS    sql:timing:all_pins_tier_gpu -- sql/q20_timing.sql 
+PASS    sql:cpu -- sql/q20_cpu.sql 
+PASS    sql:ncu_x3:all_pins_tier_gpu -- sql/q20_ncu_x3.sql 
+PASS    sql:ncu_x4:all_pins_tier_gpu -- sql/q20_ncu_x4.sql 
+PASS    sql:ncu_x5:all_pins_tier_gpu -- sql/q20_ncu_x5.sql 
+PASS    sql:nsys:all_pins_tier_gpu -- sql/q20_nsys.sql 
+PASS    no_ERROR.txt -- 
+PASS    timing.json -- 
+PASS    timing:warmup>=3 -- warmup=3
+PASS    timing:timed>=10 -- timed=12
+PASS    timing:positive -- median=9.0 ms
+PASS    result:identical_across_iterations -- 15 iterations, 181 rows
+PASS    result:nonempty -- rows=181
+PASS    cpu:timed>=10 -- cpu median=29.0 ms
+PASS    result:gpu_equals_duckdb_cpu -- mode=exact max_rel_diff=0.0 tol=1e-09 
+PASS    result.csv -- 
+PASS    timing_summary.txt -- 
+PASS    query_plan.txt -- 
+PASS    pcie:verification_file -- 
+PASS    pcie:overall_pass -- PASS
+PASS    pcie:sql:pin_tier_gpu -- every pinned SQL script pins each referenced table once with tier='gpu'
+PASS    pcie:timing_log:iterations_found -- 15 query iterations (expected 15)
+PASS    pcie:timing_log:pin_tier_gpu -- 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+PASS    pcie:timing_log:pinned_entry_per_gpu_scan -- every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+PASS    pcie:timing_log:no_cache_assign_error -- 0 cache-assignment errors
+PASS    pcie:timing_log:fs_cache_zero_every_iteration -- 16 cache summaries for 15 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..15 all last_cycle[reads=0 hits=0 h2d=0 mi
+PASS    pcie:timing_log:no_downgrade_or_spill -- 0 downgrade/spill/OOM lines in query iterations
+PASS    pcie:timing_log:no_host_staged_filter_publication -- 30 filter publication(s) logged in query iterations; 15 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+PASS    pcie:timing_log:pool_counters_stable -- every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..15: host_pool allocated and peak unchanged
+PASS    pcie:nsys_log:iterations_found -- 8 query iterations (expected 8)
+PASS    pcie:nsys_log:pin_tier_gpu -- 5 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'part', 'partsupp', 'supplier']
+PASS    pcie:nsys_log:pinned_entry_per_gpu_scan -- every iteration: #`assigned pinned entry` == #GPU_SCAN operators (5), all of ['lineitem', 'nation', 'part', 'partsupp', 'supplier'] present
+PASS    pcie:nsys_log:no_cache_assign_error -- 0 cache-assignment errors
+PASS    pcie:nsys_log:fs_cache_zero_every_iteration -- 9 cache summaries for 8 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..8 all last_cycle[reads=0 hits=0 h2d=0 miss=
+PASS    pcie:nsys_log:no_downgrade_or_spill -- 0 downgrade/spill/OOM lines in query iterations
+PASS    pcie:nsys_log:no_host_staged_filter_publication -- 16 filter publication(s) logged in query iterations; 8 carry a transport line, all 'peer copies' (device-side), 0 host-staged
+PASS    pcie:nsys_log:pool_counters_stable -- every iteration: gpu_pool allocated == pinned footprint 87107584 B at QueryBegin and QueryEnd; iterations 2..8: host_pool allocated and peak unchanged
+PASS    pcie:nsys:windows -- 8 iteration windows from the nsys-run Sirius log (5 measured, 3 warmup); kernels per iteration [142, 142, 142, 142, 142, 142, 142, 142]
+PASS    pcie:no_parquet_decode_kernels -- 0 decode/decompress kernels among 1136 kernels of all 8 iterations
+PASS    pcie:h2d_measured_iterations -- per measured iteration: up to 68 copies, 3862 B total, largest single 276 B (limits: single <= 5000 B, total <= 1048576 B)
+PASS    pcie:d2h_measured_iterations -- per measured iteration: up to 56 copies, 9581 B total, largest single 9280 B (result CSV is 8319 B; limit 262144 B)
+PASS    pcie:no_other_host_copies -- 0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration
+PASS    pcie:unified_memory -- UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault 
+PASS    nsys_iteration_breakdown -- 5 measured iterations
+PASS    pcie:byte_limits_are_defaults -- limits {'h2d_max_single': 5000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144} defaults {'h2d_max_single': 5000, 'h2d_max_iter': 1048576, 'd2h_max_iter': 262144}
+PASS    pcie:nsys_trace_present -- 
+PASS    ncu_plan.json -- 
+PASS    warm_kernel_list.json -- 
+PASS    launch_counts_stable -- per-iteration=[142, 142] skip=1106 count=142
+PASS    warm_gpu_time>0 -- 1769.5 us
+PASS    ncu_count==nsys_count -- nsys 142 vs ncu 142
+PASS    warm_kernel_summary.txt -- 
+PASS    ncu_list_run_logs_residency -- 3 ncu list run(s): ncu_list_x3, ncu_list_x4, ncu_list_x5 
+PASS    ncu_detail_run_logs_residency -- 1 ncu detail run(s): ncu_detail_full 
+PASS    ncu_no_sysmem_aperture_access -- q20_warm_full.ncu-rep: 0 kernels with SM sysmem sectors, missing none
+PASS    selftest_negative_control -- negative control: 'lineitem' left unpinned; pcie_verify.py exit code 1 (1 expected)
+PASS    ncu_report_present -- 
+PASS    ncu_slice_multiset_match -- q20_warm_full.ncu-rep: 142/142 match=True
+PASS    ncu_warm_metrics.json -- 
+PASS    metrics_kernel_count==warm_count -- 142 vs 142
+PASS    metrics_percentages_in_range_and_dur>0 --  (hit rates >100% clamped to 100: 2; kernels with achieved occupancy >100%: 0)
+PASS    full_set_kernels==full_report_kernels_and_cover>=90% -- 142 kernels carry --set full metrics, full/families report(s) hold 142; 100.0% of warm time
+PASS    phase_breakdown.txt -- 
+PASS    operator_breakdown.txt -- 
+PASS    top_kernel_details.txt -- 
+PASS    sass_hotspots>=1 -- DeviceMergeSortBlockSortKernel_hotspots.txt, compute_column_kernel_hotspots.txt
+PASS    plot:phase_breakdown -- 
+PASS    plot:kernel_sequence -- 
+PASS    plot:roofline -- 
+PASS    plot:stalls -- 
+PASS    outputs_newer_than_inputs -- 9 output groups fresh
+PASS    physical_floor.md -- 
+PENDING REPORT_tpch_q20_sf1.md -- 
+SUMMARY q20: 72 PASS, 0 FAIL, 1 PENDING
+[17:19:10] q20 stage validate: ok (0 s)
+[17:19:10] q20 pipeline finished in 259 s
+EXIT=0

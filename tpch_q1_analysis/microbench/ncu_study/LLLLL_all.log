@@ -1,0 +1,148 @@
+==PROF== Connected to process 281128 (/home/sai/cs254_project/tpch_q1_analysis/microbench/unroll_study)
+==PROF== Profiling "us_baseline": 0%....50%....100% - 40 passes
+# NVIDIA GeForce RTX 5070 | rows=3153518 cols=LLLLL bytes/row=44 input=138.8 MB | grid=240 x 128 | reps=1 (median, L2 flushed) | real q1 groups
+# floor @672 GB/s = 206.5 us
+variant                     regs  median_us     min_us    GB/s  speedup  %floor check
+baseline                      38  1716796.9  1716796.9     0.1    1.00x    0.0% OK
+==PROF== Profiling "us_naive_rows": 0%....50%....100% - 40 passes
+naive pragma rows U=4         36   889449.9   889449.9     0.2    1.93x    0.0% OK
+==PROF== Profiling "us_naive_grid": 0%....50%....100% - 40 passes
+naive pragma grid U=4         40   881153.6   881153.6     0.2    1.95x    0.0% OK
+==PROF== Profiling "us_naive_cols": 0%....50%....100% - 40 passes
+naive pragma cols N=4         38   822257.1   822257.1     0.2    2.09x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=1 warp                 38   825077.2   825077.2     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=2 warp                 40   815757.2   815757.2     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=3 warp                 40   815852.9   815852.9     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 warp                 40   804713.8   804713.8     0.2    2.13x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=6 warp                 48   816889.6   816889.6     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp                 64   813311.0   813311.0     0.2    2.11x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=12 warp                96   836890.6   836890.6     0.2    2.05x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 warp               124   861587.9   861587.9     0.2    1.99x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=24 warp               168   870925.8   870925.8     0.2    1.97x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=32 warp               244   909488.4   909488.4     0.2    1.89x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp minb5           78   818861.9   818861.9     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 warp minb5          96   863630.6   863630.6     0.2    1.99x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 41 passes
+rows U=24 warp minb5          96   930501.3   930501.3     0.1    1.85x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=32 warp minb5          96   945061.4   945061.4     0.1    1.82x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=2 thread               40   824026.9   824026.9     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 thread               40   804984.8   804984.8     0.2    2.13x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 thread               56   812761.8   812761.8     0.2    2.11x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 thread             118   857076.6   857076.6     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=2 threadvec rem        40   853415.7   853415.7     0.2    2.01x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 threadvec rem        39   866800.4   866800.4     0.2    1.98x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 threadvec rem        56   933536.6   933536.6     0.1    1.84x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 threadvec rem       96  1079962.5  1079962.5     0.1    1.59x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=2 grid                 40   820905.4   820905.4     0.2    2.09x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 grid                 40   809795.8   809795.8     0.2    2.12x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 grid                 64   817186.4   817186.4     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 warp rem             40   858498.4   858498.4     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp rem             56   933476.8   933476.8     0.1    1.84x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 warp lazyslot        40   830854.2   830854.2     0.2    2.07x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp lazyslot        56   859217.7   859217.7     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols CU=2 (U=1)               40   852391.6   852391.6     0.2    2.01x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols CU=4 (U=1)               39   846681.1   846681.1     0.2    2.03x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols CU=8 (U=1)               48   868212.2   868212.2     0.2    1.98x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=2 x CU=2               48   854810.9   854810.9     0.2    2.01x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=2 x CU=4               56   851480.8   851480.8     0.2    2.02x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=4 x CU=2               64   844849.4   844849.4     0.2    2.03x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=4 x CU=4               80   867352.8   867352.8     0.2    1.98x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=8 x CU=2               96   876399.4   876399.4     0.2    1.96x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=2 warp defslot         38   826828.1   826828.1     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=4 warp defslot         40   828244.2   828244.2     0.2    2.07x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp defslot         48   825278.1   825278.1     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols CU=4 (U=1) defslot       40   863489.4   863489.4     0.2    1.99x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols ALL (U=1)                46   841835.3   841835.3     0.2    2.04x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+cols ALL (U=1) defslot        46   846939.3   846939.3     0.2    2.03x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 41 passes
+both U=2 x ALL                72   894652.8   894652.8     0.2    1.92x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=2 x ALL defslot        70   867007.2   867007.2     0.2    1.98x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+both U=4 x ALL defslot       128   905049.6   905049.6     0.2    1.90x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=8 warp sub64=4         62   834374.9   834374.9     0.2    2.06x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 warp sub64=4       124   858154.6   858154.6     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+rows U=16 warp sub64=8       124   858662.2   858662.2     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_baseline": 0%....50%....100% - 40 passes
+gdesc baseline                34   816322.1   816322.1     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_naive_rows": 0%....50%....100% - 40 passes
+gdesc naive rows U=4          30   887080.1   887080.1     0.2    1.94x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=1 warp           32   830193.9   830193.9     0.2    2.07x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=2 warp           38   821420.2   821420.2     0.2    2.09x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=3 warp           40   825580.8   825580.8     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=4 warp           40   812499.9   812499.9     0.2    2.11x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=6 warp           48   815993.8   815993.8     0.2    2.10x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=8 warp           64   826002.1   826002.1     0.2    2.08x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=12 warp          88   833685.9   833685.9     0.2    2.06x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=16 warp         116   857768.6   857768.6     0.2    2.00x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=4 warp rem       40   840017.8   840017.8     0.2    2.04x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=4 threadvec      40   813984.6   813984.6     0.2    2.11x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc rows U=8 threadvec      56   821623.3   821623.3     0.2    2.09x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc cols CU=2 (U=1)         34   847709.4   847709.4     0.2    2.03x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc cols CU=4 (U=1)         40   850240.1   850240.1     0.2    2.02x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc cols ALL (U=1)          44   845554.4   845554.4     0.2    2.03x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc both U=2 x ALL          72   867277.1   867277.1     0.2    1.98x    0.0% OK
+==PROF== Profiling "us_kernel": 0%....50%....100% - 40 passes
+gdesc both U=4 x CU=2         64   832332.1   832332.1     0.2    2.06x    0.0% OK
+==PROF== Disconnected from process 281128
+==PROF== Report: /home/sai/cs254_project/tpch_q1_analysis/microbench/ncu_study/LLLLL_all.ncu-rep

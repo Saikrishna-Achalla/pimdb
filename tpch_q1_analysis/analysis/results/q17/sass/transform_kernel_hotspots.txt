@@ -1,0 +1,84 @@
+# transform_kernel: family 63.7 us (14.5% of warm GPU time, 26 launches); hotspots for its longest launch pos 16 (3.0 us, grid 14.0, block 256.0; q17_warm_full.ncu-rep row 16, selection verified by duration)
+# void transform::transform_kernel<transform::policy_selector_from_types<1, 1, std::tuple<thrust::permutation_iterator<const int *, cudf::input_indexalator>>, int *>, long, cuda::always_true, std::identity, int *, thrust::permutation_iterator<const int *, cudf::input_indexalator>>(T2, int, bool, T3, T
+static instructions=136  executed(warp)=6380  stall samples=43
+static instructions ever executed: 96 (70.6% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic          54        3135   49.1   30.2
+Const Load              17        1336   20.9    2.3
+Control Flow            24         800   12.5    4.7
+Move/Special            21         454    7.1    0.0
+Global Load             14         218    3.4    0.0
+Uniform datapath         2         216    3.4    0.0
+FP Arithmetic            2         112    1.8    0.0
+Global Store             2         109    1.7   62.8
+
+Top 25 instructions by stall samples:
+  +0x00760 samp=    25 (58.1%) exe=      104 thr=32.0 [long_sb=25]  STG.E desc[UR4][R12.64], R11
+  +0x00710 samp=     8 (18.6%) exe=      104 thr=32.0 [long_sb=8]  IMAD.WIDE R10, R13, 0x4, R8
+  +0x00450 samp=     2 ( 4.7%) exe=        5 thr=28.0 [long_sb=2]  STG.E desc[UR4][R14.64], R13
+  +0x004c0 samp=     2 ( 4.7%) exe=      104 thr=32.0 [no_inst=2]  ISETP.GE.AND P0, PT, R8, 0x1, PT
+  +0x00000 samp=     1 ( 2.3%) exe=      112 thr=32.0 [no_inst=1]  LDC R1, c[0x0][0x37c]
+  +0x00420 samp=     1 ( 2.3%) exe=        5 thr=28.0 [long_sb=1]  IMAD.WIDE R12, R15, 0x4, R8
+  +0x00590 samp=     1 ( 2.3%) exe=      104 thr=32.0 [selected=1]  IMAD R12, R6, UR8, RZ
+  +0x005e0 samp=     1 ( 2.3%) exe=      104 thr=32.0 [wait=1]  IADD.64 R10, R10, UR10
+  +0x00610 samp=     1 ( 2.3%) exe=      104 thr=32.0 [wait=1]  @P0   BRA 0x7efdca5d8060
+  +0x00790 samp=     1 ( 2.3%) exe=        0 thr= 0.0 [wait=1]  BRA 0x7efdca5d8190
+  +0x00010 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  LDC R8, c[0x0][0x388]
+  +0x00020 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  LDCU.64 UR6, c[0x0][0x380]
+  +0x00030 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  LDCU UR8, c[0x0][0x3a0]
+  +0x00040 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  S2UR UR4, SR_CTAID.X
+  +0x00050 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  LDC.64 R10, c[0x0][0x390]
+  +0x00060 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IMAD.SHL.U32 R2, R8, 0x100, RZ
+  +0x00070 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  SHF.R.S32.HI R3, RZ, 0x1f, R2
+  +0x00080 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IMAD.WIDE.U32 R6, R2, UR4, RZ
+  +0x00090 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IMAD R5, R3, UR4, RZ
+  +0x000a0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  LDCU.64 UR4, c[0x0][0x358]
+  +0x000b0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IADD R7, R7, R5
+  +0x000c0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IADD.64 R4, -R6, UR6
+  +0x000d0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  USHF.R.S32.HI UR6, URZ, 0x1f, UR8
+  +0x000e0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IMNMX.S64 R4, R2, R4, PT, !PT
+  +0x000f0 samp=     0 ( 0.0%) exe=      112 thr=32.0 []  IMAD R5, R7, UR8, RZ
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x790, n=10
+
+stall reasons (sum over instructions): long_sb=83.7%, no_inst=7.0%, wait=7.0%, selected=2.3%
+
+context around +0x00760 (exe = warp-level executions, samp = stall samples):
+     +0x006e0 exe=       0 samp=    0 thr= 0.0  BRA 0x7efdca5d8110
+     +0x006f0 exe=       0 samp=    0 thr= 0.0  LDG.E R13, desc[UR4][R10.64]
+     +0x00700 exe=       0 samp=    0 thr= 0.0  ISETP.NE.U32.AND P0, PT, R14, 0x7, PT
+     +0x00710 exe=     104 samp=    8 thr=32.0  IMAD.WIDE R10, R13, 0x4, R8
+     +0x00720 exe=     104 samp=    0 thr=32.0  LDG.E R11, desc[UR4][R10.64]
+     +0x00730 exe=     104 samp=    0 thr=32.0  IMAD.WIDE R12, R15, 0x4, R4
+     +0x00740 exe=     104 samp=    0 thr=32.0  IADD R0, R0, 0x1
+     +0x00750 exe=     104 samp=    0 thr=32.0  ISETP.NE.U32.AND P0, PT, R0, UR9, PT
+  >> +0x00760 exe=     104 samp=   25 thr=32.0  STG.E desc[UR4][R12.64], R11
+     +0x00770 exe=     104 samp=    0 thr=32.0  @P0   BRA 0x7efdca5d7f70
+     +0x00780 exe=     104 samp=    0 thr=32.0  EXIT
+
+context around +0x00710 (exe = warp-level executions, samp = stall samples):
+     +0x00690 exe=       0 samp=    0 thr= 0.0  ISETP.GT.AND P0, PT, R14, 0x6, PT
+     +0x006a0 exe=       0 samp=    0 thr= 0.0  @P0   BRA 0x7efdca5d80f0
+     +0x006b0 exe=       0 samp=    0 thr= 0.0  ISETP.NE.U32.AND P0, PT, R14, 0x5, PT
+     +0x006c0 exe=       0 samp=    0 thr= 0.0  @P0   LDG.E.U16 R13, desc[UR4][R10.64]
+     +0x006d0 exe=       0 samp=    0 thr= 0.0  @!P0  LDG.E.U8 R13, desc[UR4][R10.64]
+     +0x006e0 exe=       0 samp=    0 thr= 0.0  BRA 0x7efdca5d8110
+     +0x006f0 exe=       0 samp=    0 thr= 0.0  LDG.E R13, desc[UR4][R10.64]
+     +0x00700 exe=       0 samp=    0 thr= 0.0  ISETP.NE.U32.AND P0, PT, R14, 0x7, PT
+  >> +0x00710 exe=     104 samp=    8 thr=32.0  IMAD.WIDE R10, R13, 0x4, R8
+     +0x00720 exe=     104 samp=    0 thr=32.0  LDG.E R11, desc[UR4][R10.64]
+     +0x00730 exe=     104 samp=    0 thr=32.0  IMAD.WIDE R12, R15, 0x4, R4
+
+context around +0x00450 (exe = warp-level executions, samp = stall samples):
+     +0x003d0 exe=       0 samp=    0 thr= 0.0  @P0   LDG.E.U16 R15, desc[UR4][R12.64]
+     +0x003e0 exe=       0 samp=    0 thr= 0.0  @!P0  LDG.E.U8 R15, desc[UR4][R12.64]
+     +0x003f0 exe=       0 samp=    0 thr= 0.0  BRA 0x7efdca5d7e20
+     +0x00400 exe=       0 samp=    0 thr= 0.0  LDG.E R15, desc[UR4][R12.64]
+     +0x00410 exe=       0 samp=    0 thr= 0.0  ISETP.NE.U32.AND P0, PT, R11, 0x7, PT
+     +0x00420 exe=       5 samp=    1 thr=28.0  IMAD.WIDE R12, R15, 0x4, R8
+     +0x00430 exe=       5 samp=    0 thr=28.0  LDG.E R13, desc[UR4][R12.64]
+     +0x00440 exe=       5 samp=    0 thr=28.0  IMAD.WIDE R14, R19, 0x4, R4
+  >> +0x00450 exe=       5 samp=    2 thr=28.0  STG.E desc[UR4][R14.64], R13
+     +0x00460 exe=       9 samp=    0 thr=28.0  NOP
+     +0x00470 exe=       9 samp=    0 thr=28.0  BSYNC.RECONVERGENT B0

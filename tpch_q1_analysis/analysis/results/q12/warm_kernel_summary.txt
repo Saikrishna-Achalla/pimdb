@@ -1,0 +1,39 @@
+ncu list passes: pin+3 iters=526, pin+4=612, pin+5=698 launches; launches added per iteration [86, 86]; nsys kernels per measured iteration 86
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 14 positions; x4 vs first N4 of x5 at 32 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 86 kernels, serialized GPU time 1560.2 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 5.76 us; <5 us: 40; <10 us: 52; time in <10 us kernels: 175.2 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['compute_column_kernel', 'gather_chars_fn_char_parallel', 'DeviceScanKernel', 'transform_kernel', 'DeviceSelectSweepKernel', 'static_kernel', 'DeviceMergeSortBlockSortKernel', 'DeviceScanInitKernel'] -> 69 kernels, 93.2% of time
+
+family (function base)                     count   time_us    pct   avg_us
+compute_column_kernel                          6     832.9   53.4   138.81
+gather_chars_fn_char_parallel                  9     175.9   11.3    19.54
+DeviceScanKernel                              12     127.1    8.1    10.59
+transform_kernel                              18     122.2    7.8     6.79
+DeviceSelectSweepKernel                        6      71.4    4.6    11.90
+static_kernel                                  5      69.0    4.4    13.80
+DeviceMergeSortBlockSortKernel                 1      33.6    2.2    33.57
+DeviceScanInitKernel                          12      21.5    1.4     1.79
+mapping_indices_kernel                         1      15.8    1.0    15.84
+single_pass_shmem_aggs_kernel                  1      15.3    1.0    15.30
+hash_csr_build_count_kernel                    1      12.7    0.8    12.74
+hash_csr_retrieve_kernel                       1      11.4    0.7    11.42
+DeviceCompactInitKernel                        6      10.7    0.7     1.78
+hash_csr_probe_count_kernel                    1      10.1    0.6    10.11
+hash_csr_build_fill_kernel                     1       8.4    0.5     8.38
+insert_if_n                                    1       7.4    0.5     7.39
+fused_concatenate_string_chars_kernel          1       6.3    0.4     6.30
+copy_if_else_kernel                            2       5.1    0.3     2.54
+fused_concatenate_string_offset_kernel         1       3.5    0.2     3.46
+
+phase                        count   time_us    pct
+expression eval                  8     837.0   53.6
+gather/copy/concat              43     428.1   27.4
+cub scan/select/reduce          16      95.4    6.1
+scan/filter                      4      73.0    4.7
+hash group-by/agg                3      33.9    2.2
+sort/top-N                       1      33.6    2.2
+hash join probe                  2      21.5    1.4
+hash join build                  2      21.1    1.4
+other                            5       9.3    0.6
+string ops                       2       7.3    0.5

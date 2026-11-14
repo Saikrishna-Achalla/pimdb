@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=92 (full metrics: 92) gpu_time_us=1735.7 dram_MB=99.48 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+ 77 DeviceMergeSortBlockSortKernel       633.8  36.5      3  256   0.6   0.1    0.5  16.6  0.02   0.32
+ 87 DeviceMergeSortBlockSortKernel       126.4   7.3      1  256   0.3   0.1    0.7  16.6  0.01   0.09
+ 31 fused_membership_mask_kernel         110.2   6.3   4096  256  53.3  21.7  143.6  80.3 17.07  15.83
+ 34 fused_membership_mask_kernel         110.2   6.3   4096  256  53.2  21.7  143.6  80.4 17.07  15.82
+ 12 fused_membership_mask_kernel          69.6   4.0   4096  256  50.9  17.4  115.4  78.0 17.07   8.03
+ 79 DeviceMergeSortMergeKernel            63.6   3.7      3  256   0.5   0.6    4.2  16.6  0.02   0.27
+ 81 DeviceMergeSortMergeKernel            62.4   3.6      3  256   0.6   0.7    4.9  16.6  0.02   0.31
+ 30 static_kernel                         32.8   1.9   5859  256  63.5  28.0  185.4  87.7 20.34   6.09
+ 32 static_kernel                         31.8   1.8   5863  256  65.7  29.0  191.3  86.2 20.36   6.09
+ 21 find_if_n                             25.5   1.5   1144  128  36.5   6.5   43.3  86.5  1.99   1.10
+ 63 mapping_indices_kernel                24.9   1.4    235  128  11.9   3.0   19.8  28.9  0.98   0.49
+ 45 insert_if_n                           24.3   1.4   1144  128  11.8  16.7  110.3  79.8  1.99   2.68
+ 29 insert_if_n                           23.9   1.4   1144  128   9.6  16.6  109.5  84.0  1.99   2.62
+ 39 DeviceSelectSweepKernel               20.7   1.2    522  384  35.2  22.4  148.1  44.7  5.44   3.06
+ 78 DeviceMergeSortPartitionKernel        20.0   1.2      1  256   0.0   0.6    4.1   2.5  0.01   0.08
+ 35 DeviceSelectSweepKernel               19.8   1.1    521  384  35.7  23.4  154.5  45.3  5.43   3.06
+ 11 static_kernel                         18.9   1.1   2930  256  54.8  24.7  163.3  86.9 10.17   3.09
+ 80 DeviceMergeSortPartitionKernel        18.8   1.1      1  256   0.0   0.7    4.5   2.4  0.01   0.08
+  2 static_kernel                         14.0   0.8    293  256  19.8  21.7  143.0  85.3  1.02   2.00
+ 46 find_if_n                             13.8   0.8    235  128   9.1   8.8   57.9  29.1  0.41   0.80
+ 14 DeviceSelectSweepKernel               11.6   0.7    261  384  39.7  20.4  134.3  42.1  2.72   1.56
+ 20 insert_if_n                           11.5   0.7    236  128   5.5   7.5   49.3  28.8  0.41   0.57
+ 69 single_pass_shmem_aggs_kernel         11.3   0.7    235  128  10.1   7.9   52.3  35.5  0.70   0.59
+ 57 static_kernel                          9.3   0.5     59  256   2.7   9.9   65.4  20.6  0.25   0.61
+ 16 transform_kernel                       8.4   0.5    286  256   5.3  71.6  472.0  89.0  0.99   3.94
+time-weighted stall mix (kernels with full metrics): long_scoreboard=47.9%, barrier=15.7%, wait=11.6%, no_instructions=7.7%, short_scoreboard=4.5%, selected=4.0%, branch_resolving=3.2%, not_selected=2.3%
+sm clock (MHz) median: 2258

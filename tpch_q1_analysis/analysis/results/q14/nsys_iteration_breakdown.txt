@@ -1,0 +1,40 @@
+nsys (CUDA trace, unserialized, boost clocks), measured iterations [4, 5, 6, 7, 8] of the nsys run
+iter planning_ms engine_ms gpu_busy_ms gpu_span_ms kernels gpu_ops
+   4         2.0       5.0       0.456        4.02      46     154
+   5         2.0       5.0       0.456        4.85      46     154
+   6         2.0       5.0       0.456        4.02      46     154
+   7         2.0       5.0       0.458        3.99      46     154
+   8         2.0       5.0       0.454        4.45      46     154
+median: planning 2.0 ms, engine 5.0 ms, GPU busy 0.456 ms (9% of the engine window), first->last GPU op 4.02 ms
+(planning/engine from 1 ms Sirius log stamps; GPU busy = union of kernel+memcpy+memset intervals)
+
+CUDA runtime API per measured iteration (mean over 5): calls, CPU ms (all threads, summed)
+  cudaStreamSynchronize                      155.0    0.625
+  cudaMemcpyBatchAsync                        95.0    0.394
+  cudaLaunchKernel                            46.0    0.273
+  cudaMallocFromPoolAsync                     99.0    0.173
+  cudaFreeAsync                               99.0    0.105
+  cuStreamSynchronize                         25.0    0.087
+  cudaMemcpyAsync                              9.0    0.056
+  cudaEventRecord                             62.0    0.055
+  cudaStreamWaitEvent                         53.0    0.051
+  cudaStreamGetDevice                         72.0    0.028
+  cudaMemsetAsync                             19.0    0.013
+  cudaEventDestroy                            10.0    0.011
+  cudaEventCreateWithFlags                    10.0    0.010
+  cuKernelGetName                             46.0    0.009
+  cudaEventSynchronize                         2.0    0.003
+
+kernel time by name at real clocks (nsys, mean per measured iteration; total 411.3 us of kernels):
+  compute_column_kernel                            254.0 us  61.8%
+  DeviceSelectSweepKernel                           33.8 us   8.2%
+  gather_chars_fn_char_parallel                     25.2 us   6.1%
+  transform_kernel                                  24.6 us   6.0%
+  static_kernel                                     20.0 us   4.9%
+  insert_if_n                                       16.0 us   3.9%
+  find_if_n                                         11.8 us   2.9%
+  DeviceScanKernel                                   9.0 us   2.2%
+  DeviceReduceKernel                                 5.4 us   1.3%
+  DeviceReduceSingleTileKernel                       3.9 us   0.9%
+  DeviceCompactInitKernel                            2.1 us   0.5%
+  copy_if_else_kernel                                1.7 us   0.4%

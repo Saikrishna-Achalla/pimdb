@@ -1,0 +1,18 @@
+== id 107 parquet::<unnamed>::compute_page_string_sizes_kernel(parquet::PageInfo *, std::span<const parquet::ColumnChunkDesc, 18446744073709551615>, std::span<c
+  dur=1316.9us grid=1745 blk=512 regs=36 smem=624B occ ach/theo=91.9/100.0 waves=12.12 ipc=3.11 inst=4.17e+08 thread_eff=30.7
+  SM%=71.2 Mem%=17.6 DRAM%=0.3 L1hit=99.3 L2hit=19.4 dramMB=2.3
+  pipes%: alu=42.4 fma=4.7 lsu=19.2 adu=0.3 cbu=10.6 xu=0.0 uniform=0.2 fp64=0.0
+  global ld_req=1.22e+07 st_req=980 atom_req=0 | shared ld=1.75e+05 st=3.72e+05 bank_conf=2
+  stalls%: not_selected=30.1, wait=23.9, long_scoreboard=11.0, barrier=9.1, math_pipe_throttle=7.7, selected=7.6, branch_resolving=6.8
+== id 129 void parquet::<unnamed>::decode_page_data_generic<unsigned char, 128, 1048576>(parquet::PageInfo *, std::span<const parquet::ColumnChunkDesc, 18446744
+  dur=1143.7us grid=1745 blk=128 regs=64 smem=12992B occ ach/theo=43.8/58.3 waves=5.19 ipc=1.84 inst=2.21e+08 thread_eff=25.0
+  SM%=43.5 Mem%=42.0 DRAM%=7.9 L1hit=75.6 L2hit=82.2 dramMB=60.1
+  pipes%: alu=22.0 fma=3.8 lsu=44.4 adu=16.6 cbu=4.3 xu=2.1 uniform=0.5 fp64=0.0
+  global ld_req=3.32e+06 st_req=1.88e+06 atom_req=0 | shared ld=1.1e+07 st=6.15e+06 bank_conf=2.01e+06
+  stalls%: wait=26.4, barrier=24.2, short_scoreboard=13.3, long_scoreboard=12.4, selected=9.0, branch_resolving=5.1, not_selected=4.5
+== id 241 groupby::<unnamed>::single_pass_shmem_aggs_kernel(int, const unsigned int *, int *, int *, int *, cudf::table_device_view, cudf::mutable_table_device_
+  dur=1134.3us grid=240 blk=128 regs=72 smem=10240B occ ach/theo=27.8/58.3 waves=0.71 ipc=0.68 inst=4.14e+07 thread_eff=30.4
+  SM%=10.0 Mem%=15.8 DRAM%=15.8 L1hit=48.8 L2hit=2.6 dramMB=118.9
+  pipes%: alu=6.1 fma=1.1 lsu=20.8 adu=10.4 cbu=1.6 xu=0.0 uniform=0.5 fp64=0.0
+  global ld_req=4.09e+06 st_req=0 atom_req=1.68e+03 | shared ld=1.62e+06 st=8.88e+03 bank_conf=2.32e+06
+  stalls%: long_scoreboard=44.6, barrier=17.8, wait=17.5, short_scoreboard=5.2, selected=4.7, branch_resolving=4.5, no_instructions=3.4

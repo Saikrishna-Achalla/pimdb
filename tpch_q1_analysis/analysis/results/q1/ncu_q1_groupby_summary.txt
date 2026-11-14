@@ -1,0 +1,29 @@
+kernels=65 gpu_time_us=19668.5 missing_metrics=['smsp__thread_inst_executed.sum']
+  # kernel                                      us     %   grid  blk   SM%  Mem% DRAM%   GB/s  occ% waves     MB
+ 38 single_pass_shmem_aggs_kernel           1740.9   8.9    240  128   7.0  11.0  11.0   72.9  35.5  0.71  126.8
+ 16 single_pass_shmem_aggs_kernel           1493.3   7.6    240  128   8.1  12.8  12.8   84.9  35.0  0.71  126.8
+ 12 single_pass_shmem_aggs_kernel           1439.5   7.3    240  128   8.4  13.2  13.2   87.7  31.9  0.71  126.2
+ 36 single_pass_shmem_aggs_kernel           1362.8   6.9    240  128   9.0  14.0  14.0   92.7  31.8  0.71  126.3
+ 19 single_pass_shmem_aggs_kernel           1337.7   6.8    240  128   9.1  14.3  14.3   94.8  35.4  0.71  126.8
+ 39 single_pass_shmem_aggs_kernel           1272.0   6.5    240  128   9.5  15.0  15.0   99.2  37.4  0.71  126.2
+ 57 single_pass_shmem_aggs_kernel           1243.8   6.3    240  128   9.7  15.3  15.3  101.6  39.4  0.71  126.4
+ 37 single_pass_shmem_aggs_kernel           1126.4   5.7    240  128  10.7  17.0  17.0  112.7  34.6  0.71  127.0
+ 18 single_pass_shmem_aggs_kernel           1086.5   5.5    240  128  11.1  17.6  17.6  116.2  34.4  0.71  126.2
+ 48 single_pass_shmem_aggs_kernel           1040.3   5.3    240  128  11.8  18.4  18.4  121.6  35.5  0.71  126.5
+ 59 single_pass_shmem_aggs_kernel            866.5   4.4    240  128  14.0  22.1  22.1  146.4  37.8  0.71  126.8
+ 22 mapping_indices_kernel                   418.6   2.1    240  128  37.1  46.3  10.7   71.0  40.5  1.00   29.7
+  2 mapping_indices_kernel                   416.6   2.1    240  128  36.9  46.3  10.7   71.0  40.6  1.00   29.6
+ 31 mapping_indices_kernel                   415.7   2.1    240  128  37.2  46.5  10.8   71.6  40.5  1.00   29.8
+ 29 mapping_indices_kernel                   415.0   2.1    240  128  37.3  46.6  10.9   72.0  40.5  1.00   29.9
+  3 mapping_indices_kernel                   414.6   2.1    240  128  37.3  46.6  10.7   70.8  40.5  1.00   29.3
+ 23 mapping_indices_kernel                   414.3   2.1    240  128  37.4  46.6  10.8   71.3  40.6  1.00   29.5
+ 42 mapping_indices_kernel                   412.8   2.1    240  128  37.5  46.8  10.9   72.2  40.7  1.00   29.8
+ 55 mapping_indices_kernel                   412.4   2.1    240  128  37.6  47.0  10.8   71.8  40.6  1.00   29.6
+ 51 mapping_indices_kernel                   411.5   2.1    240  128  37.6  47.0  10.8   71.6  40.5  1.00   29.5
+ 11 mapping_indices_kernel                   411.0   2.1    240  128  37.6  47.0  10.8   71.8  40.7  1.00   29.5
+ 10 mapping_indices_kernel                   409.7   2.1    240  128  37.8  47.2  10.8   71.6  40.6  1.00   29.3
+ 49 single_pass_shmem_aggs_kernel            254.9   1.3    240  128  10.1  14.8  14.8   97.8  37.9  0.71   24.9
+ 45 mapping_indices_kernel                    94.3   0.5    240  128  34.5  43.5   9.2   61.1  39.9  1.00    5.8
+ 15 DeviceSelectSweepKernel                   43.9   0.2    979  384  30.0  77.9  77.9  515.2  68.6  6.80   22.6
+time-weighted stall mix: long_scoreboard=44.2%, wait=17.9%, barrier=13.3%, selected=5.4%, short_scoreboard=5.3%, branch_resolving=4.8%, no_instructions=4.3%, not_selected=1.7%
+sm clock (MHz) median: 2284

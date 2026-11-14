@@ -1,0 +1,32 @@
+ncu list passes: pin+3 iters=343, pin+4=379, pin+5=415 launches; launches added per iteration [36, 36]; nsys kernels per measured iteration 36
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 0 positions; x4 vs first N4 of x5 at 11 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 36 kernels, serialized GPU time 578.1 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 3.90 us; <5 us: 22; <10 us: 25; time in <10 us kernels: 82.1 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['like_multiliteral_kernel', 'DeviceMergeSortBlockSortKernel', 'transform_kernel', 'accumulate_kernel', 'DeviceSelectSweepKernel', 'mapping_indices_kernel', 'single_pass_shmem_aggs_kernel'] -> 22 kernels, 93.6% of time
+
+family (function base)                     count   time_us    pct   avg_us
+like_multiliteral_kernel                       2     212.9   36.8   106.43
+DeviceMergeSortBlockSortKernel                 1     150.0   25.9   149.95
+transform_kernel                              11      68.9   11.9     6.27
+accumulate_kernel                              3      52.0    9.0    17.32
+DeviceSelectSweepKernel                        3      24.9    4.3     8.31
+mapping_indices_kernel                         1      21.9    3.8    21.92
+single_pass_shmem_aggs_kernel                  1      10.8    1.9    10.82
+DeviceReduceKernel                             2       7.3    1.3     3.66
+static_kernel                                  3       7.0    1.2     2.34
+DeviceCompactInitKernel                        3       5.3    0.9     1.77
+DeviceReduceSingleTileKernel                   2       4.7    0.8     2.35
+emit_kernel                                    1       4.5    0.8     4.54
+find_kernel                                    1       4.1    0.7     4.13
+single_thread_kernel                           1       2.0    0.3     1.95
+init_found_pos_pointer                         1       1.8    0.3     1.76
+
+phase                        count   time_us    pct
+string ops                       2     212.9   36.8
+sort/top-N                       1     150.0   25.9
+other                            8      64.7   11.2
+gather/copy/concat               8      62.8   10.9
+cub scan/select/reduce          11      44.3    7.7
+hash group-by/agg                3      35.6    6.2
+expression eval                  3       7.9    1.4

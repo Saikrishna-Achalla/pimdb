@@ -1,0 +1,349 @@
+CREATE VIEW lineitem AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf1/lineitem/part.0.parquet']);
+CREATE VIEW orders AS SELECT * FROM read_parquet(['/home/sai/cs254_project/sirius/test_datasets/tpch_parquet_sf1/orders/part.0.parquet']);
+.mode csv
+.timer on
+.print __ITER__ 1
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 2
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 3
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 4
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 5
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 6
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 7
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 8
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 9
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 10
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 11
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 12
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 13
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 14
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;
+.print __ITER__ 15
+select
+  o.o_orderpriority,
+  count(*) as order_count
+from
+  orders o
+where
+  o.o_orderdate >= date '1996-10-01'
+  and o.o_orderdate < date '1997-01-01'
+  and
+  exists (
+    select
+      *
+    from
+      lineitem l
+    where
+      l.l_orderkey = o.o_orderkey
+      and l.l_commitdate < l.l_receiptdate
+  )
+group by
+  o.o_orderpriority
+order by
+  o.o_orderpriority;

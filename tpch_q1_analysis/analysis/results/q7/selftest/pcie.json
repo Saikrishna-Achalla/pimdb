@@ -1,0 +1,472 @@
+{
+ "query": 7,
+ "overall": "FAIL",
+ "checks": {
+  "sql:pin_tier_gpu": {
+   "ok": false,
+   "detail": "{'q7_nsys.sql': [\"pinned tables ['customer', 'nation', 'orders', 'supplier'] != referenced tables ['customer', 'lineitem', 'nation', 'orders', 'supplier']\"]}"
+  },
+  "timing_log:iterations_found": {
+   "ok": true,
+   "detail": "5 query iterations (expected 5)"
+  },
+  "timing_log:pin_tier_gpu": {
+   "ok": false,
+   "detail": "non-gpu or missing pins: []; pinned ['customer', 'nation', 'orders', 'supplier'] vs referenced ['customer', 'lineitem', 'nation', 'orders', 'supplier']"
+  },
+  "timing_log:pinned_entry_per_gpu_scan": {
+   "ok": false,
+   "detail": "iter1: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter2: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter3: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']"
+  },
+  "timing_log:no_cache_assign_error": {
+   "ok": true,
+   "detail": "0 cache-assignment errors"
+  },
+  "timing_log:fs_cache_zero_every_iteration": {
+   "ok": false,
+   "detail": "non-zero: [\"summary 2 (describes iteration 1): {'reads': '24', 'hits': '0', 'h2d': '65', 'miss': '2', 'evictions': '0'}\", \"summary 3 (describes iteration 2): {'reads': '24', 'hits': '66', 'h2d': '0', 'miss': '0', 'evictions': '0'}\"]"
+  },
+  "timing_log:no_downgrade_or_spill": {
+   "ok": true,
+   "detail": "0 downgrade/spill/OOM lines in query iterations"
+  },
+  "timing_log:no_host_staged_filter_publication": {
+   "ok": true,
+   "detail": "0 dynamic-filter publications, all through peer copies (device-side)"
+  },
+  "timing_log:pool_counters_stable": {
+   "ok": true,
+   "detail": "every iteration: gpu_pool allocated == pinned footprint 12781568 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged"
+  },
+  "nsys_log:iterations_found": {
+   "ok": true,
+   "detail": "5 query iterations (expected 5)"
+  },
+  "nsys_log:pin_tier_gpu": {
+   "ok": false,
+   "detail": "non-gpu or missing pins: []; pinned ['customer', 'nation', 'orders', 'supplier'] vs referenced ['customer', 'lineitem', 'nation', 'orders', 'supplier']"
+  },
+  "nsys_log:pinned_entry_per_gpu_scan": {
+   "ok": false,
+   "detail": "iter1: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter2: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']; iter3: 5 assigned for 6 GPU_SCANs, missing tables ['lineitem']"
+  },
+  "nsys_log:no_cache_assign_error": {
+   "ok": true,
+   "detail": "0 cache-assignment errors"
+  },
+  "nsys_log:fs_cache_zero_every_iteration": {
+   "ok": false,
+   "detail": "non-zero: [\"summary 2 (describes iteration 1): {'reads': '24', 'hits': '0', 'h2d': '65', 'miss': '2', 'evictions': '0'}\", \"summary 3 (describes iteration 2): {'reads': '24', 'hits': '66', 'h2d': '0', 'miss': '0', 'evictions': '0'}\"]"
+  },
+  "nsys_log:no_downgrade_or_spill": {
+   "ok": true,
+   "detail": "0 downgrade/spill/OOM lines in query iterations"
+  },
+  "nsys_log:no_host_staged_filter_publication": {
+   "ok": true,
+   "detail": "0 dynamic-filter publications, all through peer copies (device-side)"
+  },
+  "nsys_log:pool_counters_stable": {
+   "ok": true,
+   "detail": "every iteration: gpu_pool allocated == pinned footprint 12781568 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged"
+  },
+  "nsys:windows": {
+   "ok": true,
+   "detail": "5 iteration windows from the nsys-run Sirius log (2 measured, 3 warmup); kernels per iteration [364, 364, 364, 364, 364]"
+  },
+  "no_parquet_decode_kernels": {
+   "ok": false,
+   "detail": "found: ['cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::', 'cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:', 'void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector']"
+  },
+  "h2d_measured_iterations": {
+   "ok": false,
+   "detail": "per measured iteration: up to 229 copies, 44507401 B total, largest single 3560399 B (limits: single <= 5000 B, total <= 1048576 B)"
+  },
+  "d2h_measured_iterations": {
+   "ok": false,
+   "detail": "per measured iteration: up to 167 copies, 1100127 B total, largest single 79040 B (result CSV is 195 B; limit 262144 B)"
+  },
+  "no_other_host_copies": {
+   "ok": true,
+   "detail": "0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration"
+  },
+  "unified_memory": {
+   "ok": true,
+   "detail": "UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault tables only when a fault occurs (present: none); faults per measured iteration [0, 0]; managed-memory API calls in the whole trace: none"
+  }
+ },
+ "determinism": {
+  "nsys:kernels_per_iteration_stable": {
+   "ok": true,
+   "detail": "measured iterations: [364, 364]"
+  }
+ },
+ "memory": {
+  "pinned_allocated_bytes": 12781568,
+  "peak_bytes_high_water": 1387484944,
+  "note": "gpu_pool peak is a process-lifetime high-water mark (it includes the pin phase)"
+ },
+ "table_rows": {
+  "lineitem": 6001215,
+  "orders": 1500000,
+  "customer": 150000,
+  "supplier": 10000,
+  "nation": 25
+ },
+ "tables_below_byte_limit": [
+  "nation"
+ ],
+ "per_iteration": [
+  {
+   "iter": 1,
+   "measured": false,
+   "kernels": 364,
+   "kernel_ns": 7134262,
+   "decode_kernels": [
+    "cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::",
+    "cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:",
+    "void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector",
+    "void cub::detail::reduce::DeviceReduceSingleTileKernel<cub::detail::reduce::poli",
+    "void cub::detail::reduce_by_key::DeviceReduceByKeyKernel<cub::detail::reduce_by_",
+    "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_",
+    "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from",
+    "void cub::detail::scan_by_key::DeviceScanByKeyInitKernel<cub::ReduceByKeyScanTil",
+    "void cub::detail::scan_by_key::DeviceScanByKeyKernel<cub::detail::scan_by_key::p",
+    "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_se",
+    "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_sel",
+    "void cudf::io::parquet::detail::<unnamed>::decode_delta_binary_kernel<unsigned c",
+    "void cudf::io::parquet::detail::<unnamed>::decode_page_data_generic<unsigned cha",
+    "void cudf::io::parquet::detail::<unnamed>::preprocess_levels_kernel<unsigned cha",
+    "void nvcomp::unsnap_kernel<(bool)0>(const void *const *, const unsigned long *, "
+   ],
+   "copies": {
+    "D2D (on device)": {
+     "count": 39,
+     "bytes": 4176077,
+     "max": 396912,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 39
+     }
+    },
+    "D2H": {
+     "count": 167,
+     "bytes": 1100127,
+     "max": 79040,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 149,
+      "Device->Pageable": 18
+     }
+    },
+    "H2D": {
+     "count": 271,
+     "bytes": 44507401,
+     "max": 1048576,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 246,
+      "Pageable->Device": 25
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 2,
+   "measured": false,
+   "kernels": 364,
+   "kernel_ns": 7361970,
+   "decode_kernels": [
+    "cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::",
+    "cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:",
+    "void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector",
+    "void cub::detail::reduce::DeviceReduceSingleTileKernel<cub::detail::reduce::poli",
+    "void cub::detail::reduce_by_key::DeviceReduceByKeyKernel<cub::detail::reduce_by_",
+    "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_",
+    "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from",
+    "void cub::detail::scan_by_key::DeviceScanByKeyInitKernel<cub::ReduceByKeyScanTil",
+    "void cub::detail::scan_by_key::DeviceScanByKeyKernel<cub::detail::scan_by_key::p",
+    "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_se",
+    "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_sel",
+    "void cudf::io::parquet::detail::<unnamed>::decode_delta_binary_kernel<unsigned c",
+    "void cudf::io::parquet::detail::<unnamed>::decode_page_data_generic<unsigned cha",
+    "void cudf::io::parquet::detail::<unnamed>::preprocess_levels_kernel<unsigned cha",
+    "void nvcomp::unsnap_kernel<(bool)0>(const void *const *, const unsigned long *, "
+   ],
+   "copies": {
+    "H2D": {
+     "count": 229,
+     "bytes": 44507401,
+     "max": 3560399,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 204,
+      "Pageable->Device": 25
+     }
+    },
+    "D2D (on device)": {
+     "count": 39,
+     "bytes": 4176077,
+     "max": 396912,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 39
+     }
+    },
+    "D2H": {
+     "count": 167,
+     "bytes": 1100127,
+     "max": 79040,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 149,
+      "Device->Pageable": 18
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 3,
+   "measured": false,
+   "kernels": 364,
+   "kernel_ns": 6938929,
+   "decode_kernels": [
+    "cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::",
+    "cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:",
+    "void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector",
+    "void cub::detail::reduce::DeviceReduceSingleTileKernel<cub::detail::reduce::poli",
+    "void cub::detail::reduce_by_key::DeviceReduceByKeyKernel<cub::detail::reduce_by_",
+    "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_",
+    "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from",
+    "void cub::detail::scan_by_key::DeviceScanByKeyInitKernel<cub::ReduceByKeyScanTil",
+    "void cub::detail::scan_by_key::DeviceScanByKeyKernel<cub::detail::scan_by_key::p",
+    "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_se",
+    "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_sel",
+    "void cudf::io::parquet::detail::<unnamed>::decode_delta_binary_kernel<unsigned c",
+    "void cudf::io::parquet::detail::<unnamed>::decode_page_data_generic<unsigned cha",
+    "void cudf::io::parquet::detail::<unnamed>::preprocess_levels_kernel<unsigned cha",
+    "void nvcomp::unsnap_kernel<(bool)0>(const void *const *, const unsigned long *, "
+   ],
+   "copies": {
+    "H2D": {
+     "count": 229,
+     "bytes": 44507401,
+     "max": 3560399,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 204,
+      "Pageable->Device": 25
+     }
+    },
+    "D2D (on device)": {
+     "count": 39,
+     "bytes": 4176077,
+     "max": 396912,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 39
+     }
+    },
+    "D2H": {
+     "count": 167,
+     "bytes": 1100127,
+     "max": 79040,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 149,
+      "Device->Pageable": 18
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 4,
+   "measured": true,
+   "kernels": 364,
+   "kernel_ns": 6953554,
+   "decode_kernels": [
+    "cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::",
+    "cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:",
+    "void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector",
+    "void cub::detail::reduce::DeviceReduceSingleTileKernel<cub::detail::reduce::poli",
+    "void cub::detail::reduce_by_key::DeviceReduceByKeyKernel<cub::detail::reduce_by_",
+    "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_",
+    "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from",
+    "void cub::detail::scan_by_key::DeviceScanByKeyInitKernel<cub::ReduceByKeyScanTil",
+    "void cub::detail::scan_by_key::DeviceScanByKeyKernel<cub::detail::scan_by_key::p",
+    "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_se",
+    "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_sel",
+    "void cudf::io::parquet::detail::<unnamed>::decode_delta_binary_kernel<unsigned c",
+    "void cudf::io::parquet::detail::<unnamed>::decode_page_data_generic<unsigned cha",
+    "void cudf::io::parquet::detail::<unnamed>::preprocess_levels_kernel<unsigned cha",
+    "void nvcomp::unsnap_kernel<(bool)0>(const void *const *, const unsigned long *, "
+   ],
+   "copies": {
+    "D2D (on device)": {
+     "count": 39,
+     "bytes": 4176077,
+     "max": 396912,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 39
+     }
+    },
+    "D2H": {
+     "count": 167,
+     "bytes": 1100127,
+     "max": 79040,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 149,
+      "Device->Pageable": 18
+     }
+    },
+    "H2D": {
+     "count": 229,
+     "bytes": 44507401,
+     "max": 3560399,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 204,
+      "Pageable->Device": 25
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 5,
+   "measured": true,
+   "kernels": 364,
+   "kernel_ns": 7322067,
+   "decode_kernels": [
+    "cudf::io::parquet::detail::<unnamed>::count_page_headers_kernel(cuda::std::__4::",
+    "cudf::io::parquet::detail::<unnamed>::decode_page_headers_kernel(cuda::std::__4:",
+    "void cub::detail::for_each::static_kernel<cub::detail::for_each::policy_selector",
+    "void cub::detail::reduce::DeviceReduceSingleTileKernel<cub::detail::reduce::poli",
+    "void cub::detail::reduce_by_key::DeviceReduceByKeyKernel<cub::detail::reduce_by_",
+    "void cub::detail::scan::DeviceScanInitKernel<cub::detail::scan::policy_selector_",
+    "void cub::detail::scan::DeviceScanKernel<cub::detail::scan::policy_selector_from",
+    "void cub::detail::scan_by_key::DeviceScanByKeyInitKernel<cub::ReduceByKeyScanTil",
+    "void cub::detail::scan_by_key::DeviceScanByKeyKernel<cub::detail::scan_by_key::p",
+    "void cub::detail::select::DeviceSelectSweepKernel<cub::detail::select::policy_se",
+    "void cub::detail::transform::transform_kernel<cub::detail::transform::policy_sel",
+    "void cudf::io::parquet::detail::<unnamed>::decode_delta_binary_kernel<unsigned c",
+    "void cudf::io::parquet::detail::<unnamed>::decode_page_data_generic<unsigned cha",
+    "void cudf::io::parquet::detail::<unnamed>::preprocess_levels_kernel<unsigned cha",
+    "void nvcomp::unsnap_kernel<(bool)0>(const void *const *, const unsigned long *, "
+   ],
+   "copies": {
+    "D2D (on device)": {
+     "count": 39,
+     "bytes": 4176077,
+     "max": 396912,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 39
+     }
+    },
+    "D2H": {
+     "count": 167,
+     "bytes": 1100127,
+     "max": 79040,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 149,
+      "Device->Pageable": 18
+     }
+    },
+    "H2D": {
+     "count": 229,
+     "bytes": 44507401,
+     "max": 3560399,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 204,
+      "Pageable->Device": 25
+     }
+    }
+   },
+   "um_faults": 0
+  }
+ ],
+ "after_pin": {
+  "D2H": {
+   "count": 838,
+   "bytes": 5500655,
+   "max": 79040,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Pinned": 747,
+    "Device->Pageable": 91
+   }
+  },
+  "H2D": {
+   "count": 1189,
+   "bytes": 222537212,
+   "max": 3560399,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Pinned->Device": 1064,
+    "Pageable->Device": 125
+   }
+  },
+  "D2D (on device)": {
+   "count": 195,
+   "bytes": 20880385,
+   "max": 396912,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Device": 195
+   }
+  }
+ },
+ "pin_phase": {
+  "H2D": {
+   "count": 202,
+   "bytes": 4216125,
+   "max": 1048576,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Pinned->Device": 188,
+    "Pageable->Device": 14
+   }
+  },
+  "D2H": {
+   "count": 182,
+   "bytes": 126893,
+   "max": 24000,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Pinned": 167,
+    "Device->Pageable": 15
+   }
+  },
+  "D2D (on device)": {
+   "count": 20,
+   "bytes": 13283117,
+   "max": 6000000,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Device": 20
+   }
+  }
+ },
+ "limits": {
+  "h2d_max_single": 5000,
+  "h2d_max_iter": 1048576,
+  "d2h_max_iter": 262144
+ },
+ "default_limits": {
+  "h2d_max_single": 5000,
+  "h2d_max_iter": 1048576,
+  "d2h_max_iter": 262144
+ },
+ "log_processes": {
+  "timing": 1,
+  "nsys": 1
+ }
+}

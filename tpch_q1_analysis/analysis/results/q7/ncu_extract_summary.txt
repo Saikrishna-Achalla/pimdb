@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=207 (full metrics: 207) gpu_time_us=1851.2 dram_MB=99.56 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): ['pos121:l2_hit=104.2', 'pos188:l2_hit=102.2']
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+198 DeviceMergeSortBlockSortKernel       236.8  12.8      1  256   0.2   0.1    0.4  16.6  0.01   0.09
+ 63 compute_column_kernel                110.9   6.0  15630  128  88.0   5.6   36.8  91.2 27.14   4.09
+ 54 compute_column_kernel                109.8   5.9  15629  128  88.5   5.6   37.2  91.2 27.13   4.09
+ 55 compute_column_kernel                107.1   5.8  15627  128  88.3   5.8   38.2  91.1 27.13   4.09
+ 98 fused_membership_mask_kernel          94.8   5.1   4096  256  54.4  17.7  116.9  78.8 17.07  11.08
+ 70 fused_membership_mask_kernel          73.0   3.9   4096  256  56.6  11.2   74.4  78.4 17.07   5.43
+ 56 fused_membership_mask_kernel          72.9   3.9   4096  256  56.6  11.3   74.6  78.5 17.07   5.44
+ 57 fused_membership_mask_kernel          72.1   3.9   4096  256  56.6  11.4   75.3  78.5 17.07   5.43
+ 95 gather_chars_fn_char_parallel         30.6   1.7   4642  128  66.3   6.0   39.5  85.9  8.06   1.21
+ 97 insert_if_n                           22.4   1.2   1161  128  10.1  17.3  114.2  79.5  2.02   2.56
+178 mapping_indices_kernel                22.0   1.2     47  128   4.2   1.4    9.0   7.1  0.20   0.20
+103 hash_csr_build_count_kernel           20.2   1.1    581  256  20.8  17.8  117.3  71.1  2.02   2.36
+ 86 find_if_n                             19.0   1.0   1161  128  48.2   5.1   33.5  83.6  2.02   0.64
+106 hash_csr_build_fill_kernel            17.7   1.0    581  256  37.2  20.3  133.9  75.7  2.02   2.37
+134 compute_column_kernel                 16.8   0.9     93  128   9.5   3.6   23.6  16.4  0.22   0.40
+ 74 DeviceSelectSweepKernel               15.6   0.8    348  384  34.2  20.1  132.5  45.3  3.62   2.06
+ 61 DeviceSelectSweepKernel               15.3   0.8    348  384  35.5  20.4  134.4  45.3  3.62   2.06
+ 59 DeviceSelectSweepKernel               15.3   0.8    348  384  34.7  20.4  134.7  43.8  3.62   2.06
+168 DeviceRadixSortSingleTileKernel       13.4   0.7      1  256   1.4   0.2    1.2  16.5  0.01   0.02
+116 DeviceScanKernel                      13.3   0.7      5  224   0.6   4.3   28.7  14.5  0.03   0.38
+158 DeviceRadixSortSingleTileKernel       13.2   0.7      1  256   1.4   0.2    1.2  16.8  0.01   0.02
+128 DeviceScanKernel                      13.2   0.7      5  224   0.6   1.7   10.9  14.6  0.03   0.14
+141 DeviceScanKernel                      13.1   0.7      3  224   0.3   1.4    9.0  14.2  0.02   0.12
+144 DeviceScanKernel                      13.1   0.7      3  224   0.3   1.4    9.0  14.3  0.02   0.12
+132 DeviceScanKernel                      12.7   0.7      5  224   0.7   1.7   11.3  14.5  0.03   0.14
+time-weighted stall mix (kernels with full metrics): long_scoreboard=34.1%, barrier=17.1%, wait=12.4%, no_instructions=12.2%, short_scoreboard=6.5%, selected=4.1%, not_selected=3.2%, mio_throttle=3.0%
+sm clock (MHz) median: 2269

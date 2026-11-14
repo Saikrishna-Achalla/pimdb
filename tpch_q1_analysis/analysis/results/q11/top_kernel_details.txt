@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 168; total 676.7 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 80 [scan/filter / dynamic filter: membership probe] static_kernel  (2.8% of GPU time)
+   void for_each::static_kernel<for_each::policy_selector, int, sirius::membership_probe_functor<sirius::integral_probe_adapter<short, int>, sirius::set_lookup<cuco::static_set_ref<int, 1, std::equal_to<int>, cuco::double_h
+  dur=19.0us grid=1563 blk=256 regs=37 smem=0B occ ach/theo=83.0/100.0 waves=5.43 ipc=2.73 inst=4.85e+06 thread_eff=23.9
+  SM%=60.5 Mem%=24.1 DRAM%=13.2 DRAM=1.65MB (87.2 GB/s) L1hit=95.8 L2hit=37.6 SM busy max/avg=1.04 active_frac=0.87
+  pipes%: alu=34.4 fma=8.3 lsu=20.9 adu=14.3 cbu=3.2 xu=11.2 uniform=3.5 fp64=0.0
+  global ld_req=1.48e+05 st_req=2.5e+04 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=31.7, wait=26.1, not_selected=9.5, selected=8.0, branch_resolving=8.0, no_instructions=5.8, short_scoreboard=5.3, math_pipe_throttle=2.2
+== pos 25 [scan/filter / dynamic filter: membership probe] static_kernel  (2.8% of GPU time)
+   void for_each::static_kernel<for_each::policy_selector, int, sirius::membership_probe_functor<sirius::integral_probe_adapter<short, int>, sirius::set_lookup<cuco::static_set_ref<int, 1, std::equal_to<int>, cuco::double_h
+  dur=18.8us grid=1563 blk=256 regs=37 smem=0B occ ach/theo=82.8/100.0 waves=5.43 ipc=2.69 inst=4.85e+06 thread_eff=23.9
+  SM%=61.1 Mem%=24.3 DRAM%=13.3 DRAM=1.65MB (87.8 GB/s) L1hit=95.8 L2hit=37.1 SM busy max/avg=1.04 active_frac=0.89
+  pipes%: alu=33.9 fma=8.2 lsu=20.6 adu=14.1 cbu=3.2 xu=11.1 uniform=3.5 fp64=0.0
+  global ld_req=1.48e+05 st_req=2.5e+04 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=32.5, wait=24.9, not_selected=9.6, selected=7.7, no_instructions=7.2, branch_resolving=7.0, short_scoreboard=5.2, math_pipe_throttle=2.3
+== pos 90 [hash join probe / hash join: probe (find/count/retrieve)] find_if_n  (1.8% of GPU time)
+   void open_addressing_ns::find_if_n<1, 128, cuda::transform_iterator<cudf::<unnamed>::primitive_keys_fn<row::lhs_index_type>, cuda::counting_iterator<int, long>>, cuda::constant_iterator<bool, long>, std::identity, cuda::
+  dur=12.1us grid=248 blk=128 regs=38 smem=1024B occ ach/theo=36.9/100.0 waves=0.43 ipc=1.02 inst=1.04e+06 thread_eff=9.3
+  SM%=19.7 Mem%=11.9 DRAM%=2.0 DRAM=0.16MB (13.4 GB/s) L1hit=87.5 L2hit=59.4 SM busy max/avg=1.09 active_frac=0.77
+  pipes%: alu=11.8 fma=1.1 lsu=15.5 adu=4.3 cbu=3.7 xu=0.4 uniform=0.5 fp64=0.0
+  global ld_req=5.58e+04 st_req=990 atom=0 | shared ld=990 st=990 bank_conf=1.03e+03
+  stalls%: long_scoreboard=30.0, barrier=27.0, wait=17.0, short_scoreboard=6.3, no_instructions=6.2, selected=6.2, branch_resolving=4.3, not_selected=1.9
+== pos 125 [hash join probe / hash join: output/compaction] conditional_join  (1.6% of GPU time)
+   void cudf::conditional_join<128, 128, 0>(cudf::table_device_view, cudf::table_device_view, cudf::join_kind, int *, int *, unsigned long *, ast::expression_device_view, unsigned long, bool)
+  dur=10.7us grid=233 blk=128 regs=60 smem=4128B occ ach/theo=38.6/66.7 waves=0.61 ipc=0.31 inst=2.97e+05 thread_eff=29.9
+  SM%=6.6 Mem%=8.0 DRAM%=8.0 DRAM=0.57MB (52.8 GB/s) L1hit=43.8 L2hit=44.9 SM busy max/avg=1.01 active_frac=0.81
+  pipes%: alu=3.1 fma=0.7 lsu=8.2 adu=4.6 cbu=0.9 xu=0.2 uniform=0.1 fp64=0.0
+  global ld_req=1.96e+04 st_req=1.86e+03 atom=932 | shared ld=4.66e+03 st=2.8e+03 bank_conf=2.01e+04
+  stalls%: no_instructions=54.0, long_scoreboard=31.6, wait=4.8, short_scoreboard=3.5, selected=2.2, branch_resolving=2.1, not_selected=1.2, mio_throttle=0.2
+== pos 34 [hash join probe / hash join: probe (find/count/retrieve)] find_if_n  (1.6% of GPU time)
+   void open_addressing_ns::find_if_n<1, 128, cuda::transform_iterator<cudf::<unnamed>::primitive_keys_fn<row::lhs_index_type>, cuda::counting_iterator<int, long>>, cuda::constant_iterator<bool, long>, std::identity, cuda::
+  dur=10.7us grid=248 blk=128 regs=38 smem=1024B occ ach/theo=38.1/100.0 waves=0.43 ipc=1.08 inst=1.07e+06 thread_eff=9.1
+  SM%=22.8 Mem%=13.6 DRAM%=2.3 DRAM=0.16MB (15.0 GB/s) L1hit=87.5 L2hit=60.5 SM busy max/avg=1.06 active_frac=0.84
+  pipes%: alu=12.5 fma=1.1 lsu=16.1 adu=4.4 cbu=3.9 xu=0.4 uniform=0.5 fp64=0.0
+  global ld_req=5.63e+04 st_req=990 atom=0 | shared ld=990 st=990 bank_conf=1.02e+03
+  stalls%: long_scoreboard=33.1, barrier=22.7, wait=16.6, no_instructions=7.0, short_scoreboard=6.9, selected=6.0, branch_resolving=4.8, not_selected=2.2
+== pos 89 [hash join build / hash join: build (insert)] insert_if_n  (1.5% of GPU time)
+   void open_addressing_ns::insert_if_n<1, 128, cuda::transform_iterator<cudf::<unnamed>::primitive_keys_fn<row::rhs_index_type>, cuda::counting_iterator<int, long>>, cuda::constant_iterator<bool, long>, std::identity, cuco
+  dur=10.4us grid=4 blk=128 regs=22 smem=0B occ ach/theo=5.4/100.0 waves=0.01 ipc=0.09 inst=4.52e+03 thread_eff=12.9
+  SM%=0.1 Mem%=0.8 DRAM%=0.4 DRAM=0.02MB (2.4 GB/s) L1hit=20.1 L2hit=87.1 SM busy max/avg=17.17 active_frac=0.05
+  pipes%: alu=0.9 fma=0.1 lsu=1.0 adu=0.5 cbu=0.3 xu=0.1 uniform=0.0 fp64=0.0
+  global ld_req=193 st_req=0 atom=53 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=50.0, no_instructions=14.8, short_scoreboard=13.0, branch_resolving=9.3, wait=9.3, selected=3.7
+== pos 124 [hash join probe / hash join: output/compaction] compute_conditional_join_output_size  (1.5% of GPU time)
+   void cudf::compute_conditional_join_output_size<128, 0>(cudf::table_device_view, cudf::table_device_view, cudf::join_kind, ast::expression_device_view, bool, unsigned long *)
+  dur=10.3us grid=233 blk=128 regs=58 smem=48B occ ach/theo=37.5/66.7 waves=0.61 ipc=0.26 inst=2.36e+05 thread_eff=31.2
+  SM%=6.4 Mem%=8.3 DRAM%=8.3 DRAM=0.56MB (54.7 GB/s) L1hit=53.9 L2hit=40.8 SM busy max/avg=1.01 active_frac=0.80
+  pipes%: alu=3.3 fma=0.4 lsu=8.0 adu=4.8 cbu=0.2 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=1.96e+04 st_req=0 atom=233 | shared ld=466 st=932 bank_conf=0
+  stalls%: no_instructions=49.8, long_scoreboard=34.5, wait=4.2, drain=3.9, short_scoreboard=3.9, selected=1.0, mio_throttle=0.9, not_selected=0.7
+== pos 82 [cub scan/select/reduce / cub/thrust: select/compact] DeviceSelectSweepKernel  (1.5% of GPU time)
+   void select::DeviceSelectSweepKernel<select::policy_selector_from_types<cuda::counting_iterator<int, long>, cub::NullType *, int *, long, 0>, cuda::counting_iterator<int, long>, cub::NullType *, int *, long *, cub::ScanT
+  dur=10.0us grid=139 blk=384 regs=80 smem=23040B occ ach/theo=41.3/50.0 waves=1.45 ipc=1.24 inst=8.53e+05 thread_eff=24.6
+  SM%=22.6 Mem%=22.5 DRAM%=13.1 DRAM=0.86MB (86.2 GB/s) L1hit=93.0 L2hit=55.4 SM busy max/avg=1.24 active_frac=0.65
+  pipes%: alu=17.6 fma=0.5 lsu=34.5 adu=5.2 cbu=2.5 xu=0.1 uniform=1.0 fp64=0.0
+  global ld_req=2.52e+04 st_req=1.85e+04 atom=0 | shared ld=3.5e+04 st=2.72e+04 bank_conf=12
+  stalls%: barrier=28.8, wait=14.7, no_instructions=13.7, long_scoreboard=9.2, mio_throttle=8.4, selected=5.5, not_selected=5.2, branch_resolving=4.9

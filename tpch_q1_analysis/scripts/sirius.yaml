@@ -1,0 +1,18 @@
+# Sirius config for TPC-H Q1 SF1 profiling on a single RTX 5070 (12 GB).
+# Host pinned memory capped at 8 GB (default would pin 90% of 125 GB RAM).
+sirius:
+  max_concurrent_queries: 1
+  topology: { num_gpus: 1 }
+  memory:
+    gpu:
+      usage_limit_fraction: 0.85
+      reservation_limit_fraction: 1.0
+      downgrade_trigger_fraction: 0.8
+      downgrade_stop_fraction: 0.6
+    host: { capacity_bytes: 8GB, initial_number_pools: 16, pool_size: 512, block_size: 1048576 }
+  executor:
+    pipeline:     { num_threads: 4 }
+    downgrade:    { num_threads: 1 }
+    task_creator: { num_threads: 1 }
+  telemetry:
+    enable_quent: false

@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 175; total 2544.4 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 25 [expression eval / expression: AST] compute_column_kernel  (9.2% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=234.7us grid=7813 blk=128 regs=56 smem=3072B occ ach/theo=71.3/75.0 waves=18.09 ipc=1.79 inst=4.53e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.2 Mem%=80.2 DRAM%=10.8 DRAM=16.70MB (71.1 GB/s) L1hit=94.6 L2hit=20.4 SM busy max/avg=1.01 active_frac=0.98
+  pipes%: alu=18.5 fma=4.3 lsu=81.4 adu=17.8 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.5e+06 st_req=3.13e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.97e+05
+  stalls%: long_scoreboard=44.8, wait=21.4, no_instructions=10.6, selected=5.2, not_selected=4.0, branch_resolving=3.3, mio_throttle=3.2, lg_throttle=3.2
+== pos 26 [expression eval / expression: AST] compute_column_kernel  (9.2% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=234.7us grid=7821 blk=128 regs=56 smem=3072B occ ach/theo=71.3/75.0 waves=18.10 ipc=1.80 inst=4.53e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.8 Mem%=80.8 DRAM%=10.8 DRAM=16.75MB (71.4 GB/s) L1hit=94.6 L2hit=19.9 SM busy max/avg=1.01 active_frac=0.98
+  pipes%: alu=18.6 fma=4.3 lsu=81.8 adu=17.9 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.51e+06 st_req=3.13e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.98e+05
+  stalls%: long_scoreboard=44.3, wait=22.0, no_instructions=11.0, selected=5.3, not_selected=4.0, short_scoreboard=3.2, branch_resolving=3.1, lg_throttle=3.0
+== pos 96 [expression eval / expression: AST] compute_column_kernel  (9.2% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=234.7us grid=7813 blk=128 regs=56 smem=3072B occ ach/theo=71.2/75.0 waves=18.09 ipc=1.79 inst=4.53e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.8 Mem%=80.8 DRAM%=10.8 DRAM=16.73MB (71.3 GB/s) L1hit=94.6 L2hit=20.4 SM busy max/avg=1.01 active_frac=0.98
+  pipes%: alu=18.5 fma=4.3 lsu=81.4 adu=17.8 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.5e+06 st_req=3.13e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.97e+05
+  stalls%: long_scoreboard=44.6, wait=21.5, no_instructions=11.1, selected=5.3, not_selected=3.9, lg_throttle=3.2, branch_resolving=3.2, short_scoreboard=3.2
+== pos 27 [expression eval / expression: AST] compute_column_kernel  (9.2% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=233.6us grid=7807 blk=128 regs=56 smem=3072B occ ach/theo=71.2/75.0 waves=18.07 ipc=1.79 inst=4.52e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.8 Mem%=80.8 DRAM%=10.8 DRAM=16.71MB (71.5 GB/s) L1hit=94.6 L2hit=19.6 SM busy max/avg=1.02 active_frac=0.98
+  pipes%: alu=18.6 fma=4.3 lsu=81.7 adu=17.9 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.49e+06 st_req=3.12e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.97e+05
+  stalls%: long_scoreboard=45.0, wait=21.7, no_instructions=10.7, selected=5.2, not_selected=4.1, branch_resolving=3.2, short_scoreboard=3.1, lg_throttle=3.0
+== pos 94 [expression eval / expression: AST] compute_column_kernel  (9.2% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=233.4us grid=7817 blk=128 regs=56 smem=3072B occ ach/theo=71.3/75.0 waves=18.09 ipc=1.79 inst=4.53e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.5 Mem%=80.5 DRAM%=10.8 DRAM=16.71MB (71.6 GB/s) L1hit=94.6 L2hit=19.7 SM busy max/avg=1.01 active_frac=0.98
+  pipes%: alu=18.6 fma=4.3 lsu=81.7 adu=17.9 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.5e+06 st_req=3.13e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.97e+05
+  stalls%: long_scoreboard=44.8, wait=21.6, no_instructions=10.8, selected=5.2, not_selected=4.0, lg_throttle=3.2, short_scoreboard=3.1, branch_resolving=3.0
+== pos 24 [expression eval / expression: AST] compute_column_kernel  (9.1% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=231.7us grid=7816 blk=128 regs=56 smem=3072B occ ach/theo=71.2/75.0 waves=18.09 ipc=1.80 inst=4.53e+07 active_lanes_per_inst(of 32)=29.0
+  SM%=80.9 Mem%=80.9 DRAM%=10.9 DRAM=16.75MB (72.3 GB/s) L1hit=94.6 L2hit=20.5 SM busy max/avg=1.02 active_frac=0.98
+  pipes%: alu=18.6 fma=4.3 lsu=81.8 adu=17.9 cbu=0.4 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=7.5e+06 st_req=3.13e+04 atom=0 | shared ld=3.75e+05 st=3.75e+05 bank_conf=3.98e+05
+  stalls%: long_scoreboard=45.1, wait=21.3, no_instructions=10.9, selected=5.1, not_selected=4.0, short_scoreboard=3.3, branch_resolving=3.2, lg_throttle=3.1
+== pos 0 [expression eval / expression: AST] compute_column_kernel  (5.3% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=135.9us grid=1563 blk=128 regs=56 smem=4096B occ ach/theo=70.8/75.0 waves=3.62 ipc=1.73 inst=2.48e+07 active_lanes_per_inst(of 32)=26.2
+  SM%=71.9 Mem%=71.9 DRAM%=5.3 DRAM=4.79MB (35.3 GB/s) L1hit=96.8 L2hit=36.2 SM busy max/avg=1.04 active_frac=0.95
+  pipes%: alu=19.7 fma=3.4 lsu=75.6 adu=15.8 cbu=1.0 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=4.16e+06 st_req=6.25e+03 atom=0 | shared ld=1.75e+05 st=1.75e+05 bank_conf=2.29e+06
+  stalls%: long_scoreboard=48.7, wait=19.4, no_instructions=5.6, selected=5.1, branch_resolving=4.7, not_selected=4.5, lg_throttle=4.1, short_scoreboard=4.0
+== pos 153 [expression eval / expression: AST] compute_column_kernel  (2.5% of GPU time)
+   void cudf::compute_column_kernel<128, 0, 1>(cudf::table_device_view, ast::expression_device_view, cudf::mutable_column_device_view)
+  dur=64.3us grid=3 blk=128 regs=56 smem=4096B occ ach/theo=8.3/75.0 waves=0.01 ipc=0.16 inst=6.86e+04 active_lanes_per_inst(of 32)=26.2
+  SM%=0.4 Mem%=0.4 DRAM%=0.3 DRAM=0.12MB (1.8 GB/s) L1hit=96.1 L2hit=64.8 SM busy max/avg=16.02 active_frac=0.06
+  pipes%: alu=1.7 fma=0.3 lsu=7.0 adu=1.6 cbu=0.1 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=1.14e+04 st_req=12 atom=0 | shared ld=552 st=552 bank_conf=6.67e+03
+  stalls%: long_scoreboard=61.5, no_instructions=15.9, wait=12.8, short_scoreboard=4.7, selected=2.8, branch_resolving=2.1, dispatch_stall=0.2

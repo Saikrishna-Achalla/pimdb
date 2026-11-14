@@ -1,0 +1,45 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+dynamic filter: membership probe                   6     333.1   30.3    34.66  104.1
+gather/scatter: fixed-width                       52     150.2   13.7    12.76   85.0
+cub/thrust: select/compact                        25     103.1    9.4     8.45   82.0
+expression: AST                                    2      98.8    9.0     3.18   32.2
+hash join: probe (find/count/retrieve)             7      70.0    6.4     1.46   20.9
+expression: binary op                             10      61.7    5.6     3.31   53.7
+hash join: build (insert)                          7      56.9    5.2     2.52   44.2
+gather: strings                                    6      36.2    3.3     0.37   10.4
+expression: cast/unary                            14      28.6    2.6     0.24    8.4
+dynamic filter: build key set (cuco insert)        3      28.3    2.6     2.19   77.5
+group-by / aggregation                             3      25.3    2.3     0.24    9.6
+hash join: output/compaction                       7      25.3    2.3     0.79   31.2
+sort / top-N                                       1      19.0    1.7     0.01    0.7
+cub/thrust: scan                                   6      13.3    1.2     0.09    6.8
+hash join: hash-table init                         7      12.1    1.1     0.02    1.7
+cub/thrust: reduce/find                            4      11.9    1.1     0.03    2.7
+hash-table init (cuco, other)                      4       7.6    0.7     0.01    1.6
+other: transform_kernel                            3       6.7    0.6     0.03    4.8
+dynamic filter: key conversion                     2       4.1    0.4     0.02    5.0
+filter: boolean-mask compaction                    1       2.9    0.3     0.02    5.3
+fill / sequence / init                             1       2.5    0.2     0.01    2.7
+other: static_kernel                               1       2.3    0.2     0.00    1.4
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+fused_membership_mask_kernel                       5     330.9   30.1    34.64  104.7
+transform_kernel                                  72     192.1   17.5    13.06   68.0
+DeviceSelectSweepKernel                           16     102.4    9.3     9.19   89.8
+compute_column_kernel                              2      98.8    9.0     3.18   32.2
+insert_if_n                                       10      85.2    7.7     4.71   55.3
+static_kernel                                     20      76.9    7.0     3.28   42.6
+find_if_n                                          7      70.0    6.4     1.46   20.9
+DeviceScanKernel                                   5      31.5    2.9     0.26    8.3
+DeviceCompactInitKernel                           16      26.0    2.4     0.04    1.7
+DeviceRadixSortSingleTileKernel                    1      19.0    1.7     0.01    0.7
+single_pass_shmem_aggs_kernel                      1      12.8    1.2     0.14   10.6
+gather_chars_fn_char_parallel                      2       9.5    0.9     0.19   20.0
+mapping_indices_kernel                             1       9.3    0.8     0.09   10.2
+DeviceScanInitKernel                               5       8.4    0.8     0.01    1.6
+DeviceReduceKernel                                 2       6.2    0.6     0.08   12.2
+DeviceReduceSingleTileKernel                       2       6.0    0.5     0.03    4.8
+single_thread_kernel                               2       5.4    0.5     0.01    1.2
+find_kernel                                        1       4.6    0.4     0.02    4.9
+copy_if_else_kernel                                1       2.9    0.3     0.02    5.3
+init_found_pos_pointer                             1       1.8    0.2     0.00    1.4

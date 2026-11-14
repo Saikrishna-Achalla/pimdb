@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=47 (full metrics: 47) gpu_time_us=974.9 dram_MB=78.78 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+  2 compute_column_kernel                267.2  27.4  15627  128  85.5  11.4   75.2  71.7 36.17  20.11
+  0 compute_column_kernel                265.4  27.2  15630  128  85.3  11.4   75.8  71.7 36.18  20.11
+  1 compute_column_kernel                265.4  27.2  15629  128  85.5  11.4   75.8  71.9 36.18  20.11
+  7 DeviceSelectSweepKernel               15.3   1.6    348  384  34.6  20.5  135.0  45.7  3.62   2.06
+  4 DeviceSelectSweepKernel               15.2   1.6    348  384  34.0  20.6  135.5  45.4  3.62   2.06
+  8 DeviceSelectSweepKernel               15.0   1.5    348  384  34.1  20.8  137.3  45.1  3.62   2.06
+ 21 static_kernel                          9.2   0.9     74  256   3.5  12.1   80.0  24.1  0.31   0.73
+ 23 static_kernel                          8.2   0.8     75  256   3.9  13.4   88.7  25.1  0.31   0.73
+ 22 static_kernel                          8.0   0.8     76  256   4.0  13.8   91.1  25.9  0.32   0.73
+ 11 transform_kernel                       4.1   0.4    148  256   4.0  42.8  281.6  36.3  0.51   1.15
+ 12 transform_kernel                       4.1   0.4    149  256   4.0  43.2  283.8  41.9  0.52   1.16
+ 14 transform_kernel                       4.1   0.4    149  256   4.0  43.6  285.9  40.8  0.52   1.16
+  9 transform_kernel                       3.9   0.4    151  256   4.3  46.0  300.4  41.0  0.52   1.17
+ 10 transform_kernel                       3.9   0.4    151  256   4.4  45.9  300.5  36.5  0.52   1.17
+ 13 transform_kernel                       3.9   0.4    148  256   4.3  45.3  295.5  43.9  0.51   1.15
+ 24 DeviceReduceKernel                     3.8   0.4     37  256   4.5  12.8   84.5  16.0  0.13   0.32
+ 33 DeviceReduceKernel                     3.5   0.4     19  256   1.8  14.3   92.6  15.3  0.07   0.33
+ 27 DeviceReduceSingleTileKernel           3.5   0.4      1  256   0.1   0.7    4.4  15.8  0.01   0.02
+ 26 DeviceReduceKernel                     3.4   0.3     38  256   5.2  14.8   97.4  16.0  0.13   0.33
+ 37 DeviceReduceKernel                     3.3   0.3     19  256   1.9  14.8   96.2  14.3  0.07   0.32
+ 35 DeviceReduceKernel                     3.3   0.3     19  256   1.9  15.2   99.1  17.5  0.07   0.32
+ 28 DeviceReduceKernel                     3.2   0.3     38  256   5.5  15.4  100.5  15.6  0.13   0.32
+ 29 DeviceReduceSingleTileKernel           3.0   0.3      1  256   0.1   0.7    4.9  15.0  0.01   0.01
+ 25 DeviceReduceSingleTileKernel           3.0   0.3      1  256   0.1   0.8    4.9  15.6  0.01   0.01
+ 38 DeviceReduceSingleTileKernel           2.9   0.3      1  256   0.1   1.0    6.6  15.6  0.00   0.02
+time-weighted stall mix (kernels with full metrics): long_scoreboard=36.5%, wait=21.3%, no_instructions=17.6%, selected=5.0%, short_scoreboard=4.7%, not_selected=3.5%, branch_resolving=3.3%, mio_throttle=2.7%
+sm clock (MHz) median: 2261

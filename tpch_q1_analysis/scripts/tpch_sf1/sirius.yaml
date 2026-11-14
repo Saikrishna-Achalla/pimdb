@@ -1,0 +1,23 @@
+# Sirius config for TPC-H SF1 profiling on a single RTX 5070 (12 GB). Used by ALL stages (timing, nsys, ncu).
+# Differs from ../sirius.yaml (Q1) only in memory sizes, chosen for ncu replay cost:
+#  - ncu kernel replay saves/restores every device-accessible allocation once per profiled kernel, including the
+#    stream-ordered GPU pool and the registered pinned-host pools. With 0.85 GPU / 8 GB host (16 pools) a
+#    multi-pass kernel cost ~6.8 s; with 0.25 GPU / 1 GB host (2 pools) ~1 s (measured on Q2).
+#  - SF1 peaks are far below these limits (gpu_pool high-water: Q2 51 MB, Q9 457 MB, Q18 283 MB, Q21 232 MB).
+#    If a query ever downgrades/spills, pcie_verify.py fails; raise usage_limit_fraction for that query.
+sirius:
+  max_concurrent_queries: 1
+  topology: { num_gpus: 1 }
+  memory:
+    gpu:
+      usage_limit_fraction: 0.25
+      reservation_limit_fraction: 1.0
+      downgrade_trigger_fraction: 0.8
+      downgrade_stop_fraction: 0.6
+    host: { capacity_bytes: 1GB, initial_number_pools: 2, pool_size: 512, block_size: 1048576 }
+  executor:
+    pipeline:     { num_threads: 4 }
+    downgrade:    { num_threads: 1 }
+    task_creator: { num_threads: 1 }
+  telemetry:
+    enable_quent: false

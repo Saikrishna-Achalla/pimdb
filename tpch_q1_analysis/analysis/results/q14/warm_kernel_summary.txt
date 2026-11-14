@@ -1,0 +1,32 @@
+ncu list passes: pin+3 iters=364, pin+4=410, pin+5=456 launches; launches added per iteration [46, 46]; nsys kernels per measured iteration 46
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 7 positions; x4 vs first N4 of x5 at 25 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 46 kernels, serialized GPU time 600.7 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 3.94 us; <5 us: 30; <10 us: 37; time in <10 us kernels: 136.8 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['compute_column_kernel', 'transform_kernel', 'DeviceSelectSweepKernel', 'static_kernel', 'gather_chars_fn_char_parallel', 'insert_if_n', 'find_if_n', 'DeviceReduceKernel'] -> 32 kernels, 93.1% of time
+
+family (function base)                     count   time_us    pct   avg_us
+compute_column_kernel                          3     321.5   53.5   107.18
+transform_kernel                              13      47.4    7.9     3.64
+DeviceSelectSweepKernel                        3      47.1    7.8    15.69
+static_kernel                                  6      41.4    6.9     6.91
+gather_chars_fn_char_parallel                  1      35.8    6.0    35.81
+insert_if_n                                    1      31.4    5.2    31.36
+find_if_n                                      1      19.5    3.2    19.49
+DeviceReduceKernel                             4      15.0    2.5     3.76
+DeviceScanKernel                               1      13.8    2.3    13.82
+DeviceReduceSingleTileKernel                   4       9.4    1.6     2.35
+DeviceCompactInitKernel                        3       5.3    0.9     1.78
+single_thread_kernel                           2       4.0    0.7     2.02
+copy_if_else_kernel                            1       3.6    0.6     3.65
+copy_range_kernel                              2       3.5    0.6     1.74
+DeviceScanInitKernel                           1       1.9    0.3     1.89
+
+phase                        count   time_us    pct
+expression eval                 18     388.9   64.7
+gather/copy/concat              13      86.1   14.3
+cub scan/select/reduce           9      56.0    9.3
+hash join build                  2      35.2    5.9
+hash join probe                  2      24.6    4.1
+string ops                       1       6.2    1.0
+scan/filter                      1       3.6    0.6

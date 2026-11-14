@@ -1,0 +1,505 @@
+{
+ "query": 3,
+ "overall": "PASS",
+ "checks": {
+  "sql:pin_tier_gpu": {
+   "ok": true,
+   "detail": "every pinned SQL script pins each referenced table once with tier='gpu'"
+  },
+  "timing_log:iterations_found": {
+   "ok": true,
+   "detail": "15 query iterations (expected 15)"
+  },
+  "timing_log:pin_tier_gpu": {
+   "ok": true,
+   "detail": "3 CALL pin_table statements, all tier='gpu', tables ['customer', 'lineitem', 'orders']"
+  },
+  "timing_log:pinned_entry_per_gpu_scan": {
+   "ok": true,
+   "detail": "every iteration: #`assigned pinned entry` == #GPU_SCAN operators (3), all of ['customer', 'lineitem', 'orders'] present"
+  },
+  "timing_log:no_cache_assign_error": {
+   "ok": true,
+   "detail": "0 cache-assignment errors"
+  },
+  "timing_log:fs_cache_zero_every_iteration": {
+   "ok": true,
+   "detail": "16 cache summaries for 15 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..15 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]"
+  },
+  "timing_log:no_downgrade_or_spill": {
+   "ok": true,
+   "detail": "0 downgrade/spill/OOM lines in query iterations"
+  },
+  "timing_log:no_host_staged_filter_publication": {
+   "ok": true,
+   "detail": "0 dynamic-filter publications, all through peer copies (device-side)"
+  },
+  "timing_log:pool_counters_stable": {
+   "ok": true,
+   "detail": "every iteration: gpu_pool allocated == pinned footprint 103068160 B at QueryBegin and QueryEnd; iterations 2..15: host_pool allocated and peak unchanged"
+  },
+  "nsys_log:iterations_found": {
+   "ok": true,
+   "detail": "8 query iterations (expected 8)"
+  },
+  "nsys_log:pin_tier_gpu": {
+   "ok": true,
+   "detail": "3 CALL pin_table statements, all tier='gpu', tables ['customer', 'lineitem', 'orders']"
+  },
+  "nsys_log:pinned_entry_per_gpu_scan": {
+   "ok": true,
+   "detail": "every iteration: #`assigned pinned entry` == #GPU_SCAN operators (3), all of ['customer', 'lineitem', 'orders'] present"
+  },
+  "nsys_log:no_cache_assign_error": {
+   "ok": true,
+   "detail": "0 cache-assignment errors"
+  },
+  "nsys_log:fs_cache_zero_every_iteration": {
+   "ok": true,
+   "detail": "9 cache summaries for 8 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..8 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]"
+  },
+  "nsys_log:no_downgrade_or_spill": {
+   "ok": true,
+   "detail": "0 downgrade/spill/OOM lines in query iterations"
+  },
+  "nsys_log:no_host_staged_filter_publication": {
+   "ok": true,
+   "detail": "0 dynamic-filter publications, all through peer copies (device-side)"
+  },
+  "nsys_log:pool_counters_stable": {
+   "ok": true,
+   "detail": "every iteration: gpu_pool allocated == pinned footprint 103068160 B at QueryBegin and QueryEnd; iterations 2..8: host_pool allocated and peak unchanged"
+  },
+  "nsys:windows": {
+   "ok": true,
+   "detail": "8 iteration windows from the nsys-run Sirius log (5 measured, 3 warmup); kernels per iteration [92, 92, 92, 92, 92, 92, 92, 92]"
+  },
+  "no_parquet_decode_kernels": {
+   "ok": true,
+   "detail": "0 decode/decompress kernels among 736 kernels of all 8 iterations"
+  },
+  "h2d_measured_iterations": {
+   "ok": true,
+   "detail": "per measured iteration: up to 36 copies, 1093 B total, largest single 192 B (limits: single <= 65536 B, total <= 1048576 B)"
+  },
+  "d2h_measured_iterations": {
+   "ok": true,
+   "detail": "per measured iteration: up to 33 copies, 422 B total, largest single 280 B (result CSV is 376 B; limit 262144 B)"
+  },
+  "no_other_host_copies": {
+   "ok": true,
+   "detail": "0 copies with a non-device source and destination (managed/unknown kinds) per measured iteration"
+  },
+  "unified_memory": {
+   "ok": true,
+   "detail": "UM CPU+GPU page-fault collection on ({'PROCESS_0:COLLECT_UVM_CPU_PAGE_FAULTS': 'true', 'PROCESS_0:COLLECT_UVM_GPU_PAGE_FAULTS': 'true'}); nsys writes the fault tables only when a fault occurs (present: none); faults per measured iteration [0, 0, 0, 0, 0]; managed-memory API calls in the whole trace: none"
+  }
+ },
+ "determinism": {
+  "nsys:kernels_per_iteration_stable": {
+   "ok": true,
+   "detail": "measured iterations: [92, 92, 92, 92, 92]"
+  }
+ },
+ "memory": {
+  "pinned_allocated_bytes": 103068160,
+  "peak_bytes_high_water": 359554646,
+  "note": "gpu_pool peak is a process-lifetime high-water mark (it includes the pin phase)"
+ },
+ "table_rows": {
+  "lineitem": 6001215,
+  "orders": 1500000,
+  "customer": 150000
+ },
+ "tables_below_byte_limit": [],
+ "per_iteration": [
+  {
+   "iter": 1,
+   "measured": false,
+   "kernels": 92,
+   "kernel_ns": 1224415,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 2,
+   "measured": false,
+   "kernels": 92,
+   "kernel_ns": 1232863,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 3,
+   "measured": false,
+   "kernels": 92,
+   "kernel_ns": 1231328,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 4,
+   "measured": true,
+   "kernels": 92,
+   "kernel_ns": 1242111,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 5,
+   "measured": true,
+   "kernels": 92,
+   "kernel_ns": 1238015,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 6,
+   "measured": true,
+   "kernels": 92,
+   "kernel_ns": 1234750,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 7,
+   "measured": true,
+   "kernels": 92,
+   "kernel_ns": 1226014,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  },
+  {
+   "iter": 8,
+   "measured": true,
+   "kernels": 92,
+   "kernel_ns": 1234463,
+   "decode_kernels": [],
+   "copies": {
+    "H2D": {
+     "count": 36,
+     "bytes": 1093,
+     "max": 192,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Pinned->Device": 30,
+      "Pageable->Device": 6
+     }
+    },
+    "D2H": {
+     "count": 33,
+     "bytes": 422,
+     "max": 280,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Pinned": 26,
+      "Device->Pageable": 7
+     }
+    },
+    "D2D (on device)": {
+     "count": 14,
+     "bytes": 481101,
+     "max": 120756,
+     "max_api": "cudaMemcpyBatchAsync_v13000",
+     "mem": {
+      "Device->Device": 14
+     }
+    }
+   },
+   "um_faults": 0
+  }
+ ],
+ "after_pin": {
+  "H2D": {
+   "count": 318,
+   "bytes": 8884,
+   "max": 192,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Pinned->Device": 270,
+    "Pageable->Device": 48
+   }
+  },
+  "D2H": {
+   "count": 288,
+   "bytes": 3452,
+   "max": 280,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Pinned": 232,
+    "Device->Pageable": 56
+   }
+  },
+  "D2D (on device)": {
+   "count": 112,
+   "bytes": 3848808,
+   "max": 120756,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Device": 112
+   }
+  }
+ },
+ "pin_phase": {
+  "H2D": {
+   "count": 253,
+   "bytes": 39544383,
+   "max": 1048576,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Pinned->Device": 243,
+    "Pageable->Device": 10
+   }
+  },
+  "D2H": {
+   "count": 185,
+   "bytes": 1086733,
+   "max": 95040,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Pinned": 173,
+    "Device->Pageable": 12
+   }
+  },
+  "D2D (on device)": {
+   "count": 18,
+   "bytes": 15917328,
+   "max": 6000000,
+   "max_api": "cudaMemcpyBatchAsync_v13000",
+   "mem": {
+    "Device->Device": 18
+   }
+  }
+ },
+ "limits": {
+  "h2d_max_single": 65536,
+  "h2d_max_iter": 1048576,
+  "d2h_max_iter": 262144
+ },
+ "default_limits": {
+  "h2d_max_single": 65536,
+  "h2d_max_iter": 1048576,
+  "d2h_max_iter": 262144
+ },
+ "log_processes": {
+  "timing": 1,
+  "nsys": 1
+ }
+}

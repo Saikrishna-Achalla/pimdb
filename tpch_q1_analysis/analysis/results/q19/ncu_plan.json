@@ -1,0 +1,126 @@
+{
+ "N3": 1121,
+ "N4": 1296,
+ "N5": 1471,
+ "pin_plus_iteration1_if_iterations_2_3_equal": 771,
+ "per_iteration_counts": [
+  175,
+  175
+ ],
+ "cross_run_prefix_multisets_equal": true,
+ "added_iteration_multisets_equal": true,
+ "order_positions_differing_iter4_vs_iter5": 79,
+ "x4_vs_x5_prefix_positions_differing": 278,
+ "nsys_kernels_per_warm_iter": 175,
+ "stable": true,
+ "unstable_reasons": [],
+ "skip": 1296,
+ "count": 175,
+ "threshold": 1000,
+ "coverage": 0.9,
+ "policy": "full_all",
+ "families": [
+  {
+   "func": "compute_column_kernel",
+   "count": 15,
+   "time_us": 1712.576,
+   "pct": 66.428349779681
+  },
+  {
+   "func": "fused_membership_mask_kernel",
+   "count": 6,
+   "time_us": 246.56,
+   "pct": 9.56370632408614
+  },
+  {
+   "func": "DeviceScanKernel",
+   "count": 14,
+   "time_us": 173.568,
+   "pct": 6.732452057345001
+  },
+  {
+   "func": "transform_kernel",
+   "count": 65,
+   "time_us": 169.28,
+   "pct": 6.566126729969589
+  },
+  {
+   "func": "DeviceSelectSweepKernel",
+   "count": 16,
+   "time_us": 95.52,
+   "pct": 3.705082852355241
+  },
+  {
+   "func": "gather_chars_fn_char_parallel",
+   "count": 14,
+   "time_us": 71.104,
+   "pct": 2.7580214733445043
+  },
+  {
+   "func": "DeviceCompactInitKernel",
+   "count": 16,
+   "time_us": 27.968,
+   "pct": 1.0848383292993236
+  },
+  {
+   "func": "DeviceScanInitKernel",
+   "count": 14,
+   "time_us": 24.864,
+   "pct": 0.964438652020108
+  },
+  {
+   "func": "static_kernel",
+   "count": 4,
+   "time_us": 15.168,
+   "pct": 0.5883448147458574
+  },
+  {
+   "func": "fused_concatenate_kernel",
+   "count": 4,
+   "time_us": 13.056,
+   "pct": 0.5064233848445354
+  },
+  {
+   "func": "insert_if_n",
+   "count": 2,
+   "time_us": 11.2,
+   "pct": 0.43443182523428286
+  },
+  {
+   "func": "find_if_n",
+   "count": 1,
+   "time_us": 8.32,
+   "pct": 0.322720784459753
+  },
+  {
+   "func": "DeviceReduceSingleTileKernel",
+   "count": 2,
+   "time_us": 5.056,
+   "pct": 0.19611493824861911
+  },
+  {
+   "func": "single_thread_kernel",
+   "count": 1,
+   "time_us": 2.112,
+   "pct": 0.08192142990132191
+  },
+  {
+   "func": "copy_range_kernel",
+   "count": 1,
+   "time_us": 1.728,
+   "pct": 0.06702662446471792
+  }
+ ],
+ "full_families": [
+  "compute_column_kernel",
+  "fused_membership_mask_kernel",
+  "DeviceScanKernel",
+  "transform_kernel",
+  "DeviceSelectSweepKernel",
+  "gather_chars_fn_char_parallel"
+ ],
+ "full_regex": "^(compute_column_kernel|fused_membership_mask_kernel|DeviceScanKernel|transform_kernel|DeviceSelectSweepKernel|gather_chars_fn_char_parallel)$",
+ "full_regex_skip": 630,
+ "full_regex_count": 130,
+ "full_regex_time_pct": 95.75373921678148
+}

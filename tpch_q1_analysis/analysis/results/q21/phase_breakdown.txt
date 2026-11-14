@@ -1,0 +1,14 @@
+phase                                        kernels   time_us    pct  DRAM_MB   GB/s
+sort/top-N                                         2    1297.0   41.2     0.25    0.2
+scan/filter                                       12     542.1   17.2    86.96  160.4
+gather/copy/concat                                68     366.3   11.6    54.16  147.8
+other                                             12     280.8    8.9     6.34   22.6
+hash join probe                                   10     217.8    6.9     9.90   45.4
+cub scan/select/reduce                            37     212.6    6.8    20.95   98.5
+hash join build                                    6     109.2    3.5    13.40  122.7
+expression eval                                   16      80.7    2.6    10.95  135.6
+hash group-by/agg                                  3      38.1    1.2     0.33    8.5
+TOTAL kernels=166 gpu_time_us=3144.8 dram_MB=203.25 avg_GB/s=64.6 (ncu: serialized, clock-locked, L2 flushed before each kernel -> DRAM bytes are cold-L2 traffic)
+kernels <5us: 104; <10us: 134; time in <10us kernels: 486.0 us (15.5%)
+kernels with < 1 wave (48 SMs): 142 (1999.5 us); grid < 48 CTAs: 92
+top-10 kernels share of GPU time: 68.6%

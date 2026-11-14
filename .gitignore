@@ -1,0 +1,17 @@
+# Python environments and caches
+**/venv/
+**/__pycache__/
+
+# Nsight Compute reports: regenerable with the pipeline, and most exceed GitHub's 100 MB file limit
+*.ncu-rep
+# raw Nsight Systems stream (the .nsys-rep and .sqlite exports are kept)
+*.qdstrm
+
+# built binaries and downloaded archives
+cudf_u4/libs/*.so
+cudf_u4/jitlink_dl/
+tpch_q1_analysis/microbench/groupby_unroll_bench
+tpch_q1_analysis/microbench/unroll_study
+
+# stale staging copy of the pipeline scripts
+tpch_q1_analysis/scripts/tpch_sf1_next/

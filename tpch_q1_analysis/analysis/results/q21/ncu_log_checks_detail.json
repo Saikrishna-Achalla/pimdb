@@ -1,0 +1,45 @@
+{
+ "ok": true,
+ "runs": {
+  "ncu_detail_full": {
+   "processes_in_dir": 1,
+   "log_files": [
+    "sirius_2026-11-13.log"
+   ],
+   "checks": {
+    "ncu_detail_full:iterations_found": {
+     "ok": true,
+     "detail": "5 query iterations (expected 5)"
+    },
+    "ncu_detail_full:pin_tier_gpu": {
+     "ok": true,
+     "detail": "4 CALL pin_table statements, all tier='gpu', tables ['lineitem', 'nation', 'orders', 'supplier']"
+    },
+    "ncu_detail_full:pinned_entry_per_gpu_scan": {
+     "ok": true,
+     "detail": "every iteration: #`assigned pinned entry` == #GPU_SCAN operators (6), all of ['lineitem', 'nation', 'orders', 'supplier'] present"
+    },
+    "ncu_detail_full:no_cache_assign_error": {
+     "ok": true,
+     "detail": "0 cache-assignment errors"
+    },
+    "ncu_detail_full:fs_cache_zero_every_iteration": {
+     "ok": true,
+     "detail": "6 cache summaries for 5 iterations (summary k describes iteration k-1, the shutdown summary the last); iterations 1..5 all last_cycle[reads=0 hits=0 h2d=0 miss=0 ...]"
+    },
+    "ncu_detail_full:no_downgrade_or_spill": {
+     "ok": true,
+     "detail": "0 downgrade/spill/OOM lines in query iterations"
+    },
+    "ncu_detail_full:no_host_staged_filter_publication": {
+     "ok": true,
+     "detail": "15 filter publication(s) logged in query iterations; 10 carry a transport line, all 'peer copies' (device-side), 0 host-staged"
+    },
+    "ncu_detail_full:pool_counters_stable": {
+     "ok": true,
+     "detail": "every iteration: gpu_pool allocated == pinned footprint 73765632 B at QueryBegin and QueryEnd; iterations 2..5: host_pool allocated and peak unchanged"
+    }
+   }
+  }
+ }
+}

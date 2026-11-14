@@ -1,0 +1,31 @@
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes are cold-L2 traffic; durations of tiny kernels are inflated vs real clocks (use nsys for those)
+policy=full_all kernels=156 (full metrics: 156) gpu_time_us=9744.2 dram_MB=101.49 missing_metrics full=[] light=None family_match=None
+hit rates > 100% clamped to 100 (raw kept as *_raw): none
+pos kernel                                  us     %   grid  blk   SM% DRAM%   GB/s  occ% waves     MB
+141 DeviceMergeSortBlockSortKernel      3998.5  41.0      5  256   1.1   0.0    0.3  16.6  0.03   1.06
+ 90 DeviceMergeSortBlockSortKernel      2248.4  23.1     28  256  10.6   0.1    0.9  16.7  0.15   2.06
+ 98 DeviceMergeSortMergeKernel           261.8   2.7     28  256   8.5   1.1    7.5  16.6  0.15   1.97
+ 96 DeviceMergeSortMergeKernel           258.0   2.6     28  256   7.6   1.1    6.9  16.8  0.15   1.79
+100 DeviceMergeSortMergeKernel           257.7   2.6     28  256   8.5   1.2    7.7  16.6  0.15   1.99
+ 94 DeviceMergeSortMergeKernel           246.9   2.5     28  256   9.2   1.1    7.6  16.6  0.15   1.87
+ 92 DeviceMergeSortMergeKernel           239.3   2.5     28  256   9.6   1.1    7.4  16.7  0.15   1.77
+147 DeviceMergeSortMergeKernel           213.2   2.2      5  256   0.4   0.3    2.2  16.8  0.03   0.47
+143 DeviceMergeSortMergeKernel           209.0   2.1      5  256   0.7   0.4    2.4  16.8  0.03   0.51
+145 DeviceMergeSortMergeKernel           189.9   1.9      5  256   0.6   0.4    2.4  16.7  0.03   0.46
+ 99 DeviceMergeSortPartitionKernel        97.7   1.0      1  256   0.1   0.2    1.4   2.1  0.01   0.14
+ 97 DeviceMergeSortPartitionKernel        92.8   1.0      1  256   0.1   0.2    1.4   2.1  0.01   0.13
+ 95 DeviceMergeSortPartitionKernel        81.2   0.8      1  256   0.1   0.2    1.4   2.1  0.01   0.11
+ 93 DeviceMergeSortPartitionKernel        77.2   0.8      1  256   0.1   0.2    1.5   2.1  0.01   0.11
+ 15 gather_chars_fn_char_parallel         75.6   0.8   5800  128  68.6  12.8   84.6  91.5 10.07   6.40
+ 91 DeviceMergeSortPartitionKernel        73.7   0.8      1  256   0.1   0.2    1.4   2.2  0.01   0.10
+ 18 compute_column_kernel                 56.5   0.6   1450  128  74.5   2.2   14.6  88.6  2.52   0.83
+ 66 gather_chars_fn_char_parallel         50.1   0.5   3720  128  66.6  11.8   77.8  89.9  6.46   3.90
+ 47 gather_chars_fn_char_parallel         48.0   0.5   3722  128  71.8   5.3   35.3  89.8  6.46   1.70
+110 insert_if_n                           47.4   0.5    930  128  19.8   6.8   44.9  51.7  2.15   2.13
+144 DeviceMergeSortPartitionKernel        39.5   0.4      1  256   0.1   0.3    2.1   2.2  0.01   0.08
+ 12 gather_chars_fn_char_parallel         38.7   0.4   5800  128  53.2  15.2  100.6  90.9 10.07   3.89
+142 DeviceMergeSortPartitionKernel        30.8   0.3      1  256   0.1   0.4    2.6   2.2  0.01   0.08
+ 81 transform_kernel                      29.9   0.3    155  256  30.3  15.6  102.7  50.3  0.81   3.07
+146 DeviceMergeSortPartitionKernel        28.6   0.3      1  256   0.1   0.4    2.8   2.2  0.01   0.08
+time-weighted stall mix (kernels with full metrics): long_scoreboard=58.2%, wait=14.9%, barrier=10.9%, selected=6.1%, branch_resolving=3.2%, no_instructions=3.1%, short_scoreboard=1.2%, not_selected=1.0%
+sm clock (MHz) median: 2256

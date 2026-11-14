@@ -1,0 +1,58 @@
+Top 8 warm-iteration kernels by ncu duration (of 127; total 2106.9 us)
+ncu conditions: kernels serialized, SM clocks locked to base, L2 flushed before each kernel (--cache-control all): DRAM bytes and hit rates are cold-L2 values, not what the kernel sees inside a real query.
+== pos 16 [hash group-by/agg / group-by / aggregation] transform_kernel  (8.6% of GPU time)
+   void transform::transform_kernel<transform::policy_selector_from_types<1, 1, std::tuple<cuda::counting_iterator<int, long>>, bool *>, long, cuda::always_true, cudf::unique_copy_fn<const cuda::counting_iterator<int, long>
+  dur=181.7us grid=1804 blk=256 regs=48 smem=0B occ ach/theo=74.7/83.3 waves=7.52 ipc=1.63 inst=3.02e+07 active_lanes_per_inst(of 32)=27.3
+  SM%=67.2 Mem%=67.2 DRAM%=43.1 DRAM=51.80MB (285.1 GB/s) L1hit=76.5 L2hit=77.2 SM busy max/avg=1.03 active_frac=0.95
+  pipes%: alu=18.4 fma=2.1 lsu=69.7 adu=9.7 cbu=4.4 xu=0.0 uniform=0.4 fp64=0.0
+  global ld_req=2.63e+06 st_req=1.88e+05 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=65.5, wait=11.0, branch_resolving=7.4, selected=4.6, lg_throttle=3.2, not_selected=2.5, short_scoreboard=2.3, no_instructions=1.9
+== pos 108 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (8.5% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=178.0us grid=1 blk=256 regs=64 smem=17424B occ ach/theo=16.8/66.7 waves=0.01 ipc=0.23 inst=9.37e+04 active_lanes_per_inst(of 32)=17.5
+  SM%=0.2 Mem%=0.5 DRAM%=0.1 DRAM=0.09MB (0.5 GB/s) L1hit=46.1 L2hit=77.9 SM busy max/avg=48.00 active_frac=0.02
+  pipes%: alu=2.8 fma=0.3 lsu=9.9 adu=2.2 cbu=0.5 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=4.32e+03 st_req=2 atom=0 | shared ld=1.47e+03 st=1.36e+03 bank_conf=11
+  stalls%: barrier=77.0, wait=5.2, long_scoreboard=4.5, lg_throttle=3.2, branch_resolving=2.5, no_instructions=2.5, selected=2.2, short_scoreboard=1.5
+== pos 118 [sort/top-N / sort / top-N] DeviceMergeSortBlockSortKernel  (8.3% of GPU time)
+   void merge_sort::DeviceMergeSortBlockSortKernel<merge_sort::policy_selector_from_types<int *>, int *, cub::NullType *, int *, cub::NullType *, unsigned int, lexicographic::less_comparator<lexicographic::device_row_compar
+  dur=175.0us grid=1 blk=256 regs=64 smem=17424B occ ach/theo=16.6/66.7 waves=0.01 ipc=0.23 inst=9.27e+04 active_lanes_per_inst(of 32)=17.6
+  SM%=0.2 Mem%=0.5 DRAM%=0.1 DRAM=0.09MB (0.5 GB/s) L1hit=46.0 L2hit=81.5 SM busy max/avg=48.00 active_frac=0.02
+  pipes%: alu=2.8 fma=0.3 lsu=10.1 adu=2.2 cbu=0.5 xu=0.0 uniform=0.0 fp64=0.0
+  global ld_req=4.32e+03 st_req=2 atom=0 | shared ld=1.47e+03 st=1.36e+03 bank_conf=0
+  stalls%: barrier=77.2, wait=6.6, long_scoreboard=5.1, no_instructions=3.0, short_scoreboard=2.3, branch_resolving=2.0, lg_throttle=1.8, selected=1.5
+== pos 23 [gather/copy/concat / gather/scatter: fixed-width] transform_kernel  (7.4% of GPU time)
+   void transform::transform_kernel<transform::policy_selector_from_types<1, 1, std::tuple<thrust::permutation_iterator<const long *, cudf::input_indexalator>>, long *>, long, cuda::always_true, std::identity, long *, thrus
+  dur=155.4us grid=3908 blk=256 regs=22 smem=0B occ ach/theo=89.5/100.0 waves=13.57 ipc=0.31 inst=5.06e+06 active_lanes_per_inst(of 32)=32.0
+  SM%=9.0 Mem%=91.1 DRAM%=91.1 DRAM=93.71MB (602.9 GB/s) L1hit=0.0 L2hit=0.1 SM busy max/avg=1.02 active_frac=0.95
+  pipes%: alu=2.8 fma=2.1 lsu=7.3 adu=2.3 cbu=0.1 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=3.75e+05 st_req=1.88e+05 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=96.0, wait=2.2, selected=0.8, branch_resolving=0.3, no_instructions=0.2, short_scoreboard=0.2, not_selected=0.2, dispatch_stall=0.1
+== pos 25 [hash group-by/agg / group-by / aggregation] _kernel_agent  (6.7% of GPU time)
+   void core::_kernel_agent<__reduce_by_key::ReduceByKeyAgent<const int *, cuda::transform_iterator<groupby::null_replaced_value_accessor<long, long>, cuda::counting_iterator<int, long>>, cuda::discard_iterator, long *, std
+  dur=141.6us grid=2605 blk=256 regs=64 smem=36880B occ ach/theo=32.8/33.3 waves=27.14 ipc=0.78 inst=1.14e+07 active_lanes_per_inst(of 32)=31.8
+  SM%=33.5 Mem%=84.4 DRAM%=84.4 DRAM=79.06MB (558.2 GB/s) L1hit=3.8 L2hit=4.3 SM busy max/avg=1.03 active_frac=0.94
+  pipes%: alu=10.3 fma=0.5 lsu=35.3 adu=4.2 cbu=0.9 xu=0.0 uniform=0.5 fp64=0.0
+  global ld_req=3.81e+05 st_req=5.33e+04 atom=0 | shared ld=8.61e+05 st=8.34e+05 bank_conf=6.78e+05
+  stalls%: barrier=34.0, long_scoreboard=29.7, wait=9.3, short_scoreboard=5.7, mio_throttle=5.4, selected=4.9, no_instructions=2.8, not_selected=2.5
+== pos 65 [scan/filter / dynamic filter: membership probe] static_kernel  (4.9% of GPU time)
+   void for_each::static_kernel<for_each::policy_selector, int, sirius::membership_probe_functor<sirius::integral_probe_adapter<int, int>, sirius::set_lookup<cuco::static_set_ref<int, 1, std::equal_to<int>, cuco::double_has
+  dur=104.0us grid=11722 blk=256 regs=37 smem=0B occ ach/theo=85.9/100.0 waves=40.70 ipc=2.93 inst=3.19e+07 active_lanes_per_inst(of 32)=27.5
+  SM%=72.3 Mem%=35.0 DRAM%=35.0 DRAM=24.05MB (231.4 GB/s) L1hit=79.1 L2hit=15.6 SM busy max/avg=1.02 active_frac=0.97
+  pipes%: alu=36.3 fma=9.3 lsu=21.1 adu=17.3 cbu=3.6 xu=13.8 uniform=4.3 fp64=0.0
+  global ld_req=8.64e+05 st_req=1.88e+05 atom=0 | shared ld=0 st=0 bank_conf=0
+  stalls%: long_scoreboard=35.4, wait=25.7, not_selected=11.5, selected=7.4, short_scoreboard=6.3, branch_resolving=5.1, no_instructions=3.6, math_pipe_throttle=2.9
+== pos 35 [scan/filter / dynamic filter: membership probe] fused_membership_mask_kernel  (4.6% of GPU time)
+   sirius::<unnamed>::fused_membership_mask_kernel(sirius::<unnamed>::fused_round)
+  dur=97.2us grid=4096 blk=256 regs=48 smem=44B occ ach/theo=80.7/83.3 waves=17.07 ipc=2.33 inst=2.29e+07 active_lanes_per_inst(of 32)=26.5
+  SM%=57.1 Mem%=38.5 DRAM%=21.6 DRAM=13.86MB (142.6 GB/s) L1hit=55.5 L2hit=78.9 SM busy max/avg=1.02 active_frac=0.96
+  pipes%: alu=27.3 fma=5.4 lsu=16.2 adu=20.9 cbu=2.6 xu=7.6 uniform=5.1 fp64=0.0
+  global ld_req=4.92e+05 st_req=4.69e+04 atom=4.15e+03 | shared ld=5.73e+04 st=6.55e+04 bank_conf=3.7e+03
+  stalls%: long_scoreboard=35.9, wait=20.9, short_scoreboard=9.9, barrier=9.5, not_selected=6.9, selected=5.9, no_instructions=5.1, branch_resolving=3.6
+== pos 12 [expression eval / expression: binary op] DeviceReduceKernel  (3.8% of GPU time)
+   void reduce::DeviceReduceKernel<reduce::policy_selector_from_types<reduction::<unnamed>::minmax_pair<long>, unsigned int, reduction::<unnamed>::minmax_binary_op<long>, 1>, 1, cuda::transform_iterator<reduction::<unnamed>
+  dur=80.4us grid=1440 blk=256 regs=40 smem=152B occ ach/theo=97.6/100.0 waves=5.00 ipc=0.42 inst=3.49e+06 active_lanes_per_inst(of 32)=31.6
+  SM%=11.5 Mem%=92.9 DRAM%=92.9 DRAM=49.41MB (614.7 GB/s) L1hit=0.1 L2hit=0.4 SM busy max/avg=1.02 active_frac=0.95
+  pipes%: alu=7.7 fma=0.2 lsu=12.1 adu=2.4 cbu=0.1 xu=0.0 uniform=0.1 fp64=0.0
+  global ld_req=1.88e+05 st_req=2.88e+03 atom=0 | shared ld=1.15e+04 st=2.3e+04 bank_conf=787
+  stalls%: long_scoreboard=90.3, barrier=5.3, wait=1.7, short_scoreboard=0.7, selected=0.7, no_instructions=0.3, not_selected=0.3, mio_throttle=0.2

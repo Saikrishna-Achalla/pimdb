@@ -1,0 +1,39 @@
+ncu list passes: pin+3 iters=582, pin+4=694, pin+5=806 launches; launches added per iteration [112, 112]; nsys kernels per measured iteration 112
+cross-run prefix multisets reproduce: True; added-iteration multisets equal (x4 tail, x5 tail, x5 iter 4): True; STABLE: True 
+launch-order differences (multi-threaded pipelines interleave): x5 iteration 4 vs 5 differ at 47 positions; x4 vs first N4 of x5 at 107 positions (only counts and multisets are used for the -s/-c slice)
+warm iteration (5th): 112 kernels, serialized GPU time 927.0 us (ncu gpu__time_duration: kernels serialized, clocks locked to base, L2 flushed before each kernel)
+median kernel 3.36 us; <5 us: 78; <10 us: 100; time in <10 us kernels: 360.4 us
+policy: full_all (threshold 1000); full-set families (90% coverage): ['compute_column_kernel', 'static_kernel', 'transform_kernel', 'mapping_indices_kernel', 'DeviceSelectSweepKernel', 'DeviceScanKernel', 'DeviceRadixSortSingleTileKernel', 'gather_chars_fn_char_parallel', 'find_kernel', 'DeviceScanInitKernel', 'hash_csr_retrieve_kernel', 'hash_csr_probe_count_kernel', 'single_pass_shmem_aggs_kernel'] -> 91 kernels, 93.6% of time
+
+family (function base)                     count   time_us    pct   avg_us
+compute_column_kernel                          2     316.4   34.1   158.18
+static_kernel                                 13     123.0   13.3     9.46
+transform_kernel                              32     104.1   11.2     3.25
+mapping_indices_kernel                         3      96.5   10.4    32.18
+DeviceSelectSweepKernel                        5      60.9    6.6    12.19
+DeviceScanKernel                              10      40.8    4.4     4.08
+DeviceRadixSortSingleTileKernel                2      23.0    2.5    11.52
+gather_chars_fn_char_parallel                  6      21.5    2.3     3.59
+find_kernel                                    3      20.5    2.2     6.83
+DeviceScanInitKernel                          10      17.5    1.9     1.75
+hash_csr_retrieve_kernel                       2      16.4    1.8     8.19
+hash_csr_probe_count_kernel                    2      14.0    1.5     7.02
+single_pass_shmem_aggs_kernel                  1      13.1    1.4    13.06
+DeviceReduceKernel                             3      11.5    1.2     3.84
+hash_csr_build_count_kernel                    2      10.4    1.1     5.20
+hash_csr_build_fill_kernel                     2      10.3    1.1     5.15
+DeviceCompactInitKernel                        5       8.7    0.9     1.74
+DeviceReduceSingleTileKernel                   3       7.4    0.8     2.45
+init_found_pos_pointer                         3       5.1    0.6     1.71
+single_thread_kernel                           2       4.1    0.4     2.03
+copy_range_kernel                              1       1.7    0.2     1.70
+
+phase                        count   time_us    pct
+expression eval                 19     391.6   42.3
+hash group-by/agg                7     183.6   19.8
+gather/copy/concat              38     130.0   14.0
+cub scan/select/reduce          27     124.3   13.4
+hash join probe                  4      30.4    3.3
+other                           11      23.3    2.5
+sort/top-N                       2      23.0    2.5
+hash join build                  4      20.7    2.2

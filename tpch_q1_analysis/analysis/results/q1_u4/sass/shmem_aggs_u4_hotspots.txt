@@ -1,0 +1,47 @@
+static instructions=113960  executed(warp)=3.011e+07  stall samples=23068
+static instructions ever executed: 1199 (1.1% of the binary)
+
+class               static        exec  %exec %stall
+Int Arithmetic       56405   1.336e+07   44.4   34.1
+Control Flow         21258   5.721e+06   19.0   16.8
+Move/Special         17896   5.556e+06   18.4    6.7
+Uniform datapath      4415   1.252e+06    4.2    4.5
+Global Load            126   1.071e+06    3.6    3.0
+Other                 6122   8.817e+05    2.9    1.3
+Const Load             455   7.375e+05    2.4    2.1
+Shared Load           1374   7.218e+05    2.4    1.0
+Global Atomic         2108   6.055e+05    2.0   30.0
+FP Arithmetic         1342   1.963e+05    0.7    0.3
+Shared Store           411   1.056e+04    0.0    0.0
+Barrier/Fence            5        4800    0.0    0.0
+Shared Atomic          250           0    0.0    0.0
+Local (spill)         1793           0    0.0    0.0
+
+Top 25 instructions by stall samples:
+  +0x150020 samp=  6763 (29.3%) exe=   106601 thr=31.0  ATOM.E.ADD.64.STRONG.SYS P6, RZ, desc[UR8][R18.64], R26
+  +0x06cd0 samp=  1097 ( 4.8%) exe=    21147 thr=31.0  @P1   IADD R48, R16, R7
+  +0x06d90 samp=   425 ( 1.8%) exe=   147911 thr=31.0  LDG.E R26, desc[UR8][R16.64+0x28]
+  +0x176ce0 samp=   384 ( 1.7%) exe=      960 thr=32.0  UMOV UR4, 0x400
+  +0x150d90 samp=   280 ( 1.2%) exe=   101810 thr=31.0  @P0   BRA 0x7f5f2a950e60
+  +0x150030 samp=   278 ( 1.2%) exe=   106601 thr=31.0  @P6   BRA 0x7f5f2a950100
+  +0x00d80 samp=   272 ( 1.2%) exe=      960 thr=32.0  UMOV UR4, 0x400
+  +0x1506f0 samp=   268 ( 1.2%) exe=   104380 thr=31.0  @P5   BRA 0x7f5f2a9507c0
+  +0x1513f0 samp=   267 ( 1.2%) exe=   101803 thr=31.0  @P0   BRA 0x7f5f2a976bc0
+  +0x06e30 samp=   237 ( 1.0%) exe=   147911 thr=31.0  ULEA UR5, UR6, UR5, 0x18
+  +0x06eb0 samp=   213 ( 0.9%) exe=   147911 thr=31.0  ISETP.GT.AND P0, PT, R22, 0xe, PT
+  +0x150670 samp=   187 ( 0.8%) exe=   104380 thr=31.0  ULEA UR5, UR6, UR5, 0x18
+  +0x06cf0 samp=   182 ( 0.8%) exe=    21147 thr=31.0  @P3   IADD R30, R20, R7
+  +0x06ce0 samp=   176 ( 0.8%) exe=    21147 thr=31.0  @P2   IADD R36, R18, R7
+  +0x14dbe0 samp=   176 ( 0.8%) exe=   126813 thr=31.0  ISETP.GT.AND P0, PT, R22, 0x1a, PT
+  +0x14ffb0 samp=   175 ( 0.8%) exe=   106601 thr=31.0  ULEA UR5, UR6, UR5, 0x18
+  +0x150eb0 samp=   172 ( 0.7%) exe=   101327 thr=31.0  ISETP.NE.U32.AND P0, PT, R13, RZ, PT
+  +0x06ea0 samp=   166 ( 0.7%) exe=   147911 thr=31.0  IADD R13, R15, R82
+  +0x150d10 samp=   166 ( 0.7%) exe=   101810 thr=31.0  ULEA UR5, UR6, UR5, 0x18
+  +0x176bc0 samp=   164 ( 0.7%) exe=   148942 thr=31.0  BSYNC B6
+  +0x14f530 samp=   162 ( 0.7%) exe=   105702 thr=31.0  @!P0  SHF.R.W.U32.HI R16, RZ, R17, R18
+  +0x14f9f0 samp=   162 ( 0.7%) exe=   105702 thr=31.0  ISETP.NE.U32.AND P6, PT, R16, RZ, PT
+  +0x13ee30 samp=   161 ( 0.7%) exe=   147911 thr=31.0  ISETP.GT.AND P0, PT, R22, 0x18, PT
+  +0x150820 samp=   155 ( 0.7%) exe=   101119 thr=31.0  ISETP.NE.U32.AND P0, PT, R16, RZ, PT
+  +0x06d60 samp=   153 ( 0.7%) exe=   148103 thr=31.0  IMAD.WIDE R16, R14, 0x40, R16
+
+hot PCs (>0.2% samples each) span +0x0 .. +0x176ce0, n=77

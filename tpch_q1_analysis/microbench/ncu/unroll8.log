@@ -1,0 +1,14 @@
+==PROF== Connected to process 275432 (/home/sai/cs254_project/tpch_q1_analysis/microbench/groupby_unroll_bench)
+==PROF== Profiling "unroll_kernel": 0%....50%....100% - 40 passes
+# NVIDIA GeForce RTX 5070 | rows=3153518 cols=LLLL bytes/row=36 input=113.5 MB | grid=240 x 128 | reps=1 (median, L2 flushed)
+# floor @672 GB/s = 168.9 us
+variant                  regs  median_us     min_us     GB/s  speedup check
+baseline (cuDF-like)       38      298.2      298.2    380.7    1.00x OK
+unroll U=1                 34      389.2      389.2    291.7    0.77x OK
+unroll U=2                 32      230.3      230.3    492.9    1.29x OK
+unroll U=4                 38      207.6      207.6    546.9    1.44x OK
+unroll U=8                 56  1598920.5  1598920.5      0.1    0.00x OK
+unroll U=16               120      222.1      222.1    511.2    1.34x OK
+unroll U=8 +ATOMS          40      627.4      627.4    180.9    0.48x OK
+==PROF== Disconnected from process 275432
+==PROF== Report: /home/sai/cs254_project/tpch_q1_analysis/microbench/ncu/unroll8.ncu-rep

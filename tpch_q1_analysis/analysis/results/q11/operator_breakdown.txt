@@ -1,0 +1,42 @@
+operator                                     kernels   time_us    pct  DRAM_MB   GB/s
+sort / top-N                                      35     169.6   25.1     7.97   47.0
+gather/scatter: fixed-width                       40     122.9   18.2    11.86   96.5
+cub/thrust: select/compact                        18      60.5    8.9     2.09   34.6
+expression: binary op                             10      56.0    8.3     2.68   47.8
+dynamic filter: membership probe                   4      43.4    6.4     3.37   77.6
+expression: cast/unary                            17      40.8    6.0     1.47   35.9
+hash join: output/compaction                       6      35.5    5.2     1.52   43.0
+hash join: probe (find/count/retrieve)             4      33.3    4.9     0.38   11.4
+hash join: build (insert)                          4      27.2    4.0     0.08    3.0
+group-by / aggregation                             5      22.5    3.3     1.42   63.1
+cub/thrust: scan                                   6      17.0    2.5     0.22   12.8
+cub/thrust: reduce/find                            5      14.3    2.1     0.16   11.1
+dynamic filter: build key set (cuco insert)        2       8.2    1.2     0.03    3.5
+fill / sequence / init                             3       8.0    1.2     0.02    3.0
+hash join: hash-table init                         4       7.3    1.1     0.01    1.7
+dynamic filter: key conversion                     2       4.7    0.7     0.02    4.5
+hash-table init (cuco, other)                      2       3.5    0.5     0.01    1.7
+copy / concatenate                                 1       2.0    0.3     0.00    1.7
+
+family (function base name)                  kernels   time_us    pct  DRAM_MB   GB/s
+transform_kernel                                  62     180.4   26.7    13.81   76.5
+DeviceRadixSortOnesweepKernel                     16     120.9   17.9     7.52   62.2
+static_kernel                                     18     102.9   15.2     5.74   55.8
+DeviceSelectSweepKernel                           11      55.3    8.2     2.46   44.4
+DeviceRadixSortInitKernel                         17      38.9    5.8     0.06    1.5
+insert_if_n                                        6      35.4    5.2     0.11    3.1
+find_if_n                                          4      33.3    4.9     0.38   11.4
+DeviceCompactInitKernel                           11      19.6    2.9     0.03    1.6
+DeviceScanKernel                                   3      11.3    1.7     0.21   18.5
+DeviceReduceKernel                                 3      10.9    1.6     0.82   75.0
+conditional_join                                   1      10.7    1.6     0.57   52.8
+compute_conditional_join_output_size               1      10.3    1.5     0.56   54.7
+_kernel_agent                                      2       9.6    1.4     0.46   48.2
+DeviceReduceSingleTileKernel                       3       7.8    1.2     0.05    6.0
+DeviceRadixSortHistogramKernel                     1       6.8    1.0     0.37   54.9
+DeviceScanInitKernel                               3       5.7    0.8     0.01    1.6
+find_kernel                                        1       5.3    0.8     0.13   24.6
+single_thread_kernel                               2       4.6    0.7     0.01    1.3
+DeviceRadixSortExclusiveSumKernel                  1       3.0    0.4     0.02    6.9
+copy_range_kernel                                  1       2.0    0.3     0.00    1.7
+init_found_pos_pointer                             1       1.9    0.3     0.00    1.4
