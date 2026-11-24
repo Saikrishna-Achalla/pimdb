@@ -1,0 +1,230 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Executing script file `prove_slot.ys' --
+
+1. Executing SLANG frontend.
+Top level design units:
+    pu_slot
+    slot_ref
+
+
+Build succeeded: 0 errors, 0 warnings
+
+1.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\slot_ref.$0'.
+Cleaned up 1 empty switch.
+
+1.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 63 switch rules as full_case in process $0 in module slot_ref.
+Removed a total of 0 dead cases.
+
+1.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+1.4. Executing PROC_INIT pass (extract init attributes).
+
+1.5. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~127 debug messages>
+
+1.6. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\slot_ref.$0'.
+     1/96: $m_d$1441
+     2/96: $$11.rb$1443
+     3/96: $m_d$1442
+     4/96: $m_d$1396
+     5/96: $$11.rb$1398
+     6/96: $m_d$1397
+     7/96: $m_d$1351
+     8/96: $$11.rb$1353
+     9/96: $m_d$1352
+    10/96: $m_d$1306
+    11/96: $$11.rb$1308
+    12/96: $m_d$1307
+    13/96: $m_d$1261
+    14/96: $$11.rb$1263
+    15/96: $m_d$1262
+    16/96: $m_d$1216
+    17/96: $$11.rb$1218
+    18/96: $m_d$1217
+    19/96: $m_d$1171
+    20/96: $$11.rb$1173
+    21/96: $m_d$1172
+    22/96: $m_d$1126
+    23/96: $$11.rb$1128
+    24/96: $m_d$1127
+    25/96: $m_d$1081
+    26/96: $$11.rb$1083
+    27/96: $m_d$1082
+    28/96: $m_d$1036
+    29/96: $$11.rb$1038
+    30/96: $m_d$1037
+    31/96: $m_d$991
+    32/96: $$11.rb$993
+    33/96: $m_d$992
+    34/96: $m_d$946
+    35/96: $$11.rb$948
+    36/96: $m_d$947
+    37/96: $m_d$901
+    38/96: $$11.rb$903
+    39/96: $m_d$902
+    40/96: $m_d$856
+    41/96: $$11.rb$858
+    42/96: $m_d$857
+    43/96: $m_d$811
+    44/96: $$11.rb$813
+    45/96: $m_d$812
+    46/96: $m_d$766
+    47/96: $$11.rb$768
+    48/96: $m_d$767
+    49/96: $m_d$721
+    50/96: $$11.rb$723
+    51/96: $m_d$722
+    52/96: $m_d$676
+    53/96: $$11.rb$678
+    54/96: $m_d$677
+    55/96: $m_d$631
+    56/96: $$11.rb$633
+    57/96: $m_d$632
+    58/96: $m_d$586
+    59/96: $$11.rb$588
+    60/96: $m_d$587
+    61/96: $m_d$541
+    62/96: $$11.rb$543
+    63/96: $m_d$542
+    64/96: $m_d$496
+    65/96: $$11.rb$498
+    66/96: $m_d$497
+    67/96: $m_d$451
+    68/96: $$11.rb$453
+    69/96: $m_d$452
+    70/96: $m_d$406
+    71/96: $$11.rb$408
+    72/96: $m_d$407
+    73/96: $m_d$361
+    74/96: $$11.rb$363
+    75/96: $m_d$362
+    76/96: $m_d$316
+    77/96: $$11.rb$318
+    78/96: $m_d$317
+    79/96: $m_d$271
+    80/96: $$11.rb$273
+    81/96: $m_d$272
+    82/96: $m_d$226
+    83/96: $$11.rb$228
+    84/96: $m_d$227
+    85/96: $m_d$181
+    86/96: $$11.rb$183
+    87/96: $m_d$182
+    88/96: $m_d$136
+    89/96: $$11.rb$138
+    90/96: $m_d$137
+    91/96: $m_d$91
+    92/96: $$11.rb$93
+    93/96: $m_d$92
+    94/96: $m_d$46
+    95/96: $$11.rb$48
+    96/96: $m_d$47
+
+1.7. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 127 empty switches in `\slot_ref.$0'.
+Removing empty process `slot_ref.$0'.
+Cleaned up 127 empty switches.
+
+1.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module slot_ref.
+Couldn't topologically sort cells, optimizing module slot_ref may take a longer time.
+Couldn't topologically sort cells, optimizing module slot_ref may take a longer time.
+<suppressed ~64 debug messages>
+Optimizing module pu_slot.
+<suppressed ~828 debug messages>
+
+2. Executing PROC pass (convert processes to netlists).
+
+2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module slot_ref.
+Couldn't topologically sort cells, optimizing module slot_ref may take a longer time.
+Optimizing module pu_slot.
+
+3. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "pu_slot" and gate cell "slot_ref".
+
+3.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+3.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+Couldn't topologically sort cells, optimizing module miter may take a longer time.
+Removed 32 unused cells and 1252 unused wires.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1. Analyzing design hierarchy..
+Top module:  \miter
+
+4.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\slot_ref'.
+Removing unused module `\pu_slot'.
+Removed 2 unused modules.
+Module miter directly or indirectly contains formal properties -> setting "keep" attribute.
+
+5. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up SAT problem:
+Final constraint equation: { } = { }
+Imported 7944 cells to SAT database.
+Import proof for assert: $auto$miter.cc:241:create_miter_equiv$448 when 1'1.
+
+Solving problem with 808403 variables and 2356963 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+
+End of script. Logfile hash: f20b5fe077, time: 41.62s, user: 41.31s, system: 0.26s, MEM: 716.27 MB peak
+Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 99% 1x sat (41 sec), 0% 1x clean (0 sec), ...

@@ -1,0 +1,126 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/bin/clang++ 21.1.8)
+
+-- Executing script file `prove_cmp.ys' --
+
+1. Executing SLANG frontend.
+Top level design units:
+    cmp_ref
+    pu_cmp_seg
+
+
+Build succeeded: 0 errors, 0 warnings
+
+1.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+1.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+1.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+1.4. Executing PROC_INIT pass (extract init attributes).
+
+1.5. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+1.6. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+1.7. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+1.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module pu_cmp_seg.
+Optimizing module cmp_ref.
+
+2. Executing PROC pass (convert processes to netlists).
+
+2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Removed a total of 0 dead cases.
+
+2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 0 redundant assignments.
+Promoted 0 assignments to connections.
+
+2.4. Executing PROC_INIT pass (extract init attributes).
+
+2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+
+2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module pu_cmp_seg.
+Optimizing module cmp_ref.
+
+3. Executing MITER pass (creating miter circuit).
+Creating miter cell "miter" with gold cell "pu_cmp_seg" and gate cell "cmp_ref".
+
+3.1. Executing FLATTEN pass (flatten design).
+<suppressed ~2 debug messages>
+
+3.2. Executing OPT_EXPR pass (perform const folding).
+Optimizing module miter.
+Removed 0 unused cells and 300 unused wires.
+
+4. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1. Analyzing design hierarchy..
+Top module:  \miter
+
+4.2. Analyzing design hierarchy..
+Top module:  \miter
+Removing unused module `\pu_cmp_seg'.
+Removing unused module `\cmp_ref'.
+Removed 2 unused modules.
+Module miter directly or indirectly contains formal properties -> setting "keep" attribute.
+
+5. Executing SAT pass (solving SAT problems in the circuit).
+Using SAT solver `minisat`.
+
+Setting up SAT problem:
+Final constraint equation: { } = { }
+Imported 581 cells to SAT database.
+Import proof for assert: $auto$miter.cc:268:create_miter_equiv$18 when 1'1.
+Import show expression: \in_a
+Import show expression: \in_b
+Import show expression: \in_sgn
+Import show expression: \trigger
+
+Solving problem with 7148 variables and 19761 clauses..
+SAT proof finished - no model found: SUCCESS!
+
+                  /$$$$$$      /$$$$$$$$     /$$$$$$$    
+                 /$$__  $$    | $$_____/    | $$__  $$   
+                | $$  \ $$    | $$          | $$  \ $$   
+                | $$  | $$    | $$$$$       | $$  | $$   
+                | $$  | $$    | $$__/       | $$  | $$   
+                | $$/$$ $$    | $$          | $$  | $$   
+                |  $$$$$$/ /$$| $$$$$$$$ /$$| $$$$$$$//$$
+                 \____ $$$|__/|________/|__/|_______/|__/
+                       \__/                              
+
+End of script. Logfile hash: 94086bc141, time: 0.08s, user: 0.08s, system: 0.01s, MEM: 34.59 MB peak
+Yosys 0.70+309 (git sha1 bd3168b1a, Release, Clang /usr/bin/clang++ 21.1.8)
+Time spent: 77% 1x sat (0 sec), 15% 2x read_slang (0 sec), ...

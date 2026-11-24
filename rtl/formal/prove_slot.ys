@@ -1,0 +1,6 @@
+# Formal equivalence: pu_slot (slot placement + mask op) = behavioural reference, all inputs.
+read_slang ../src/pu_pkg.sv ../src/pu_slot.sv slot_ref.sv --top pu_slot --top slot_ref
+proc
+miter -equiv -make_assert -flatten pu_slot slot_ref miter
+hierarchy -top miter
+sat -verify -prove-asserts -set-init-zero miter

@@ -1,0 +1,7 @@
+# Formal equivalence: pu_cmp_seg (byte tree, signed correction at the lane root) = per-lane behavioural compare,
+# for all 2^513 inputs (a, b, sgn), all four widths, lt and eq.
+read_slang ../src/pu_pkg.sv ../src/pu_cmp_seg.sv cmp_ref.sv --top pu_cmp_seg --top cmp_ref
+proc
+miter -equiv -make_assert -flatten pu_cmp_seg cmp_ref miter
+hierarchy -top miter
+sat -verify -prove-asserts -show-ports -set-init-zero miter
