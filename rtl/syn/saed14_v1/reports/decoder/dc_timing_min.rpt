@@ -1,0 +1,99 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay min
+        -max_paths 3
+Design : pu_decoder
+Version: Y-2026.03-SP2
+Date   : Mon Nov 23 17:16:40 2026
+****************************************
+
+Operating Conditions: tt0p8v25c   Library: saed14rvt_base_tt0p8v25c
+Wire Load Model Mode: top
+
+  Startpoint: cmd_addr[2]
+              (input port clocked by clk)
+  Endpoint: addr_reg_2_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Point                                     Incr       Path
+  ------------------------------------------------------------
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  input external delay                      0.00       0.00 f
+  cmd_addr[2] (in)                          0.00       0.00 f
+  addr_reg_2_/D (SAEDRVT14_FDP_V2_0P5)      0.00       0.00 f
+  data arrival time                                    0.00
+
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  addr_reg_2_/CK (SAEDRVT14_FDP_V2_0P5)     0.00       0.00 r
+  library hold time                         0.00       0.00
+  data required time                                   0.00
+  ------------------------------------------------------------
+  data required time                                   0.00
+  data arrival time                                    0.00
+  ------------------------------------------------------------
+  slack (VIOLATED: increase significant digits)        0.00
+
+
+  Startpoint: cmd_addr[1]
+              (input port clocked by clk)
+  Endpoint: addr_reg_1_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Point                                     Incr       Path
+  ------------------------------------------------------------
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  input external delay                      0.00       0.00 f
+  cmd_addr[1] (in)                          0.00       0.00 f
+  addr_reg_1_/D (SAEDRVT14_FDP_V2_0P5)      0.00       0.00 f
+  data arrival time                                    0.00
+
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  addr_reg_1_/CK (SAEDRVT14_FDP_V2_0P5)     0.00       0.00 r
+  library hold time                         0.00       0.00
+  data required time                                   0.00
+  ------------------------------------------------------------
+  data required time                                   0.00
+  data arrival time                                    0.00
+  ------------------------------------------------------------
+  slack (VIOLATED: increase significant digits)        0.00
+
+
+  Startpoint: cmd_addr[0]
+              (input port clocked by clk)
+  Endpoint: addr_reg_0_
+            (rising edge-triggered flip-flop clocked by clk)
+  Path Group: clk
+  Path Type: min
+
+  Point                                     Incr       Path
+  ------------------------------------------------------------
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  input external delay                      0.00       0.00 f
+  cmd_addr[0] (in)                          0.00       0.00 f
+  addr_reg_0_/D (SAEDRVT14_FDP_V2_0P5)      0.00       0.00 f
+  data arrival time                                    0.00
+
+  clock clk (rise edge)                     0.00       0.00
+  clock network delay (ideal)               0.00       0.00
+  addr_reg_0_/CK (SAEDRVT14_FDP_V2_0P5)     0.00       0.00 r
+  library hold time                         0.00       0.00
+  data required time                                   0.00
+  ------------------------------------------------------------
+  data required time                                   0.00
+  data arrival time                                    0.00
+  ------------------------------------------------------------
+  slack (VIOLATED: increase significant digits)        0.00
+
+
+1

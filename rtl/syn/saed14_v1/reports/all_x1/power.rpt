@@ -1,0 +1,60 @@
+****************************************
+Report : Time Based Power
+	-verbose
+	-nosplit
+Design : pu_HAS_JOIN1_HAS_SETSEL1_HAS_XREG1
+Version: Y-2026.03-SP3
+Date   : Mon Nov 23 17:23:40 2026
+****************************************
+
+Sampling Interval: 2.284 ns
+
+Library(s) Used:
+
+    saed14rvt_base_tt0p8v25c (File: /mnt/nas0/eda.libs/saed14/EDK_08_2025/SAED14nm_EDK_STD_RVT/liberty/nldm/base/saed14rvt_base_tt0p8v25c.db)
+    saed14rvt_cg_tt0p8v25c (File: /mnt/nas0/eda.libs/saed14/EDK_08_2025/SAED14nm_EDK_STD_RVT/liberty/nldm/cg/saed14rvt_cg_tt0p8v25c.db)
+
+
+Operating Conditions: tt0p8v25c   Library: saed14rvt_base_tt0p8v25c
+Wire Load Model Mode: top
+
+<no wire load model is set>
+
+Power-specific unit information :
+    Voltage Units = 1 V
+    Capacitance Units = 1 pf
+    Time Units = 1 ns
+    Dynamic Power Units = 1 W
+    Leakage Power Units = 1 W
+
+
+
+  Attributes
+  ----------
+      i  -  Including register clock pin internal power
+      u  -  User defined power group
+
+                        Internal  Switching  Leakage    Total               Peak         Peak            Glitch    X-tran
+Power Group             Power     Power      Power      Power   (     %)    Power        Time            Power     Power    Attrs
+----------------------------------------------------------------------------------------------------------------------------------
+clock_network           9.724e-04    0.0000    0.0000 9.724e-04 (54.33%)      N/A         N/A             0.0000    0.0000  i
+register                7.431e-05 9.239e-05 4.356e-07 1.671e-04 ( 9.34%)      N/A         N/A             0.0000    0.0000  
+combinational           3.255e-04 3.232e-04 1.429e-06 6.501e-04 (36.33%)      N/A         N/A             0.0000    0.0000  
+sequential                 0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+memory                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+io_pad                     0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+black_box                  0.0000    0.0000    0.0000    0.0000 ( 0.00%)      N/A         N/A             0.0000    0.0000  
+
+  Net Switching Power  = 4.156e-04   (23.22%)
+  Cell Internal Power  = 1.372e-03   (76.67%)
+  Cell Leakage Power   = 1.865e-06   ( 0.10%)
+                         ---------
+Total Power            = 1.790e-03  (100.00%)
+
+X Transition Power     =    0.0000
+Glitching Power        =    0.0000
+
+Peak Power             = 3.308e-03
+Peak Time              =  33565.66
+
+1

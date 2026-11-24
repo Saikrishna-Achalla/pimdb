@@ -1,0 +1,31 @@
+****************************************
+Report : Time Based Power
+	-groups clock_network register combinational sequential
+	-nosplit
+Design : pu_HAS_JOIN0_HAS_SETSEL0_HAS_XREG1
+Version: Y-2026.03-SP3
+Date   : Mon Nov 23 17:20:17 2026
+****************************************
+
+
+
+  Attributes
+  ----------
+      i  -  Including register clock pin internal power
+      u  -  User defined power group
+
+                        Internal  Switching  Leakage    Total
+Power Group             Power     Power      Power      Power   (     %)  Attrs
+--------------------------------------------------------------------------------
+clock_network           5.426e-04    0.0000    0.0000 5.426e-04 (68.72%)  i
+register                5.904e-05 3.033e-05 2.434e-07 8.962e-05 (11.35%)  
+combinational           7.265e-05 8.446e-05 2.454e-07 1.574e-04 (19.93%)  
+sequential                 0.0000    0.0000    0.0000    0.0000 ( 0.00%)  
+
+  Net Switching Power  = 1.148e-04   (14.54%)
+  Cell Internal Power  = 6.743e-04   (85.40%)
+  Cell Leakage Power   = 4.888e-07   ( 0.06%)
+                         ---------
+Total Power            = 7.896e-04  (100.00%)
+
+1
