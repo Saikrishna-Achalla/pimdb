@@ -1,0 +1,6 @@
+# Formal equivalence: pu_filter (two comparators, AND, invert) = per-lane range check, all inputs and widths.
+read_slang ../src/pu_pkg.sv ../src/pu_cmp_seg.sv ../src/pu_filter.sv filter_ref.sv --top pu_filter --top filter_ref
+proc
+miter -equiv -make_assert -flatten pu_filter filter_ref miter
+hierarchy -top miter
+sat -verify -prove-asserts -set-init-zero miter
